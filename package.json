@@ -1,0 +1,34 @@
+{
+  "name": "gene-info",
+  "version": "1.0.0",
+  "description": "Chrome extension and mobile app for getting gene information",
+  "main": "package.json",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knightjdr/gene-info.git"
+  },
+  "author": "James Knight",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/knightjdr/gene-info/issues"
+  },
+  "homepage": "https://github.com/knightjdr/gene-info#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-nodemon": "^2.2.1",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.3",
+    "express": "^4.15.2",
+    "http": "0.0.0",
+    "mongodb": "^2.2.25",
+    "promise": "^7.1.1"
+  }
+}
