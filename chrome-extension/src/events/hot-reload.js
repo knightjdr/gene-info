@@ -15,23 +15,23 @@ const timestampForFilesInDirectory = dir => filesInDirectory(dir)
 
 const reload = () => {
   chrome.tabs.query ({ active: true, currentWindow: true }, tabs => {
-    if (tabs[0]) { chrome.tabs.reload(tabs[0].id) }
-    chrome.runtime.reload()
-  })
-}
+    if (tabs[0]) { chrome.tabs.reload(tabs[0].id); }
+    chrome.runtime.reload();
+  });
+};
 
 const watchChanges = (dir, lastTimestamp) => {
   timestampForFilesInDirectory (dir).then (timestamp => {
     if (!lastTimestamp || (lastTimestamp === timestamp)) {
-      setTimeout (() => watchChanges (dir, timestamp), 1000) // retry after 1s
+      setTimeout (() => watchChanges (dir, timestamp), 1000); // retry after 1s
     } else {
-      reload ()
+      reload ();
     }
-  })
-}
+  });
+};
 
 chrome.management.getSelf (self => {
   if (self.installType === 'development') {
-    chrome.runtime.getPackageDirectoryEntry (dir => watchChanges (dir))
+    chrome.runtime.getPackageDirectoryEntry (dir => watchChanges (dir));
   }
-})
+});

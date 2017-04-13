@@ -12,21 +12,12 @@
   "author": "James Knight",
   "background": {
     "persistant": false,
-    "scripts": [
-      "event/events.js",
-      "hot-reload.js"
-    ]
+    "scripts": ["event.js"]
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": [
-        "content/content.js",
-        "content/detailed-template.js",
-        "content/http.js",
-        "content/tooltip-template.js",
-        "content/transitions.js"
-      ]
+      "js": ["content.js"]
     }
   ],
   "browser_action": {

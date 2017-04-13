@@ -1,5 +1,9 @@
+$font-stack: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+$toggle-green: #4caf50;
+$toggle-grey: #bdbdbd;
+
 body {
-  font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+  font-family: $font-stack;
   font-size: 12px;
   width: 170px;
 }
@@ -44,7 +48,7 @@ body {
   top: .1em; left: .3em;
   font-size: 1.3em;
   line-height: 0.8;
-  color: #4caf50;
+  color: $toggle-green;
   transition: all .2s;
 }
 .checkbox:not(:checked) + label:after {
@@ -56,7 +60,7 @@ body {
   transform: scale(1);
 }
 label:hover:before {
-  border: 2px solid #4caf50 !important;
+  border: 2px solid $toggle-green !important;
 }
 
 /*toggle*/
@@ -105,19 +109,19 @@ label:hover:before {
   padding: 1px;
   transition: all .2s ease;
   background: #fff;
-  border: 2px solid #bdbdbd;
+  border: 2px solid $toggle-grey;
   border-radius: 2em;
 }
 .toggle-flat + .toggle-button:after {
   transition: all .2s ease;
-  background: #bdbdbd;
+  background: $toggle-grey;
   content: "";
   border-radius: 1em;
 }
 .toggle-flat:checked + .toggle-button {
-  border: 2px solid #4caf50;
+  border: 2px solid $toggle-green;
 }
 .toggle-flat:checked + .toggle-button:after {
   left: 50%;
-  background: #4caf50;
+  background: $toggle-green;
 }

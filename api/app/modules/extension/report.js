@@ -31,7 +31,7 @@ const Report =  {
             if(geneMatch) {
               geneMatch = matches[0];
             }
-            res.send({result: geneMatch});
+            res.send({status: 200, result: geneMatch});
           }
         })
         .catch(function(error) {

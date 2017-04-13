@@ -1,9 +1,15 @@
 //get active tab and send current object to content script
 function tabsFunction(sendObject) {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  /*chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     ensureSendMessage(tabs[0].id, sendObject);
+  });*/
+  chrome.tabs.query({}, function(tabs) {
+    for(let i = 0, iLen = tabs.length; i < iLen; i++) {
+      chrome.tabs.sendMessage(tabs[i].id, sendObject);
+    }
   });
 }
+
 //check if content is listening and send message, if not, execute, then send message
 function ensureSendMessage(tabId, message, callback) {
   chrome.tabs.sendMessage(tabId, {action: 'ping'}, function(response) {
@@ -19,6 +25,36 @@ function ensureSendMessage(tabId, message, callback) {
       });
     }
   });
+}
+
+function clickSet() {
+  const checked = this.checked;
+  chrome.storage.local.set({'click': checked});
+  tabsFunction({action: 'toggleDoubleClick', click: checked});
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector('#click').addEventListener('click', clickSet);
+  document.querySelectorAll('.display-click').forEach(function(element) { element.addEventListener('click', reportType); });
+  document.querySelectorAll('.toggle').forEach(function(element) { element.addEventListener('click', toggle); });
+});
+
+function reportType() {
+  const type = this.dataset.type;
+  chrome.storage.local.set({'report': type});
+  const typeOff = this.dataset.type === 'detailed' ? 'tooltip' : 'detailed';
+  document.querySelector('#report_' + typeOff).checked = false;
+  tabsFunction({action: 'toggleReportType', type: type});
+}
+
+function toggle() {
+  const checked = this.checked;
+  const toggleValue = checked ? 'on' : 'off';
+  const type = this.dataset.type;
+  const toggleObj = {};
+  toggleObj['detail-' + type] = toggleValue;
+  chrome.storage.local.set(toggleObj);
+  tabsFunction({action: 'toggleDisplayElement', type: type, checked: checked});
 }
 
 //set params on page load
@@ -42,34 +78,4 @@ details.forEach(function(detail) {
       document.querySelector('#detail_' + detail).checked = false;
     }
   });
-});
-
-//listeners
-function clickSet() {
-  const checked = this.checked;
-  chrome.storage.local.set({'click': checked});
-  tabsFunction({action: 'toggleDoubleClick', click: checked});
-}
-function reportType() {
-  const type = this.dataset.type;
-  chrome.storage.local.set({'report': type});
-  const typeOff = this.dataset.type === 'detailed' ? 'tooltip' : 'detailed';
-  document.querySelector('#report_' + typeOff).checked = false;
-  tabsFunction({action: 'toggleReportType', type: type});
-}
-function toggle() {
-  const checked = this.checked;
-  const toggleValue = checked ? 'on' : 'off';
-  const type = this.dataset.type;
-  const toggleObj = {};
-  toggleObj['detail-' + type] = toggleValue;
-  chrome.storage.local.set(toggleObj);
-  tabsFunction({action: 'toggleDisplayElement', type: type, checked: checked});
-}
-
-//inject listeners
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelector('#click').addEventListener('click', clickSet);
-  document.querySelectorAll('.display-click').forEach(function(element) { element.addEventListener('click', reportType); });
-  document.querySelectorAll('.toggle').forEach(function(element) { element.addEventListener('click', toggle); });
 });
