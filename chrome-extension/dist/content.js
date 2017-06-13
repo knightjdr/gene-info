@@ -61,9 +61,12 @@ chrome.runtime.onMessage.addListener(
 );
 
 function biogridStringConstructor(data, options) {
-  let biogridString = '<b>Interactors: </b>';
-  biogridString += '<a rel="noopener noreferrer" target="_blank" href="https://thebiogrid.org/' + data.biogrid + '/summary/homo-sapiens/">BioGRID</a>';
-  biogridString += '<hr style="margin: 1px 1px 1px 1px;"/><div>';
+  let biogridString = `
+    <div class="cExtension-gene-info-section-header">
+      <b>INTERACTORS:</b>
+      <a rel="noopener noreferrer" target="_blank" href="https://thebiogrid.org/${data.biogrid}/summary/homo-sapiens/">BioGRID</a>
+    </div>`
+  ;
   if(data.interactors.length > 0) {
     data.interactors.forEach(function(interactor) {
       biogridString += '<div id="cExtension_gene_info_details_interactors" style="display: flex;">';
@@ -75,98 +78,156 @@ function biogridStringConstructor(data, options) {
     biogridString += '<div id="cExtension_gene_info_details_interactors" style="display: flex;"><div style="flex: 0 0 25%;">none</div></div>';
   }
   biogridString += '</div>';
+  biogridString += '<hr style="margin: 1px 1px 1px 1px;"/><div>';
   return biogridString;
 }
 
-function goStringConstructor(data, options) {
-  let goString = '<b>GO terms: </b>';
-  goString += '<a rel="noopener noreferrer" target="_blank" href="http://amigo.geneontology.org/amigo/gene_product/UniProtKB:' + data.uniprot + '">AmiGO</a>';
-  goString += '<hr style="margin: 1px 1px 1px 1px;"/>';
-  goString += '<div>';
-  goString += '<div style="display: flex; flex-direction: row;">';
-  goString += '<div class="cExtension-gene-info-go-selector" data-type="bp" style="background-color: #a8a6a6; border: 1px solid #90a4ae; border-radius: 2px; cursor: pointer; flex-grow: 1; margin: 0px 2px 0px 2px; text-align: center;">BP</div>';
-  goString += '<div class="cExtension-gene-info-go-selector" data-type="cc" style="border: 1px solid #90a4ae; border-radius: 2px; cursor: pointer; flex-grow: 1; margin: 0px 2px 0px 2px; text-align: center;">CC</div>';
-  goString += '<div class="cExtension-gene-info-go-selector" data-type="mf" style="border: 1px solid #90a4ae; border-radius: 2px; cursor: pointer; flex-grow: 1; margin: 0px 2px 0px 2px; text-align: center;">MF</div>';
-  goString += '</div>';
-  goString += '<div id="cExtension-gene-info-go-container-bp" style="padding: 0px 5px 0px 5px;">';
+const goStringConstructor = (data, options) => {
+  let goString =
+    `<div class="cExtension-gene-info-section-header">
+      <b>GO TERMS: </b>
+      <a
+        rel="noopener noreferrer"
+        target="_blank"
+        href="http://amigo.geneontology.org/amigo/gene_product/UniProtKB:${data.uniprot}"
+      >
+        AmiGO
+      </a>
+    </div>
+    <div>
+      <div style="display: flex; flex-direction: row;">
+        <div
+          class="cExtension-gene-info-go-selector active"
+          data-type="bp"
+        >
+          BP
+        </div>
+        <div
+          class="cExtension-gene-info-go-selector"
+          data-type="cc"
+        >
+          CC
+        </div>
+        <div
+          class="cExtension-gene-info-go-selector"
+          data-type="mf"
+        >
+          MF
+        </div>
+      </div>
+    `
+  ;
+  goString += `
+    <div
+      id="cExtension-gene-info-go-container-bp"
+      style="padding: 0px 5px 0px 5px;"
+    >`
+  ;
   if(data.go.p.length > 0) {
     data.go.p.forEach(function(term) {
-      goString += '<div style="padding: 2px 0px 2px 0px;"> &#8226; ' + term.term + ' <a rel="noopener noreferrer" target="_blank" href="http://amigo.geneontology.org/amigo/term/GO:' + term.id + '">&#10162;</a></div>';
+      goString +=
+        `<div style="padding: 2px 0px 2px 0px;">
+          &#8226;
+          ${term.term}
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="http://amigo.geneontology.org/amigo/term/GO:${term.id}"
+            style="text-decoration: none;"
+          >
+            &#10162;
+          </a>
+        </div>`
+      ;
     });
   } else {
     goString += '<div style="padding: 2px 0px 2px 0px;">no terms</div>';
   }
   goString += '</div>';
-  goString += '<div id="cExtension-gene-info-go-container-cc" style="display: none; padding: 0px 5px 0px 5px;">';
+  goString += `
+    <div
+      id="cExtension-gene-info-go-container-cc"
+      style="display: none; padding: 0px 5px 0px 5px;"
+    >`
+  ;
   if(data.go.c.length > 0) {
     data.go.c.forEach(function(term) {
-      goString += '<div style="padding: 2px 0px 2px 0px;"> &#8226; ' + term.term + ' <a rel="noopener noreferrer" target="_blank" href="http://amigo.geneontology.org/amigo/term/GO:' + term.id + '">&#10162;</a></div>';
+      goString +=
+        `<div style="padding: 2px 0px 2px 0px;">
+          &#8226;
+          ${term.term}
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="http://amigo.geneontology.org/amigo/term/GO:${term.id}"
+            style="text-decoration: none;"
+          >
+            &#10162;
+          </a>
+        </div>`
+      ;
     });
   } else {
     goString += '<div style="padding: 2px 0px 2px 0px;">no terms</div>';
   }
   goString += '</div>';
-  goString += '<div id="cExtension-gene-info-go-container-mf" style="display: none; padding: 0px 5px 0px 5px;">';
+  goString += `
+    <div
+      id="cExtension-gene-info-go-container-mf"
+      style="display: none; padding: 0px 5px 0px 5px;"
+    >`
+  ;
   if(data.go.f.length > 0) {
     data.go.f.forEach(function(term) {
-      goString += '<div style="padding: 2px 0px 2px 0px;"> &#8226; ' + term.term + ' <a rel="noopener noreferrer" target="_blank" href="http://amigo.geneontology.org/amigo/term/GO:' + term.id + '">&#10162;</a></div>';
+      goString +=
+        `<div style="padding: 2px 0px 2px 0px;">
+          &#8226;
+          ${term.term}
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="http://amigo.geneontology.org/amigo/term/GO:${term.id}"
+            style="text-decoration: none;"
+          >
+            &#10162;
+          </a>
+        </div>`
+      ;
     });
   } else {
     goString += '<div style="padding: 2px 0px 2px 0px;">no terms</div>';
   }
   goString += '</div>';
   goString += '</div>';
+  goString += '<hr style="margin: 0px 1px 1px 1px;"/>';
   return goString;
-}
-
-function disableScroll(div) {
-  div.addEventListener('mousewheel', function(event) {
-    var delta = event.wheelDelta || -event.detail;
-    div.scrollTop += (delta < 0 ? 1 : -1) * 65;
-    event.preventDefault();
-  });
-}
-
-function insertAfter(newNode, referenceNode) {
-  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
+};
 
 function createDetailedPanel(data, options) {
   let detailedDiv = document.createElement('div');
   detailedDiv.id = 'cExtension_gene_info_panel';
-  detailedDiv.style.backgroundColor = '#f5f5f5';
-  detailedDiv.style.border = '1px solid #90a4ae';
-  detailedDiv.style.borderRadius = '3px';
-  detailedDiv.style.boxShadow = '0px 0px 2px 2px rgba(97, 97, 97, 0.4)';
-  detailedDiv.style.color = '#333333';
-  detailedDiv.style.fontFamily = 'Tahoma, Geneva, sans-serif';
-  detailedDiv.style.fontSize = '14px';
-  detailedDiv.style.maxHeight = 'calc(100vh - 25px)';
-  detailedDiv.style.minWidth = window.innerWidth < 310 ? window.innerWidth - 10 + 'px' : '300px';
-  detailedDiv.style.opacity = 0;
-  detailedDiv.style.overflowX = 'none';
-  detailedDiv.style.overflowY = 'auto';
-  detailedDiv.style.padding = '5px 5px 5px 5px';
-  detailedDiv.style.position = 'fixed';
-  detailedDiv.style.right = '5px';
-  detailedDiv.style.top = '5px';
-  detailedDiv.style.textAlign = 'left';
-  detailedDiv.style.width = window.innerWidth < 310 ? window.innerWidth - 10 + 'px' : 'calc(25vw)';
-  detailedDiv.style.zIndex = '10000';
-  if(!data) {
+  if (!data) {
+    detailedDiv.className = 'cExtension-gene-info-panel-backdrop-small';
     let htmlString = '<div id="cExtension_gene_info_empty">No gene information available</div>';
     detailedDiv.innerHTML = htmlString;
     document.body.insertBefore(detailedDiv, document.body.firstChild);
   } else {
+    detailedDiv.className = 'cExtension-gene-info-panel-backdrop';
+    detailedDiv.style.minWidth = window.innerWidth < 310 ? window.innerWidth - 10 + 'px' : '300px';
+    detailedDiv.style.width = window.innerWidth < 310 ? window.innerWidth - 10 + 'px' : 'calc(25vw)';
+    // css 'classes'
+    const elementBackdrop = `
+      padding: 2px 0px 2px 0px;
+    `;
     //add html
     let htmlString = '<div id="cExtension_gene_info_details">';
-    htmlString += '<div id="cExtension_gene_info_details_gene" style="padding: 0px 0px 2px 0px;"><b>Gene: </b>' + data.gene + '</div>';
-    if(data.synonyms && options.basic) {
-      htmlString += '<div id="cExtension_gene_info_details_synonyms" style="padding: 2px 0px 2px 0px;"><b>Synonyms: </b>';
-      if(data.synonyms.length > 0) {
+    htmlString += `<div id="cExtension_gene_info_details_gene" style="${elementBackdrop}"><b>Gene: </b>${data.gene}</div>`;
+    if (data.synonyms && options.basic) {
+      htmlString += `<div id="cExtension_gene_info_details_synonyms" style="${elementBackdrop}"><b>Synonyms: </b>`;
+      if (data.synonyms.length > 0) {
         data.synonyms.forEach(function(synonym, i) {
           htmlString += synonym;
-          if(i < data.synonyms.length - 1) {
+          if (i < data.synonyms.length - 1) {
             htmlString += ', ';
           }
         });
@@ -175,69 +236,71 @@ function createDetailedPanel(data, options) {
       }
       htmlString += '</div>';
     }
-    if(data.fullname && options.basic) {
-      htmlString += '<div id="cExtension_gene_info_details_name" style="padding: 2px 0px 2px 0px;"><b>Name: </b>';
-      htmlString += data.fullname;
-      htmlString += '</div>';
+    if (data.fullname && options.basic) {
+      htmlString +=
+        `<div id="cExtension_gene_info_details_name" style="${elementBackdrop}">
+          <b>Name: </b>${data.fullname}
+        </div>`
+      ;
     }
-    if(data.hgnc && options.links) {
-      htmlString += '<div id="cExtension_gene_info_details_hgnc" style="padding: 2px 0px 2px 0px;"><b>HGNC: </b>';
-      htmlString += '<a rel="noopener noreferrer" target="_blank" href="http://www.genenames.org/cgi-bin/gene_symbol_report?hgnc_id=HGNC:' + data.hgnc + '">' + data.hgnc + '</a>';
-      htmlString += '</div>';
+    if (data.geneid && options.links) {
+      htmlString +=
+        `<div id="cExtension_gene_info_details_ncbi" style="${elementBackdrop}">
+          <b>NCBI: </b>
+          <a rel="noopener noreferrer" target="_blank" href="https://www.ncbi.nlm.nih.gov/gene/?term=${data.geneid }">${data.geneid }</a>
+        </div>`
+      ;
     }
-    if(data.geneid && options.links) {
-      htmlString += '<div id="cExtension_gene_info_details_ncbi" style="padding: 2px 0px 2px 0px;"><b>NCBI: </b>';
-      htmlString += '<a rel="noopener noreferrer" target="_blank" href="https://www.ncbi.nlm.nih.gov/gene/?term=' + data.geneid + '">' + data.geneid + '</a>';
-      htmlString += '</div>';
+    if (data.uniprot && options.links) {
+      htmlString +=
+        `<div id="cExtension_gene_info_details_uniprot" style="${elementBackdrop}">
+          <b>UniProt: </b>
+          <a rel="noopener noreferrer" target="_blank" href="http://www.uniprot.org/uniprot/${data.uniprot}">${data.uniprot }</a>
+        </div>`
+      ;
     }
-    if(data.uniprot && options.links) {
-      htmlString += '<div id="cExtension_gene_info_details_uniprot" style="padding: 2px 0px 2px 0px;"><b>UniProt: </b>';
-      htmlString += '<a rel="noopener noreferrer" target="_blank" href="http://www.uniprot.org/uniprot/' + data.uniprot + '">' + data.uniprot + '</a>';
-      htmlString += '</div>';
+    if (data.description && options.description) {
+      htmlString +=
+        `<div id="cExtension_gene_info_details_description" style="${elementBackdrop}">
+          <b>Description: </b>${data.description}
+        </div>`
+      ;
     }
-    if(data.description && options.description) {
-      htmlString += '<div id="cExtension_gene_info_details_description" style="padding: 2px 0px 2px 0px;"><b>Description: </b>';
-      htmlString += data.description;
-      htmlString += '</div>';
-    }
+    htmlString += '<hr style="margin: 0px 1px 1px 1px;"/>';
     if(data.go && options.go) {
-      htmlString += '<div id="cExtension_gene_info_details_go" style="padding: 5px 0px 2px 0px;">';
-      htmlString += goStringConstructor(data, options);
-      htmlString += '</div>';
+      htmlString +=
+        `<div id="cExtension_gene_info_details_go" style="${elementBackdrop}">
+          ${goStringConstructor(data, options)}
+        </div>`
+      ;
     }
     if(data.biogrid && options.interactors) {
-      htmlString += '<div id="cExtension_gene_info_details_biogrid" style="padding: 5px 0px 2px 0px;">';
-      htmlString += biogridStringConstructor(data, options);
-      htmlString += '</div>';
+      htmlString +=
+        `<div id="cExtension_gene_info_details_biogrid" style="${elementBackdrop}">
+          ${biogridStringConstructor(data, options)}
+        </div>`
+      ;
     }
     htmlString += '</div>';
     detailedDiv.innerHTML = htmlString;
     document.body.insertBefore(detailedDiv, document.body.firstChild);
     //listeners for GO and disable scroll
     document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.addEventListener('click', goSelector); });
+    addDrag(detailedDiv);
     disableScroll(detailedDiv);
   }
   //create close cutton
   let closeButton = document.createElement('span');
   closeButton.id = 'cExtension_gene_info_panel_button';
+  closeButton.className = 'cExtension-gene-info-panel-button';
   closeButton.innerHTML = 'x';
-  closeButton.style.backgroundColor = '#ef5350';
-  closeButton.style.borderRadius = '2px';
-  closeButton.style.color = '#fafafa';
-  closeButton.style.cursor = 'pointer';
-  closeButton.style.display = 'none';
-  closeButton.style.height = '15px';
-  closeButton.style.lineHeight = '15px';
-  closeButton.style.padding = '0px 1px 1px 1px';
-  closeButton.style.position = 'fixed';
-  closeButton.style.right = '25px';
-  closeButton.style.textAlign = 'center';
-  closeButton.style.top = '8px';
-  closeButton.style.width = '15px';
-  closeButton.style.zIndex = '10001';
   detailedDiv.appendChild(closeButton);
-  detailedDiv.addEventListener('mouseover', function() { closeButton.style.display = 'inline' ;});
-  detailedDiv.addEventListener('mouseout', function() { closeButton.style.display = 'none' ;});
+  if (data) {
+    detailedDiv.addEventListener('mouseover', function() { closeButton.style.display = 'inline' ;});
+    detailedDiv.addEventListener('mouseout', function() { closeButton.style.display = 'none' ;});
+  } else {
+    closeButton.style.display = 'inline';
+  }
   closeButton.addEventListener('click', removePanel);
   //show panel
   fadeIn(detailedDiv);
@@ -301,24 +364,6 @@ function fillDetailedPanel(data, options) {
   } else {
     if(document.getElementById('cExtension_gene_info_details_name')) {
       document.getElementById('cExtension_gene_info_details_name').remove();
-    }
-  }
-  //hgnc
-  if(data.geneid && options.links) {
-    let uniprotString = '<b>NCBI: </b><a rel="noopener noreferrer" target="_blank" href="http://www.genenames.org/cgi-bin/gene_symbol_report?hgnc_id=HGNC:' + data.hgnc + '">' + data.hgnc + '</a>';
-    if(document.getElementById('cExtension_gene_info_details_hgnc')) {
-      document.getElementById('cExtension_gene_info_details_hgnc').innerHTML = uniprotString;
-    } else {
-      let uniprotDiv = document.createElement('div');
-      uniprotDiv.id = 'cExtension_gene_info_details_hgnc';
-      uniprotDiv.innerHTML = uniprotString;
-      uniprotDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(uniprotDiv, lastNode);
-    }
-    lastNode = document.getElementById('cExtension_gene_info_details_hgnc');
-  } else {
-    if(document.getElementById('cExtension_gene_info_details_hgnc')) {
-      document.getElementById('cExtension_gene_info_details_hgnc').remove();
     }
   }
   //ncbi
@@ -416,6 +461,37 @@ function fillDetailedPanel(data, options) {
   }
 }
 
+const addDrag = (div) => {
+  let startX;
+  const mouseMove = (event) => {
+    const delta = startX - event.screenX;
+    startX = event.screenX;
+    const right = document.documentElement.clientWidth - div.getBoundingClientRect().right;
+    div.style.right = `${right + delta}px`;
+  };
+  div.addEventListener('mousedown', function(event) {
+    startX = event.screenX;
+    div.addEventListener('mousemove', mouseMove);
+  });
+  div.addEventListener('mouseup', function() {
+    div.removeEventListener('mousemove', mouseMove);
+  });
+};
+
+const disableScroll = (div) => {
+  const x = window.scrollX;
+  const y = window.scrollY;
+  div.addEventListener('mousewheel', function(event) {
+    window.onscroll = function(){
+      window.scrollTo(x, y);
+    };
+  });
+};
+
+function insertAfter(newNode, referenceNode) {
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
 function clearPanel(data, type) {
   if(!data) {
     if(document.getElementById('cExtension_gene_info_panel')) {
@@ -442,6 +518,7 @@ function clearTooltip() {
 
 function removePanel() {
   if(document.getElementById('cExtension_gene_info_panel')) {
+    window.onscroll = null;
     document.getElementById('cExtension_gene_info_panel_button').removeEventListener('click', removePanel);
     document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.removeEventListener('click', goSelector); });
     fadeOut(document.getElementById('cExtension_gene_info_panel'));
@@ -464,7 +541,7 @@ function http(gene) {
     chrome.runtime.sendMessage({
       method: 'GET',
       action: 'xhttp',
-      url: 'http://localhost:8002/extension' + paramString
+      url: 'http://prohitstools.mshri.on.ca:8002/extension' + paramString
     }, function(response) {
       var parsedResponse = JSON.parse(response);
       if(parsedResponse.status === 200) {
@@ -531,9 +608,6 @@ function createTooltipTemplate(event, data, options) {
     //add html
     let htmlString = '<div style="padding: 0px 0px 2px 0px; text-align: center;">' + data.fullname + '</div>';
     htmlString += '<div style="display: flex; flex-direction: row; flex-wrap: wrap;">';
-    if(data.hgnc && options.links) {
-      htmlString += '<span style="flex-grow: 1; text-align: center; min-width: 80px;"><a rel="noopener noreferrer" target="_blank" href="http://www.genenames.org/cgi-bin/gene_symbol_report?hgnc_id=HGNC:' + data.hgnc + '">HGNC</a></span>';
-    }
     if(data.geneid && options.links) {
       htmlString += '<span style="flex-grow: 1; text-align: center; min-width: 80px;"><a rel="noopener noreferrer" target="_blank" href="https://www.ncbi.nlm.nih.gov/gene/?term=' + data.geneid + '">NCBI</a></span>';
     }
@@ -634,16 +708,16 @@ function goSelector() {
   const selectedType = this.dataset.type;
   const types = ['bp', 'cc', 'mf'];
   types.forEach(function(v) {
-    if(v !== selectedType) {
+    if (v !== selectedType) {
       document.querySelector('#cExtension-gene-info-go-container-' + v).style.display = 'none';
     }
   });
   document.querySelector('#cExtension-gene-info-go-container-' + selectedType).style.display = 'inline-block';
   document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) {
-    if(element.dataset.type === selectedType) {
-      element.style.backgroundColor = '#a8a6a6';
+    if (element.dataset.type === selectedType) {
+      element.classList.add('active');
     } else {
-      element.style.backgroundColor = 'transparent';
+      element.classList.remove('active');
     }
   });
 }

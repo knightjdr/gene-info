@@ -49,24 +49,6 @@ function fillDetailedPanel(data, options) {
       document.getElementById('cExtension_gene_info_details_name').remove();
     }
   }
-  //hgnc
-  if(data.geneid && options.links) {
-    let uniprotString = '<b>NCBI: </b><a rel="noopener noreferrer" target="_blank" href="http://www.genenames.org/cgi-bin/gene_symbol_report?hgnc_id=HGNC:' + data.hgnc + '">' + data.hgnc + '</a>';
-    if(document.getElementById('cExtension_gene_info_details_hgnc')) {
-      document.getElementById('cExtension_gene_info_details_hgnc').innerHTML = uniprotString;
-    } else {
-      let uniprotDiv = document.createElement('div');
-      uniprotDiv.id = 'cExtension_gene_info_details_hgnc';
-      uniprotDiv.innerHTML = uniprotString;
-      uniprotDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(uniprotDiv, lastNode);
-    }
-    lastNode = document.getElementById('cExtension_gene_info_details_hgnc');
-  } else {
-    if(document.getElementById('cExtension_gene_info_details_hgnc')) {
-      document.getElementById('cExtension_gene_info_details_hgnc').remove();
-    }
-  }
   //ncbi
   if(data.geneid && options.links) {
     let uniprotString = '<b>NCBI: </b><a rel="noopener noreferrer" target="_blank" href="https://www.ncbi.nlm.nih.gov/gene/?term=' + data.geneid + '">' + data.geneid + '</a>';

@@ -1,7 +1,9 @@
-function disableScroll(div) {
+const disableScroll = (div) => {
+  const x = window.scrollX;
+  const y = window.scrollY;
   div.addEventListener('mousewheel', function(event) {
-    var delta = event.wheelDelta || -event.detail;
-    div.scrollTop += (delta < 0 ? 1 : -1) * 65;
-    event.preventDefault();
+    window.onscroll = function(){
+      window.scrollTo(x, y);
+    };
   });
-}
+};

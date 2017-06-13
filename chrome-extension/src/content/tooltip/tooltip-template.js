@@ -35,9 +35,6 @@ function createTooltipTemplate(event, data, options) {
     //add html
     let htmlString = '<div style="padding: 0px 0px 2px 0px; text-align: center;">' + data.fullname + '</div>';
     htmlString += '<div style="display: flex; flex-direction: row; flex-wrap: wrap;">';
-    if(data.hgnc && options.links) {
-      htmlString += '<span style="flex-grow: 1; text-align: center; min-width: 80px;"><a rel="noopener noreferrer" target="_blank" href="http://www.genenames.org/cgi-bin/gene_symbol_report?hgnc_id=HGNC:' + data.hgnc + '">HGNC</a></span>';
-    }
     if(data.geneid && options.links) {
       htmlString += '<span style="flex-grow: 1; text-align: center; min-width: 80px;"><a rel="noopener noreferrer" target="_blank" href="https://www.ncbi.nlm.nih.gov/gene/?term=' + data.geneid + '">NCBI</a></span>';
     }

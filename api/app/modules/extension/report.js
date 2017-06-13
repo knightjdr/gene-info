@@ -8,10 +8,12 @@ const Report =  {
     if(!gene || (typeof gene !== 'number' && typeof gene !== 'string')) {
       res.status(400).send({error: 'The query must be a non-empty string or number'});
     } else {
+      const searchString = '^' + gene + '$';
+			const re = new RegExp(searchString, "i");
       const queryObj = {
         $or: [
-          {gene: gene},
-          {synonyms: gene}
+          {gene: {$regex: re}},
+          {synonyms: re}
         ]
       };
       crud.get('geneinfo', 'homosapiens', queryObj)

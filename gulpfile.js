@@ -7,7 +7,7 @@ const util = require('gulp-util');
 
 const dest = 'chrome-extension/dist/';
 const modules = {
-    content: {src: 'chrome-extension/src/content/**/*.js', target: 'content.js'},
+    content: {sass: 'chrome-extension/src/content/**/*.scss', sassTarget: 'content.css', src: 'chrome-extension/src/content/**/*.js', target: 'content.js'},
     event: {src: 'chrome-extension/src/events/**/*.js', target: 'event.js'},
     node: {src: 'api/**/*.js'},
     popup: {sass: 'chrome-extension/src/popup/popup.scss', src: 'chrome-extension/src/popup/**/*.js', target: 'popup.js'}
@@ -31,10 +31,18 @@ gulp.task('js-concat', function() {
 
 gulp.task('sass', function() {
   const module = modules[util.env.module];
-	gulp.src(module.sass)
-   	.pipe(sass({outputStyle: 'compressed'}))
-    .pipe(gulp.dest(dest))
-	;
+  if (module.sassTarget) {
+    gulp.src(module.sass)
+     	.pipe(sass({outputStyle: 'compressed'}))
+      .pipe(concat(module.sassTarget))
+      .pipe(gulp.dest(dest))
+  	;
+  } else {
+    gulp.src(module.sass)
+     	.pipe(sass({outputStyle: 'compressed'}))
+      .pipe(gulp.dest(dest))
+  	;
+  }
 });
 
 gulp.task('dev', function() {
@@ -45,6 +53,11 @@ gulp.task('dev', function() {
    	gulp.src('api/index.js')
   });
   gulp.watch(modules.content.src, ['js-hint', 'js-concat'])
+    .on('change', function () {
+      util.env.module = 'content';
+    })
+  ;
+  gulp.watch(modules.content.sass, ['sass'])
     .on('change', function () {
       util.env.module = 'content';
     })
