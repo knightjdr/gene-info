@@ -1,4 +1,4 @@
-function createDetailedPanel(data, options) {
+createDetailedPanel = (data, options) => {
   let detailedDiv = document.createElement('div');
   detailedDiv.id = 'cExtension_gene_info_panel';
   if (!data) {
@@ -11,14 +11,24 @@ function createDetailedPanel(data, options) {
     detailedDiv.style.minWidth = window.innerWidth < 310 ? window.innerWidth - 10 + 'px' : '300px';
     detailedDiv.style.width = window.innerWidth < 310 ? window.innerWidth - 10 + 'px' : 'calc(25vw)';
     // css 'classes'
-    const elementBackdrop = `
-      padding: 2px 0px 2px 0px;
-    `;
     //add html
     let htmlString = '<div id="cExtension_gene_info_details">';
-    htmlString += `<div id="cExtension_gene_info_details_gene" style="${elementBackdrop}"><b>Gene: </b>${data.gene}</div>`;
+    htmlString += `
+      <div
+        class="cExtension-gene-info-details-backdrop"
+        id="cExtension_gene_info_details_gene"
+      >
+        <b>Gene: </b>${data.gene}
+      </div>`
+    ;
     if (data.synonyms && options.basic) {
-      htmlString += `<div id="cExtension_gene_info_details_synonyms" style="${elementBackdrop}"><b>Synonyms: </b>`;
+      htmlString += `
+        <div
+          class="cExtension-gene-info-details-backdrop"
+          id="cExtension_gene_info_details_synonyms"
+        >
+          <b>Synonyms: </b>`
+      ;
       if (data.synonyms.length > 0) {
         data.synonyms.forEach(function(synonym, i) {
           htmlString += synonym;
@@ -32,46 +42,94 @@ function createDetailedPanel(data, options) {
       htmlString += '</div>';
     }
     if (data.fullname && options.basic) {
-      htmlString +=
-        `<div id="cExtension_gene_info_details_name" style="${elementBackdrop}">
+      htmlString += `
+        <div
+          class="cExtension-gene-info-details-backdrop"
+          id="cExtension_gene_info_details_name"
+        >
           <b>Name: </b>${data.fullname}
         </div>`
       ;
     }
     if (data.geneid && options.links) {
       htmlString +=
-        `<div id="cExtension_gene_info_details_ncbi" style="${elementBackdrop}">
+        `<div
+          class="cExtension-gene-info-details-backdrop"
+          id="cExtension_gene_info_details_ncbi"
+        >
           <b>NCBI: </b>
-          <a rel="noopener noreferrer" target="_blank" href="https://www.ncbi.nlm.nih.gov/gene/?term=${data.geneid }">${data.geneid }</a>
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://www.ncbi.nlm.nih.gov/gene/?term=${data.geneid }"
+          >
+            ${data.geneid}
+          </a>
         </div>`
       ;
     }
     if (data.uniprot && options.links) {
       htmlString +=
-        `<div id="cExtension_gene_info_details_uniprot" style="${elementBackdrop}">
+        `<div
+          class="cExtension-gene-info-details-backdrop"
+          id="cExtension_gene_info_details_uniprot"
+        >
           <b>UniProt: </b>
-          <a rel="noopener noreferrer" target="_blank" href="http://www.uniprot.org/uniprot/${data.uniprot}">${data.uniprot }</a>
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="http://www.uniprot.org/uniprot/${data.uniprot}"
+          >
+            ${data.uniprot}
+          </a>
+        </div>`
+      ;
+    }
+    if (data['ensembl-gene'] && options.links) {
+      htmlString +=
+        `<div
+          class="cExtension-gene-info-details-backdrop"
+          id="cExtension_gene_info_details_hpa"
+        >
+          <b>Human Protein Atlas: </b>
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="http://www.proteinatlas.org/${data['ensembl-gene']}/cell"
+          >
+            ${data['ensembl-gene']}
+          </a>
         </div>`
       ;
     }
     if (data.description && options.description) {
       htmlString +=
-        `<div id="cExtension_gene_info_details_description" style="${elementBackdrop}">
+        `<div
+          class="cExtension-gene-info-details-backdrop"
+          id="cExtension_gene_info_details_description"
+        >
           <b>Description: </b>${data.description}
         </div>`
       ;
     }
-    htmlString += '<hr style="margin: 0px 1px 1px 1px;"/>';
     if(data.go && options.go) {
+      htmlString += '<div class="cExtension-gene-info-bevel-line"></div>';
       htmlString +=
-        `<div id="cExtension_gene_info_details_go" style="${elementBackdrop}">
+        `<div
+          class="cExtension-gene-info-details-backdrop"
+          id="cExtension_gene_info_details_go"
+        >
           ${goStringConstructor(data, options)}
         </div>`
       ;
     }
     if(data.biogrid && options.interactors) {
+      htmlString += '<div class="cExtension-gene-info-bevel-line"></div>';
       htmlString +=
-        `<div id="cExtension_gene_info_details_biogrid" style="${elementBackdrop}">
+        `<div
+          class="cExtension-gene-info-details-backdrop"
+          id="cExtension_gene_info_details_biogrid"
+        >
           ${biogridStringConstructor(data, options)}
         </div>`
       ;
@@ -82,7 +140,7 @@ function createDetailedPanel(data, options) {
     //listeners for GO and disable scroll
     document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.addEventListener('click', goSelector); });
     addDrag(detailedDiv);
-    disableScroll(detailedDiv);
+    // disableScroll(detailedDiv);
   }
   //create close cutton
   let closeButton = document.createElement('span');
@@ -99,4 +157,4 @@ function createDetailedPanel(data, options) {
   closeButton.addEventListener('click', removePanel);
   //show panel
   fadeIn(detailedDiv);
-}
+};

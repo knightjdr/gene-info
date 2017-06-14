@@ -115,6 +115,5 @@ const goStringConstructor = (data, options) => {
   }
   goString += '</div>';
   goString += '</div>';
-  goString += '<hr style="margin: 0px 1px 1px 1px;"/>';
   return goString;
 };

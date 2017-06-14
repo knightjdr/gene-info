@@ -1,7 +1,7 @@
 .cExtension-gene-info-panel-backdrop {
   background-color: #fafafa;
   border-radius: 2px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: -8px 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   color: #333333;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -50,6 +50,15 @@
    background-color: #a8a6a6;
 }
 .cExtension-gene-info-section-header {
-  border-bottom: 1px solid #bdbdbd;
+  border-bottom: 1px solid #e6e6e6;
   margin-bottom: 5px;
+}
+.cExtension-gene-info-bevel-line {
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #d0d0d0;
+  margin: 0px 0px 5px 0px;
+  min-height: 2px;
+}
+.cExtension-gene-info-details-backdrop {
+  padding: 2px 0px 2px 0px;
 }

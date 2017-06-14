@@ -16,6 +16,5 @@ function biogridStringConstructor(data, options) {
     biogridString += '<div id="cExtension_gene_info_details_interactors" style="display: flex;"><div style="flex: 0 0 25%;">none</div></div>';
   }
   biogridString += '</div>';
-  biogridString += '<hr style="margin: 1px 1px 1px 1px;"/><div>';
   return biogridString;
 }
