@@ -1,13 +1,13 @@
 {
   "manifest_version": 2,
   "name": "Gene info",
-  "version": "1.0",
-  "version_name": "1.0 beta",
+  "version": "0.0.1",
+  "version_name": "0.0.1 alpha",
   "description": "Find gene information by clicking an official gene name on any webpage. Only human gene information will be retrieved currently.",
   "icons": {
-    "16": "images/icon16.png",
-    "48": "images/icon48.png",
-    "128": "images/icon128.png"
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   },
   "author": "James Knight",
   "background": {
@@ -23,9 +23,9 @@
   ],
   "browser_action": {
     "default_icon": {
-      "16": "images/icon16.png",
-      "24": "images/icon24.png",
-      "32": "images/icon32.png"
+      "16": "icon16.png",
+      "24": "icon24.png",
+      "32": "icon32.png"
     },
     "default_title": "Gene info",
     "default_popup": "popup.html"
