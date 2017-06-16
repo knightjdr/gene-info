@@ -1,5 +1,5 @@
-//get active tab and send current object to content script
-function tabsFunction(sendObject) {
+// get active tab and send current object to content script
+const tabsFunction = (sendObject) => {
   /*chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     ensureSendMessage(tabs[0].id, sendObject);
   });*/
@@ -8,4 +8,4 @@ function tabsFunction(sendObject) {
       chrome.tabs.sendMessage(tabs[i].id, sendObject);
     }
   });
-}
+};

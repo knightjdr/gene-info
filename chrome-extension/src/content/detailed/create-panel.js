@@ -112,7 +112,18 @@ createDetailedPanel = (data, options) => {
         </div>`
       ;
     }
-    if(data.go && options.go) {
+    if ((data.domains || data.length || data.mw) && options.domain) {
+      htmlString += '<div class="cExtension-gene-info-bevel-line"></div>';
+      htmlString +=
+        `<div
+          class="cExtension-gene-info-details-backdrop"
+          id="cExtension_gene_info_details_domain"
+        >
+          ${domainConstructor(data, options)}
+        </div>`
+      ;
+    }
+    if (data.go && options.go) {
       htmlString += '<div class="cExtension-gene-info-bevel-line"></div>';
       htmlString +=
         `<div
@@ -123,7 +134,7 @@ createDetailedPanel = (data, options) => {
         </div>`
       ;
     }
-    if(data.biogrid && options.interactors) {
+    if (data.biogrid && options.interactors) {
       htmlString += '<div class="cExtension-gene-info-bevel-line"></div>';
       htmlString +=
         `<div

@@ -5,5 +5,5 @@ function toggle() {
   const toggleObj = {};
   toggleObj['detail-' + type] = toggleValue;
   chrome.storage.local.set(toggleObj);
-  tabsFunction({action: 'toggleDisplayElement', type: type, checked: checked});
+  tabsFunction({ action: 'toggleDisplayElement', type: type, checked: checked });
 }

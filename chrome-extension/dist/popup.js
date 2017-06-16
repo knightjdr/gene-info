@@ -1,21 +1,21 @@
 function clickSet() {
   const checked = this.checked;
-  chrome.storage.local.set({'click': checked});
-  tabsFunction({action: 'toggleDoubleClick', click: checked});
+  chrome.storage.local.set({ 'click': checked });
+  tabsFunction({ action: 'toggleDoubleClick', click: checked });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#click').addEventListener('click', clickSet);
-  document.querySelectorAll('.display-click').forEach(function(element) { element.addEventListener('click', reportType); });
-  document.querySelectorAll('.toggle').forEach(function(element) { element.addEventListener('click', toggle); });
+  document.querySelectorAll('.display-click').forEach((element) => { element.addEventListener('click', reportType); });
+  document.querySelectorAll('.toggle').forEach((element) => { element.addEventListener('click', toggle); });
 });
 
 function reportType() {
   const type = this.dataset.type;
-  chrome.storage.local.set({'report': type});
+  chrome.storage.local.set({ 'report': type });
   const typeOff = this.dataset.type === 'detailed' ? 'tooltip' : 'detailed';
   document.querySelector('#report_' + typeOff).checked = false;
-  tabsFunction({action: 'toggleReportType', type: type});
+  tabsFunction({ action: 'toggleReportType', type: type });
 }
 
 function toggle() {
@@ -25,11 +25,11 @@ function toggle() {
   const toggleObj = {};
   toggleObj['detail-' + type] = toggleValue;
   chrome.storage.local.set(toggleObj);
-  tabsFunction({action: 'toggleDisplayElement', type: type, checked: checked});
+  tabsFunction({ action: 'toggleDisplayElement', type: type, checked: checked });
 }
 
-//get active tab and send current object to content script
-function tabsFunction(sendObject) {
+// get active tab and send current object to content script
+const tabsFunction = (sendObject) => {
   /*chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     ensureSendMessage(tabs[0].id, sendObject);
   });*/
@@ -38,12 +38,12 @@ function tabsFunction(sendObject) {
       chrome.tabs.sendMessage(tabs[i].id, sendObject);
     }
   });
-}
+};
 
 //check if content is listening and send message, if not, execute, then send message
 function ensureSendMessage(tabId, message, callback) {
   chrome.tabs.sendMessage(tabId, {action: 'ping'}, function(response) {
-    if(response.ready) {
+    if (response.ready) {
       chrome.tabs.sendMessage(tabId, message, callback);
     } else {
       chrome.tabs.executeScript(tabId, {file: "content.js"}, function() {
@@ -59,22 +59,22 @@ function ensureSendMessage(tabId, message, callback) {
 
 //set params on page load
 chrome.storage.local.get('click', function(storage) {
-  if(storage.click) {
+  if (storage.click) {
     document.querySelector('#click').checked = true;
   }
 });
 chrome.storage.local.get('report', function(storage) {
-  if(storage.report) {
+  if (storage.report) {
     document.querySelector('#report_' + storage.report).checked = true;
     const typeOff = storage.report === 'detailed' ? 'tooltip' : 'detailed';
     document.querySelector('#report_' + typeOff).checked = false;
   }
 });
-const details = ['basic', 'description', 'go', 'interactors', 'links'];
+const details = ['basic', 'description', 'domain', 'go', 'interactors', 'links'];
 details.forEach(function(detail) {
   const currDetail = 'detail-' + detail;
   chrome.storage.local.get(currDetail, function(storage) {
-    if(storage[currDetail] === 'off') {
+    if (storage[currDetail] === 'off') {
       document.querySelector('#detail_' + detail).checked = false;
     }
   });
