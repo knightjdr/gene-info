@@ -1,0 +1,9 @@
+Double click on a gene name to retrieve information about it and links to related resources.
+
+Information can be displayed as a detailed report or as a minimal tooltip with links to outside resources.
+
+The information displayed can be customized via the extensions popup menu (more options will be added in the future).
+
+Information is from UniProt and BioGRID. Currently, only human searches are supported but other species will be added in the future.
+
+On first installation, the double-click feature must be enabled via the extension's popup menu. Activation of this event is given to the user to prevent the extension from conflicting with others that work in a similar way (such as the Google dictionary extension).

@@ -3,144 +3,50 @@ fillDetailedPanel = (data, options) => {
   //update gene
   document.getElementById('cExtension_gene_info_details_gene').innerHTML = '<b>Gene: </b>' + data.gene;
   lastNode = document.getElementById('cExtension_gene_info_details_gene');
-  //synonyms
-  if (data.synonyms && options.basic) {
-    let synonymString = '<b>Synonyms: </b>';
-    if (data.synonyms.length > 0) {
-      data.synonyms.forEach(function(synonym, i) {
-        synonymString += synonym;
-        if (i < data.synonyms.length - 1) {
-          synonymString += ', ';
-        }
-      });
+  // basic
+  if (options.basic) {
+    let basicString = basicConstructor(data, false);
+    if (document.getElementById('cExtension_gene_info_details_basic')) {
+      document.getElementById('cExtension_gene_info_details_basic').innerHTML = basicString;
     } else {
-      synonymString += '-';
+      let basicDiv = document.createElement('div');
+      basicDiv.id = 'cExtension_gene_info_details_basic';
+      basicDiv.innerHTML = basicString;
+      insertAfter(basicDiv, lastNode);
     }
-    if (document.getElementById('cExtension_gene_info_details_synonyms')) {
-      document.getElementById('cExtension_gene_info_details_synonyms').innerHTML = synonymString;
-    } else {
-      let synonymsDiv = document.createElement('div');
-      synonymsDiv.id = 'cExtension_gene_info_details_synonyms';
-      synonymsDiv.innerHTML = synonymString;
-      synonymsDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(synonymsDiv, lastNode);
-    }
-    lastNode = document.getElementById('cExtension_gene_info_details_synonyms');
+    lastNode = document.getElementById('cExtension_gene_info_details_basic');
   } else {
-    if (document.getElementById('cExtension_gene_info_details_synonyms')) {
-      document.getElementById('cExtension_gene_info_details_synonyms').remove();
+    if (document.getElementById('cExtension_gene_info_details_basic')) {
+      document.getElementById('cExtension_gene_info_details_basic').remove();
     }
   }
-  //name
-  if (data.fullname && options.basic) {
-    let nameString = '<b>Name: </b>' + data.fullname;
-    if (document.getElementById('cExtension_gene_info_details_name')) {
-      document.getElementById('cExtension_gene_info_details_name').innerHTML = nameString;
+  // ncbi
+  if (options.links) {
+    let linkString = linkConstructor(data, false);
+    if (document.getElementById('cExtension_gene_info_details_link')) {
+      document.getElementById('cExtension_gene_info_details_link').innerHTML = linkString;
     } else {
-      let nameDiv = document.createElement('div');
-      nameDiv.id = 'cExtension_gene_info_details_name';
-      nameDiv.innerHTML = nameString;
-      nameDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(nameDiv, lastNode);
+      let linkDiv = document.createElement('div');
+      linkDiv.id = 'cExtension_gene_info_details_basic';
+      linkDiv.innerHTML = linkString;
+      insertAfter(linkDiv, lastNode);
     }
-    lastNode = document.getElementById('cExtension_gene_info_details_name');
+    lastNode = document.getElementById('cExtension_gene_info_details_link');
   } else {
-    if (document.getElementById('cExtension_gene_info_details_name')) {
-      document.getElementById('cExtension_gene_info_details_name').remove();
-    }
-  }
-  //ncbi
-  if (data.geneid && options.links) {
-    let uniprotString = `
-      <b>NCBI: </b>
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="https://www.ncbi.nlm.nih.gov/gene/?term=${data.geneid}"
-      >
-        ${data.geneid }
-      </a>`
-    ;
-    if (document.getElementById('cExtension_gene_info_details_ncbi')) {
-      document.getElementById('cExtension_gene_info_details_ncbi').innerHTML = uniprotString;
-    } else {
-      let uniprotDiv = document.createElement('div');
-      uniprotDiv.id = 'cExtension_gene_info_details_ncbi';
-      uniprotDiv.innerHTML = uniprotString;
-      uniprotDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(uniprotDiv, lastNode);
-    }
-    lastNode = document.getElementById('cExtension_gene_info_details_ncbi');
-  } else {
-    if (document.getElementById('cExtension_gene_info_details_ncbi')) {
-      document.getElementById('cExtension_gene_info_details_ncbi').remove();
-    }
-  }
-  //uniprot
-  if (data.uniprot && options.links) {
-    let uniprotString = `
-      <b>UniProt: </b>
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="http://www.uniprot.org/uniprot/${data.uniprot}"
-      >
-        ${data.uniprot}
-      </a>`
-    ;
-    if (document.getElementById('cExtension_gene_info_details_uniprot')) {
-      document.getElementById('cExtension_gene_info_details_uniprot').innerHTML = uniprotString;
-    } else {
-      let uniprotDiv = document.createElement('div');
-      uniprotDiv.id = 'cExtension_gene_info_details_uniprot';
-      uniprotDiv.innerHTML = uniprotString;
-      uniprotDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(uniprotDiv, lastNode);
-    }
-    lastNode = document.getElementById('cExtension_gene_info_details_uniprot');
-  } else {
-    if (document.getElementById('cExtension_gene_info_details_uniprot')) {
-      document.getElementById('cExtension_gene_info_details_uniprot').remove();
-    }
-  }
-  // HPA
-  if (data['ensembl-gene'] && options.links) {
-    let uniprotString = `
-      <b>Human Protein Atlas: </b>
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="http://www.proteinatlas.org/${data['ensembl-gene']}/cell"
-      >
-        ${data['ensembl-gene']}
-      </a>`
-    ;
-    if (document.getElementById('cExtension_gene_info_details_hpa')) {
-      document.getElementById('cExtension_gene_info_details_hpa').innerHTML = uniprotString;
-    } else {
-      let uniprotDiv = document.createElement('div');
-      uniprotDiv.id = 'cExtension_gene_info_details_hpa';
-      uniprotDiv.innerHTML = uniprotString;
-      uniprotDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(uniprotDiv, lastNode);
-    }
-    lastNode = document.getElementById('cExtension_gene_info_details_hpa');
-  } else {
-    if (document.getElementById('cExtension_gene_info_details_hpa')) {
-      document.getElementById('cExtension_gene_info_details_hpa').remove();
+    if (document.getElementById('cExtension_gene_info_details_link')) {
+      document.getElementById('cExtension_gene_info_details_link').remove();
     }
   }
   //description
-  if (data.description && options.description) {
-    let descriptionString = '<b>Description: </b>' + data.description;
+  if (options.description) {
+    let descriptionString = descriptionConstructor(data, false);
     if (document.getElementById('cExtension_gene_info_details_description')) {
       document.getElementById('cExtension_gene_info_details_description').innerHTML = descriptionString;
     } else {
-      let descriptionDiv = document.createElement('div');
-      descriptionDiv.id = 'cExtension_gene_info_details_description';
-      descriptionDiv.innerHTML = descriptionString;
-      descriptionDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(descriptionDiv, lastNode);
+      let descDiv = document.createElement('div');
+      descDiv.id = 'cExtension_gene_info_details_description';
+      descDiv.innerHTML = descriptionString;
+      insertAfter(descDiv, lastNode);
     }
     lastNode = document.getElementById('cExtension_gene_info_details_description');
   } else {
@@ -148,18 +54,35 @@ fillDetailedPanel = (data, options) => {
       document.getElementById('cExtension_gene_info_details_description').remove();
     }
   }
-  //go
+  // domain
+  if (data.domains && options.domain) {
+    let domainString = domainConstructor(data, false);
+    if (document.getElementById('cExtension_gene_info_details_domain')) {
+      document.getElementById('cExtension_gene_info_details_domain').innerHTML = domainString;
+    } else {
+      let domainDiv = document.createElement('div');
+      domainDiv.id = 'cExtension_gene_info_details_domain';
+      domainDiv.innerHTML = domainString;
+      insertAfter(domainDiv, lastNode);
+    }
+    document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.addEventListener('click', goSelector); });
+    lastNode = document.getElementById('cExtension_gene_info_details_domain');
+  } else {
+    if (document.getElementById('cExtension_gene_info_details_domain')) {
+      document.getElementById('cExtension_gene_info_details_domain').remove();
+    }
+  }
+  // go
   if (data.go && options.go) {
     //remove listeners for GO
     document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.removeEventListener('click', goSelector); });
-    let goString = goStringConstructor(data, options);
+    let goString = goStringConstructor(data, false);
     if (document.getElementById('cExtension_gene_info_details_go')) {
       document.getElementById('cExtension_gene_info_details_go').innerHTML = goString;
     } else {
       let goDiv = document.createElement('div');
       goDiv.id = 'cExtension_gene_info_details_go';
       goDiv.innerHTML = goString;
-      goDiv.style.padding = '5px 0px 2px 0px';
       insertAfter(goDiv, lastNode);
     }
     document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.addEventListener('click', goSelector); });
@@ -171,18 +94,18 @@ fillDetailedPanel = (data, options) => {
   }
   //biogrid
   if (data.biogrid && options.interactors) {
-    let biogridString = biogridStringConstructor(data, options);
+    let biogridString = biogridStringConstructor(data, false);
     if (document.getElementById('cExtension_gene_info_details_biogrid')) {
       document.getElementById('cExtension_gene_info_details_biogrid').innerHTML = biogridString;
     } else {
       let biogridDiv = document.createElement('div');
       biogridDiv.id = 'cExtension_gene_info_details_biogrid';
       biogridDiv.innerHTML = biogridString;
-      biogridDiv.style.padding = '5px 0px 2px 0px';
       insertAfter(biogridDiv, lastNode);
     }
     lastNode = document.getElementById('cExtension_gene_info_details_biogrid');
   } else {
+    console.log('here');
     if (document.getElementById('cExtension_gene_info_details_biogrid')) {
       document.getElementById('cExtension_gene_info_details_biogrid').remove();
     }

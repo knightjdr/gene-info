@@ -11,11 +11,14 @@ let details = {
 };
 
 //set params on load
-chrome.storage.local.get('click', function(storage) {
-  if (storage.click) {
-    document.body.addEventListener('dblclick', retrieveInfo);
-  } else {
+chrome.storage.local.get('activate', function(storage) {
+  if (storage.activate === 'disable') {
     document.body.removeEventListener('dblclick', retrieveInfo);
+    document.body.removeEventListener('mouseup', retrieveInfo);
+  } else if (storage.activate === 'drag') {
+    document.body.addEventListener('mouseup', retrieveInfo);
+  } else {
+    document.body.addEventListener('dblclick', retrieveInfo);
   }
 });
 chrome.storage.local.get('report', function(storage) {
@@ -40,11 +43,14 @@ chrome.runtime.onMessage.addListener(
       sendResponse({ready: true});
     } else if (request.action === 'toggleDisplayElement') {
       details.displayOptions[request.type] = request.checked;
-    } else if (request.action === 'toggleDoubleClick') {
-      if (request.click) {
-        document.body.addEventListener('dblclick', retrieveInfo);
-      } else {
+    } else if (request.action === 'toggleActivationMethod') {
+      if (request.type === 'disable') {
         document.body.removeEventListener('dblclick', retrieveInfo);
+        document.body.removeEventListener('mouseup', retrieveInfo);
+      } else if (request.type === 'drag') {
+        document.body.addEventListener('mouseup', retrieveInfo);
+      } else {
+        document.body.addEventListener('dblclick', retrieveInfo);
       }
     } else if (request.action === 'toggleReportType') {
       details.report = request.type;

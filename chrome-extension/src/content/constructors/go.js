@@ -1,36 +1,40 @@
-const goStringConstructor = (data, options) => {
-  let goString =
-    `<div class="cExtension-gene-info-section-header">
-      <b>GO TERMS: </b>
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="http://amigo.geneontology.org/amigo/gene_product/UniProtKB:${data.uniprot}"
-      >
-        AmiGO
-      </a>
-    </div>
-    <div>
-      <div style="display: flex; flex-direction: row;">
-        <div
-          class="cExtension-gene-info-go-selector active"
-          data-type="bp"
+const goStringConstructor = (data, wrapper = true) => {
+  let goString = `
+    <div
+      class="cExtension-gene-info-details-backdrop"
+    >
+      <div class="cExtension-gene-info-bevel-line"></div>
+      <div class="cExtension-gene-info-section-header">
+        <b>GO TERMS: </b>
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          href="http://amigo.geneontology.org/amigo/gene_product/UniProtKB:${data.uniprot}"
         >
-          BP
-        </div>
-        <div
-          class="cExtension-gene-info-go-selector"
-          data-type="cc"
-        >
-          CC
-        </div>
-        <div
-          class="cExtension-gene-info-go-selector"
-          data-type="mf"
-        >
-          MF
-        </div>
+          AmiGO
+        </a>
       </div>
+      <div>
+        <div style="display: flex; flex-direction: row;">
+          <div
+            class="cExtension-gene-info-go-selector active"
+            data-type="bp"
+          >
+            BP
+          </div>
+          <div
+            class="cExtension-gene-info-go-selector"
+            data-type="cc"
+          >
+            CC
+          </div>
+          <div
+            class="cExtension-gene-info-go-selector"
+            data-type="mf"
+          >
+            MF
+          </div>
+        </div>
     `
   ;
   goString += `
@@ -113,7 +117,13 @@ const goStringConstructor = (data, options) => {
   } else {
     goString += '<div style="padding: 2px 0px 2px 0px;">no terms</div>';
   }
-  goString += '</div>';
-  goString += '</div>';
+  goString += '</div></div></div>';
+  if (wrapper) {
+    goString = `
+      <div id="cExtension_gene_info_details_go">
+        ${goString}
+      </div>
+    `;
+  }
   return goString;
 };

@@ -7,8 +7,22 @@
   </head>
   <body>
     <div>
-      <input class="checkbox" type="checkbox" id="click" tabindex="-1" />
-      <label for="click">Activate on double click</label>
+      <div>
+        <b>Activate by:</b>
+      </div>
+      <hr />
+      <div class="activate-container-element">
+        <input class="checkbox activate-click" data-type="click" id="report_click" tabindex="-1" type="checkbox" checked />
+        <label for="report_click">Double click</label>
+      </div>
+      <div class="activate-container-element">
+        <input class="checkbox activate-click" data-type="drag" id="report_drag" tabindex="-1" type="checkbox" />
+        <label for="report_drag">Drag select</label>
+      </div>
+      <div class="activate-container-element">
+        <input class="checkbox activate-click" data-type="disable" id="report_disable" tabindex="-1" type="checkbox" />
+        <label for="report_disable">Disable</label>
+      </div>
     </div>
     <div class="display-container">
       <div>

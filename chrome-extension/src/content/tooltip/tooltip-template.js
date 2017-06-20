@@ -51,6 +51,19 @@ const createTooltipTemplate = (event, data, options) => {
         </span>`
       ;
     }
+    if (options.domain && data.domains) {
+      htmlString += `
+        <span class="cExtension-gene-info-tooltip-link">
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="http://pfam.xfam.org/protein/${data.uniprot}"
+          >
+            Pfam
+          </a>
+        </span>`
+      ;
+    }
     if (options.go && data.go) {
       htmlString += `
         <span class="cExtension-gene-info-tooltip-link">

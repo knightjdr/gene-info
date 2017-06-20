@@ -1,61 +1,83 @@
-const domainConstructor = (data, options) => {
+const domainConstructor = (data, wrapper = true) => {
   let domainString = `
-    <div class="cExtension-gene-info-section-header">
-      <b>DOMAINS:</b>
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="https://www.ebi.ac.uk/interpro/protein/${data.uniprot}"
-      >
-        InterPro
-      </a>
-    </div>`
-  ;
-  const length = data.length ? data.length : '-';
-  const mw = data.mw ? data.mw : '-';
-  domainString = `
-    <div>
-      <b>Length:</b> ${length}, <b>MW:</b> ${mw}
-    </div>`
+    <div
+      class="cExtension-gene-info-details-backdrop"
+    >
+      <div class="cExtension-gene-info-bevel-line"></div>
+      <div class="cExtension-gene-info-section-header">
+        <b>DOMAINS:</b>
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          href="http://pfam.xfam.org/protein/${data.uniprot}"
+        >
+          Pfam
+        </a>
+      </div>`
   ;
   if (data.domains.length > 0) {
+    domainString += `
+      <div
+        style="display: flex;"
+      >
+        <div
+          style="text-align: center; width: 35%"
+        >
+          <u>Start-End</u>
+        </div>
+        <div style="width: 65%">
+          <u>Name</u>
+        </div>
+      </div>`
+    ;
+    data.domains = data.domains.sort((a,b) => { return a.domain_start - b.domain_start; });
     data.domains.forEach((domain) => {
-      domainString += '<div id="cExtension_gene_info_details_domains" style="display: flex;">';
       domainString += `
-        <div style="flex: 0 0 30%;">
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://www.ebi.ac.uk/interpro/entry/${domain.domain_interpro}"
-          >
+        <div
+          style="display: flex;"
+        >`
+      ;
+      domainString += `
+        <div style="text-align:center; width: 35%;">
+          ${domain.domain_start}-${domain.domain_end}
+        </div>`
+      ;
+      if (domain.pfam) {
+        domainString += `
+          <div style="width: 65%">
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href="http://pfam.xfam.org/family/${domain.pfam}"
+              style="text-decoration: none;"
+            >
+              ${domain.domain_name}
+            </a>
+          </div>`
+        ;
+      } else {
+        domainString += `
+          <div style="width: 65%">
             ${domain.domain_name}
-          </a>
-        </div>`
-      ;
-      domainString += `
-        <div style="flex: 1;">
-          ${domain.domain_start}
-        </div>`
-      ;
-      domainString += `
-        <div style="flex: 1;">
-          ${domain.domain_end}
-        </div>`
-      ;
+          </div>`
+        ;
+      }
       domainString += '</div>';
     });
   } else {
     domainString += `
-      <div
-        id="cExtension_gene_info_details_domains"
-        style="display: flex;"
-      >
-        <div style="flex: 0 0 25%;">
-          none
-        </div>
+      <div>
+        none
       </div>`
     ;
   }
-  domainString += '</div>';
+  domainString += '</div></div>';
+  if (wrapper) {
+    domainString = `
+      <div id="cExtension_gene_info_details_domain">
+        ${domainString}
+      </div>
+    `;
+  }
   return domainString;
 };

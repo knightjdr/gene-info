@@ -11,11 +11,14 @@ let details = {
 };
 
 //set params on load
-chrome.storage.local.get('click', function(storage) {
-  if (storage.click) {
-    document.body.addEventListener('dblclick', retrieveInfo);
-  } else {
+chrome.storage.local.get('activate', function(storage) {
+  if (storage.activate === 'disable') {
     document.body.removeEventListener('dblclick', retrieveInfo);
+    document.body.removeEventListener('mouseup', retrieveInfo);
+  } else if (storage.activate === 'drag') {
+    document.body.addEventListener('mouseup', retrieveInfo);
+  } else {
+    document.body.addEventListener('dblclick', retrieveInfo);
   }
 });
 chrome.storage.local.get('report', function(storage) {
@@ -40,11 +43,14 @@ chrome.runtime.onMessage.addListener(
       sendResponse({ready: true});
     } else if (request.action === 'toggleDisplayElement') {
       details.displayOptions[request.type] = request.checked;
-    } else if (request.action === 'toggleDoubleClick') {
-      if (request.click) {
-        document.body.addEventListener('dblclick', retrieveInfo);
-      } else {
+    } else if (request.action === 'toggleActivationMethod') {
+      if (request.type === 'disable') {
         document.body.removeEventListener('dblclick', retrieveInfo);
+        document.body.removeEventListener('mouseup', retrieveInfo);
+      } else if (request.type === 'drag') {
+        document.body.addEventListener('mouseup', retrieveInfo);
+      } else {
+        document.body.addEventListener('dblclick', retrieveInfo);
       }
     } else if (request.action === 'toggleReportType') {
       details.report = request.type;
@@ -61,122 +67,246 @@ chrome.runtime.onMessage.addListener(
   }
 );
 
-function biogridStringConstructor(data, options) {
+const basicConstructor = (data, wrapper = true) => {
+  let basicString = '';
+  if (data.synonyms) {
+    basicString += `
+      <div
+        class="cExtension-gene-info-details-backdrop"
+      >
+        <b>Synonyms: </b>`
+    ;
+    if (data.synonyms.length > 0) {
+      data.synonyms.forEach(function(synonym, i) {
+        basicString += synonym;
+        if (i < data.synonyms.length - 1) {
+          basicString += ', ';
+        }
+      });
+    } else {
+      basicString += '-';
+    }
+    basicString += '</div>';
+  }
+  if (data.fullname) {
+    basicString += `
+      <div
+        class="cExtension-gene-info-details-backdrop"
+      >
+        <b>Name: </b>${data.fullname}
+      </div>`
+    ;
+  }
+  if (data.length) {
+    const mw = data.mw ? Math.round(data.mw / 100) / 10 : '-';
+    basicString += `
+      <div
+        class="cExtension-gene-info-details-backdrop"
+      >
+        <b>Length: </b>${data.length}aa<span style="float: right;"><b>MW:</b> ${mw}kDa</span>
+      </div>`
+    ;
+  }
+  if (wrapper) {
+    basicString = `
+      <div id="cExtension_gene_info_details_basic">
+        ${basicString}
+      </div>
+    `;
+  }
+  return basicString;
+};
+
+const biogridStringConstructor = (data, wrapper = true) => {
   let biogridString = `
-    <div class="cExtension-gene-info-section-header">
-      <b>INTERACTORS:</b>
-      <a rel="noopener noreferrer" target="_blank" href="https://thebiogrid.org/${data.biogrid}/summary/homo-sapiens/">BioGRID</a>
-    </div>`
+    <div
+      class="cExtension-gene-info-details-backdrop"
+    >
+      <div class="cExtension-gene-info-bevel-line"></div>
+      <div class="cExtension-gene-info-section-header">
+        <b>INTERACTORS:</b>
+        <a rel="noopener noreferrer" target="_blank" href="https://thebiogrid.org/${data.biogrid}/summary/homo-sapiens/">BioGRID</a>
+      </div>`
   ;
-  if(data.interactors.length > 0) {
+  if (data.interactors.length > 0) {
+    biogridString += `
+      <div style="display: flex;">
+        <div style="flex: 0 0 30%;">
+          <u>Target</u>
+        </div>
+        <div style="flex: 1;">
+          <u>Approach</u>
+        </div>
+      </div>`
+    ;
     data.interactors.forEach(function(interactor) {
-      biogridString += '<div id="cExtension_gene_info_details_interactors" style="display: flex;">';
-      biogridString += '<div style="flex: 0 0 30%;">' + interactor.gene + '</div>';
-      biogridString += '<div style="flex: 1;">' + interactor.evidence + '</div>';
-      biogridString += '</div>';
+      biogridString += `
+        <div style="display: flex;">
+          <div style="flex: 0 0 30%;">
+            ${interactor.gene}
+          </div>
+          <div style="flex: 1;">
+            ${interactor.evidence}
+          </div>
+        </div>`
+      ;
     });
   } else {
     biogridString += '<div id="cExtension_gene_info_details_interactors" style="display: flex;"><div style="flex: 0 0 25%;">none</div></div>';
   }
-  biogridString += '</div>';
+  biogridString += '</div></div>';
+  if (wrapper) {
+    biogridString = `
+      <div id="cExtension_gene_info_details_biogrid">
+        ${biogridString}
+      </div>
+    `;
+  }
   return biogridString;
-}
+};
 
-const domainConstructor = (data, options) => {
-  let domainString = `
-    <div class="cExtension-gene-info-section-header">
-      <b>DOMAINS:</b>
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="https://www.ebi.ac.uk/interpro/protein/${data.uniprot}"
+const descriptionConstructor = (data, wrapper = true) => {
+  let descriptionString = '';
+  if (data.description) {
+    descriptionString += `
+      <div
+        class="cExtension-gene-info-details-backdrop"
       >
-        InterPro
-      </a>
-    </div>`
-  ;
-  const length = data.length ? data.length : '-';
-  const mw = data.mw ? data.mw : '-';
-  domainString = `
-    <div>
-      <b>Length:</b> ${length}, <b>MW:</b> ${mw}
-    </div>`
+        <b>Description: </b>${data.description}
+      </div>`
+    ;
+  }
+  if (wrapper) {
+    descriptionString = `
+      <div id="cExtension_gene_info_details_description">
+        ${descriptionString}
+      </div>
+    `;
+  }
+  return descriptionString;
+};
+
+const domainConstructor = (data, wrapper = true) => {
+  let domainString = `
+    <div
+      class="cExtension-gene-info-details-backdrop"
+    >
+      <div class="cExtension-gene-info-bevel-line"></div>
+      <div class="cExtension-gene-info-section-header">
+        <b>DOMAINS:</b>
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          href="http://pfam.xfam.org/protein/${data.uniprot}"
+        >
+          Pfam
+        </a>
+      </div>`
   ;
   if (data.domains.length > 0) {
+    domainString += `
+      <div
+        style="display: flex;"
+      >
+        <div
+          style="text-align: center; width: 35%"
+        >
+          <u>Start-End</u>
+        </div>
+        <div style="width: 65%">
+          <u>Name</u>
+        </div>
+      </div>`
+    ;
+    data.domains = data.domains.sort((a,b) => { return a.domain_start - b.domain_start; });
     data.domains.forEach((domain) => {
-      domainString += '<div id="cExtension_gene_info_details_domains" style="display: flex;">';
       domainString += `
-        <div style="flex: 0 0 30%;">
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://www.ebi.ac.uk/interpro/entry/${domain.domain_interpro}"
-          >
+        <div
+          style="display: flex;"
+        >`
+      ;
+      domainString += `
+        <div style="text-align:center; width: 35%;">
+          ${domain.domain_start}-${domain.domain_end}
+        </div>`
+      ;
+      if (domain.pfam) {
+        domainString += `
+          <div style="width: 65%">
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href="http://pfam.xfam.org/family/${domain.pfam}"
+              style="text-decoration: none;"
+            >
+              ${domain.domain_name}
+            </a>
+          </div>`
+        ;
+      } else {
+        domainString += `
+          <div style="width: 65%">
             ${domain.domain_name}
-          </a>
-        </div>`
-      ;
-      domainString += `
-        <div style="flex: 1;">
-          ${domain.domain_start}
-        </div>`
-      ;
-      domainString += `
-        <div style="flex: 1;">
-          ${domain.domain_end}
-        </div>`
-      ;
+          </div>`
+        ;
+      }
       domainString += '</div>';
     });
   } else {
     domainString += `
-      <div
-        id="cExtension_gene_info_details_domains"
-        style="display: flex;"
-      >
-        <div style="flex: 0 0 25%;">
-          none
-        </div>
+      <div>
+        none
       </div>`
     ;
   }
-  domainString += '</div>';
+  domainString += '</div></div>';
+  if (wrapper) {
+    domainString = `
+      <div id="cExtension_gene_info_details_domain">
+        ${domainString}
+      </div>
+    `;
+  }
   return domainString;
 };
 
-const goStringConstructor = (data, options) => {
-  let goString =
-    `<div class="cExtension-gene-info-section-header">
-      <b>GO TERMS: </b>
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="http://amigo.geneontology.org/amigo/gene_product/UniProtKB:${data.uniprot}"
-      >
-        AmiGO
-      </a>
-    </div>
-    <div>
-      <div style="display: flex; flex-direction: row;">
-        <div
-          class="cExtension-gene-info-go-selector active"
-          data-type="bp"
+const goStringConstructor = (data, wrapper = true) => {
+  let goString = `
+    <div
+      class="cExtension-gene-info-details-backdrop"
+    >
+      <div class="cExtension-gene-info-bevel-line"></div>
+      <div class="cExtension-gene-info-section-header">
+        <b>GO TERMS: </b>
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          href="http://amigo.geneontology.org/amigo/gene_product/UniProtKB:${data.uniprot}"
         >
-          BP
-        </div>
-        <div
-          class="cExtension-gene-info-go-selector"
-          data-type="cc"
-        >
-          CC
-        </div>
-        <div
-          class="cExtension-gene-info-go-selector"
-          data-type="mf"
-        >
-          MF
-        </div>
+          AmiGO
+        </a>
       </div>
+      <div>
+        <div style="display: flex; flex-direction: row;">
+          <div
+            class="cExtension-gene-info-go-selector active"
+            data-type="bp"
+          >
+            BP
+          </div>
+          <div
+            class="cExtension-gene-info-go-selector"
+            data-type="cc"
+          >
+            CC
+          </div>
+          <div
+            class="cExtension-gene-info-go-selector"
+            data-type="mf"
+          >
+            MF
+          </div>
+        </div>
     `
   ;
   goString += `
@@ -259,9 +389,78 @@ const goStringConstructor = (data, options) => {
   } else {
     goString += '<div style="padding: 2px 0px 2px 0px;">no terms</div>';
   }
-  goString += '</div>';
-  goString += '</div>';
+  goString += '</div></div></div>';
+  if (wrapper) {
+    goString = `
+      <div id="cExtension_gene_info_details_go">
+        ${goString}
+      </div>
+    `;
+  }
   return goString;
+};
+
+const linkConstructor = (data, wrapper = true) => {
+  let linkString = '';
+  if (data.geneid) {
+    linkString +=
+      `<div
+        class="cExtension-gene-info-details-backdrop"
+        id="cExtension_gene_info_details_ncbi"
+      >
+        <b>NCBI: </b>
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          href="https://www.ncbi.nlm.nih.gov/gene/?term=${data.geneid }"
+        >
+          ${data.geneid}
+        </a>
+      </div>`
+    ;
+  }
+  if (data.uniprot) {
+    linkString +=
+      `<div
+        class="cExtension-gene-info-details-backdrop"
+        id="cExtension_gene_info_details_uniprot"
+      >
+        <b>UniProt: </b>
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          href="http://www.uniprot.org/uniprot/${data.uniprot}"
+        >
+          ${data.uniprot}
+        </a>
+      </div>`
+    ;
+  }
+  if (data['ensembl-gene']) {
+    linkString +=
+      `<div
+        class="cExtension-gene-info-details-backdrop"
+        id="cExtension_gene_info_details_hpa"
+      >
+        <b>Human Protein Atlas: </b>
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          href="http://www.proteinatlas.org/${data['ensembl-gene']}/cell"
+        >
+          ${data['ensembl-gene']}
+        </a>
+      </div>`
+    ;
+  }
+  if (wrapper) {
+    linkString = `
+      <div id="cExtension_gene_info_details_link">
+        ${linkString}
+      </div>
+    `;
+  }
+  return linkString;
 };
 
 createDetailedPanel = (data, options) => {
@@ -287,129 +486,23 @@ createDetailedPanel = (data, options) => {
         <b>Gene: </b>${data.gene}
       </div>`
     ;
-    if (data.synonyms && options.basic) {
-      htmlString += `
-        <div
-          class="cExtension-gene-info-details-backdrop"
-          id="cExtension_gene_info_details_synonyms"
-        >
-          <b>Synonyms: </b>`
-      ;
-      if (data.synonyms.length > 0) {
-        data.synonyms.forEach(function(synonym, i) {
-          htmlString += synonym;
-          if (i < data.synonyms.length - 1) {
-            htmlString += ', ';
-          }
-        });
-      } else {
-        htmlString += '-';
-      }
-      htmlString += '</div>';
+    if (options.basic) {
+      htmlString += basicConstructor(data);
     }
-    if (data.fullname && options.basic) {
-      htmlString += `
-        <div
-          class="cExtension-gene-info-details-backdrop"
-          id="cExtension_gene_info_details_name"
-        >
-          <b>Name: </b>${data.fullname}
-        </div>`
-      ;
+    if (options.links) {
+      htmlString += linkConstructor(data);
     }
-    if (data.geneid && options.links) {
-      htmlString +=
-        `<div
-          class="cExtension-gene-info-details-backdrop"
-          id="cExtension_gene_info_details_ncbi"
-        >
-          <b>NCBI: </b>
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://www.ncbi.nlm.nih.gov/gene/?term=${data.geneid }"
-          >
-            ${data.geneid}
-          </a>
-        </div>`
-      ;
+    if (options.description) {
+      htmlString += descriptionConstructor(data);
     }
-    if (data.uniprot && options.links) {
-      htmlString +=
-        `<div
-          class="cExtension-gene-info-details-backdrop"
-          id="cExtension_gene_info_details_uniprot"
-        >
-          <b>UniProt: </b>
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="http://www.uniprot.org/uniprot/${data.uniprot}"
-          >
-            ${data.uniprot}
-          </a>
-        </div>`
-      ;
-    }
-    if (data['ensembl-gene'] && options.links) {
-      htmlString +=
-        `<div
-          class="cExtension-gene-info-details-backdrop"
-          id="cExtension_gene_info_details_hpa"
-        >
-          <b>Human Protein Atlas: </b>
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="http://www.proteinatlas.org/${data['ensembl-gene']}/cell"
-          >
-            ${data['ensembl-gene']}
-          </a>
-        </div>`
-      ;
-    }
-    if (data.description && options.description) {
-      htmlString +=
-        `<div
-          class="cExtension-gene-info-details-backdrop"
-          id="cExtension_gene_info_details_description"
-        >
-          <b>Description: </b>${data.description}
-        </div>`
-      ;
-    }
-    if ((data.domains || data.length || data.mw) && options.domain) {
-      htmlString += '<div class="cExtension-gene-info-bevel-line"></div>';
-      htmlString +=
-        `<div
-          class="cExtension-gene-info-details-backdrop"
-          id="cExtension_gene_info_details_domain"
-        >
-          ${domainConstructor(data, options)}
-        </div>`
-      ;
+    if (data.domains && options.domain) {
+      htmlString += domainConstructor(data);
     }
     if (data.go && options.go) {
-      htmlString += '<div class="cExtension-gene-info-bevel-line"></div>';
-      htmlString +=
-        `<div
-          class="cExtension-gene-info-details-backdrop"
-          id="cExtension_gene_info_details_go"
-        >
-          ${goStringConstructor(data, options)}
-        </div>`
-      ;
+      htmlString += goStringConstructor(data);
     }
     if (data.biogrid && options.interactors) {
-      htmlString += '<div class="cExtension-gene-info-bevel-line"></div>';
-      htmlString +=
-        `<div
-          class="cExtension-gene-info-details-backdrop"
-          id="cExtension_gene_info_details_biogrid"
-        >
-          ${biogridStringConstructor(data, options)}
-        </div>`
-      ;
+      htmlString += biogridStringConstructor(data);
     }
     htmlString += '</div>';
     detailedDiv.innerHTML = htmlString;
@@ -450,144 +543,50 @@ fillDetailedPanel = (data, options) => {
   //update gene
   document.getElementById('cExtension_gene_info_details_gene').innerHTML = '<b>Gene: </b>' + data.gene;
   lastNode = document.getElementById('cExtension_gene_info_details_gene');
-  //synonyms
-  if (data.synonyms && options.basic) {
-    let synonymString = '<b>Synonyms: </b>';
-    if (data.synonyms.length > 0) {
-      data.synonyms.forEach(function(synonym, i) {
-        synonymString += synonym;
-        if (i < data.synonyms.length - 1) {
-          synonymString += ', ';
-        }
-      });
+  // basic
+  if (options.basic) {
+    let basicString = basicConstructor(data, false);
+    if (document.getElementById('cExtension_gene_info_details_basic')) {
+      document.getElementById('cExtension_gene_info_details_basic').innerHTML = basicString;
     } else {
-      synonymString += '-';
+      let basicDiv = document.createElement('div');
+      basicDiv.id = 'cExtension_gene_info_details_basic';
+      basicDiv.innerHTML = basicString;
+      insertAfter(basicDiv, lastNode);
     }
-    if (document.getElementById('cExtension_gene_info_details_synonyms')) {
-      document.getElementById('cExtension_gene_info_details_synonyms').innerHTML = synonymString;
-    } else {
-      let synonymsDiv = document.createElement('div');
-      synonymsDiv.id = 'cExtension_gene_info_details_synonyms';
-      synonymsDiv.innerHTML = synonymString;
-      synonymsDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(synonymsDiv, lastNode);
-    }
-    lastNode = document.getElementById('cExtension_gene_info_details_synonyms');
+    lastNode = document.getElementById('cExtension_gene_info_details_basic');
   } else {
-    if (document.getElementById('cExtension_gene_info_details_synonyms')) {
-      document.getElementById('cExtension_gene_info_details_synonyms').remove();
+    if (document.getElementById('cExtension_gene_info_details_basic')) {
+      document.getElementById('cExtension_gene_info_details_basic').remove();
     }
   }
-  //name
-  if (data.fullname && options.basic) {
-    let nameString = '<b>Name: </b>' + data.fullname;
-    if (document.getElementById('cExtension_gene_info_details_name')) {
-      document.getElementById('cExtension_gene_info_details_name').innerHTML = nameString;
+  // ncbi
+  if (options.links) {
+    let linkString = linkConstructor(data, false);
+    if (document.getElementById('cExtension_gene_info_details_link')) {
+      document.getElementById('cExtension_gene_info_details_link').innerHTML = linkString;
     } else {
-      let nameDiv = document.createElement('div');
-      nameDiv.id = 'cExtension_gene_info_details_name';
-      nameDiv.innerHTML = nameString;
-      nameDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(nameDiv, lastNode);
+      let linkDiv = document.createElement('div');
+      linkDiv.id = 'cExtension_gene_info_details_basic';
+      linkDiv.innerHTML = linkString;
+      insertAfter(linkDiv, lastNode);
     }
-    lastNode = document.getElementById('cExtension_gene_info_details_name');
+    lastNode = document.getElementById('cExtension_gene_info_details_link');
   } else {
-    if (document.getElementById('cExtension_gene_info_details_name')) {
-      document.getElementById('cExtension_gene_info_details_name').remove();
-    }
-  }
-  //ncbi
-  if (data.geneid && options.links) {
-    let uniprotString = `
-      <b>NCBI: </b>
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="https://www.ncbi.nlm.nih.gov/gene/?term=${data.geneid}"
-      >
-        ${data.geneid }
-      </a>`
-    ;
-    if (document.getElementById('cExtension_gene_info_details_ncbi')) {
-      document.getElementById('cExtension_gene_info_details_ncbi').innerHTML = uniprotString;
-    } else {
-      let uniprotDiv = document.createElement('div');
-      uniprotDiv.id = 'cExtension_gene_info_details_ncbi';
-      uniprotDiv.innerHTML = uniprotString;
-      uniprotDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(uniprotDiv, lastNode);
-    }
-    lastNode = document.getElementById('cExtension_gene_info_details_ncbi');
-  } else {
-    if (document.getElementById('cExtension_gene_info_details_ncbi')) {
-      document.getElementById('cExtension_gene_info_details_ncbi').remove();
-    }
-  }
-  //uniprot
-  if (data.uniprot && options.links) {
-    let uniprotString = `
-      <b>UniProt: </b>
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="http://www.uniprot.org/uniprot/${data.uniprot}"
-      >
-        ${data.uniprot}
-      </a>`
-    ;
-    if (document.getElementById('cExtension_gene_info_details_uniprot')) {
-      document.getElementById('cExtension_gene_info_details_uniprot').innerHTML = uniprotString;
-    } else {
-      let uniprotDiv = document.createElement('div');
-      uniprotDiv.id = 'cExtension_gene_info_details_uniprot';
-      uniprotDiv.innerHTML = uniprotString;
-      uniprotDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(uniprotDiv, lastNode);
-    }
-    lastNode = document.getElementById('cExtension_gene_info_details_uniprot');
-  } else {
-    if (document.getElementById('cExtension_gene_info_details_uniprot')) {
-      document.getElementById('cExtension_gene_info_details_uniprot').remove();
-    }
-  }
-  // HPA
-  if (data['ensembl-gene'] && options.links) {
-    let uniprotString = `
-      <b>Human Protein Atlas: </b>
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="http://www.proteinatlas.org/${data['ensembl-gene']}/cell"
-      >
-        ${data['ensembl-gene']}
-      </a>`
-    ;
-    if (document.getElementById('cExtension_gene_info_details_hpa')) {
-      document.getElementById('cExtension_gene_info_details_hpa').innerHTML = uniprotString;
-    } else {
-      let uniprotDiv = document.createElement('div');
-      uniprotDiv.id = 'cExtension_gene_info_details_hpa';
-      uniprotDiv.innerHTML = uniprotString;
-      uniprotDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(uniprotDiv, lastNode);
-    }
-    lastNode = document.getElementById('cExtension_gene_info_details_hpa');
-  } else {
-    if (document.getElementById('cExtension_gene_info_details_hpa')) {
-      document.getElementById('cExtension_gene_info_details_hpa').remove();
+    if (document.getElementById('cExtension_gene_info_details_link')) {
+      document.getElementById('cExtension_gene_info_details_link').remove();
     }
   }
   //description
-  if (data.description && options.description) {
-    let descriptionString = '<b>Description: </b>' + data.description;
+  if (options.description) {
+    let descriptionString = descriptionConstructor(data, false);
     if (document.getElementById('cExtension_gene_info_details_description')) {
       document.getElementById('cExtension_gene_info_details_description').innerHTML = descriptionString;
     } else {
-      let descriptionDiv = document.createElement('div');
-      descriptionDiv.id = 'cExtension_gene_info_details_description';
-      descriptionDiv.innerHTML = descriptionString;
-      descriptionDiv.style.padding = '2px 0px 2px 0px';
-      insertAfter(descriptionDiv, lastNode);
+      let descDiv = document.createElement('div');
+      descDiv.id = 'cExtension_gene_info_details_description';
+      descDiv.innerHTML = descriptionString;
+      insertAfter(descDiv, lastNode);
     }
     lastNode = document.getElementById('cExtension_gene_info_details_description');
   } else {
@@ -595,18 +594,35 @@ fillDetailedPanel = (data, options) => {
       document.getElementById('cExtension_gene_info_details_description').remove();
     }
   }
-  //go
+  // domain
+  if (data.domains && options.domain) {
+    let domainString = domainConstructor(data, false);
+    if (document.getElementById('cExtension_gene_info_details_domain')) {
+      document.getElementById('cExtension_gene_info_details_domain').innerHTML = domainString;
+    } else {
+      let domainDiv = document.createElement('div');
+      domainDiv.id = 'cExtension_gene_info_details_domain';
+      domainDiv.innerHTML = domainString;
+      insertAfter(domainDiv, lastNode);
+    }
+    document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.addEventListener('click', goSelector); });
+    lastNode = document.getElementById('cExtension_gene_info_details_domain');
+  } else {
+    if (document.getElementById('cExtension_gene_info_details_domain')) {
+      document.getElementById('cExtension_gene_info_details_domain').remove();
+    }
+  }
+  // go
   if (data.go && options.go) {
     //remove listeners for GO
     document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.removeEventListener('click', goSelector); });
-    let goString = goStringConstructor(data, options);
+    let goString = goStringConstructor(data, false);
     if (document.getElementById('cExtension_gene_info_details_go')) {
       document.getElementById('cExtension_gene_info_details_go').innerHTML = goString;
     } else {
       let goDiv = document.createElement('div');
       goDiv.id = 'cExtension_gene_info_details_go';
       goDiv.innerHTML = goString;
-      goDiv.style.padding = '5px 0px 2px 0px';
       insertAfter(goDiv, lastNode);
     }
     document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.addEventListener('click', goSelector); });
@@ -618,18 +634,18 @@ fillDetailedPanel = (data, options) => {
   }
   //biogrid
   if (data.biogrid && options.interactors) {
-    let biogridString = biogridStringConstructor(data, options);
+    let biogridString = biogridStringConstructor(data, false);
     if (document.getElementById('cExtension_gene_info_details_biogrid')) {
       document.getElementById('cExtension_gene_info_details_biogrid').innerHTML = biogridString;
     } else {
       let biogridDiv = document.createElement('div');
       biogridDiv.id = 'cExtension_gene_info_details_biogrid';
       biogridDiv.innerHTML = biogridString;
-      biogridDiv.style.padding = '5px 0px 2px 0px';
       insertAfter(biogridDiv, lastNode);
     }
     lastNode = document.getElementById('cExtension_gene_info_details_biogrid');
   } else {
+    console.log('here');
     if (document.getElementById('cExtension_gene_info_details_biogrid')) {
       document.getElementById('cExtension_gene_info_details_biogrid').remove();
     }
@@ -716,8 +732,8 @@ const http = (gene) => {
     chrome.runtime.sendMessage({
       method: 'GET',
       action: 'xhttp',
-      url: `http://localhost:8002/extension${paramString}`
-      // url: `http://prohitstools.mshri.on.ca:8002/extension${paramString}`
+      // url: `http://localhost:8002/extension${paramString}`
+      url: `http://prohitstools.mshri.on.ca:8002/extension${paramString}`
     }, function(response) {
       var parsedResponse = JSON.parse(response);
       if (parsedResponse.status === 200) {
@@ -796,6 +812,19 @@ const createTooltipTemplate = (event, data, options) => {
             href="http://www.uniprot.org/uniprot/${data.uniprot}"
           >
             UniProt
+          </a>
+        </span>`
+      ;
+    }
+    if (options.domain && data.domains) {
+      htmlString += `
+        <span class="cExtension-gene-info-tooltip-link">
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="http://pfam.xfam.org/protein/${data.uniprot}"
+          >
+            Pfam
           </a>
         </span>`
       ;

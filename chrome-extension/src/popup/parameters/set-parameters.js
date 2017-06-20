@@ -1,14 +1,26 @@
 //set params on page load
-chrome.storage.local.get('click', function(storage) {
-  if (storage.click) {
-    document.querySelector('#click').checked = true;
+chrome.storage.local.get('activate', function(storage) {
+  if (storage.activate) {
+    const options = ['click', 'drag', 'disable'];
+    options.forEach((v) => {
+      if (v === storage.activate) {
+        document.querySelector('#report_' + v).checked = true;
+      } else {
+        document.querySelector('#report_' + v).checked = false;
+      }
+    });
   }
 });
 chrome.storage.local.get('report', function(storage) {
   if (storage.report) {
-    document.querySelector('#report_' + storage.report).checked = true;
-    const typeOff = storage.report === 'detailed' ? 'tooltip' : 'detailed';
-    document.querySelector('#report_' + typeOff).checked = false;
+    const options = ['detailed', 'tooltip'];
+    options.forEach((v) => {
+      if (v === storage.report) {
+        document.querySelector('#report_' + v).checked = true;
+      } else {
+        document.querySelector('#report_' + v).checked = false;
+      }
+    });
   }
 });
 const details = ['basic', 'description', 'domain', 'go', 'interactors', 'links'];
