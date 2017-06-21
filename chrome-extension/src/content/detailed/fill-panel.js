@@ -105,7 +105,6 @@ fillDetailedPanel = (data, options) => {
     }
     lastNode = document.getElementById('cExtension_gene_info_details_biogrid');
   } else {
-    console.log('here');
     if (document.getElementById('cExtension_gene_info_details_biogrid')) {
       document.getElementById('cExtension_gene_info_details_biogrid').remove();
     }

@@ -7,6 +7,7 @@ let details = {
     interactors: true,
     links: true
   },
+  mdTime: null,
   report: 'detailed'
 };
 
@@ -14,11 +15,16 @@ let details = {
 chrome.storage.local.get('activate', function(storage) {
   if (storage.activate === 'disable') {
     document.body.removeEventListener('dblclick', retrieveInfo);
+    document.body.removeEventListener('mousedown', setMdTime);
     document.body.removeEventListener('mouseup', retrieveInfo);
   } else if (storage.activate === 'drag') {
+    document.body.removeEventListener('dblclick', retrieveInfo);
+    document.body.addEventListener('mousedown', setMdTime);
     document.body.addEventListener('mouseup', retrieveInfo);
   } else {
     document.body.addEventListener('dblclick', retrieveInfo);
+    document.body.removeEventListener('mousedown', setMdTime);
+    document.body.removeEventListener('mouseup', retrieveInfo);
   }
 });
 chrome.storage.local.get('report', function(storage) {
@@ -46,12 +52,18 @@ chrome.runtime.onMessage.addListener(
     } else if (request.action === 'toggleActivationMethod') {
       if (request.type === 'disable') {
         document.body.removeEventListener('dblclick', retrieveInfo);
+        document.body.removeEventListener('mousedown', setMdTime);
         document.body.removeEventListener('mouseup', retrieveInfo);
       } else if (request.type === 'drag') {
+        document.body.removeEventListener('dblclick', retrieveInfo);
+        document.body.addEventListener('mousedown', setMdTime);
         document.body.addEventListener('mouseup', retrieveInfo);
       } else {
         document.body.addEventListener('dblclick', retrieveInfo);
+        document.body.removeEventListener('mousedown', setMdTime);
+        document.body.removeEventListener('mouseup', retrieveInfo);
       }
+      details.mdTime = null;
     } else if (request.action === 'toggleReportType') {
       details.report = request.type;
       const panel = document.getElementById('cExtension_gene_info_panel');
