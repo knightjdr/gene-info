@@ -23,19 +23,21 @@
   width: auto;
 }
 .cExtension-gene-info-panel-button {
-   background-color: #ef5350;
+   background-color: rgba(239, 83, 80, 0.75);
+   border-color: rgb(239, 83, 80);
    border-radius: 2px;
    color: #fafafa;
    cursor: pointer;
    display: none;
-   height: 15px;
-   line-height: 15px;
+   font-size: 18px;
+   height: 20px;
+   line-height: 20px;
    padding: 0px 1px 1px 1px;
    position: absolute;
    right: 5px;
    text-align: center;
-   top: 6px;
-   width: 15px;
+   top: 5px;
+   width: 20px;
    z-index: 10001;
 }
 .cExtension-gene-info-go-selector {

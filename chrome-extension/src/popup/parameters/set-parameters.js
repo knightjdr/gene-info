@@ -1,34 +1,47 @@
-//set params on page load
+// get user preferences on load
+// activation method
 chrome.storage.local.get('activate', function(storage) {
   if (storage.activate) {
-    const options = ['click', 'drag', 'disable'];
-    options.forEach((v) => {
+    ['click', 'drag', 'disable'].forEach((v) => {
       if (v === storage.activate) {
-        document.querySelector('#report_' + v).checked = true;
+        document.getElementById(`report_${v}`).checked = true;
       } else {
-        document.querySelector('#report_' + v).checked = false;
+        document.getElementById(`report_${v}`).checked = false;
       }
     });
   }
 });
+// report type
 chrome.storage.local.get('report', function(storage) {
   if (storage.report) {
-    const options = ['detailed', 'tooltip'];
-    options.forEach((v) => {
+    ['detailed', 'tooltip'].forEach((v) => {
       if (v === storage.report) {
-        document.querySelector('#report_' + v).checked = true;
+        document.getElementById(`report_${v}`).checked = true;
       } else {
-        document.querySelector('#report_' + v).checked = false;
+        document.getElementById(`report_${v}`).checked = false;
       }
     });
   }
 });
+// options
 const details = ['basic', 'description', 'domain', 'go', 'interactors', 'links'];
 details.forEach(function(detail) {
   const currDetail = 'detail-' + detail;
   chrome.storage.local.get(currDetail, function(storage) {
     if (storage[currDetail] === 'off') {
-      document.querySelector('#detail_' + detail).checked = false;
+      document.getElementById(`detail_${detail}`).checked = false;
+      document.getElementById(`toggle-container-options-${detail}`).style.display = 'none';
     }
   });
+});
+chrome.storage.local.get('goNamespace', function(storage) {
+  if (storage.goNamespace) {
+    ['bp', 'cc', 'mf'].forEach((v) => {
+      if (v === storage.goNamespace) {
+        document.getElementById(`goNamespace_${v}`).checked = true;
+      } else {
+        document.getElementById(`goNamespace_${v}`).checked = false;
+      }
+    });
+  }
 });

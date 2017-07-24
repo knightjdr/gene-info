@@ -126,3 +126,14 @@ label:hover:before {
   left: 50%;
   background: $toggle-green;
 }
+.toggle-container-options {
+  display: block;
+}
+.toggle-container-options-header {
+  margin-bottom: 5px;
+  padding-left: 30px;
+}
+.toggle-container-options-element {
+  margin: 5px 0px 5px 0px;
+  padding-left: 30px;
+}

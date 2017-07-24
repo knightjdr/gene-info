@@ -1,4 +1,5 @@
 const goStringConstructor = (data, wrapper = true) => {
+  // create header
   let goString = `
     <div
       class="cExtension-gene-info-details-backdrop"
@@ -16,108 +17,61 @@ const goStringConstructor = (data, wrapper = true) => {
       </div>
       <div>
         <div style="display: flex; flex-direction: row;">
-          <div
-            class="cExtension-gene-info-go-selector active"
-            data-type="bp"
-          >
-            BP
-          </div>
-          <div
-            class="cExtension-gene-info-go-selector"
-            data-type="cc"
-          >
-            CC
-          </div>
-          <div
-            class="cExtension-gene-info-go-selector"
-            data-type="mf"
-          >
-            MF
-          </div>
-        </div>
     `
   ;
-  goString += `
-    <div
-      id="cExtension-gene-info-go-container-bp"
-      style="padding: 0px 5px 0px 5px;"
-    >`
-  ;
-  if(data.go.p.length > 0) {
-    data.go.p.forEach(function(term) {
-      goString +=
-        `<div style="padding: 2px 0px 2px 0px;">
-          &#8226;
-          ${term.term}
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="http://amigo.geneontology.org/amigo/term/GO:${term.id}"
-            style="text-decoration: none;"
-          >
-            &#10162;
-          </a>
-        </div>`
-      ;
-    });
-  } else {
-    goString += '<div style="padding: 2px 0px 2px 0px;">no terms</div>';
-  }
+  // create header buttons
+  ['bp', 'cc', 'mf'].forEach((namespace) => {
+    const currentClass = namespace === details.displayOptions.goNamespace ?
+      'cExtension-gene-info-go-selector active' :
+      'cExtension-gene-info-go-selector'
+    ;
+    const strNamespace = namespace.toUpperCase();
+    goString += `
+      <div
+        class="${currentClass}"
+        data-type="${namespace}"
+      >
+        ${strNamespace}
+      </div>
+    `;
+  });
   goString += '</div>';
-  goString += `
-    <div
-      id="cExtension-gene-info-go-container-cc"
-      style="display: none; padding: 0px 5px 0px 5px;"
-    >`
-  ;
-  if(data.go.c.length > 0) {
-    data.go.c.forEach(function(term) {
-      goString +=
-        `<div style="padding: 2px 0px 2px 0px;">
-          &#8226;
-          ${term.term}
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="http://amigo.geneontology.org/amigo/term/GO:${term.id}"
-            style="text-decoration: none;"
-          >
-            &#10162;
-          </a>
-        </div>`
-      ;
-    });
-  } else {
-    goString += '<div style="padding: 2px 0px 2px 0px;">no terms</div>';
-  }
-  goString += '</div>';
-  goString += `
-    <div
-      id="cExtension-gene-info-go-container-mf"
-      style="display: none; padding: 0px 5px 0px 5px;"
-    >`
-  ;
-  if(data.go.f.length > 0) {
-    data.go.f.forEach(function(term) {
-      goString +=
-        `<div style="padding: 2px 0px 2px 0px;">
-          &#8226;
-          ${term.term}
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="http://amigo.geneontology.org/amigo/term/GO:${term.id}"
-            style="text-decoration: none;"
-          >
-            &#10162;
-          </a>
-        </div>`
-      ;
-    });
-  } else {
-    goString += '<div style="padding: 2px 0px 2px 0px;">no terms</div>';
-  }
-  goString += '</div></div></div>';
+  // create namespace panels
+  ['bp', 'cc', 'mf'].forEach((namespace) => {
+    const currentStyle = namespace === details.displayOptions.goNamespace ?
+      'padding: 0px 5px 0px 5px' :
+      'display: none; padding: 0px 5px 0px 5px'
+    ;
+    const shortName = namespace.charAt(1);
+    goString += `
+      <div
+        id="cExtension-gene-info-go-container-${namespace}"
+        style="${currentStyle}"
+      >`
+    ;
+    if(data.go[shortName].length > 0) {
+      data.go[shortName].forEach(function(term) {
+        goString +=
+          `<div style="padding: 2px 0px 2px 0px;">
+            &#8226;
+            ${term.term}
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href="http://amigo.geneontology.org/amigo/term/GO:${term.id}"
+              style="text-decoration: none;"
+            >
+              &#10162;
+            </a>
+          </div>`
+        ;
+      });
+    } else {
+      goString += '<div style="padding: 2px 0px 2px 0px;">no terms</div>';
+    }
+    goString += '</div>';
+  });
+  goString += '</div></div>';
   if (wrapper) {
     goString = `
       <div id="cExtension_gene_info_details_go">
