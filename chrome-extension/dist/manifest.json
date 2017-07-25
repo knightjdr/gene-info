@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Gene info",
-  "version": "0.2.1",
-  "version_name": "0.2.1 alpha",
+  "version": "0.3.0",
+  "version_name": "0.3.0 alpha",
   "description": "Find gene information by clicking an official gene name on any webpage. Only human gene information will be retrieved currently.",
   "icons": {
     "16": "icon/icon16.png",

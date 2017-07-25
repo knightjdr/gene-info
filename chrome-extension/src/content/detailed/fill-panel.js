@@ -1,11 +1,13 @@
-fillDetailedPanel = (data, options) => {
+fillDetailedPanel = (selectedResult, completeResults, options, updateGene = true) => {
   let lastNode;
   //update gene
-  document.getElementById('cExtension_gene_info_details_gene').innerHTML = '<b>Gene: </b>' + data.gene;
+  if (updateGene) {
+    document.getElementById('cExtension_gene_info_details_gene').innerHTML = `<b>Gene: </b>${geneConstructor(selectedResult, completeResults)}`;
+  }
   lastNode = document.getElementById('cExtension_gene_info_details_gene');
   // basic
   if (options.basic) {
-    let basicString = basicConstructor(data, false);
+    let basicString = basicConstructor(selectedResult, false);
     if (document.getElementById('cExtension_gene_info_details_basic')) {
       document.getElementById('cExtension_gene_info_details_basic').innerHTML = basicString;
     } else {
@@ -22,7 +24,7 @@ fillDetailedPanel = (data, options) => {
   }
   // ncbi
   if (options.links) {
-    let linkString = linkConstructor(data, false);
+    let linkString = linkConstructor(selectedResult, false);
     if (document.getElementById('cExtension_gene_info_details_link')) {
       document.getElementById('cExtension_gene_info_details_link').innerHTML = linkString;
     } else {
@@ -39,7 +41,7 @@ fillDetailedPanel = (data, options) => {
   }
   //description
   if (options.description) {
-    let descriptionString = descriptionConstructor(data, false);
+    let descriptionString = descriptionConstructor(selectedResult, false);
     if (document.getElementById('cExtension_gene_info_details_description')) {
       document.getElementById('cExtension_gene_info_details_description').innerHTML = descriptionString;
     } else {
@@ -55,8 +57,8 @@ fillDetailedPanel = (data, options) => {
     }
   }
   // domain
-  if (data.domains && options.domain) {
-    let domainString = domainConstructor(data, false);
+  if (selectedResult.domains && options.domain) {
+    let domainString = domainConstructor(selectedResult, false);
     if (document.getElementById('cExtension_gene_info_details_domain')) {
       document.getElementById('cExtension_gene_info_details_domain').innerHTML = domainString;
     } else {
@@ -73,10 +75,10 @@ fillDetailedPanel = (data, options) => {
     }
   }
   // go
-  if (data.go && options.go) {
+  if (selectedResult.go && options.go) {
     //remove listeners for GO
     document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.removeEventListener('click', goSelector); });
-    let goString = goStringConstructor(data, false);
+    let goString = goStringConstructor(selectedResult, false);
     if (document.getElementById('cExtension_gene_info_details_go')) {
       document.getElementById('cExtension_gene_info_details_go').innerHTML = goString;
     } else {
@@ -93,8 +95,8 @@ fillDetailedPanel = (data, options) => {
     }
   }
   //biogrid
-  if (data.biogrid && options.interactors) {
-    let biogridString = biogridStringConstructor(data, false);
+  if (selectedResult.biogrid && options.interactors) {
+    let biogridString = biogridStringConstructor(selectedResult, false);
     if (document.getElementById('cExtension_gene_info_details_biogrid')) {
       document.getElementById('cExtension_gene_info_details_biogrid').innerHTML = biogridString;
     } else {
@@ -109,4 +111,6 @@ fillDetailedPanel = (data, options) => {
       document.getElementById('cExtension_gene_info_details_biogrid').remove();
     }
   }
+  // if gene changes, select listener needs to be updated
+  selectListener();
 };

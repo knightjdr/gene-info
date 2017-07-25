@@ -1,8 +1,11 @@
-const createDetailedTemplate = (data, options) => {
-  if (document.getElementById('cExtension_gene_info_details') && data) {
-    fillDetailedPanel(data, options);
+const createDetailedTemplate = (selectedResult, completeResults, options) => {
+  if (
+    document.getElementById('cExtension_gene_info_details') &&
+    selectedResult
+  ) {
+    fillDetailedPanel(selectedResult, completeResults, options);
   } else {
-    clearPanel(data, 'detailed');
-    createDetailedPanel(data, options);
+    clearPanel(selectedResult, 'detailed');
+    createDetailedPanel(selectedResult, completeResults, options);
   }
 };

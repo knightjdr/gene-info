@@ -9,7 +9,8 @@ let details = {
     links: true
   },
   mdTime: null,
-  report: 'detailed'
+  report: 'detailed',
+  results: []
 };
 
 // get user preferences on load

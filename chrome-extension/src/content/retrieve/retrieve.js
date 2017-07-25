@@ -3,12 +3,13 @@ function retrieveInfo(event) {
   const getInfo = (gene) => {
     http(gene)
       .then((data) => {
-        if(details.report === 'detailed') {
+        details.results = data;
+        if (details.report === 'detailed') {
           removeTooltip();
-          createDetailedTemplate(data, details.displayOptions);
+          createDetailedTemplate(data[0], data, details.displayOptions);
         } else {
           removePanel();
-          createTooltipTemplate(event, data, details.displayOptions);
+          createTooltipTemplate(event, data[0], data, details.displayOptions);
         }
       })
       .catch((err) => {

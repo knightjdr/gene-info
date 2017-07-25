@@ -1,10 +1,9 @@
 'use strict';
 
-var config = require('../../../config');
-var databases = require('../../connections/databases');
-var Promise = require('promise');
+const config = require('../../../config');
+const databases = require('../../connections/databases');
 
-var Crud = {
+const Crud = {
   create: function(database, collection, queryObject) {
 		return new Promise(function(resolve, reject) {
 			databases.acquire(database).collection(collection).insert(queryObject, function(err, entry) {

@@ -1,6 +1,7 @@
 'use strict';
 
 const crud = require('../crud/crud');
+const sortFunctions = require('../helpers/sort');
 
 const Report =  {
   extension: function(gene, res) {
@@ -22,21 +23,22 @@ const Report =  {
       crud.get('geneinfo', 'homosapiens', queryObj)
         .then((matches) => {
           if (matches.length === 0) {
-            res.send({status: 200, result: null});
+            res.send({status: 200, result: []});
           } else if (matches.length === 1) {
-            res.send({status: 200, result: matches[0]});
+            res.send({status: 200, result: matches});
           } else {
-            let geneMatch;
+            let orderedMatches = [];
+            let nonGeneMatches = [];
             matches.some((match) => {
               if (match.gene === gene) {
-                geneMatch = match;
-                return true;
+                orderedMatches[0] = match;
+              } else {
+                nonGeneMatches.push(match);
               }
             });
-            if (geneMatch) {
-              geneMatch = matches[0];
-            }
-            res.send({status: 200, result: geneMatch});
+            nonGeneMatches = sortFunctions.string(nonGeneMatches, 'gene');
+            orderedMatches = orderedMatches.concat(nonGeneMatches);
+            res.send({status: 200, result: orderedMatches});
           }
         })
         .catch(function(error) {
