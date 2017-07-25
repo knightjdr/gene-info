@@ -20,11 +20,14 @@ const biogridStringConstructor = (data, wrapper = true) => {
         </div>
       </div>`
     ;
-    data.interactors.forEach(function(interactor) {
+    let lastInteractor = '';
+    data.interactors.forEach((interactor) => {
+      const interactorString = interactor.gene === lastInteractor ? '' : interactor.gene;
+      lastInteractor = interactor.gene;
       biogridString += `
         <div style="display: flex;">
           <div style="flex: 0 0 30%;">
-            ${interactor.gene}
+            ${interactorString}
           </div>
           <div style="flex: 1;">
             ${interactor.evidence}
