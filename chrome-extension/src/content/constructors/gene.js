@@ -1,9 +1,14 @@
 const geneConstructor = (selectedResult, completeResults, fullname = false, resultsIndex = 0) => {
   let geneString = '';
-  if(completeResults.length == 1) {
+  if (completeResults.length === 1) {
     geneString = fullname ? selectedResult.fullname : selectedResult.gene;
   } else {
-    geneString += '<select id="cExtension_gene_info_geneSelect">';
+    geneString += `
+      <select
+        class="cExtension-gene-info-geneSelect"
+        id="cExtension_gene_info_geneSelect"
+      >`
+    ;
     completeResults.forEach((result, index) => {
       const synonyms = result.synonyms.length === 0 ?
         'none' :

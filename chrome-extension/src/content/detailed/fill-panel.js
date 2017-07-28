@@ -113,4 +113,6 @@ fillDetailedPanel = (selectedResult, completeResults, options, updateGene = true
   }
   // if gene changes, select listener needs to be updated
   selectListener();
+  // set scroll to top
+  document.getElementById('cExtension_gene_info_panel').scrollTop = 0;
 };

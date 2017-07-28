@@ -32,7 +32,7 @@ const createTooltipTemplate = (event, selectedResult, completeResults, options, 
         ${geneConstructor(selectedResult, completeResults, true, resultsIndex)}
       </div>`
     ;
-    htmlString += '<div style="display: flex; flex-direction: row; flex-wrap: wrap;">';
+    htmlString += '<div class="cExtension-gene-info-tooltip-links">';
     if (options.links && selectedResult.geneid) {
       htmlString += `
         <span class="cExtension-gene-info-tooltip-link">

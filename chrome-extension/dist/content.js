@@ -297,10 +297,15 @@ const domainConstructor = (data, wrapper = true) => {
 
 const geneConstructor = (selectedResult, completeResults, fullname = false, resultsIndex = 0) => {
   let geneString = '';
-  if(completeResults.length == 1) {
+  if (completeResults.length === 1) {
     geneString = fullname ? selectedResult.fullname : selectedResult.gene;
   } else {
-    geneString += '<select id="cExtension_gene_info_geneSelect">';
+    geneString += `
+      <select
+        class="cExtension-gene-info-geneSelect"
+        id="cExtension_gene_info_geneSelect"
+      >`
+    ;
     completeResults.forEach((result, index) => {
       const synonyms = result.synonyms.length === 0 ?
         'none' :
@@ -524,8 +529,10 @@ createDetailedPanel = (selectedResult, completeResults, options) => {
     htmlString += '</div>';
     detailedDiv.innerHTML = htmlString;
     document.body.insertBefore(detailedDiv, document.body.firstChild);
-    // listeners for GO and disable scroll
-    document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.addEventListener('click', goSelector); });
+    // listeners for GO
+    document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) {
+      element.addEventListener('click', goSelector);
+    });
     // add drag listeners
     addDrag(detailedDiv);
     // add select listener (if applicable)
@@ -676,11 +683,15 @@ fillDetailedPanel = (selectedResult, completeResults, options, updateGene = true
   }
   // if gene changes, select listener needs to be updated
   selectListener();
+  // set scroll to top
+  document.getElementById('cExtension_gene_info_panel').scrollTop = 0;
 };
 
 const addDrag = (div) => {
   let startX;
   const mouseMove = (event) => {
+    document.getElementById('cExtension_gene_info_panel').style.cursor = 'ew-resize';
+    document.getElementById('cExtension_gene_info_panel').style.userSelect = 'none';
     const delta = startX - event.screenX;
     startX = event.screenX;
     const right = document.documentElement.clientWidth - div.getBoundingClientRect().right;
@@ -691,6 +702,8 @@ const addDrag = (div) => {
     div.addEventListener('mousemove', mouseMove);
   });
   div.addEventListener('mouseup', function() {
+    document.getElementById('cExtension_gene_info_panel').style.cursor = 'auto';
+    document.getElementById('cExtension_gene_info_panel').style.userSelect = 'auto';
     div.removeEventListener('mousemove', mouseMove);
   });
 };
@@ -731,8 +744,11 @@ function clearPanel(data, type) {
   if(!data) {
     if(document.getElementById('cExtension_gene_info_panel')) {
       document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.removeEventListener('click', goSelector); });
-      document.getElementById('cExtension_gene_info_geneSelect').removeEventListener('change', selectChange);
       document.getElementById('cExtension_gene_info_panel_button').removeEventListener('click', removePanel);
+      const changeEl = document.getElementById('cExtension_gene_info_geneSelect');
+      if (changeEl) {
+        changeEl.removeEventListener('change', selectChange);
+      }
       document.getElementById('cExtension_gene_info_panel').remove();
     }
   } else {
@@ -747,6 +763,10 @@ const clearTooltip = () => {
   if (container) {
     container.removeEventListener('click', clearTooltip);
     document.getElementById('cExtension_gene_info_tooltip_button').removeEventListener('click', removeTooltip);
+    const changeEl = document.getElementById('cExtension_gene_info_geneSelect');
+    if (changeEl) {
+      changeEl.removeEventListener('change', selectChange);
+    }
     container.remove();
     window.removeEventListener('scroll', tooltipScroll.scroll);
   }
@@ -755,9 +775,12 @@ const clearTooltip = () => {
 function removePanel() {
   if(document.getElementById('cExtension_gene_info_panel')) {
     window.onscroll = null;
-    document.getElementById('cExtension_gene_info_geneSelect').removeEventListener('change', selectChange);
     document.getElementById('cExtension_gene_info_panel_button').removeEventListener('click', removePanel);
     document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.removeEventListener('click', goSelector); });
+    const changeEl = document.getElementById('cExtension_gene_info_geneSelect');
+    if (changeEl) {
+      changeEl.removeEventListener('change', selectChange);
+    }
     fadeOut(document.getElementById('cExtension_gene_info_panel'));
   }
 }
@@ -767,6 +790,10 @@ function removeTooltip() {
   if(container) {
     container.removeEventListener('click', clearTooltip);
     document.getElementById('cExtension_gene_info_tooltip_button').removeEventListener('click', removeTooltip);
+    const changeEl = document.getElementById('cExtension_gene_info_geneSelect');
+    if (changeEl) {
+      changeEl.removeEventListener('change', selectChange);
+    }
     window.removeEventListener('scroll', tooltipScroll.scroll);
     fadeOut(container);
   }
@@ -778,8 +805,8 @@ const http = (gene) => {
     chrome.runtime.sendMessage({
       method: 'GET',
       action: 'xhttp',
-      // url: `http://localhost:8002/extension${paramString}`
-      url: `http://prohitstools.mshri.on.ca:8002/extension${paramString}`
+      url: `http://localhost:8002/extension${paramString}`
+      // url: `http://prohitstools.mshri.on.ca:8002/extension${paramString}`
     }, function(response) {
       var parsedResponse = JSON.parse(response);
       if (parsedResponse.status === 200) {
@@ -862,7 +889,7 @@ const createTooltipTemplate = (event, selectedResult, completeResults, options, 
         ${geneConstructor(selectedResult, completeResults, true, resultsIndex)}
       </div>`
     ;
-    htmlString += '<div style="display: flex; flex-direction: row; flex-wrap: wrap;">';
+    htmlString += '<div class="cExtension-gene-info-tooltip-links">';
     if (options.links && selectedResult.geneid) {
       htmlString += `
         <span class="cExtension-gene-info-tooltip-link">

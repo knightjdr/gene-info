@@ -42,8 +42,10 @@ createDetailedPanel = (selectedResult, completeResults, options) => {
     htmlString += '</div>';
     detailedDiv.innerHTML = htmlString;
     document.body.insertBefore(detailedDiv, document.body.firstChild);
-    // listeners for GO and disable scroll
-    document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) { element.addEventListener('click', goSelector); });
+    // listeners for GO
+    document.querySelectorAll('.cExtension-gene-info-go-selector').forEach(function(element) {
+      element.addEventListener('click', goSelector);
+    });
     // add drag listeners
     addDrag(detailedDiv);
     // add select listener (if applicable)

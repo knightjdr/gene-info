@@ -12,12 +12,13 @@
   border-radius: 3px;
   box-shadow: 0px 0px 1px 2px rgba(97, 97, 97, 0.4);
   color: #333333;
+  display: inline-block;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   height: auto;
   max-width: 300px;
   opacity: 0;
-  padding: 5px 5px 5px 5px;
+  padding: 5px 10px 5px 10px;
   position: relative;
   width: auto;
   z-index: 10001;
@@ -25,6 +26,11 @@
 .cExtension-gene-info-tooltip-header {
    padding: 0px 0px 2px 0px;
    text-align: center;
+}
+.cExtension-gene-info-tooltip-links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .cExtension-gene-info-tooltip-link {
   flex-grow: 1;
@@ -38,9 +44,9 @@
   height: 20px;
   line-height: 20px;
   position: absolute;
-  right: 0px;
+  right: -3px;
   text-align: center;
-  top: 0px;
+  top: -3px;
   width: 20px;
   z-index: 10002;
 }
