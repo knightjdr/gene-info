@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import RootStack from './components/root-stack';
+import RootTabs from './components/root-tabs';
 
-export default class App extends Component {
-  render() {
-    return (
-      <RootStack />
-    );
-  }
-}
+const App = () => (
+  <RootTabs />
+);
+export default App;

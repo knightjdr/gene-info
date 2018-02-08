@@ -1,21 +1,51 @@
+import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { SearchBar } from 'react-native-elements';
+import { Text, View } from 'react-native';
 
-const SearchScreen = ({ navigation }) => (
-  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Search Screen</Text>
-    <Button
-      title="Go to Details"
-      onPress={() => navigation.navigate('Details')}
+const Search = ({ onChangeText, onClearText, submitSearch }) => (
+  <LinearGradient
+    colors={['#FFFFFF', '#CFD8DC']}
+    start={{ x: 0.1, y: 0.1 }}
+    style={{
+      flex: 1,
+      flexDirection: 'column',
+    }}
+  >
+    <SearchBar
+      clearIcon={{ name: 'clear' }}
+      containerStyle={{
+        backgroundColor: 'transparent',
+        borderBottomWidth: 0,
+      }}
+      inputStyle={{
+        backgroundColor: '#546E7A',
+        color: '#F5F5F5',
+      }}
+      onChangeText={onChangeText}
+      onClearText={onClearText}
+      onSubmitEditing={submitSearch}
+      placeholder="Search..."
     />
-  </View>
+    <View style={{
+        flex: 1,
+        alignItems: 'center',
+        height: '100%',
+        justifyContent: 'center',
+      }}
+    >
+      <Text>
+        Search Screen
+      </Text>
+    </View>
+  </LinearGradient>
 );
 
-SearchScreen.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
+Search.propTypes = {
+  onChangeText: PropTypes.func.isRequired,
+  onClearText: PropTypes.func.isRequired,
+  submitSearch: PropTypes.func.isRequired,
 };
 
-export default SearchScreen;
+export default Search;
