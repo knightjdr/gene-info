@@ -4,11 +4,11 @@ import Theme from './style/theme';
 
 const Styles = StyleSheet.create({
   badge: {
-    marginTop: 4,
-    marginRight: 32,
+    marginTop: 5,
+    marginRight: '30%',
     backgroundColor: Theme.accent.light,
-    height: 24,
-    width: 24,
+    height: 18,
+    width: 18,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -19,9 +19,13 @@ const Styles = StyleSheet.create({
   },
   count: {
     color: Theme.text.dark,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: 'bold',
     marginTop: -2,
+  },
+  icon: {
+    backgroundColor: 'transparent',
+    color: Theme.text.light,
   },
   indicator: {
     backgroundColor: Theme.primary.light,

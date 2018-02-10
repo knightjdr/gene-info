@@ -1,7 +1,5 @@
+import Icon from 'react-native-vector-icons/Ionicons';
 import React, { Component } from 'react';
-import fontawesome from '@fortawesome/fontawesome';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faSearch from '@fortawesome/fontawesome-pro-solid/faSearch';
 import { Dimensions, Text, View } from 'react-native';
 import { SceneMap, TabBar, TabViewAnimated } from 'react-native-tab-view';
 
@@ -9,8 +7,6 @@ import DetailsScreen from './details/details';
 import SearchScreen from './search/search-container';
 import SettingsScreen from './settings/settings';
 import Style from './root-tabs-style';
-
-fontawesome.library.add(faSearch);
 
 const initialLayout = {
   height: 0,
@@ -23,9 +19,9 @@ const scene = {
 };
 
 const routes = [
-  { key: 'search', icon: 'search', title: 'Search' },
-  { key: 'details', icon: 'search', title: 'Details' },
-  { key: 'settings', icon: 'search', title: 'Settings' },
+  { key: 'search', icon: 'ios-search' },
+  { key: 'details', icon: 'ios-paper' },
+  { key: 'settings', icon: 'ios-settings' },
 ];
 
 export default class TabViewExample extends Component {
@@ -52,11 +48,12 @@ export default class TabViewExample extends Component {
       {...props}
       indicatorStyle={Style.indicator}
       renderBadge={this.renderBadge}
+      renderIcon={this.renderIcon}
       style={Style.tabbar}
     />
   )
   renderIcon = ({ route }) => (
-    <FontAwesomeIcon icon={route.icon} />
+    <Icon name={route.icon} size={24} style={Style.icon} />
   );
   render() {
     return (
