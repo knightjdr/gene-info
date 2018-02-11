@@ -4,11 +4,18 @@ import React from 'react';
 import { SearchBar } from 'react-native-elements';
 import { Text, View } from 'react-native';
 
-const Search = ({ onChangeText, onClearText, submitSearch }) => (
+const Search = ({
+  hasSearchResult,
+  onChangeText,
+  onClearText,
+  searchTerm,
+  submitSearch,
+}) => (
   <LinearGradient
     colors={['#FFFFFF', '#CFD8DC']}
     start={{ x: 0.1, y: 0.1 }}
     style={{
+      justifyContent: 'center',
       flex: 1,
       flexDirection: 'column',
     }}
@@ -16,35 +23,55 @@ const Search = ({ onChangeText, onClearText, submitSearch }) => (
     <SearchBar
       clearIcon={{ name: 'clear' }}
       containerStyle={{
-        backgroundColor: 'transparent',
+        backgroundColor: '#455A64',
+        borderTopWidth: 0,
         borderBottomWidth: 0,
+        marginLeft: '0%',
+        width: '100%',
       }}
       inputStyle={{
-        backgroundColor: '#546E7A',
-        color: '#F5F5F5',
+        backgroundColor: '#F5F5F5',
+        color: '#263238',
       }}
       onChangeText={onChangeText}
       onClearText={onClearText}
       onSubmitEditing={submitSearch}
-      placeholder="Search..."
+      placeholder="Gene symbol..."
+      value={searchTerm}
     />
-    <View style={{
-        flex: 1,
-        alignItems: 'center',
-        height: '100%',
-        justifyContent: 'center',
-      }}
-    >
-      <Text>
-        Search Screen
-      </Text>
-    </View>
+    {
+      hasSearchResult &&
+      <View
+        style={{
+          flex: 1,
+          height: '100%',
+          justifyContent: 'center',
+          paddingLeft: '10%',
+          paddingRight: '10%',
+        }}
+      >
+        <Text
+          style={{
+            textAlign: 'center',
+          }}
+        >
+          Search for genes by official symbol or synonym using the input
+          above
+        </Text>
+      </View>
+    }
   </LinearGradient>
 );
 
+Search.defaultProps = {
+  searchTerm: null,
+};
+
 Search.propTypes = {
+  hasSearchResult: PropTypes.bool.isRequired,
   onChangeText: PropTypes.func.isRequired,
   onClearText: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string,
   submitSearch: PropTypes.func.isRequired,
 };
 
