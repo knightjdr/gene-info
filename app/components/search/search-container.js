@@ -9,7 +9,10 @@ class SearchContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasSearchResult: true,
+      isSearchEmpty: false,
+      isSearching: false,
+      hasSearchResult: false,
+      showHelp: true,
     };
   }
   onChangeText = (searchTerm) => {
@@ -18,19 +21,29 @@ class SearchContainer extends Component {
   onClearText = () => {
     this.props.clearSearchTerm();
     this.setState({
+      isSearchEmpty: false,
       hasSearchResult: false,
+      showHelp: true,
     });
   }
   submitSearch = () => {
-    console.log(this.props.searchTerm);
+    this.setState({
+      isSearchEmpty: false,
+      isSearching: true,
+      hasSearchResult: false,
+      showHelp: false,
+    });
   }
   render() {
     return (
       <Search
+        isSearchEmpty={this.state.isSearchEmpty}
+        isSearching={this.state.isSearching}
         hasSearchResult={this.state.hasSearchResult}
         onChangeText={this.onChangeText}
         onClearText={this.onClearText}
         searchTerm={this.props.searchTerm}
+        showHelp={this.state.showHelp}
         submitSearch={this.submitSearch}
       />
     );

@@ -1,65 +1,74 @@
+import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { SearchBar } from 'react-native-elements';
 import { Text, View } from 'react-native';
 
+import Style from './search-style';
+
 const Search = ({
+  isSearchEmpty,
+  isSearching,
   hasSearchResult,
   onChangeText,
   onClearText,
   searchTerm,
+  showHelp,
   submitSearch,
 }) => (
   <LinearGradient
-    colors={['#FFFFFF', '#CFD8DC']}
-    start={{ x: 0.1, y: 0.1 }}
-    style={{
-      justifyContent: 'center',
-      flex: 1,
-      flexDirection: 'column',
-    }}
+    colors={['#FFFFFF', '#ECEFF1']}
+    start={{ x: 0, y: 0.3 }}
+    style={Style.gradientContainer}
   >
     <SearchBar
       clearIcon={{ name: 'clear' }}
-      containerStyle={{
-        backgroundColor: '#455A64',
-        borderTopWidth: 0,
-        borderBottomWidth: 0,
-        marginLeft: '0%',
-        width: '100%',
-      }}
-      inputStyle={{
-        backgroundColor: '#F5F5F5',
-        color: '#263238',
-      }}
+      containerStyle={Style.searchContainer}
+      inputStyle={Style.searchInput}
       onChangeText={onChangeText}
       onClearText={onClearText}
       onSubmitEditing={submitSearch}
       placeholder="Gene symbol..."
       value={searchTerm}
     />
-    {
-      hasSearchResult &&
-      <View
-        style={{
-          flex: 1,
-          height: '100%',
-          justifyContent: 'center',
-          paddingLeft: '10%',
-          paddingRight: '10%',
-        }}
-      >
+    <View
+      style={Style.mainView}
+    >
+      {
+        showHelp &&
         <Text
-          style={{
-            textAlign: 'center',
-          }}
+          style={Style.infoText}
         >
           Search for genes by official symbol or synonym using the input
           above
         </Text>
-      </View>
-    }
+      }
+      {
+        isSearching &&
+        <Text
+          style={Style.infoText}
+        >
+          Search results
+        </Text>
+      }
+      {
+        hasSearchResult &&
+        <Text
+          style={Style.infoText}
+        >
+          Search results
+        </Text>
+      }
+      {
+        isSearchEmpty &&
+        <Text
+          style={Style.infoText}
+        >
+          There were no genes matching your search term
+        </Text>
+      }
+    </View>
   </LinearGradient>
 );
 
@@ -68,10 +77,13 @@ Search.defaultProps = {
 };
 
 Search.propTypes = {
+  isSearchEmpty: PropTypes.bool.isRequired,
+  isSearching: PropTypes.bool.isRequired,
   hasSearchResult: PropTypes.bool.isRequired,
   onChangeText: PropTypes.func.isRequired,
   onClearText: PropTypes.func.isRequired,
   searchTerm: PropTypes.string,
+  showHelp: PropTypes.bool.isRequired,
   submitSearch: PropTypes.func.isRequired,
 };
 
