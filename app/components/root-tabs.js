@@ -1,4 +1,5 @@
 import Icon from 'react-native-vector-icons/Ionicons';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Dimensions, Text, View } from 'react-native';
 import { SceneMap, TabBar, TabViewAnimated } from 'react-native-tab-view';
@@ -24,17 +25,7 @@ const routes = [
   { key: 'settings', icon: 'ios-settings' },
 ];
 
-export default class TabViewExample extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      index: 0,
-      routes,
-    };
-  }
-  handleIndexChange = (index) => {
-    this.setState({ index });
-  }
+export default class TabView extends Component {
   renderBadge = ({ route }) => {
     const badge = (
       <View style={Style.badge}>
@@ -58,12 +49,13 @@ export default class TabViewExample extends Component {
   render() {
     return (
       <TabViewAnimated
+        animationEnabled={false}
         initialLayout={initialLayout}
         navigationState={{
-          index: this.state.index,
-          routes: this.state.routes,
+          index: this.props.tab,
+          routes,
         }}
-        onIndexChange={this.handleIndexChange}
+        onIndexChange={this.props.handleIndexChange}
         renderScene={SceneMap(scene)}
         renderFooter={this.renderFooter}
         style={Style.container}
@@ -71,3 +63,8 @@ export default class TabViewExample extends Component {
     );
   }
 }
+
+TabView.propTypes = {
+  handleIndexChange: PropTypes.func.isRequired,
+  tab: PropTypes.number.isRequired,
+};

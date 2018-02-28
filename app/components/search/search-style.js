@@ -4,6 +4,7 @@ import Theme from '../style/theme';
 
 const Styles = StyleSheet.create({
   infoText: {
+    color: Theme.text.dark,
     fontFamily: 'Kalam-Regular',
     fontSize: 16,
     textAlign: 'center',
@@ -21,6 +22,14 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     paddingLeft: '10%',
     paddingRight: '10%',
+  },
+  searchBarWrapper: {
+    backgroundColor: Theme.primary.dark,
+    elevation: 5,
+    shadowColor: '#000000',
+    shadowOffset: { height: 5 },
+    shadowOpacity: 0.75,
+    shadowRadius: 5,
   },
   searchContainer: {
     backgroundColor: Theme.primary.dark,

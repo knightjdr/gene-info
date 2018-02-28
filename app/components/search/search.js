@@ -1,4 +1,3 @@
-import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -22,16 +21,20 @@ const Search = ({
     start={{ x: 0, y: 0.3 }}
     style={Style.gradientContainer}
   >
-    <SearchBar
-      clearIcon={{ name: 'clear' }}
-      containerStyle={Style.searchContainer}
-      inputStyle={Style.searchInput}
-      onChangeText={onChangeText}
-      onClearText={onClearText}
-      onSubmitEditing={submitSearch}
-      placeholder="Gene symbol..."
-      value={searchTerm}
-    />
+    <View
+      style={Style.searchBarWrapper}
+    >
+      <SearchBar
+        clearIcon={{ name: 'clear' }}
+        containerStyle={Style.searchContainer}
+        inputStyle={Style.searchInput}
+        onChangeText={onChangeText}
+        onClearText={onClearText}
+        onSubmitEditing={submitSearch}
+        placeholder="Gene symbol..."
+        value={searchTerm}
+      />
+    </View>
     <View
       style={Style.mainView}
     >
@@ -49,14 +52,12 @@ const Search = ({
         <Text
           style={Style.infoText}
         >
-          Search results
+          searching
         </Text>
       }
       {
         hasSearchResult &&
-        <Text
-          style={Style.infoText}
-        >
+        <Text>
           Search results
         </Text>
       }

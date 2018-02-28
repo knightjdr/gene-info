@@ -3,7 +3,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 
-import RootTabs from './components/root-tabs';
+import RootTabs from './components/root-tabs-container';
 import { persistor, store } from './state/store';
 
 export default class App extends Component {
