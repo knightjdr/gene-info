@@ -1,6 +1,6 @@
 /* eslint no-console: 0 */
 
-const uniprot = require('./uniprot');
+const uniprot = require('./uniprot/uniprot');
 
 uniprot()
   .catch((err) => {

@@ -40,6 +40,7 @@
     "gunzip-file": "^0.1.1",
     "http": "0.0.0",
     "mongodb": "^2.2.25",
-    "promise": "^7.1.1"
+    "promise": "^7.1.1",
+    "xml2js": "^0.4.19"
   }
 }
