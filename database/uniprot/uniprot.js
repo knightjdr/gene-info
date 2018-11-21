@@ -1,25 +1,31 @@
-const fs = require('fs').promises;
-
-const convertXml = require('../helpers/convert-xml');
+const config = require('../config');
 const downloadFile = require('../helpers/download-ftp');
 const gunzipFile = require('../helpers/gunzip-file');
-const uniprotParse = require('./uniprot-parse');
+const minXml = require('./min-xml');
 
-const config = {
-  file: './files/short.xml',
+const fsConfig = {
+  file: './files/uniprot.xml',
   host: 'ftp.uniprot.org',
   hostFile: '/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.xml.gz',
   zipFile: './files/uniprot.xml.gz',
 };
 
+/* Download and gunzip Uniprot XML database, then split the xml into
+** a file for each species, removing unneed fields. */
 const uniprot = options => (
   new Promise((resolve, reject) => {
-    downloadFile(config.host, config.hostFile, config.zipFile, options.skipDownload)
-      .then(() => gunzipFile(config.zipFile, config.file, options.skipDownload))
-      .then(() => fs.readFile(config.file, 'utf8'))
-      .then(xmlData => convertXml(xmlData))
-      .then(js => uniprotParse(js))
-      .then((data) => { resolve(data); })
+    downloadFile(fsConfig.host, fsConfig.hostFile, fsConfig.zipFile, options.skipDownload)
+      .then(() => gunzipFile(fsConfig.zipFile, fsConfig.file, options.skipDownload))
+      .then(() => (
+        minXml(
+          fsConfig.file,
+          './files',
+          config.species,
+          config.fields,
+          options.skipXmlMin,
+        )
+      ))
+      .then(() => { resolve(); })
       .catch((err) => {
         reject(err);
       });
