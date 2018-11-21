@@ -1,10 +1,14 @@
 const gunzip = require('gunzip-file');
 
-const gunzipFile = (source, target) => (
+const gunzipFile = (source, target, skip) => (
   new Promise((resolve) => {
-    gunzip(source, target, () => {
+    if (skip) {
       resolve();
-    });
+    } else {
+      gunzip(source, target, () => {
+        resolve();
+      });
+    }
   })
 );
 

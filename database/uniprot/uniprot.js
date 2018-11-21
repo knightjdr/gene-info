@@ -12,24 +12,17 @@ const config = {
   zipFile: './files/uniprot.xml.gz',
 };
 
-const uniprot = () => (
+const uniprot = options => (
   new Promise((resolve, reject) => {
-    fs.readFile(config.file, 'utf8')
-      .then(xmlData => convertXml(xmlData))
-      .then(js => uniprotParse(js))
-      .then((data) => { resolve(data); })
-      .catch((err) => {
-        reject(err);
-      });
-    /* downloadFile(config.host, config.hostFile, config.zipFile)
-      .then(() => gunzipFile(config.zipFile, config.file))
+    downloadFile(config.host, config.hostFile, config.zipFile, options.skipDownload)
+      .then(() => gunzipFile(config.zipFile, config.file, options.skipDownload))
       .then(() => fs.readFile(config.file, 'utf8'))
       .then(xmlData => convertXml(xmlData))
       .then(js => uniprotParse(js))
       .then((data) => { resolve(data); })
       .catch((err) => {
         reject(err);
-      }); */
+      });
   })
 );
 

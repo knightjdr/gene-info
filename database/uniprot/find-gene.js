@@ -1,5 +1,8 @@
-const findGene = genes => (
-  genes.reduce((accum, gene) => {
+const findGene = (genes) => {
+  if (!genes) {
+    return {};
+  }
+  return genes[0].name.reduce((accum, gene) => {
     switch (gene.$.type) {
       case 'primary':
         return {
@@ -14,7 +17,7 @@ const findGene = genes => (
       default:
         return accum;
     }
-  }, { primary: '', synonyms: [] })
-);
+  }, { primary: '', synonyms: [] });
+};
 
 module.exports = findGene;
