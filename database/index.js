@@ -2,11 +2,12 @@
 
 const args = require('./args');
 const generateDB = require('./generate-db');
+const interactions = require('./interactions/interactions');
 const uniprot = require('./uniprot/uniprot');
 
 const options = args();
 
-uniprot(options)
+interactions(options)
   .then(() => generateDB())
   .then(() => {
     console.log('complete');

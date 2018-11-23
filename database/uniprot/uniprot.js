@@ -1,6 +1,6 @@
 const config = require('../config');
-const downloadFile = require('../helpers/download-ftp');
-const gunzipFile = require('../helpers/gunzip-file');
+const downloadFtp = require('../helpers/download-ftp');
+const unzipFile = require('../helpers/unzip-file');
 const minXml = require('./min-xml');
 
 const fsConfig = {
@@ -14,8 +14,8 @@ const fsConfig = {
 ** a file for each species, removing unneed fields. */
 const uniprot = options => (
   new Promise((resolve, reject) => {
-    downloadFile(fsConfig.host, fsConfig.hostFile, fsConfig.zipFile, options.skipDownload)
-      .then(() => gunzipFile(fsConfig.zipFile, fsConfig.file, options.skipDownload))
+    downloadFtp(fsConfig.host, fsConfig.hostFile, fsConfig.zipFile, options.skipDownload)
+      .then(() => unzipFile('gunzip', fsConfig.zipFile, fsConfig.file, options.skipUnzip))
       .then(() => (
         minXml(
           fsConfig.file,
