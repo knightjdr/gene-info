@@ -7,7 +7,8 @@ const uniprot = require('./uniprot/uniprot');
 
 const options = args();
 
-interactions(options)
+uniprot(options)
+  .then(() => interactions(options))
   .then(() => generateDB())
   .then(() => {
     console.log('complete');

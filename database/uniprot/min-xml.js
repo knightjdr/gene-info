@@ -1,4 +1,4 @@
-/* eslint no-param-reassign: 0, prefer-destructuring: 0 */
+/* eslint no-param-reassign: 0 */
 
 const fs = require('fs');
 const readline = require('readline');
@@ -44,7 +44,7 @@ const minXml = (file, path, species, fields, skip) => (
           const field = line.match(fieldRegex)[1];
           keepField = fields.includes(field);
         } else if (line.startsWith('    <name type="scientific">')) {
-          organism = line.match(speciesRegex)[1];
+          [, organism] = line.match(speciesRegex);
           keepEntry = species.includes(organism);
         }
         if (keepField) {

@@ -11,6 +11,9 @@ const config = {
   species: [
     'Homo sapiens',
   ],
+  speciesID: {
+    9606: 'Homo sapiens',
+  },
 };
 
 module.exports = config;
