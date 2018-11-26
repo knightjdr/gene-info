@@ -7,8 +7,10 @@ const uniprot = require('./uniprot/uniprot');
 
 const options = args();
 
-uniprot(options)
-  .then(() => interactions(options))
+Promise.all([
+  interactions(options),
+  uniprot(options),
+])
   .then(() => generateDB())
   .then(() => {
     console.log('complete');
