@@ -1,5 +1,8 @@
+const { promises } = require('fs');
+
 const config = require('./config');
 const intParse = require('./interactions/iterate-tab');
+const mergeDB = require('./merge-db');
 const uniParse = require('./uniprot/iterate-xml');
 
 const speciesDB = specie => (
@@ -10,6 +13,10 @@ const speciesDB = specie => (
     ])
       .then((values) => {
         const [db, interactions] = values;
+        const merged = mergeDB(db, interactions);
+        return promises.writeFile(`./files/${specie}.json`, JSON.stringify(merged, null, 2));
+      })
+      .then(() => {
         resolve();
       })
       .catch((err) => {

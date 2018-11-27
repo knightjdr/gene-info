@@ -1,35 +1,33 @@
+/* eslint no-param-reassign: 0 */
+
 const fs = require('fs');
 const readline = require('readline');
 
 const sortArray = require('../helpers/sort-array');
 
+/* Using parameter reassigment as it is much faster in the number of
+** interactions can be ~1M */
 const addGene = (interactions, source, target, evidence) => {
-  if (Object.prototype.hasOwnProperty.call(interactions, source)) {
-    return {
-      ...interactions,
-      [source]: [
-        ...interactions[source],
-        { gene: target, evidence },
-      ],
-    };
+  if (interactions[source]) {
+    interactions[source].push({ gene: target, evidence });
+  } else {
+    interactions[source] = [{ gene: target, evidence }];
   }
-  return {
-    ...interactions,
-    [source]: [{ gene: target, evidence }],
-  };
 };
 
-const sortInteractions = interactions => (
-  Object.entries(interactions).reduce((accum, [gene, interactors]) => ({
-    ...accum,
-    [gene]: sortArray.alphabeticalByTwoKeys(interactors, 'gene', 'evidence'),
-  }), {})
-);
+const sortInteractions = (interactions) => {
+  const sortedInteractions = {};
+  Object.entries(interactions).forEach(([gene, interactors]) => {
+    sortedInteractions[gene] = sortArray.alphabeticalByTwoKeys(interactors, 'gene', 'evidence');
+  });
+  return sortedInteractions;
+};
 
-const uniqueInteractions = interactions => (
-  Object.entries(interactions).reduce((accum, [gene, interactors]) => {
+const uniqueInteractions = (interactions) => {
+  const uniqueInt = {};
+  Object.entries(interactions).forEach(([gene, interactors]) => {
     let last = {};
-    const unique = interactors.reduce((arrAccum, obj) => {
+    uniqueInt[gene] = interactors.reduce((arrAccum, obj) => {
       if (
         obj.gene !== last.gene
         || obj.evidence !== last.evidence
@@ -42,12 +40,9 @@ const uniqueInteractions = interactions => (
       }
       return arrAccum;
     }, []);
-    return {
-      ...accum,
-      [gene]: unique,
-    };
-  }, {})
-);
+  });
+  return uniqueInt;
+};
 
 const tabIterator = file => (
   new Promise((resolve, reject) => {
@@ -58,8 +53,8 @@ const tabIterator = file => (
     });
     lineReader.on('line', (line) => {
       const [geneA, geneB, evidence] = line.split('\t');
-      interactions = addGene(interactions, geneA, geneB, evidence);
-      interactions = addGene(interactions, geneB, geneA, evidence);
+      addGene(interactions, geneA, geneB, evidence);
+      addGene(interactions, geneB, geneA, evidence);
     });
     lineReader.on('close', () => {
       interactions = sortInteractions(interactions);

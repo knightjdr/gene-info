@@ -2,6 +2,7 @@ const arrayUnique = require('../helpers/array-unique');
 const findGene = require('./find-gene');
 const getComments = require('./get-comments');
 const getDBRefs = require('./get-dbrefs');
+const getName = require('./get-name');
 const getSequence = require('./get-sequence');
 const sortArray = require('../helpers/sort-array');
 
@@ -18,7 +19,7 @@ const entryParse = (entry) => {
       description: comments.description,
       'ensembl-gene': refs['ensembl-gene'],
       'ensembl-protein': refs['ensembl-protein'],
-      fullname: entry.protein[0].recommendedName[0].fullName[0] || '',
+      fullname: getName(entry.protein[0].recommendedName[0].fullName[0]),
       gene: genes.primary,
       geneid: refs.geneid,
       go: {

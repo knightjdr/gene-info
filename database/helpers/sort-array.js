@@ -9,6 +9,8 @@ const sortArray = {
     arr.sort((a, b) => {
       if (a[key1].localeCompare(b[key1]) < 0) {
         return -1;
+      } if (a[key1].localeCompare(b[key1]) > 0) {
+        return 1;
       } if (
         a[key1].localeCompare(b[key1]) === 0
         && a[key2].localeCompare(b[key2]) < 0
@@ -18,8 +20,6 @@ const sortArray = {
         a[key1].localeCompare(b[key1]) === 0
         && a[key2].localeCompare(b[key2]) > 0
       ) {
-        return 1;
-      } if (a[key1].localeCompare(b[key1]) > 0) {
         return 1;
       }
       return 0;
