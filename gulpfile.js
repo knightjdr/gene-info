@@ -2,7 +2,6 @@ const concat = require('gulp-concat');
 const gulp = require('gulp');
 const nodemon = require('gulp-nodemon');
 const sass = require('gulp-sass');
-const util = require('gulp-util');
 
 const dest = 'chrome-extension/dist/';
 const modules = {
@@ -21,15 +20,13 @@ const modules = {
   },
 };
 
-gulp.task('js-concat', () => {
-  const module = modules[util.env.module];
-  return gulp.src(module.src)
+const jsBuild = module => (
+  gulp.src(module.src)
     .pipe(concat(module.target))
-    .pipe(gulp.dest(dest));
-});
+    .pipe(gulp.dest(dest))
+);
 
-gulp.task('sass', () => {
-  const module = modules[util.env.module];
+const sassBuild = (module) => {
   if (module.sassTarget) {
     gulp.src(module.sass)
       .pipe(sass({ outputStyle: 'compressed' }))
@@ -40,7 +37,7 @@ gulp.task('sass', () => {
       .pipe(sass({ outputStyle: 'compressed' }))
       .pipe(gulp.dest(dest));
   }
-});
+};
 
 gulp.task('dev', () => {
   nodemon({
@@ -49,24 +46,9 @@ gulp.task('dev', () => {
   }).on('restart', () => {
     gulp.src('api/index.js');
   });
-  gulp.watch(modules.content.src, ['js-concat'])
-    .on('change', () => {
-      util.env.module = 'content';
-    });
-  gulp.watch(modules.content.sass, ['sass'])
-    .on('change', () => {
-      util.env.module = 'content';
-    });
-  gulp.watch(modules.event.src, ['js-concat'])
-    .on('change', () => {
-      util.env.module = 'event';
-    });
-  gulp.watch(modules.popup.src, ['js-concat'])
-    .on('change', () => {
-      util.env.module = 'popup';
-    });
-  gulp.watch(modules.popup.sass, ['sass'])
-    .on('change', () => {
-      util.env.module = 'popup';
-    });
+  gulp.watch(modules.content.src, jsBuild(modules.content));
+  gulp.watch(modules.event.src, jsBuild(modules.event));
+  gulp.watch(modules.popup.src, jsBuild(modules.popup));
+  gulp.watch(modules.content.sass, sassBuild(modules.content));
+  gulp.watch(modules.popup.sass, sassBuild(modules.popup));
 });
