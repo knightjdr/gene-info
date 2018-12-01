@@ -1,3 +1,5 @@
+const parseDescription = require('./parse-description');
+
 const parseObjectEntry = entry => (
   typeof entry === 'object' ? entry._ : entry
 );
@@ -10,7 +12,7 @@ const getComments = (comments) => {
         case 'function':
           return {
             ...accum,
-            description: parseObjectEntry(comment.text[0]),
+            description: parseDescription(parseObjectEntry(comment.text[0])),
           };
         case 'subcellular location':
           if (comment.subcellularLocation) {

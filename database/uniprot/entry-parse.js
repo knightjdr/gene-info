@@ -2,7 +2,7 @@ const arrayUnique = require('../helpers/array-unique');
 const findGene = require('./find-gene');
 const getComments = require('./get-comments');
 const getDBRefs = require('./get-dbrefs');
-const getName = require('./get-name');
+const { getNames } = require('./get-names');
 const getSequence = require('./get-sequence');
 const sortArray = require('../helpers/sort-array');
 
@@ -12,14 +12,16 @@ const entryParse = (entry) => {
   const genes = findGene(entry.gene);
   if (genes.primary) {
     const comments = getComments(entry.comment);
+    const names = getNames(entry.protein[0]);
     const refs = getDBRefs(entry.dbReference);
     const sequence = getSequence(entry.sequence[0]);
     return {
+      alternativeNames: names.alternative,
       biogrid: refs.biogrid,
       description: comments.description,
       'ensembl-gene': refs['ensembl-gene'],
       'ensembl-protein': refs['ensembl-protein'],
-      fullname: getName(entry.protein[0].recommendedName[0].fullName[0]),
+      fullname: names.full,
       gene: genes.primary,
       geneid: refs.geneid,
       go: {
