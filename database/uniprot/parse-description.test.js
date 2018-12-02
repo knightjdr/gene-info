@@ -18,14 +18,8 @@ beforeAll(async (done) => {
 });
 
 describe('Parse protein description', () => {
-  let description;
-
-  beforeAll(() => {
-    const proteinFunction = exampleEntry.comment.find(v => v.$.type === 'function').text[0]._;
-    description = parseDescription(proteinFunction);
-  });
-
   it('should return name without pubmed IDs', () => {
+    const proteinFunction = exampleEntry.comment.find(v => v.$.type === 'function').text[0]._;
     const expected = 'Promotes cell proliferation. Modulates apoptotic pathways.'
       + ' Increases mitogen-activated protein kinase activity and STK26 activity.'
       + ' Important for cell migration, and for normal structure and assembly of'
@@ -33,6 +27,18 @@ describe('Parse protein description', () => {
       + ' stability of KDR/VEGFR2 and prevents its breakdown. Required for normal'
       + ' cardiovascular development. Required for normal angiogenesis, vasculogenesis'
       + ' and hematopoiesis during embryonic development.';
-    expect(description).toBe(expected);
+    expect(parseDescription(proteinFunction)).toBe(expected);
+  });
+
+  it('should remove pubmed ID with no leading space', () => {
+    const proteinFunction = 'aaaaaa(PubMed:123456). Aaaaaaaa';
+    const expected = 'aaaaaa. Aaaaaaaa';
+    expect(parseDescription(proteinFunction)).toBe(expected);
+  });
+
+  it('should remove pubmed ID with any characters before "Pubmed"', () => {
+    const proteinFunction = 'aaaaaa (ABC|PubMed:123456). Aaaaaaaa';
+    const expected = 'aaaaaa. Aaaaaaaa';
+    expect(parseDescription(proteinFunction)).toBe(expected);
   });
 });
