@@ -1,28 +1,8 @@
-# Gene Info tools
+# Gene Info Chrome extension
 
-## Databases
+## Adding resources
 
-### General
-
-* Uniprot
-ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.xml.gz
-
-### Interactions
-
-* BioGRID
-https://downloads.thebiogrid.org/Download/BioGRID/Latest-Release/BIOGRID-ALL-LATEST.tab2.zip
-
-* IntAct
-ftp.ebi.ac.uk/pub/databases/intact/current/psimitab/intact.zip
-
-## Create database
-
-```
-node index.js
-```
-
-### Flags
-
-* --skip-download
-* --skip-unzip
-* --skip-min
+If you would like see a resource added to the extension please submit an [issue](https://github.com/knightjdr/gene-info/issues) using the "Add my resource" template and provide the requested information. Resources must be:
+* Not for profit
+* Open to the public without login
+* We must be able to download the resource in its entirety as we merge all incorporated databases into one to make request processing faster

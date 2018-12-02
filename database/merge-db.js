@@ -1,6 +1,7 @@
-const mergeDb = (db, interactions) => (
+const mergeDb = (db, domains, interactions) => (
   db.map(entry => ({
     ...entry,
+    domains: domains[entry.uniprot] || [],
     interactors: interactions[entry.gene] || [],
   }))
 );

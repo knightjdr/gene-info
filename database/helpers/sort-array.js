@@ -25,6 +25,12 @@ const sortArray = {
       return 0;
     })
   ),
+  numericalByKey: (arr, key, dir = 'asc') => {
+    if (dir !== 'asc') {
+      return arr.sort((a, b) => a[key] < b[key]);
+    }
+    return arr.sort((a, b) => a[key] > b[key]);
+  },
 };
 
 module.exports = sortArray;

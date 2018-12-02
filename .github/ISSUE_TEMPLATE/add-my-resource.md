@@ -1,6 +1,6 @@
 ---
 name: Add my resource
-about: Suggest an a resource to add to our database
+about: Suggest a resource to add to our database
 
 ---
 
