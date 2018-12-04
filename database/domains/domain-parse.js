@@ -13,10 +13,10 @@ const handleLines = (file, names) => (
     lineReader.on('line', (line) => {
       const [uniprot, pfam, start, end] = line.split('\t');
       const domain = {
-        domain_name: pfam && names[pfam] ? names[pfam] : 'unknown',
+        name: pfam && names[pfam] ? names[pfam] : 'unknown',
         pfam,
-        domain_start: Number(start),
-        domain_end: Number(end),
+        start: Number(start),
+        end: Number(end),
       };
       if (domains[uniprot]) {
         domains[uniprot].push(domain);
@@ -36,7 +36,7 @@ const handleLines = (file, names) => (
 const sortDomains = (domains) => {
   const sortedDomains = {};
   Object.entries(domains).forEach(([gene, arr]) => {
-    sortedDomains[gene] = sortArray.numericalByKey(arr, 'domain_start', 'asc');
+    sortedDomains[gene] = sortArray.numericalByKey(arr, 'start', 'asc');
   });
   return sortedDomains;
 };

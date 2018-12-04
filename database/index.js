@@ -4,6 +4,7 @@ const args = require('./args');
 const domains = require('./domains/domains');
 const generateDB = require('./generate-db');
 const interactions = require('./interactions/interactions');
+const rnaExpression = require('./rna-expression/rna-expression.js');
 const uniprot = require('./uniprot/uniprot');
 
 const options = args();
@@ -16,6 +17,7 @@ const options = args();
 ** keep. */
 Promise.all([
   interactions(options),
+  rnaExpression(options),
   uniprot(options),
 ])
   .then(() => Promise.all([
