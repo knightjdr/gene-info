@@ -43,15 +43,19 @@ const sortDomains = (domains) => {
 
 const domainParse = (domainFile, namesFile) => (
   new Promise((resolve, reject) => {
-    shortNames(namesFile)
-      .then(names => handleLines(domainFile, names))
-      .then((domains) => {
-        const sorted = sortDomains(domains);
-        resolve(sorted);
-      })
-      .catch((err) => {
-        reject(err);
-      });
+    if (fs.existsSync(domainFile)) {
+      shortNames(namesFile)
+        .then(names => handleLines(domainFile, names))
+        .then((domains) => {
+          const sorted = sortDomains(domains);
+          resolve(sorted);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } else {
+      resolve({});
+    }
   })
 );
 

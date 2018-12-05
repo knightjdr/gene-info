@@ -47,23 +47,26 @@ const uniqueInteractions = (interactions) => {
 const tabIterator = file => (
   new Promise((resolve, reject) => {
     let interactions = {};
-
-    const lineReader = readline.createInterface({
-      input: fs.createReadStream(file),
-    });
-    lineReader.on('line', (line) => {
-      const [geneA, geneB, evidence] = line.split('\t');
-      addGene(interactions, geneA, geneB, evidence);
-      addGene(interactions, geneB, geneA, evidence);
-    });
-    lineReader.on('close', () => {
-      interactions = sortInteractions(interactions);
-      interactions = uniqueInteractions(interactions);
+    if (fs.existsSync(file)) {
+      const lineReader = readline.createInterface({
+        input: fs.createReadStream(file),
+      });
+      lineReader.on('line', (line) => {
+        const [geneA, geneB, evidence] = line.split('\t');
+        addGene(interactions, geneA, geneB, evidence);
+        addGene(interactions, geneB, geneA, evidence);
+      });
+      lineReader.on('close', () => {
+        interactions = sortInteractions(interactions);
+        interactions = uniqueInteractions(interactions);
+        resolve(interactions);
+      });
+      lineReader.on('error', (err) => {
+        reject(err);
+      });
+    } else {
       resolve(interactions);
-    });
-    lineReader.on('error', (err) => {
-      reject(err);
-    });
+    }
   })
 );
 

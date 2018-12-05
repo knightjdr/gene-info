@@ -1,0 +1,25 @@
+# config file
+api/config.js
+
+# data folder
+data/
+database/files
+
+# Mac folder
+./**/.DS_Store
+
+# node modules, client and server side
+node_modules
+./**/node_modules
+
+# NPM
+npm-debug.log
+./**/npm-debug.log
+/**/.npmrc
+
+# Optional npm cache directory
+.npm
+./**/npm
+
+#pem key
+chrome-extension/dist.pem

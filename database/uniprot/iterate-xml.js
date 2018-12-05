@@ -11,29 +11,33 @@ const iterateXml = file => (
     const entries = [];
     let entry = '';
 
-    const lineReader = readline.createInterface({
-      input: fs.createReadStream(file),
-    });
-    lineReader.on('line', async (line) => {
-      if (line.startsWith('<entry')) {
-        entry = line;
-      } else if (line.startsWith('</entry>')) {
-        entry += `${line}\n`;
-        const js = await convertXml(entry);
-        const parsed = entryParse(js.entry);
-        if (parsed) {
-          entries.push(parsed);
+    if (fs.existsSync(file)) {
+      const lineReader = readline.createInterface({
+        input: fs.createReadStream(file),
+      });
+      lineReader.on('line', async (line) => {
+        if (line.startsWith('<entry')) {
+          entry = line;
+        } else if (line.startsWith('</entry>')) {
+          entry += `${line}\n`;
+          const js = await convertXml(entry);
+          const parsed = entryParse(js.entry);
+          if (parsed) {
+            entries.push(parsed);
+          }
+        } else {
+          entry += `${line}\n`;
         }
-      } else {
-        entry += `${line}\n`;
-      }
-    });
-    lineReader.on('close', () => {
+      });
+      lineReader.on('close', () => {
+        resolve(entries);
+      });
+      lineReader.on('error', (err) => {
+        reject(err);
+      });
+    } else {
       resolve(entries);
-    });
-    lineReader.on('error', (err) => {
-      reject(err);
-    });
+    }
   })
 );
 
