@@ -1,6 +1,9 @@
 # config file
 api/config.js
 
+# mobile app
+app/
+
 # data folder
 data/
 database/files

@@ -6,6 +6,7 @@ const generateDB = require('./generate-db');
 const interactions = require('./interactions/interactions');
 const rnaExpression = require('./rna-expression/rna-expression.js');
 const uniprot = require('./uniprot/uniprot');
+const writeTissues = require('./write-tissues');
 
 const options = args();
 
@@ -24,6 +25,7 @@ Promise.all([
     domains(options),
   ]))
   .then(() => generateDB())
+  .then(rnaTissues => writeTissues(rnaTissues, './files/rna-tissues.js'))
   .then(() => {
     console.log('complete');
   })
