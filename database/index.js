@@ -4,6 +4,7 @@ const args = require('./args');
 const domains = require('./domains/domains');
 const generateDB = require('./generate-db');
 const interactions = require('./interactions/interactions');
+const localization = require('./localization/localization');
 const rnaExpression = require('./rna-expression/rna-expression.js');
 const uniprot = require('./uniprot/uniprot');
 const writeTissues = require('./write-tissues');
@@ -18,6 +19,7 @@ const options = args();
 ** keep. */
 Promise.all([
   interactions(options),
+  localization(options),
   rnaExpression(options),
   uniprot(options),
 ])
@@ -30,5 +32,5 @@ Promise.all([
     console.log('complete');
   })
   .catch((err) => {
-    console.log(err);
+    console.error(err);
   });

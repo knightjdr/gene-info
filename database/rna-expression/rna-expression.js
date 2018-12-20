@@ -17,7 +17,7 @@ const fsConfig = {
   tissuesFolder: './files/rna-expression/tissues',
 };
 
-/* Download and unzip interactions database from BioGrid and Intact. */
+/* Download and unzip expression database from HPA */
 const rnaExpression = options => (
   new Promise((resolve, reject) => {
     Promise.all([

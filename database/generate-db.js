@@ -4,6 +4,7 @@ const config = require('./config');
 const domainParse = require('./domains/domain-parse');
 const expressionParse = require('./rna-expression/expression-parse');
 const intParse = require('./interactions/iterate-tab');
+const localizationParse = require('./localization/localization-parse');
 const mergeDB = require('./merge-db');
 const uniParse = require('./uniprot/iterate-xml');
 
@@ -18,6 +19,7 @@ const speciesDB = specie => (
       ),
       domainParse(`./files/domains/${specie}.tsv`, './files/domains/domain-names.tsv'),
       intParse(`./files/interactions/${specie}.tab`),
+      localizationParse(`./files/localization/hpa/${specie}.tsv`),
     ])
       .then((values) => {
         [, { rnaTissues }] = values;
