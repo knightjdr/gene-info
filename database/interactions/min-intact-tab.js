@@ -47,7 +47,7 @@ const minTab = (file, path, speciesIDs, skip) => (
                 let [, method] = fields[6].match(methodRegex);
                 method = method.toLowerCase().replace(/-/, ' ');
                 uniqueOrganisms.forEach((organism) => {
-                  streams[organism].write(`${geneA}\t${geneB}\t${method}\n`);
+                  streams[organism].write(`intact\t${geneA}\t${geneB}\t${method}\n`);
                 });
               }
             }

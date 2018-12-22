@@ -8,7 +8,7 @@ const mergeDb = ([
   db.map(entry => ({
     ...entry,
     domains: domains[entry.uniprot] || [],
-    interactors: interactions[entry.gene] || [],
+    interactors: interactions[entry.gene] || {},
     localization: {
       hpa: localization.hpa[entry['ensembl-gene']],
       uniprot: entry.localization.uniprot,

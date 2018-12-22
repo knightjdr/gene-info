@@ -3,43 +3,56 @@
 const fs = require('fs');
 const readline = require('readline');
 
+const arrayUnique = require('../helpers/array-unique');
 const sortArray = require('../helpers/sort-array');
 
-/* Using parameter reassigment as it is much faster in the number of
+/* Using parameter reassigment as it is much faster as the number of
 ** interactions can be ~1M */
-const addGene = (interactions, source, target, evidence) => {
-  if (interactions[source]) {
-    interactions[source].push({ gene: target, evidence });
+const addGene = (interactions, source, target, evidence, database) => {
+  if (interactions[source] && interactions[source][target]) {
+    interactions[source][target][database].push(evidence);
+  } else if (interactions[source]) {
+    interactions[source][target] = {
+      biogrid: [],
+      intact: [],
+    };
+    interactions[source][target][database].push(evidence);
   } else {
-    interactions[source] = [{ gene: target, evidence }];
+    interactions[source] = {};
+    interactions[source][target] = {
+      biogrid: [],
+      intact: [],
+    };
+    interactions[source][target][database].push(evidence);
   }
 };
 
 const sortInteractions = (interactions) => {
   const sortedInteractions = {};
-  Object.entries(interactions).forEach(([gene, interactors]) => {
-    sortedInteractions[gene] = sortArray.alphabeticalByTwoKeys(interactors, 'gene', 'evidence');
+  Object.keys(interactions).forEach((source) => {
+    sortedInteractions[source] = Object.keys(interactions[source]).map((target) => {
+      const sortedBiogrid = sortArray.alphabetical(interactions[source][target].biogrid);
+      const sortedIntact = sortArray.alphabetical(interactions[source][target].intact);
+      return {
+        gene: target,
+        biogrid: sortedBiogrid,
+        intact: sortedIntact,
+      };
+    });
+    sortedInteractions[source] = sortArray.alphabeticalByKey(sortedInteractions[source], 'gene');
   });
   return sortedInteractions;
 };
 
-const uniqueInteractions = (interactions) => {
+// Remove any duplicated evidences.
+const uniqueEvidence = (interactions) => {
   const uniqueInt = {};
-  Object.entries(interactions).forEach(([gene, interactors]) => {
-    let last = {};
-    uniqueInt[gene] = interactors.reduce((arrAccum, obj) => {
-      if (
-        obj.gene !== last.gene
-        || obj.evidence !== last.evidence
-      ) {
-        last = obj;
-        return [
-          ...arrAccum,
-          obj,
-        ];
-      }
-      return arrAccum;
-    }, []);
+  Object.entries(interactions).forEach(([source, targets]) => {
+    uniqueInt[source] = targets.map(obj => ({
+      gene: obj.gene,
+      biogrid: arrayUnique(obj.biogrid),
+      intact: arrayUnique(obj.intact),
+    }));
   });
   return uniqueInt;
 };
@@ -52,13 +65,13 @@ const tabIterator = file => (
         input: fs.createReadStream(file),
       });
       lineReader.on('line', (line) => {
-        const [geneA, geneB, evidence] = line.split('\t');
-        addGene(interactions, geneA, geneB, evidence);
-        addGene(interactions, geneB, geneA, evidence);
+        const [database, geneA, geneB, evidence] = line.split('\t');
+        addGene(interactions, geneA, geneB, evidence, database);
+        addGene(interactions, geneB, geneA, evidence, database);
       });
       lineReader.on('close', () => {
         interactions = sortInteractions(interactions);
-        interactions = uniqueInteractions(interactions);
+        interactions = uniqueEvidence(interactions);
         resolve(interactions);
       });
       lineReader.on('error', (err) => {

@@ -36,7 +36,7 @@ const minTab = (file, path, speciesIDs, skip) => (
             const geneB = fields[8];
             const method = fields[11].toLowerCase().replace(/-/, ' ');
             uniqueOrganisms.forEach((organism) => {
-              streams[organism].write(`${geneA}\t${geneB}\t${method}\n`);
+              streams[organism].write(`biogrid\t${geneA}\t${geneB}\t${method}\n`);
             });
           }
         }
