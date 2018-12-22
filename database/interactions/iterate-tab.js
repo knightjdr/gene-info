@@ -1,4 +1,5 @@
 /* eslint no-param-reassign: 0 */
+/* eslint no-console: 0 */
 
 const fs = require('fs');
 const readline = require('readline');
@@ -78,6 +79,7 @@ const tabIterator = file => (
         reject(err);
       });
     } else {
+      console.error(`Missing interactions file: ${file}`);
       resolve(interactions);
     }
   })

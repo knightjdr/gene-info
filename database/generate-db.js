@@ -19,7 +19,10 @@ const speciesDB = specie => (
       ),
       domainParse(`./files/domains/${specie}.tsv`, './files/domains/domain-names.tsv'),
       intParse(`./files/interactions/${specie}.tab`),
-      localizationParse(`./files/localization/hpa/${specie}.tsv`),
+      localizationParse(
+        `./files/localization/hpa/${specie}.tsv`,
+        `./files/localization/compartments/${specie}.tsv`,
+      ),
     ])
       .then((values) => {
         [, { rnaTissues }] = values;

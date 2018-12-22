@@ -13,7 +13,7 @@
 
 ## Expression
 
-### RNA
+### Human protein atlas (RNA)
 * https://www.proteinatlas.org/download/rna_celline.tsv.zip
 * https://www.proteinatlas.org/download/rna_tissue.tsv.zip
 
@@ -25,9 +25,17 @@
 ### IntAct
 * ftp.ebi.ac.uk/pub/databases/intact/current/psimitab/intact.zip
 
+## Localization
+
+### Compartments
+* http://download.jensenlab.org/human_compartment_integrated_full.tsv
+
+### Human protein atlas
+* https://www.proteinatlas.org/download/subcellular_location.tsv.zip
+
 ## Create database
 
-Databases for each species specied in configs.js will be written to `files/databases`. Javascript files containing tissues in expression databases for each species will be written to `files/rna-expression.js`.
+Databases for each species specified in configs.js will be written to `files/databases`. Javascript files containing tissues in expression databases for each species will be written to `files/rna-expression.js`.
 
 ```
 node index.js

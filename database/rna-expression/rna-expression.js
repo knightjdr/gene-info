@@ -1,5 +1,5 @@
 const createFolder = require('../helpers/create-folder');
-const downloadHttp = require('../helpers/download-http');
+const downloadHttps = require('../helpers/download-https');
 const unzipFile = require('../helpers/unzip-file');
 
 const fsConfig = {
@@ -25,8 +25,8 @@ const rnaExpression = options => (
       createFolder(fsConfig.tissuesFolder),
     ])
       .then(() => Promise.all([
-        downloadHttp(fsConfig.cell.url, fsConfig.cell.zipFile, options.skipDownload),
-        downloadHttp(fsConfig.tissue.url, fsConfig.tissue.zipFile, options.skipDownload),
+        downloadHttps(fsConfig.cell.url, fsConfig.cell.zipFile, options.skipDownload),
+        downloadHttps(fsConfig.tissue.url, fsConfig.tissue.zipFile, options.skipDownload),
       ]))
       .then(() => Promise.all([
         unzipFile(

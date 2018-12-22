@@ -1,5 +1,5 @@
 const fs = require('fs');
-const http = require('http');
+const https = require('https');
 
 const downloadHttp = (url, dest, skip) => (
   new Promise((resolve, reject) => {
@@ -7,7 +7,7 @@ const downloadHttp = (url, dest, skip) => (
       resolve();
     } else {
       const stream = fs.createWriteStream(dest);
-      http.get(url, (response) => {
+      https.get(url, (response) => {
         response.on('data', (chunk) => {
           stream.write(chunk);
         });

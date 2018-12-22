@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 const fs = require('fs');
 const readline = require('readline');
 
@@ -54,6 +56,7 @@ const domainParse = (domainFile, namesFile) => (
           reject(err);
         });
     } else {
+      console.error(`Missing domain file: ${domainFile}`);
       resolve({});
     }
   })

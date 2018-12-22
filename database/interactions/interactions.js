@@ -1,7 +1,7 @@
 const createFolder = require('../helpers/create-folder');
 const config = require('../config');
 const downloadFtp = require('../helpers/download-ftp');
-const downloadHttp = require('../helpers/download-http');
+const downloadHttps = require('../helpers/download-https');
 const minBiogridTab = require('./min-biogrid-tab');
 const minIntactTab = require('./min-intact-tab');
 const unzipFile = require('../helpers/unzip-file');
@@ -26,7 +26,7 @@ const interactions = options => (
   new Promise((resolve, reject) => {
     createFolder(fsConfig.folder)
       .then(() => Promise.all([
-        downloadHttp(fsConfig.biogrid.url, fsConfig.biogrid.zipFile, options.skipDownload),
+        downloadHttps(fsConfig.biogrid.url, fsConfig.biogrid.zipFile, options.skipDownload),
         downloadFtp(
           fsConfig.intact.host,
           fsConfig.intact.hostFile,

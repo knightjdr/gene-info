@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 const fs = require('fs');
 const readline = require('readline');
 
@@ -39,6 +41,7 @@ const handleLines = file => (
         reject(err);
       });
     } else {
+      console.error(`Missing HPA RNA expression file: ${file}`);
       resolve({});
     }
   })

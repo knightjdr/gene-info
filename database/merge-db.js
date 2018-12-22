@@ -10,7 +10,8 @@ const mergeDb = ([
     domains: domains[entry.uniprot] || [],
     interactors: interactions[entry.gene] || {},
     localization: {
-      hpa: localization.hpa[entry['ensembl-gene']],
+      compartments: Boolean(localization.compartments[entry['ensembl-protein']]),
+      hpa: localization.hpa[entry['ensembl-gene']] || {},
       uniprot: entry.localization.uniprot,
     },
     'rna-expression': rnaExpression[entry['ensembl-gene']] || { cells: {}, tissues: {} },
