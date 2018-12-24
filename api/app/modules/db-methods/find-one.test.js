@@ -21,6 +21,7 @@ const findOne = require('./find-one');
 
 // expected return values
 const response = {
+  missing: [],
   one: [{ _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' }],
   subset: [{ field: 'a' }],
 };
@@ -43,6 +44,12 @@ describe('Query for a single entry', () => {
     it('should subset returned documents from database', () => (
       findOne('get', {}, { _id: 0, field: 1 }).then((getCollection) => {
         expect(getCollection).toEqual(response.subset);
+      })
+    ));
+
+    it('should not find a record in the database', () => (
+      findOne('get', { name: 'test-missing' }).then((getCollection) => {
+        expect(getCollection).toEqual(response.missing);
       })
     ));
   });

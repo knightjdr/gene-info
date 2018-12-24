@@ -11,7 +11,7 @@ about: Suggest a resource to add to our database
 * how many daily users/requests does it handle?
 * how can we download the resource programmatically and in what format(s)?
 * how often does it update?
-* what species does it support (if this is a large amount, just provide a number)?
+* what species does it support (if this is a large number, just provide an estimation)?
 * how are database entries indexed (e.g. Uniprot accession, official gene name, etc)?
 
 **Additional context**

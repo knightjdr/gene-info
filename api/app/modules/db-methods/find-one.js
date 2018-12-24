@@ -11,7 +11,11 @@ const find = (
     db.collection(`${config.database.prefix}${collection}`)
       .findOne(queryObject, { projection: returnObject })
       .then((document) => {
-        resolve([document]);
+        if (document) {
+          resolve([document]);
+        } else {
+          resolve([]);
+        }
       })
       .catch((err) => {
         reject(err);

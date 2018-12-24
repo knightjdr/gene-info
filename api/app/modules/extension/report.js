@@ -13,24 +13,28 @@ const report = (req, res) => {
     res.status(400);
     res.end();
   } else {
-    const findMethod = field === 'gene' ? find : findOne;
-    const query = createQuery(field, term);
+    const findMethod = validated.field === 'gene' ? find : findOne;
+    const query = createQuery(validated.field, validated.term);
     Promise.all([
-      findMethod(species, query, {}, { gene: 1 }),
-      tracking(req.ip, species, field, term),
+      findMethod(validated.species, query, {}, { gene: 1 }),
+      tracking(req.ip, validated.species, validated.field, validated.term),
     ])
       .then((results) => {
         const [matches] = results;
-        const official = [];
-        const nonOfficial = [];
-        matches.forEach((match) => {
-          if (match.gene === term) {
-            official[0] = match;
-          } else {
-            nonOfficial.push(match);
-          }
-        });
-        res.send({ result: [...official, ...nonOfficial] });
+        if (!matches || matches.length === 0) {
+          res.send({ result: [] });
+        } else {
+          const official = [];
+          const nonOfficial = [];
+          matches.forEach((match) => {
+            if (match.gene === validated.term) {
+              official[0] = match;
+            } else {
+              nonOfficial.push(match);
+            }
+          });
+          res.send({ result: [...official, ...nonOfficial] });
+        }
       })
       .catch((err) => {
         res.statusMessage = `Gene-Info extension ${err.toString()}`;
