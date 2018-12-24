@@ -1,6 +1,5 @@
 const concat = require('gulp-concat');
 const gulp = require('gulp');
-const nodemon = require('gulp-nodemon');
 const sass = require('gulp-sass');
 
 const dest = 'chrome-extension/dist/';
@@ -12,7 +11,6 @@ const modules = {
     target: 'content.js',
   },
   event: { src: 'chrome-extension/src/events/**/*.js', target: 'event.js' },
-  node: { src: 'api/**/*.js' },
   popup: {
     sass: 'chrome-extension/src/popup/popup.scss',
     src: 'chrome-extension/src/popup/**/*.js',
@@ -40,12 +38,6 @@ const sassBuild = (module) => {
 };
 
 gulp.task('dev', () => {
-  nodemon({
-    script: 'api/index.js',
-    watch: modules.node.src,
-  }).on('restart', () => {
-    gulp.src('api/index.js');
-  });
   gulp.watch(modules.content.src, jsBuild(modules.content));
   gulp.watch(modules.event.src, jsBuild(modules.event));
   gulp.watch(modules.popup.src, jsBuild(modules.popup));

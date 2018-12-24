@@ -1,51 +1,43 @@
-'use strict';
+const createQuery = require('./create-query');
+const find = require('../db-methods/find');
+const findOne = require('../db-methods/find-one');
+const tracking = require('../tracking/tracking');
+const validate = require('./validate');
 
-const crud = require('../crud/crud');
-const sortFunctions = require('../helpers/sort');
-
-const Report =  {
-  extension: function(gene, res) {
-    // check if gene is null
-    if (
-      !gene ||
-      (typeof gene !== 'number' && typeof gene !== 'string')
-    ) {
-      res.status(400).send({error: 'The query must be a non-empty string or number'});
-    } else {
-      const searchString = '^' + gene + '$';
-			const re = new RegExp(searchString, "i");
-      const queryObj = {
-        $or: [
-          { gene: { $regex: re } },
-          { synonyms: re }
-        ]
-      };
-      crud.get('geneinfo', 'homosapiens', queryObj)
-        .then((matches) => {
-          if (matches.length === 0) {
-            res.send({status: 200, result: []});
-          } else if (matches.length === 1) {
-            res.send({status: 200, result: matches});
+const report = (req, res) => {
+  const { field, term } = req.params;
+  const species = req.params.species.split('-').join(' ');
+  const validated = validate(species, field, term);
+  if (validated.err) {
+    res.statusMessage = validated.message;
+    res.status(400);
+    res.end();
+  } else {
+    const findMethod = field === 'gene' ? find : findOne;
+    const query = createQuery(field, term);
+    Promise.all([
+      findMethod(species, query, {}, { gene: 1 }),
+      tracking(req.ip, species, field, term),
+    ])
+      .then((results) => {
+        const [matches] = results;
+        const official = [];
+        const nonOfficial = [];
+        matches.forEach((match) => {
+          if (match.gene === term) {
+            official[0] = match;
           } else {
-            let orderedMatches = [];
-            let nonGeneMatches = [];
-            matches.some((match) => {
-              if (match.gene === gene) {
-                orderedMatches[0] = match;
-              } else {
-                nonGeneMatches.push(match);
-              }
-            });
-            nonGeneMatches = sortFunctions.string(nonGeneMatches, 'gene');
-            orderedMatches = orderedMatches.concat(nonGeneMatches);
-            res.send({status: 200, result: orderedMatches});
+            nonOfficial.push(match);
           }
-        })
-        .catch(function(error) {
-          res.status(500).send({status: 500, error: 'Gene-Info extension ' + error});
-        })
-      ;
-    }
+        });
+        res.send({ result: [...official, ...nonOfficial] });
+      })
+      .catch((err) => {
+        res.statusMessage = `Gene-Info extension ${err.toString()}`;
+        res.status(500);
+        res.end();
+      });
   }
 };
-module.exports = Report;
+
+module.exports = report;

@@ -1,17 +1,26 @@
-'use strict';
+const insert = require('../db-methods/insert');
+const ipInfo = require('./ip-info');
 
-const crud = require('../crud/crud');
-
-const tracking = {
-  log: function(req, res, next) {
-    crud.create('tracking', 'geneinfo', {ip: req.ip, date: new Date()})
-      .then(function() {
-        next();
+const tracking = (ip, species, field, gene) => (
+  new Promise((resolve) => {
+    const info = ipInfo(ip);
+    const insertObj = {
+      city: info.city,
+      country: info.country,
+      date: new Date(),
+      field,
+      gene,
+      region: info.region,
+      species,
+    };
+    insert('tracking', insertObj)
+      .then(() => {
+        resolve();
       })
-      .catch(function() {
-				next();
-			})
-    ;
-  }
-};
+      .catch((err) => {
+        resolve(err);
+      });
+  })
+);
+
 module.exports = tracking;

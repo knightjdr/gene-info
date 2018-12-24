@@ -1,27 +1,42 @@
-'use strict';
+const init = require('./init');
+const Logger = require('../../logger');
 
-const config = require('../../config');
-const mongo = require('mongodb');
-const mongoClient = mongo.MongoClient;
-
-const Connection = {
-  acquire: function(name) {
-    return Connection.connection[name];
-  },
-  connection: {},
-  init: function() {
-    config.database.names.forEach(function(v) {
-      const url = 'mongodb://' + config.database.user + ':' + config.database.readPW + '@localhost:27017/' + v;
-      mongoClient.connect(url, function(err, db) {
-        if(!err) {
-          Connection.connection[v] = db;
-          console.log('MongoDB connected, db: ' + v);
-        } else {
-          console.log(err);
-          console.log('Could not connect to database ' + v);
-        }
-      });
-    });
-  }
+// initialize database when class is first requried
+const database = {
+  client: null,
+  close: () => (
+    new Promise((resolve, reject) => {
+      if (database.connection) {
+        database.client.close()
+          .then(() => {
+            database.client = null;
+            database.connection = null;
+            Logger.info('database connection closed');
+            resolve();
+          })
+          .catch((err) => {
+            Logger.error(err);
+            reject();
+          });
+      }
+      resolve();
+    })
+  ),
+  connection: null,
+  init: () => (
+    new Promise((resolve, reject) => {
+      init()
+        .then((initObj) => {
+          database.client = initObj.client;
+          database.connection = initObj.db;
+          resolve();
+        })
+        .catch((err) => {
+          Logger.error(err);
+          reject(err);
+        });
+    })
+  ),
 };
-module.exports = Connection;
+
+module.exports = database;

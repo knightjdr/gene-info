@@ -1,10 +1,11 @@
-# config file
+# api onfig file
 api/config.js
 
 # mobile app
 app/
 
-# data folder
+# data and log folder
+api/log
 data/
 database/files
 
