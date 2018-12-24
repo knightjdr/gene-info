@@ -37,7 +37,7 @@ const entryParse = (entry) => {
       mw: sequence.mw,
       proteomicsdb: refs.proteomicsdb,
       synonyms: sortArray.alphabetical(genes.synonyms),
-      uniprot: entry.accession[0],
+      uniprot: entry.accession,
     };
   }
   return null;

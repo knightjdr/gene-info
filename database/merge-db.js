@@ -7,14 +7,14 @@ const mergeDb = ([
 ]) => (
   db.map(entry => ({
     ...entry,
-    domains: domains[entry.uniprot] || [],
+    domains: entry.uniprot[0] && domains[entry.uniprot[0]] ? domains[entry.uniprot[0]] : [],
     interactors: interactions[entry.gene] || {},
     localization: {
-      compartments: Boolean(localization.compartments[entry['ensembl-protein']]),
-      hpa: localization.hpa[entry['ensembl-gene']] || {},
+      compartments: entry['ensembl-protein'][0] && Boolean(localization.compartments[entry['ensembl-protein'][0]]),
+      hpa: entry['ensembl-gene'][0] && localization.hpa[entry['ensembl-gene'][0]] ? localization.hpa[entry['ensembl-gene'][0]] : {},
       uniprot: entry.localization.uniprot,
     },
-    'rna-expression': rnaExpression[entry['ensembl-gene']] || { cells: {}, tissues: {} },
+    'rna-expression': entry['ensembl-gene'][0] && rnaExpression[entry['ensembl-gene'][0]] ? rnaExpression[entry['ensembl-gene'][0]] : {},
   }))
 );
 

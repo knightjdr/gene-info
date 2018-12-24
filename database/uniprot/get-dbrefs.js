@@ -1,3 +1,5 @@
+const arrayUnique = require('../helpers/array-unique');
+
 const getDBRefs = dbRefs => (
   dbRefs.reduce((accum, ref) => {
     if (ref.$.type === 'BioGrid') {
@@ -35,7 +37,7 @@ const getDBRefs = dbRefs => (
           ],
         },
       };
-    } if (ref.$.type === 'Ensembl' && !accum['ensembl-gene']) {
+    } if (ref.$.type === 'Ensembl') {
       const ensembl = ref.property.reduce((accumRef, prop) => {
         if (prop.$.type === 'gene ID') {
           return {
@@ -52,8 +54,8 @@ const getDBRefs = dbRefs => (
       }, {});
       return {
         ...accum,
-        'ensembl-gene': ensembl.gene,
-        'ensembl-protein': ensembl.protein,
+        'ensembl-gene': arrayUnique([...accum['ensembl-gene'], ensembl.gene]),
+        'ensembl-protein': arrayUnique([...accum['ensembl-protein'], ensembl.protein]),
       };
     } if (ref.$.type === 'HGNC') {
       return {
@@ -67,7 +69,11 @@ const getDBRefs = dbRefs => (
       };
     }
     return accum;
-  }, { go: { c: [], f: [], p: [] } })
+  }, {
+    'ensembl-gene': [],
+    'ensembl-protein': [],
+    go: { c: [], f: [], p: [] },
+  })
 );
 
 module.exports = getDBRefs;

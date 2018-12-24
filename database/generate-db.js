@@ -1,11 +1,10 @@
-const { promises } = require('fs');
-
 const config = require('./config');
 const domainParse = require('./domains/domain-parse');
 const expressionParse = require('./rna-expression/expression-parse');
 const intParse = require('./interactions/iterate-tab');
 const localizationParse = require('./localization/localization-parse');
 const mergeDB = require('./merge-db');
+const jsonStringify = require('./helpers/json-stringify');
 const uniParse = require('./uniprot/iterate-xml');
 
 const speciesDB = specie => (
@@ -27,7 +26,7 @@ const speciesDB = specie => (
       .then((values) => {
         [, { rnaTissues }] = values;
         const merged = mergeDB(values);
-        return promises.writeFile(`./files/databases/${specie}.json`, JSON.stringify(merged, null, 2));
+        return jsonStringify(`./files/databases/${specie}.json`, merged);
       })
       .then(() => {
         resolve(rnaTissues);
