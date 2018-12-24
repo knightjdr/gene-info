@@ -1,24 +1,21 @@
-# api onfig file
-api/config.js
+# api
+/api/config.js
+/api/logs
 
 # mobile app
-app/
+/app
 
-# data and log folder
-api/log
-data/
-database/files
+# database files
+/database/files/*
 
 # Mac folder
-./**/.DS_Store
+.DS_Store
 
 # node modules, client and server side
 node_modules
-./**/node_modules
 
 # NPM
 npm-debug.log
-./**/npm-debug.log
 /**/.npmrc
 
 # Optional npm cache directory

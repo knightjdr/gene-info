@@ -2,7 +2,7 @@ const createQuery = require('./create-query');
 const find = require('../db-methods/find');
 const findOne = require('../db-methods/find-one');
 const tracking = require('../tracking/tracking');
-const validate = require('./validate');
+const { validate } = require('./validate');
 
 const report = (req, res) => {
   const { field, term } = req.params;

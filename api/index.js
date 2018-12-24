@@ -5,7 +5,7 @@ const express = require('express');
 const http = require('http');
 
 const config = require('./config');
-const database = require('./app/connections/databases');
+const database = require('./app/connections/database');
 const logger = require('./logger');
 const responseHeaders = require('./setup/response-headers');
 const router = require('./app/routes/router');

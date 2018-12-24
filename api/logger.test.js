@@ -19,8 +19,8 @@ const promiseDelay = () => (
 );
 
 afterAll(() => {
-  fs.unlinkSync('logs/test-combined.log');
-  fs.unlinkSync('logs/test-error.log');
+  fs.unlinkSync('api/logs/test-combined.log');
+  fs.unlinkSync('api/logs/test-error.log');
 });
 
 describe('Logging', () => {
@@ -42,14 +42,14 @@ describe('Logging', () => {
     it('should log all messages to combined.log', async () => {
       // need a delay with this test because logger doesn't write immediately
       await promiseDelay();
-      const file = fs.readFileSync('logs/test-combined.log', 'utf8');
+      const file = fs.readFileSync('api/logs/test-combined.log', 'utf8');
       expect(file).toMatch(messages.output.combined);
     });
 
     it('should log error messages to error.log', async () => {
       // need a delay with this test because logger doesn't write immediately
       await promiseDelay();
-      const file = fs.readFileSync('logs/test-error.log', 'utf8');
+      const file = fs.readFileSync('api/logs/test-error.log', 'utf8');
       expect(file).toMatch(messages.output.error);
     });
   });

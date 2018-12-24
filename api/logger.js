@@ -4,7 +4,7 @@ const config = require('./config');
 
 // set env and log directory
 const env = process.env.NODE_ENV || 'development';
-const logDir = 'logs';
+const logDir = 'api/logs';
 
 // configure timestamp
 const tsOptions = {
