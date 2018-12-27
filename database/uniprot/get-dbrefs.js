@@ -67,12 +67,20 @@ const getDBRefs = dbRefs => (
         ...accum,
         proteomicsdb: Number(ref.$.id),
       };
+    } if (ref.$.type === 'RefSeq') {
+      const id = ref.$.id.split('.')[0];
+      const value = ref.property[0].$.value.split('.')[0];
+      return {
+        ...accum,
+        refseq: arrayUnique([...accum.refseq, id, value]),
+      };
     }
     return accum;
   }, {
     'ensembl-gene': [],
     'ensembl-protein': [],
     go: { c: [], f: [], p: [] },
+    refseq: [],
   })
 );
 

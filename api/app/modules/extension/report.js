@@ -36,8 +36,7 @@ const report = (req, res) => {
           res.send({ result: [...official, ...nonOfficial] });
         }
       })
-      .catch((err) => {
-        res.statusMessage = `Gene-Info extension ${err.toString()}`;
+      .catch(() => {
         res.status(500);
         res.end();
       });

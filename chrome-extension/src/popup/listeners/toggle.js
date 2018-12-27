@@ -1,14 +1,17 @@
-function toggle() {
-  const checked = this.checked;
-  const toggleValue = checked ? 'on' : 'off';
-  const type = this.dataset.type;
+import updateTab from './update-tab';
+
+const toggle = function tog() {
+  const { checked } = this;
+  const { type } = this.dataset;
   const toggleObj = {};
-  toggleObj['detail-' + type] = toggleValue;
-  // update storage settings
+  toggleObj[`detail-${type}`] = checked;
   chrome.storage.local.set(toggleObj);
-  // update content options
-  tabsFunction({ action: 'toggleDisplayElement', type: type, checked: checked });
-  // hide toggle options if exist
+  updateTab({ action: 'toggleDisplayElement', type, checked });
   const optionsID = `toggle-container-options-${type}`;
-  document.getElementById(optionsID).style.display = checked ? 'block' : 'none';
-}
+  const el = document.getElementById(optionsID);
+  if (el) {
+    el.style.display = checked ? 'block' : 'none';
+  }
+};
+
+export default toggle;

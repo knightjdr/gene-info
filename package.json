@@ -5,6 +5,7 @@
   "main": "package.json",
   "scripts": {
     "dev-api": "NODE_ENV=development nodemon node api/index.js",
+    "dev-ext": "webpack --watch",
     "prod-api": "NODE_ENV=production node api/index.js",
     "prod-api-forever": "NODE_ENV=production forever start -a --uid 'gene-info-api' api/index.js",
     "test": "jest"
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/knightjdr/gene-info#readme",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "css-loader": "^2.1.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -32,7 +34,11 @@
     "gulp-sass": "^3.1.0",
     "jest": "^23.6.0",
     "jshint": "^2.9.6",
-    "jshint-stylish": "^2.2.1"
+    "jshint-stylish": "^2.2.1",
+    "mini-css-extract-plugin": "^0.5.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.28.2",
+    "webpack-cli": "^3.1.2"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -57,5 +63,11 @@
       "api/*"
     ],
     "verbose": true
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/app",
+      "/node_modules"
+    ]
   }
 }

@@ -1,11 +1,15 @@
-function reportType() {
-  const type = this.dataset.type;
-  ['detailed', 'tooltip'].forEach((v) => {
-    if (v === type) {
-      chrome.storage.local.set({ 'report': v });
+import updateTab from './update-tab';
+
+const reportType = function report() {
+  const { type } = this.dataset;
+  ['detailed', 'tooltip'].forEach((option) => {
+    if (option === type) {
+      chrome.storage.local.set({ report: option });
     } else {
-      document.getElementById('report_' + v).checked = false;
+      document.getElementById(`report_${option}`).checked = false;
     }
   });
-  tabsFunction({ action: 'toggleReportType', type: type });
-}
+  updateTab({ action: 'toggleReportType', type });
+};
+
+export default reportType;

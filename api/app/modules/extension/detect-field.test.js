@@ -37,6 +37,28 @@ describe('Detect field', () => {
     expect(detectField(term)).toBe('geneid');
   });
 
+  describe('RefSeq', () => {
+    it('should detect NP_ accession', () => {
+      const term = 'NP_009148';
+      expect(detectField(term)).toBe('refseq');
+    });
+
+    it('should detect NM_ accession', () => {
+      const term = 'NM_007217';
+      expect(detectField(term)).toBe('refseq');
+    });
+
+    it('should detect XP_ accession', () => {
+      const term = 'XP_005247144';
+      expect(detectField(term)).toBe('refseq');
+    });
+
+    it('should detect XM_ accession', () => {
+      const term = 'XM_005247087';
+      expect(detectField(term)).toBe('refseq');
+    });
+  });
+
   describe('Uniprot', () => {
     it('should detect O, P, Q type accession', () => {
       const term = 'Q9BUL8';

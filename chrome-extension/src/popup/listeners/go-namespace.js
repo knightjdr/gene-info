@@ -1,13 +1,15 @@
-function goNamespace() {
-  console.log('here');
-  const type = this.dataset.type;
-  console.log(type);
-  ['bp', 'cc', 'mf'].forEach((v) => {
-    if (v === type) {
-      chrome.storage.local.set({ 'goNamespace': v });
+import updateTab from './update-tab';
+
+const goNamespace = function namespage() {
+  const { type } = this.dataset;
+  ['bp', 'cc', 'mf'].forEach((option) => {
+    if (option === type) {
+      chrome.storage.local.set({ goNamespace: option });
     } else {
-      document.getElementById('goNamespace_' + v).checked = false;
+      document.getElementById(`goNamespace_${option}`).checked = false;
     }
   });
-  tabsFunction({ action: 'toggleGoNamespace', type: type });
-}
+  updateTab({ action: 'toggleGoNamespace', type });
+};
+
+export default goNamespace;

@@ -7,6 +7,7 @@ const fields = [
   'ensembl-protein',
   'gene',
   'geneid',
+  'refseq',
   'uniprot',
 ];
 
