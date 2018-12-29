@@ -4,12 +4,12 @@ const goNamespace = function namespage() {
   const { type } = this.dataset;
   ['bp', 'cc', 'mf'].forEach((option) => {
     if (option === type) {
-      chrome.storage.local.set({ goNamespace: option });
+      chrome.storage.local.set({ check_namespace: option });
     } else {
-      document.getElementById(`goNamespace_${option}`).checked = false;
+      document.getElementById(`check_namespace_${option}`).checked = false;
     }
   });
-  updateTab({ action: 'toggleGoNamespace', type });
+  updateTab({ action: 'updateNamespace', type });
 };
 
 export default goNamespace;

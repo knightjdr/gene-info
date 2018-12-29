@@ -1,11 +1,15 @@
-import activationMethod from './activation-method';
-import details from './details';
-import reportType from './report-type';
+import activationCheckbox from './activation-checkbox';
+import menus from './menus';
+import namspaceCheckbox from './namespace-checkbox';
+import reportCheckbox from './report-checkbox';
+import toggles from './toggles';
 
 const loadPreferences = () => {
-  activationMethod();
-  details();
-  reportType();
+  activationCheckbox();
+  menus();
+  namspaceCheckbox();
+  reportCheckbox();
+  toggles();
 };
 
 export default loadPreferences;

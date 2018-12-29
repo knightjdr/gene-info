@@ -5,99 +5,109 @@
     <script src="popup.js"></script>
   </head>
   <body>
-    <section class="activate">
-      <h1>Activate by:</h1>
-      <hr />
-      <div>
-        <input class="checkbox activate-click" data-type="click" id="report_click" tabindex="-1" type="checkbox" checked />
-        <label for="report_click">Double click</label>
-      </div>
-      <div>
-        <input class="checkbox activate-click" data-type="drag" id="report_drag" tabindex="-1" type="checkbox" />
-        <label for="report_drag">Drag select</label>
-      </div>
-      <div>
-        <input class="checkbox activate-click" data-type="disable" id="report_disable" tabindex="-1" type="checkbox" />
-        <label for="report_disable">Disable</label>
-      </div>
-    </section>
-    <section class="field">
-      <h1>Term type:</h1>
-      <hr />
-      <select data-type="field" id="detail_field">
-        <option value="ensembl-gene">Ensembl gene</option>
-        <option value="ensembl-protein">Ensembl protein</option>
-        <option value="geneid">Gene ID</option>
-        <option value="gene">Gene name</option>
-        <option value="refseq">RefSeq</option>
-        <option value="uniprot">UniProt</option>
-      </select>
-      <div class="toggle-container">
-        <input class="toggle toggle-flat" data-type="auto" id="detail_auto" type="checkbox" tabindex="-1" checked />
-        <label for="detail_auto"></label>
-        Auto detect
-      </div>
-    </section>
-    <section class="display">
-      <h1>Display options:</h1>
-      <hr />
-      <div>
-        <input class="checkbox display-click" data-type="detailed" id="report_detailed" tabindex="-1" type="checkbox" checked />
-        <label for="report_detailed">Detailed report</label>
-      </div>
-      <div>
-        <input class="checkbox display-click" data-type="tooltip" id="report_tooltip" tabindex="-1" type="checkbox" />
-        <label for="report_tooltip">Tooltip report</label>
-      </div>
-    </section>
-    <section>
-      <h1>Information options:</h1>
-      <hr />
-      <div class="toggle-container">
-        <input class="toggle toggle-flat" data-type="basic" id="detail_basic" type="checkbox" tabindex="-1" checked />
-        <label for="detail_basic"></label>
-        Basic
-      </div>
-      <div class="toggle-container">
-        <input class="toggle toggle-flat" data-type="description" id="detail_description" type="checkbox" tabindex="-1" checked />
-        <label for="detail_description"></label>
-        Description
-      </div>
-      <div class="toggle-container">
-        <input class="toggle toggle-flat" data-type="domain" id="detail_domain" type="checkbox" tabindex="-1" checked />
-        <label for="detail_domain"></label>
-        Domain
-      </div>
-      <div class="toggle-container">
-        <input class="toggle toggle-flat" data-type="links" id="detail_links" type="checkbox" tabindex="-1" checked />
-        <label for="detail_links"></label>
-        Links
-      </div>
-      <div class="toggle-container">
-        <input class="toggle toggle-flat" data-type="go" id="detail_go" type="checkbox" tabindex="-1" checked />
-        <label for="detail_go"></label>
-        GO terms
-      </div>
-      <div class="toggle-container-options" id="toggle-container-options-go">
-        <h2>Default GO namespace</h2>
+    <div>
+      <section class="activate">
+        <h1>Activate by:</h1>
+        <hr />
         <div>
-          <input class="checkbox namespace-click" data-type="bp" id="goNamespace_bp" tabindex="-1" type="checkbox" checked />
-          <label for="goNamespace_bp">BP</label>
+          <input class="checkbox click-activate" data-type="click" id="check_activate_click" tabindex="-1" type="checkbox" checked />
+          <label for="check_activate_click">Double click</label>
         </div>
         <div>
-          <input class="checkbox namespace-click" data-type="cc" id="goNamespace_cc" tabindex="-1" type="checkbox" />
-          <label for="goNamespace_cc">CC</label>
+          <input class="checkbox click-activate" data-type="drag" id="check_activate_drag" tabindex="-1" type="checkbox" />
+          <label for="check_activate_drag">Drag select</label>
         </div>
         <div>
-          <input class="checkbox namespace-click" data-type="mf" id="goNamespace_mf" tabindex="-1" type="checkbox" />
-          <label for="goNamespace_mf">MF</label>
+          <input class="checkbox click-activate" data-type="disable" id="check_activate_disable" tabindex="-1" type="checkbox" />
+          <label for="check_activate_disable">Disable</label>
         </div>
-      </div>
-      <div class="toggle-container">
-        <input class="toggle toggle-flat" data-type="interactors" id="detail_interactors" type="checkbox" tabindex="-1" checked/>
-        <label for="detail_interactors"></label>
-        Interactors
-      </div>
-    </section>
+      </section>
+      <section class="display">
+        <h1>Display options:</h1>
+        <hr />
+        <div>
+          <input class="checkbox click-display" data-type="detailed" id="check_detailed" tabindex="-1" type="checkbox" checked />
+          <label for="check_detailed">Detailed report</label>
+        </div>
+        <div>
+          <input class="checkbox click-display" data-type="tooltip" id="check_tooltip" tabindex="-1" type="checkbox" />
+          <label for="check_tooltip">Tooltip report</label>
+        </div>
+      </section>
+      <section>
+        <h1>Species:</h1>
+        <hr />
+        <select class="select" data-type="species" id="select_species">
+        </select>
+      </section>
+      <section>
+        <h1>Term type:</h1>
+        <hr />
+        <select class="select" data-type="field" id="select_field">
+          <option value="ensembl-gene">Ensembl gene</option>
+          <option value="ensembl-protein">Ensembl protein</option>
+          <option value="geneid">Gene ID</option>
+          <option value="gene">Gene name</option>
+          <option value="refseq">RefSeq</option>
+          <option value="uniprot">UniProt</option>
+        </select>
+        <div class="toggle-container">
+          <input class="toggle toggle-flat" data-type="auto" id="toggle_auto" type="checkbox" tabindex="-1" checked />
+          <label for="toggle_auto"></label>
+          Auto detect
+        </div>
+      </section>
+    </div>
+    <div>
+      <section>
+        <h1>Information options:</h1>
+        <hr />
+        <div class="toggle-container">
+          <input class="toggle toggle-flat" data-type="basic" id="toggle_basic" type="checkbox" tabindex="-1" checked />
+          <label for="toggle_basic"></label>
+          Basic
+        </div>
+        <div class="toggle-container">
+          <input class="toggle toggle-flat" data-type="description" id="toggle_description" type="checkbox" tabindex="-1" checked />
+          <label for="toggle_description"></label>
+          Description
+        </div>
+        <div class="toggle-container">
+          <input class="toggle toggle-flat" data-type="domain" id="toggle_domain" type="checkbox" tabindex="-1" checked />
+          <label for="toggle_domain"></label>
+          Domain
+        </div>
+        <div class="toggle-container">
+          <input class="toggle toggle-flat" data-type="links" id="toggle_links" type="checkbox" tabindex="-1" checked />
+          <label for="toggle_links"></label>
+          Links
+        </div>
+        <div class="toggle-container">
+          <input class="toggle toggle-flat" data-type="go" id="toggle_go" type="checkbox" tabindex="-1" checked />
+          <label for="toggle_go"></label>
+          GO terms
+        </div>
+        <div class="toggle-options" id="toggle_options_go">
+          <h2>Default GO namespace</h2>
+          <div>
+            <input class="checkbox click-namespace" data-type="bp" id="check_namespace_bp" tabindex="-1" type="checkbox" checked />
+            <label for="check_namespace_bp">BP</label>
+          </div>
+          <div>
+            <input class="checkbox click-namespace" data-type="cc" id="check_namespace_cc" tabindex="-1" type="checkbox" />
+            <label for="check_namespace_cc">CC</label>
+          </div>
+          <div>
+            <input class="checkbox click-namespace" data-type="mf" id="check_namespace_mf" tabindex="-1" type="checkbox" />
+            <label for="check_namespace_mf">MF</label>
+          </div>
+        </div>
+        <div class="toggle-container">
+          <input class="toggle toggle-flat" data-type="interactors" id="toggle_interactors" type="checkbox" tabindex="-1" checked/>
+          <label for="toggle_interactors"></label>
+          Interactors
+        </div>
+      </section>
+    </div>
   </body>
 </html>

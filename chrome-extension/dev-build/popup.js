@@ -97,26 +97,33 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _listeners_bind_listeners__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./listeners/bind-listeners */ "./chrome-extension/src/popup/listeners/bind-listeners.js");
 /* harmony import */ var _settings_load_preferences__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settings/load-preferences */ "./chrome-extension/src/popup/settings/load-preferences.js");
-/* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./popup.css */ "./chrome-extension/src/popup/popup.css");
-/* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_popup_css__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _populate_populate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./populate/populate */ "./chrome-extension/src/popup/populate/populate.js");
+/* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./popup.css */ "./chrome-extension/src/popup/popup.css");
+/* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_popup_css__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
 
 
-// Get user preferences on load.
-Object(_settings_load_preferences__WEBPACK_IMPORTED_MODULE_1__["default"])();
 
-// Bind event handlers.
-Object(_listeners_bind_listeners__WEBPACK_IMPORTED_MODULE_0__["default"])();
+document.addEventListener('DOMContentLoaded', () => {
+  // Populate menus.
+  Object(_populate_populate__WEBPACK_IMPORTED_MODULE_2__["default"])();
+
+  // Get user preferences on load.
+  Object(_settings_load_preferences__WEBPACK_IMPORTED_MODULE_1__["default"])();
+
+  // Bind event handlers.
+  Object(_listeners_bind_listeners__WEBPACK_IMPORTED_MODULE_0__["default"])();
+});
 
 
 /***/ }),
 
-/***/ "./chrome-extension/src/popup/listeners/activation-type.js":
-/*!*****************************************************************!*\
-  !*** ./chrome-extension/src/popup/listeners/activation-type.js ***!
-  \*****************************************************************/
+/***/ "./chrome-extension/src/popup/listeners/activation-check.js":
+/*!******************************************************************!*\
+  !*** ./chrome-extension/src/popup/listeners/activation-check.js ***!
+  \******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -125,20 +132,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _update_tab__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./update-tab */ "./chrome-extension/src/popup/listeners/update-tab.js");
 
 
-const activatationType = function activate() {
+const activatationCheck = function activate() {
   const options = ['click', 'drag', 'disable'];
   const { type } = this.dataset;
   options.forEach((option) => {
     if (option === type) {
-      chrome.storage.local.set({ activate: option });
+      chrome.storage.local.set({ check_activate: option });
     } else {
-      document.querySelector(`#report_${option}`).checked = false;
+      document.getElementById(`check_activate_${option}`).checked = false;
     }
   });
-  Object(_update_tab__WEBPACK_IMPORTED_MODULE_0__["default"])({ action: 'toggleActivationMethod', type });
+  Object(_update_tab__WEBPACK_IMPORTED_MODULE_0__["default"])({ action: 'updateActivationMethod', type });
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (activatationType);
+/* harmony default export */ __webpack_exports__["default"] = (activatationCheck);
 
 
 /***/ }),
@@ -152,29 +159,32 @@ const activatationType = function activate() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _activation_type__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./activation-type */ "./chrome-extension/src/popup/listeners/activation-type.js");
-/* harmony import */ var _go_namespace__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./go-namespace */ "./chrome-extension/src/popup/listeners/go-namespace.js");
-/* harmony import */ var _report_type__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./report-type */ "./chrome-extension/src/popup/listeners/report-type.js");
-/* harmony import */ var _toggle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./toggle */ "./chrome-extension/src/popup/listeners/toggle.js");
+/* harmony import */ var _activation_check__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./activation-check */ "./chrome-extension/src/popup/listeners/activation-check.js");
+/* harmony import */ var _namespace_check__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./namespace-check */ "./chrome-extension/src/popup/listeners/namespace-check.js");
+/* harmony import */ var _on_change__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./on-change */ "./chrome-extension/src/popup/listeners/on-change.js");
+/* harmony import */ var _report_check__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./report-check */ "./chrome-extension/src/popup/listeners/report-check.js");
+/* harmony import */ var _toggle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./toggle */ "./chrome-extension/src/popup/listeners/toggle.js");
+
 
 
 
 
 
 const bindListeners = () => {
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.activate-click').forEach((element) => {
-      element.addEventListener('click', _activation_type__WEBPACK_IMPORTED_MODULE_0__["default"]);
-    });
-    document.querySelectorAll('.display-click').forEach((element) => {
-      element.addEventListener('click', _report_type__WEBPACK_IMPORTED_MODULE_2__["default"]);
-    });
-    document.querySelectorAll('.namespace-click').forEach((element) => {
-      element.addEventListener('click', _go_namespace__WEBPACK_IMPORTED_MODULE_1__["default"]);
-    });
-    document.querySelectorAll('.toggle').forEach((element) => {
-      element.addEventListener('click', _toggle__WEBPACK_IMPORTED_MODULE_3__["default"]);
-    });
+  document.querySelectorAll('.click-activate').forEach((element) => {
+    element.addEventListener('click', _activation_check__WEBPACK_IMPORTED_MODULE_0__["default"]);
+  });
+  document.querySelectorAll('.click-display').forEach((element) => {
+    element.addEventListener('click', _report_check__WEBPACK_IMPORTED_MODULE_3__["default"]);
+  });
+  document.querySelectorAll('.click-namespace').forEach((element) => {
+    element.addEventListener('click', _namespace_check__WEBPACK_IMPORTED_MODULE_1__["default"]);
+  });
+  document.querySelectorAll('.select').forEach((element) => {
+    element.addEventListener('change', _on_change__WEBPACK_IMPORTED_MODULE_2__["default"]);
+  });
+  document.querySelectorAll('.toggle').forEach((element) => {
+    element.addEventListener('click', _toggle__WEBPACK_IMPORTED_MODULE_4__["default"]);
   });
 };
 
@@ -183,10 +193,10 @@ const bindListeners = () => {
 
 /***/ }),
 
-/***/ "./chrome-extension/src/popup/listeners/go-namespace.js":
-/*!**************************************************************!*\
-  !*** ./chrome-extension/src/popup/listeners/go-namespace.js ***!
-  \**************************************************************/
+/***/ "./chrome-extension/src/popup/listeners/namespace-check.js":
+/*!*****************************************************************!*\
+  !*** ./chrome-extension/src/popup/listeners/namespace-check.js ***!
+  \*****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -199,12 +209,12 @@ const goNamespace = function namespage() {
   const { type } = this.dataset;
   ['bp', 'cc', 'mf'].forEach((option) => {
     if (option === type) {
-      chrome.storage.local.set({ goNamespace: option });
+      chrome.storage.local.set({ check_namespace: option });
     } else {
-      document.getElementById(`goNamespace_${option}`).checked = false;
+      document.getElementById(`check_namespace_${option}`).checked = false;
     }
   });
-  Object(_update_tab__WEBPACK_IMPORTED_MODULE_0__["default"])({ action: 'toggleGoNamespace', type });
+  Object(_update_tab__WEBPACK_IMPORTED_MODULE_0__["default"])({ action: 'updateNamespace', type });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (goNamespace);
@@ -212,10 +222,10 @@ const goNamespace = function namespage() {
 
 /***/ }),
 
-/***/ "./chrome-extension/src/popup/listeners/report-type.js":
-/*!*************************************************************!*\
-  !*** ./chrome-extension/src/popup/listeners/report-type.js ***!
-  \*************************************************************/
+/***/ "./chrome-extension/src/popup/listeners/on-change.js":
+/*!***********************************************************!*\
+  !*** ./chrome-extension/src/popup/listeners/on-change.js ***!
+  \***********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -224,19 +234,44 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _update_tab__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./update-tab */ "./chrome-extension/src/popup/listeners/update-tab.js");
 
 
-const reportType = function report() {
+const onChange = function change() {
+  const { value } = this;
   const { type } = this.dataset;
-  ['detailed', 'tooltip'].forEach((option) => {
-    if (option === type) {
-      chrome.storage.local.set({ report: option });
-    } else {
-      document.getElementById(`report_${option}`).checked = false;
-    }
-  });
-  Object(_update_tab__WEBPACK_IMPORTED_MODULE_0__["default"])({ action: 'toggleReportType', type });
+  chrome.storage.local.set({ [`select_${type}`]: value });
+  Object(_update_tab__WEBPACK_IMPORTED_MODULE_0__["default"])({ action: 'updateSelect', type, value });
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (reportType);
+/* harmony default export */ __webpack_exports__["default"] = (onChange);
+
+
+/***/ }),
+
+/***/ "./chrome-extension/src/popup/listeners/report-check.js":
+/*!**************************************************************!*\
+  !*** ./chrome-extension/src/popup/listeners/report-check.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _update_tab__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./update-tab */ "./chrome-extension/src/popup/listeners/update-tab.js");
+
+
+const reportCheck = function report() {
+  const options = ['detailed', 'tooltip'];
+  const { type } = this.dataset;
+  options.forEach((option) => {
+    if (option === type) {
+      chrome.storage.local.set({ check_report: option });
+    } else {
+      document.getElementById(`check_${option}`).checked = false;
+    }
+  });
+  Object(_update_tab__WEBPACK_IMPORTED_MODULE_0__["default"])({ action: 'updateReportType', type });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (reportCheck);
 
 
 /***/ }),
@@ -256,11 +291,9 @@ __webpack_require__.r(__webpack_exports__);
 const toggle = function tog() {
   const { checked } = this;
   const { type } = this.dataset;
-  const toggleObj = {};
-  toggleObj[`detail-${type}`] = checked;
-  chrome.storage.local.set(toggleObj);
+  chrome.storage.local.set({ [`toggle_${type}`]: checked });
   Object(_update_tab__WEBPACK_IMPORTED_MODULE_0__["default"])({ action: 'toggleDisplayElement', type, checked });
-  const optionsID = `toggle-container-options-${type}`;
+  const optionsID = `toggle_options_${type}`;
   const el = document.getElementById(optionsID);
   if (el) {
     el.style.display = checked ? 'block' : 'none';
@@ -296,6 +329,55 @@ const updateTab = (setting) => {
 
 /***/ }),
 
+/***/ "./chrome-extension/src/popup/populate/populate.js":
+/*!*********************************************************!*\
+  !*** ./chrome-extension/src/popup/populate/populate.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _species__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./species */ "./chrome-extension/src/popup/populate/species.js");
+
+
+const populate = () => {
+  Object(_species__WEBPACK_IMPORTED_MODULE_0__["default"])();
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (populate);
+
+
+/***/ }),
+
+/***/ "./chrome-extension/src/popup/populate/species.js":
+/*!********************************************************!*\
+  !*** ./chrome-extension/src/popup/populate/species.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _database_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../database/config */ "./database/config.js");
+/* harmony import */ var _database_config__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_database_config__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const species = () => {
+  const select = document.getElementById('select_species');
+  _database_config__WEBPACK_IMPORTED_MODULE_0___default.a.species.forEach((specie) => {
+    const option = document.createElement('option');
+    option.value = specie.split(' ').join('-');
+    option.innerHTML = specie;
+    select.appendChild(option);
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (species);
+
+
+/***/ }),
+
 /***/ "./chrome-extension/src/popup/popup.css":
 /*!**********************************************!*\
   !*** ./chrome-extension/src/popup/popup.css ***!
@@ -326,36 +408,148 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./chrome-extension/src/popup/settings/activation-method.js":
-/*!******************************************************************!*\
-  !*** ./chrome-extension/src/popup/settings/activation-method.js ***!
-  \******************************************************************/
+/***/ "./chrome-extension/src/popup/settings/activation-checkbox.js":
+/*!********************************************************************!*\
+  !*** ./chrome-extension/src/popup/settings/activation-checkbox.js ***!
+  \********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const activationMethod = () => {
-  chrome.storage.local.get('activate', (storage) => {
-    const activate = storage.activate || 'click';
-    ['click', 'drag', 'disable'].forEach((option) => {
-      if (option === activate) {
-        document.getElementById(`report_${option}`).checked = true;
-      } else {
-        document.getElementById(`report_${option}`).checked = false;
-      }
+const options = ['click', 'drag', 'disable'];
+
+const activationCheckbox = () => {
+  chrome.storage.local.get('check_activate', (storage) => {
+    const activate = storage.check_activate || 'click';
+    options.forEach((option) => {
+      const checked = option === activate;
+      document.getElementById(`check_activate_${option}`).checked = checked;
     });
   });
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (activationMethod);
+/* harmony default export */ __webpack_exports__["default"] = (activationCheckbox);
 
 
 /***/ }),
 
-/***/ "./chrome-extension/src/popup/settings/details.js":
+/***/ "./chrome-extension/src/popup/settings/load-preferences.js":
+/*!*****************************************************************!*\
+  !*** ./chrome-extension/src/popup/settings/load-preferences.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _activation_checkbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./activation-checkbox */ "./chrome-extension/src/popup/settings/activation-checkbox.js");
+/* harmony import */ var _menus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./menus */ "./chrome-extension/src/popup/settings/menus.js");
+/* harmony import */ var _namespace_checkbox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./namespace-checkbox */ "./chrome-extension/src/popup/settings/namespace-checkbox.js");
+/* harmony import */ var _report_checkbox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./report-checkbox */ "./chrome-extension/src/popup/settings/report-checkbox.js");
+/* harmony import */ var _toggles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./toggles */ "./chrome-extension/src/popup/settings/toggles.js");
+
+
+
+
+
+
+const loadPreferences = () => {
+  Object(_activation_checkbox__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  Object(_menus__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  Object(_namespace_checkbox__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  Object(_report_checkbox__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  Object(_toggles__WEBPACK_IMPORTED_MODULE_4__["default"])();
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (loadPreferences);
+
+
+/***/ }),
+
+/***/ "./chrome-extension/src/popup/settings/menus.js":
+/*!******************************************************!*\
+  !*** ./chrome-extension/src/popup/settings/menus.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const menuDefaults = [
+  { name: 'field', value: 'gene' },
+  { name: 'species', value: 'Homo-sapiens' },
+];
+
+const menus = () => {
+  menuDefaults.forEach((menu) => {
+    const currMenu = `select_${menu.name}`;
+    chrome.storage.local.get(currMenu, (storage) => {
+      const value = storage[currMenu] || menu.value;
+      document.getElementById(currMenu).value = value;
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (menus);
+
+
+/***/ }),
+
+/***/ "./chrome-extension/src/popup/settings/namespace-checkbox.js":
+/*!*******************************************************************!*\
+  !*** ./chrome-extension/src/popup/settings/namespace-checkbox.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const options = ['bp', 'cc', 'mf'];
+
+const namespaceCheckbox = () => {
+  chrome.storage.local.get('check_namespace', (storage) => {
+    const namespace = storage.check_namespace || 'bp';
+    options.forEach((option) => {
+      const checked = option === namespace;
+      document.getElementById(`check_namespace_${option}`).checked = checked;
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (namespaceCheckbox);
+
+
+/***/ }),
+
+/***/ "./chrome-extension/src/popup/settings/report-checkbox.js":
+/*!****************************************************************!*\
+  !*** ./chrome-extension/src/popup/settings/report-checkbox.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const reportCheckbox = () => {
+  const options = ['detailed', 'tooltip'];
+  chrome.storage.local.get('check_report', (storage) => {
+    const report = storage.check_report || 'detailed';
+    options.forEach((option) => {
+      const checked = option === report;
+      document.getElementById(`check_${option}`).checked = checked;
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (reportCheckbox);
+
+
+/***/ }),
+
+/***/ "./chrome-extension/src/popup/settings/toggles.js":
 /*!********************************************************!*\
-  !*** ./chrome-extension/src/popup/settings/details.js ***!
+  !*** ./chrome-extension/src/popup/settings/toggles.js ***!
   \********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -372,88 +566,51 @@ const options = [
   'links',
 ];
 
-const details = () => {
+const toggles = () => {
   options.forEach((option) => {
-    const currDetail = `detail-${option}`;
-    chrome.storage.local.get(currDetail, (storage) => {
-      if (!storage[currDetail]) {
-        document.getElementById(`detail_${option}`).checked = false;
-        const el = document.getElementById(`toggle-container-options-${option}`);
-        if (el) {
-          el.style.display = 'none';
-        }
-      }
-    });
-  });
-
-  chrome.storage.local.get('goNamespace', (storage) => {
-    if (storage.goNamespace) {
-      ['bp', 'cc', 'mf'].forEach((v) => {
-        if (v === storage.goNamespace) {
-          document.getElementById(`goNamespace_${v}`).checked = true;
-        } else {
-          document.getElementById(`goNamespace_${v}`).checked = false;
-        }
-      });
-    }
-  });
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (details);
-
-
-/***/ }),
-
-/***/ "./chrome-extension/src/popup/settings/load-preferences.js":
-/*!*****************************************************************!*\
-  !*** ./chrome-extension/src/popup/settings/load-preferences.js ***!
-  \*****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _activation_method__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./activation-method */ "./chrome-extension/src/popup/settings/activation-method.js");
-/* harmony import */ var _details__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./details */ "./chrome-extension/src/popup/settings/details.js");
-/* harmony import */ var _report_type__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./report-type */ "./chrome-extension/src/popup/settings/report-type.js");
-
-
-
-
-const loadPreferences = () => {
-  Object(_activation_method__WEBPACK_IMPORTED_MODULE_0__["default"])();
-  Object(_details__WEBPACK_IMPORTED_MODULE_1__["default"])();
-  Object(_report_type__WEBPACK_IMPORTED_MODULE_2__["default"])();
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (loadPreferences);
-
-
-/***/ }),
-
-/***/ "./chrome-extension/src/popup/settings/report-type.js":
-/*!************************************************************!*\
-  !*** ./chrome-extension/src/popup/settings/report-type.js ***!
-  \************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-const reportType = () => {
-  chrome.storage.local.get('report', (storage) => {
-    const report = storage.report || 'detailed';
-    ['detailed', 'tooltip'].forEach((option) => {
-      if (option === report) {
-        document.getElementById(`report_${option}`).checked = true;
-      } else {
-        document.getElementById(`report_${option}`).checked = false;
+    const currToggle = `toggle_${option}`;
+    chrome.storage.local.get(currToggle, (storage) => {
+      const checked = Boolean(storage[currToggle] || storage[currToggle] === undefined);
+      document.getElementById(`toggle_${option}`).checked = checked;
+      const el = document.getElementById(`toggle_options_${option}`);
+      if (el) {
+        el.style.display = checked ? 'block' : 'none';
       }
     });
   });
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (reportType);
+/* harmony default export */ __webpack_exports__["default"] = (toggles);
+
+
+/***/ }),
+
+/***/ "./database/config.js":
+/*!****************************!*\
+  !*** ./database/config.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+const config = {
+  fields: [
+    'accession',
+    'comment',
+    'dbReference',
+    'gene',
+    'organism',
+    'protein',
+    'sequence',
+  ],
+  species: [
+    'Homo sapiens',
+  ],
+  speciesID: {
+    9606: 'Homo sapiens',
+  },
+};
+
+module.exports = config;
 
 
 /***/ }),
@@ -467,7 +624,7 @@ const reportType = () => {
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "body {\n  --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';\n  --green: #4caf50;\n  --grey: #bdbdbd;\n  font-family: var(--font-stack);\n  font-size: 12px;\n  width: 170px;\n}\nbody > section:not(:first-child) {\n  margin-top: 10px;\n}\nsection > h1 {\n  font-size: 14px;\n  margin: 5px 0;\n}\n.activate > div,\n.display > div {\n  margin: 7px 0;\n}\n\n/* Checkbox */\n.checkbox:not(:checked),\n.checkbox:checked {\n  position: absolute;\n}\n.checkbox:not(:checked) + label,\n.checkbox:checked + label {\n  position: relative;\n  padding-left: 30px;\n  padding-top: 3px;\n  cursor: pointer;\n}\n.checkbox:not(:checked) + label:before,\n.checkbox:checked + label:before {\n  content: '';\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 1.25em; height: 1.25em;\n  border: 2px solid #ccc;\n  background: #fff;\n  border-radius: 4px;\n  box-shadow: inset 0 1px 3px rgba(0,0,0,.1);\n}\n.checkbox:not(:checked) + label:after,\n.checkbox:checked + label:after {\n  content: '\\2713';\n  position: absolute;\n  top: .1em; left: .3em;\n  font-size: 1.3em;\n  line-height: 0.8;\n  color: var(--green);\n  transition: all .2s;\n}\n.checkbox:not(:checked) + label:after {\n  opacity: 0;\n  transform: scale(0);\n}\n.checkbox:checked + label:after {\n  opacity: 1;\n  transform: scale(1);\n}\n.checkbox + label:hover:before {\n  border: 2px solid var(--green) !important;\n  transition: border .2s;\n}\n\n/* select */\nselect {\n  height: 25px;\n  width: 100%;\n}\nselect:focus {\n  box-shadow: 0px 0px 1px 1px var(--green);\n  outline:0;\n}\n\n/* Toggle */\n.toggle-container {\n  align-items: center;\n  display: flex;\n  height: 20px;\n  line-height: 20px;\n  margin: 5px 0px 5px 0px;\n  width: 100%;\n}\n.toggle {\n  display: none;\n}\n.toggle + label {\n  margin-right: 5px;\n}\n.toggle,\n.toggle:after,\n.toggle:before,\n.toggle *,\n.toggle *:after,\n.toggle *:before,\n.toggle + label {\n  box-sizing: border-box;\n}\n.toggle::selection,\n.toggle:after::selection,\n.toggle:before::selection,\n.toggle *::selection,\n.toggle *:after::selection,\n.toggle *:before::selection,\n.toggle + label::selection {\n  background: none;\n}\n.toggle + label {\n  outline: 0;\n  display: inline-block;\n  width: 30px;\n  height: 20px;\n  position: relative;\n  cursor: pointer;\n  user-select: none;\n}\n.toggle + label:after,\n.toggle + label:before {\n  position: relative;\n  display: inline-block;\n  content: \"\";\n  width: 50%;\n  height: 100%;\n}\n.toggle + label:after {\n  left: 0;\n}\n.toggle + label:before {\n  display: none;\n}\n.toggle:checked + label:after {\n  left: 50%;\n}\n.toggle-flat + label {\n  padding: 1px;\n  transition: all .2s ease;\n  background: #fff;\n  border: 2px solid var(--grey);\n  border-radius: 2em;\n}\n.toggle-flat + label:after {\n  transition: all .2s ease;\n  background: var(--grey);\n  content: \"\";\n  border-radius: 1em;\n}\n.toggle-flat:checked + label {\n  border: 2px solid var(--green);\n}\n.toggle-flat:checked + label:after {\n  left: 50%;\n  background: var(--green);\n}\n.toggle-container-options {\n  border-bottom: 1px solid #A5D6A7;\n  border-top: 1px solid #A5D6A7;\n  display: block;\n  padding: 5px 0 5px 20px;\n}\n.toggle-container-options > h2 {\n  font-size: 12px;\n  margin-top: 0;\n  margin-bottom: 10px;\n}\n.toggle-container-options > div {\n  margin: 5px 0;\n}\n", ""]);
+exports.push([module.i, "body {\n  --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';\n  --green: #4caf50;\n  --grey: #bdbdbd;\n  display: flex;\n  font-family: var(--font-stack);\n  font-size: 12px;\n  margin: 5px 8px;\n  width: 350px;\n}\nbody > div:first-child {\n  margin-right: 5px;\n  width: 170px;\n}\nbody > div:last-child {\n  margin-left: 5px;\n  width: 170px;\n}\nbody > div > section:not(:first-child) {\n  margin-top: 10px;\n}\nsection > h1 {\n  font-size: 14px;\n  margin: 5px 0;\n}\n.activate > div,\n.display > div {\n  margin: 7px 0;\n}\n\n/* Checkbox */\n.checkbox:not(:checked),\n.checkbox:checked {\n  position: absolute;\n}\n.checkbox:not(:checked) + label,\n.checkbox:checked + label {\n  position: relative;\n  padding-left: 30px;\n  padding-top: 3px;\n  cursor: pointer;\n}\n.checkbox:not(:checked) + label:before,\n.checkbox:checked + label:before {\n  content: '';\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 1.25em; height: 1.25em;\n  border: 2px solid #ccc;\n  background: #fff;\n  border-radius: 4px;\n  box-shadow: inset 0 1px 3px rgba(0,0,0,.1);\n}\n.checkbox:not(:checked) + label:after,\n.checkbox:checked + label:after {\n  content: '\\2713';\n  position: absolute;\n  top: .1em; left: .3em;\n  font-size: 1.3em;\n  line-height: 0.8;\n  color: var(--green);\n  transition: all .2s;\n}\n.checkbox:not(:checked) + label:after {\n  opacity: 0;\n  transform: scale(0);\n}\n.checkbox:checked + label:after {\n  opacity: 1;\n  transform: scale(1);\n}\n.checkbox + label:hover:before {\n  border: 2px solid var(--green) !important;\n  transition: border .2s;\n}\n\n/* select */\nselect {\n  height: 25px;\n  width: 100%;\n}\nselect:focus {\n  box-shadow: 0px 0px 1px 1px var(--green);\n  outline:0;\n}\n\n/* Toggle */\n.toggle-container {\n  align-items: center;\n  display: flex;\n  height: 20px;\n  line-height: 20px;\n  margin: 5px 0px 5px 0px;\n  width: 100%;\n}\n.toggle {\n  display: none;\n}\n.toggle + label {\n  margin-right: 5px;\n}\n.toggle,\n.toggle:after,\n.toggle:before,\n.toggle *,\n.toggle *:after,\n.toggle *:before,\n.toggle + label {\n  box-sizing: border-box;\n}\n.toggle::selection,\n.toggle:after::selection,\n.toggle:before::selection,\n.toggle *::selection,\n.toggle *:after::selection,\n.toggle *:before::selection,\n.toggle + label::selection {\n  background: none;\n}\n.toggle + label {\n  outline: 0;\n  display: inline-block;\n  width: 30px;\n  height: 20px;\n  position: relative;\n  cursor: pointer;\n  user-select: none;\n}\n.toggle + label:after,\n.toggle + label:before {\n  position: relative;\n  display: inline-block;\n  content: \"\";\n  width: 50%;\n  height: 100%;\n}\n.toggle + label:after {\n  left: 0;\n}\n.toggle + label:before {\n  display: none;\n}\n.toggle:checked + label:after {\n  left: 50%;\n}\n.toggle-flat + label {\n  padding: 1px;\n  transition: all .2s ease;\n  background: #fff;\n  border: 2px solid var(--grey);\n  border-radius: 2em;\n}\n.toggle-flat + label:after {\n  transition: all .2s ease;\n  background: var(--grey);\n  content: \"\";\n  border-radius: 1em;\n}\n.toggle-flat:checked + label {\n  border: 2px solid var(--green);\n}\n.toggle-flat:checked + label:after {\n  left: 50%;\n  background: var(--green);\n}\n.toggle-options {\n  border-bottom: 1px solid #A5D6A7;\n  border-top: 1px dotted #A5D6A7;\n  display: block;\n  padding: 5px 0 5px 20px;\n}\n.toggle-options > h2 {\n  font-size: 12px;\n  margin-top: 0;\n  margin-bottom: 10px;\n}\n.toggle-options > div {\n  margin: 5px 0;\n}\n", ""]);
 
 
 

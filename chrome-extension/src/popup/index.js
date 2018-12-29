@@ -1,10 +1,16 @@
 import bindListeners from './listeners/bind-listeners';
 import loadPreferences from './settings/load-preferences';
+import populate from './populate/populate';
 
 import './popup.css';
 
-// Get user preferences on load.
-loadPreferences();
+document.addEventListener('DOMContentLoaded', () => {
+  // Populate menus.
+  populate();
 
-// Bind event handlers.
-bindListeners();
+  // Get user preferences on load.
+  loadPreferences();
+
+  // Bind event handlers.
+  bindListeners();
+});

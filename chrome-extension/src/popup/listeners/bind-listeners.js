@@ -1,22 +1,24 @@
-import activationType from './activation-type';
-import goNamespace from './go-namespace';
-import reportType from './report-type';
+import activationCheck from './activation-check';
+import namespaceCheck from './namespace-check';
+import onChange from './on-change';
+import reportCheck from './report-check';
 import toggle from './toggle';
 
 const bindListeners = () => {
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.activate-click').forEach((element) => {
-      element.addEventListener('click', activationType);
-    });
-    document.querySelectorAll('.display-click').forEach((element) => {
-      element.addEventListener('click', reportType);
-    });
-    document.querySelectorAll('.namespace-click').forEach((element) => {
-      element.addEventListener('click', goNamespace);
-    });
-    document.querySelectorAll('.toggle').forEach((element) => {
-      element.addEventListener('click', toggle);
-    });
+  document.querySelectorAll('.click-activate').forEach((element) => {
+    element.addEventListener('click', activationCheck);
+  });
+  document.querySelectorAll('.click-display').forEach((element) => {
+    element.addEventListener('click', reportCheck);
+  });
+  document.querySelectorAll('.click-namespace').forEach((element) => {
+    element.addEventListener('click', namespaceCheck);
+  });
+  document.querySelectorAll('.select').forEach((element) => {
+    element.addEventListener('change', onChange);
+  });
+  document.querySelectorAll('.toggle').forEach((element) => {
+    element.addEventListener('click', toggle);
   });
 };
 
