@@ -1,7 +1,7 @@
 {
   "name": "gene-info",
   "version": "1.0.0",
-  "description": "Chrome extension and mobile app for getting gene information",
+  "description": "Chrome extension for retrieving gene information",
   "main": "package.json",
   "scripts": {
     "dev-api": "NODE_ENV=development nodemon node api/index.js",
