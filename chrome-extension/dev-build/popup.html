@@ -10,15 +10,15 @@
         <h1>Activate by:</h1>
         <hr />
         <div>
-          <input class="checkbox click-activate" data-type="click" id="check_activate_click" tabindex="-1" type="checkbox" checked />
+          <input class="checkbox click-activate" data-type="click" id="check_activate_click" type="checkbox" checked />
           <label for="check_activate_click">Double click</label>
         </div>
         <div>
-          <input class="checkbox click-activate" data-type="drag" id="check_activate_drag" tabindex="-1" type="checkbox" />
+          <input class="checkbox click-activate" data-type="drag" id="check_activate_drag" type="checkbox" />
           <label for="check_activate_drag">Drag select</label>
         </div>
         <div>
-          <input class="checkbox click-activate" data-type="disable" id="check_activate_disable" tabindex="-1" type="checkbox" />
+          <input class="checkbox click-activate" data-type="disable" id="check_activate_disable" type="checkbox" />
           <label for="check_activate_disable">Disable</label>
         </div>
       </section>
@@ -26,11 +26,11 @@
         <h1>Display options:</h1>
         <hr />
         <div>
-          <input class="checkbox click-display" data-type="detailed" id="check_detailed" tabindex="-1" type="checkbox" checked />
+          <input class="checkbox click-display" data-type="detailed" id="check_detailed" type="checkbox" checked />
           <label for="check_detailed">Detailed report</label>
         </div>
         <div>
-          <input class="checkbox click-display" data-type="tooltip" id="check_tooltip" tabindex="-1" type="checkbox" />
+          <input class="checkbox click-display" data-type="tooltip" id="check_tooltip" type="checkbox" />
           <label for="check_tooltip">Tooltip report</label>
         </div>
       </section>
@@ -41,7 +41,7 @@
         </select>
       </section>
       <section>
-        <h1>Term type:</h1>
+        <h1>Query type:</h1>
         <hr />
         <select class="select" data-type="field" id="select_field">
           <option value="ensembl-gene">Ensembl gene</option>
@@ -52,14 +52,15 @@
           <option value="uniprot">UniProt</option>
         </select>
         <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="auto" id="toggle_auto" type="checkbox" tabindex="-1" checked />
+          <input class="toggle toggle-flat" data-type="auto" id="toggle_auto" type="checkbox" checked />
           <label for="toggle_auto"></label>
           Auto detect
         </div>
       </section>
-      <section class="activate">
+      <section>
         <h1>Search:</h1>
         <hr />
+        <input class="input-search" id="input_search" placeholder="Accession/ID/name..." spellcheck="false" type="text" />
       </section>
     </div>
     <div>
@@ -67,72 +68,82 @@
         <h1>Information options:</h1>
         <hr />
         <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="basic" id="toggle_basic" type="checkbox" tabindex="-1" checked />
+          <input class="toggle toggle-flat" data-type="basic" id="toggle_basic" type="checkbox" checked />
           <label for="toggle_basic"></label>
           Basic
         </div>
         <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="description" id="toggle_description" type="checkbox" tabindex="-1" checked />
+          <input class="toggle toggle-flat" data-type="description" id="toggle_description" type="checkbox" checked />
           <label for="toggle_description"></label>
           Description
         </div>
         <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="domain" id="toggle_domain" type="checkbox" tabindex="-1" checked />
+          <input class="toggle toggle-flat" data-type="domain" id="toggle_domain" type="checkbox" checked />
           <label for="toggle_domain"></label>
           Domain
         </div>
         <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="go" id="toggle_go" type="checkbox" tabindex="-1" checked />
+          <input class="toggle toggle-flat" data-type="go" id="toggle_go" type="checkbox" checked />
           <label for="toggle_go"></label>
           GO terms
         </div>
         <div class="toggle-options" id="toggle_options_go">
-          <h2>Default GO namespace</h2>
+          <em>Default GO namespace</em>
           <div>
-            <input class="checkbox click-namespace" data-type="bp" id="check_namespace_bp" tabindex="-1" type="checkbox" checked />
+            <input class="checkbox click-namespace" data-type="bp" id="check_namespace_bp" type="checkbox" checked />
             <label for="check_namespace_bp">BP</label>
           </div>
           <div>
-            <input class="checkbox click-namespace" data-type="cc" id="check_namespace_cc" tabindex="-1" type="checkbox" />
+            <input class="checkbox click-namespace" data-type="cc" id="check_namespace_cc" type="checkbox" />
             <label for="check_namespace_cc">CC</label>
           </div>
           <div>
-            <input class="checkbox click-namespace" data-type="mf" id="check_namespace_mf" tabindex="-1" type="checkbox" />
+            <input class="checkbox click-namespace" data-type="mf" id="check_namespace_mf" type="checkbox" />
             <label for="check_namespace_mf">MF</label>
           </div>
         </div>
         <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="interactors" id="toggle_interactors" type="checkbox" tabindex="-1" checked/>
+          <input class="toggle toggle-flat" data-type="interactors" id="toggle_interactors" type="checkbox" checked/>
           <label for="toggle_interactors"></label>
           Interactors
         </div>
         <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="links" id="toggle_links" type="checkbox" tabindex="-1" checked />
+          <input class="toggle toggle-flat" data-type="links" id="toggle_links" type="checkbox" checked />
           <label for="toggle_links"></label>
           Links
         </div>
         <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="localization" id="toggle_localization" type="checkbox" tabindex="-1" checked />
+          <input class="toggle toggle-flat" data-type="localization" id="toggle_localization" type="checkbox" checked />
           <label for="toggle_localization"></label>
           Localization
         </div>
-        <div class="toggle-options toggle-options_no-bottom_border" id="toggle_options_localization">
-          <h2>Localization source</h2>
+        <div class="toggle-options" id="toggle_options_localization">
+          <em>Localization source</em>
           <div class="toggle-container">
-            <input class="toggle toggle-flat" data-type="localization_hpa" id="toggle_localization_hpa" type="checkbox" tabindex="-1" checked />
+            <input class="toggle toggle-flat" data-type="localization_compartments" id="toggle_localization_compartments" type="checkbox" checked />
+            <label for="toggle_localization_compartments"></label>
+            Compartments
+          </div>
+          <div class="toggle-container">
+            <input class="toggle toggle-flat" data-type="localization_hpa" id="toggle_localization_hpa" type="checkbox" checked />
             <label for="toggle_localization_hpa"></label>
             Human Protein Atlas
           </div>
           <div class="toggle-container">
-            <input class="toggle toggle-flat" data-type="localization_uniprot" id="toggle_localization_uniprot" type="checkbox" tabindex="-1" checked />
+            <input class="toggle toggle-flat" data-type="localization_uniprot" id="toggle_localization_uniprot" type="checkbox" checked />
             <label for="toggle_localization_uniprot"></label>
             UniProt
           </div>
-          <div class="toggle-container">
-            <input class="toggle toggle-flat" data-type="localization_compartments" id="toggle_localization_compartments" type="checkbox" tabindex="-1" checked />
-            <label for="toggle_localization_compartments"></label>
-            Compartments
-          </div>
+        </div>
+        <div class="toggle-container">
+          <input class="toggle toggle-flat" data-type="rna" id="toggle_rna" type="checkbox" checked />
+          <label for="toggle_rna"></label>
+          RNA expression
+        </div>
+        <div class="toggle-options toggle-options_no-bottom_border toggle-options_no-padding" id="toggle_options_rna">
+          <em>RNA expression tissues</em>
+          <select class="slim-select" data-type="tissues" id="select_tissues" multiple>
+          </select>
         </div>
       </section>
     </div>

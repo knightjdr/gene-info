@@ -10,6 +10,7 @@ const options = [
   'localization_compartments',
   'localization_hpa',
   'localization_uniprot',
+  'rna',
 ];
 
 const toggles = () => {

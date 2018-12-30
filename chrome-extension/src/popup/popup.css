@@ -30,6 +30,11 @@ body > div:last-child {
 body > div > section:not(:first-child) {
   margin-top: 10px;
 }
+em {
+  display: block;
+  margin-bottom: 5px;
+  margin-top: 2px;
+}
 section > h1 {
   font-size: 14px;
   margin: 5px 0;
@@ -86,6 +91,18 @@ section > h1 {
   transition: border .2s;
 }
 
+/* input */
+.input-search {
+  border-radius: 2px;
+  border-width: 1px;
+  height: 20px;
+  width: 98%;
+}
+.input-search:focus {
+  box-shadow: 0px 0px 1px 1px var(--green);
+  outline: none;
+}
+
 /* select */
 select {
   height: 25px;
@@ -93,7 +110,10 @@ select {
 }
 select:focus {
   box-shadow: 0px 0px 1px 1px var(--green);
-  outline:0;
+  outline: none;
+}
+.slim-select {
+  height: auto;
 }
 
 /* Toggle */
@@ -191,4 +211,7 @@ select:focus {
 }
 .toggle-options_no-bottom_border {
   border-bottom: none;
+}
+.toggle-options_no-padding {
+  padding-left: 0;
 }

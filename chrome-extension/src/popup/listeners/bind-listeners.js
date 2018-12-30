@@ -1,6 +1,7 @@
 import activationCheck from './activation-check';
 import namespaceCheck from './namespace-check';
 import onChange from './on-change';
+import onEnter from './on-enter';
 import reportCheck from './report-check';
 import toggle from './toggle';
 
@@ -13,6 +14,9 @@ const bindListeners = () => {
   });
   document.querySelectorAll('.click-namespace').forEach((element) => {
     element.addEventListener('click', namespaceCheck);
+  });
+  document.querySelectorAll('.input-search').forEach((element) => {
+    element.addEventListener('keypress', onEnter);
   });
   document.querySelectorAll('.select').forEach((element) => {
     element.addEventListener('change', onChange);
