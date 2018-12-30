@@ -6,6 +6,10 @@ const options = [
   'go',
   'interactors',
   'links',
+  'localization',
+  'localization_compartments',
+  'localization_hpa',
+  'localization_uniprot',
 ];
 
 const toggles = () => {

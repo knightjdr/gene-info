@@ -1,6 +1,6 @@
 import updateTab from './update-tab';
 
-const goNamespace = function namespage() {
+const namespaceCheck = function namespage() {
   const { type } = this.dataset;
   ['bp', 'cc', 'mf'].forEach((option) => {
     if (option === type) {
@@ -12,4 +12,4 @@ const goNamespace = function namespage() {
   updateTab({ action: 'updateNamespace', type });
 };
 
-export default goNamespace;
+export default namespaceCheck;
