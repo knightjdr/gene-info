@@ -86,6 +86,100 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./chrome-extension/src/popup/display/compartments.js":
+/*!************************************************************!*\
+  !*** ./chrome-extension/src/popup/display/compartments.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* eslint no-param-reassign: 0 */
+
+const availableSpecies = [
+  'Arabidopsis-thaliana',
+  'Caenorhabditis-elegans',
+  'Drosophila-melanogaster',
+  'Homo-sapiens',
+  'Mus-musculus',
+  'Saccharomyces-cerevisiae',
+];
+
+const displayCompartments = (species) => {
+  const elements = document.querySelectorAll('.compartments');
+  if (availableSpecies.includes(species)) {
+    elements.forEach((element) => {
+      element.classList.remove('hide');
+    });
+  } else {
+    elements.forEach((element) => {
+      element.classList.add('hide');
+    });
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (displayCompartments);
+
+
+/***/ }),
+
+/***/ "./chrome-extension/src/popup/display/display.js":
+/*!*******************************************************!*\
+  !*** ./chrome-extension/src/popup/display/display.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _compartments__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./compartments */ "./chrome-extension/src/popup/display/compartments.js");
+/* harmony import */ var _hpa__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hpa */ "./chrome-extension/src/popup/display/hpa.js");
+
+
+
+const display = () => {
+  chrome.storage.local.get('select_species', (storage) => {
+    const species = storage.select_species || 'Homo-sapiens';
+    Object(_compartments__WEBPACK_IMPORTED_MODULE_0__["default"])(species);
+    Object(_hpa__WEBPACK_IMPORTED_MODULE_1__["default"])(species);
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (display);
+
+
+/***/ }),
+
+/***/ "./chrome-extension/src/popup/display/hpa.js":
+/*!***************************************************!*\
+  !*** ./chrome-extension/src/popup/display/hpa.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* eslint no-param-reassign: 0 */
+
+const displayHPA = (species) => {
+  const elements = document.querySelectorAll('.hpa');
+  if (species === 'Homo-sapiens') {
+    elements.forEach((element) => {
+      element.classList.remove('hide');
+    });
+  } else {
+    elements.forEach((element) => {
+      element.classList.add('hide');
+    });
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (displayHPA);
+
+
+/***/ }),
+
 /***/ "./chrome-extension/src/popup/index.js":
 /*!*********************************************!*\
   !*** ./chrome-extension/src/popup/index.js ***!
@@ -96,10 +190,12 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _listeners_bind_listeners__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./listeners/bind-listeners */ "./chrome-extension/src/popup/listeners/bind-listeners.js");
-/* harmony import */ var _settings_load_preferences__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settings/load-preferences */ "./chrome-extension/src/popup/settings/load-preferences.js");
-/* harmony import */ var _populate_populate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./populate/populate */ "./chrome-extension/src/popup/populate/populate.js");
-/* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./popup.css */ "./chrome-extension/src/popup/popup.css");
-/* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_popup_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _display_display__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display/display */ "./chrome-extension/src/popup/display/display.js");
+/* harmony import */ var _settings_load_preferences__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./settings/load-preferences */ "./chrome-extension/src/popup/settings/load-preferences.js");
+/* harmony import */ var _populate_populate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./populate/populate */ "./chrome-extension/src/popup/populate/populate.js");
+/* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./popup.css */ "./chrome-extension/src/popup/popup.css");
+/* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_popup_css__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -108,10 +204,13 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener('DOMContentLoaded', () => {
   // Populate menus.
-  Object(_populate_populate__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  Object(_populate_populate__WEBPACK_IMPORTED_MODULE_3__["default"])();
 
   // Get user preferences on load.
-  Object(_settings_load_preferences__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  Object(_settings_load_preferences__WEBPACK_IMPORTED_MODULE_2__["default"])();
+
+  // Update displayed elements.
+  Object(_display_display__WEBPACK_IMPORTED_MODULE_1__["default"])();
 
   // Bind event handlers.
   Object(_listeners_bind_listeners__WEBPACK_IMPORTED_MODULE_0__["default"])();
@@ -164,7 +263,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _on_change__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./on-change */ "./chrome-extension/src/popup/listeners/on-change.js");
 /* harmony import */ var _on_enter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./on-enter */ "./chrome-extension/src/popup/listeners/on-enter.js");
 /* harmony import */ var _report_check__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./report-check */ "./chrome-extension/src/popup/listeners/report-check.js");
-/* harmony import */ var _toggle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./toggle */ "./chrome-extension/src/popup/listeners/toggle.js");
+/* harmony import */ var _species_on_change__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./species-on-change */ "./chrome-extension/src/popup/listeners/species-on-change.js");
+/* harmony import */ var _toggle__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./toggle */ "./chrome-extension/src/popup/listeners/toggle.js");
+
 
 
 
@@ -188,8 +289,11 @@ const bindListeners = () => {
   document.querySelectorAll('.select').forEach((element) => {
     element.addEventListener('change', _on_change__WEBPACK_IMPORTED_MODULE_2__["default"]);
   });
+  document.querySelectorAll('.select-species').forEach((element) => {
+    element.addEventListener('change', _species_on_change__WEBPACK_IMPORTED_MODULE_5__["default"]);
+  });
   document.querySelectorAll('.toggle').forEach((element) => {
-    element.addEventListener('click', _toggle__WEBPACK_IMPORTED_MODULE_5__["default"]);
+    element.addEventListener('click', _toggle__WEBPACK_IMPORTED_MODULE_6__["default"]);
   });
 };
 
@@ -308,6 +412,38 @@ const reportCheck = function report() {
 
 /***/ }),
 
+/***/ "./chrome-extension/src/popup/listeners/species-on-change.js":
+/*!*******************************************************************!*\
+  !*** ./chrome-extension/src/popup/listeners/species-on-change.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _display_compartments__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../display/compartments */ "./chrome-extension/src/popup/display/compartments.js");
+/* harmony import */ var _display_hpa__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../display/hpa */ "./chrome-extension/src/popup/display/hpa.js");
+/* harmony import */ var _update_tab__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./update-tab */ "./chrome-extension/src/popup/listeners/update-tab.js");
+/* harmony import */ var _populate_tissues__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../populate/tissues */ "./chrome-extension/src/popup/populate/tissues.js");
+
+
+
+
+
+const speciesOnChange = function change() {
+  const { value } = this;
+  chrome.storage.local.set({ select_species: value });
+  Object(_update_tab__WEBPACK_IMPORTED_MODULE_2__["default"])({ action: 'updateSelect', type: 'species', value });
+  Object(_display_compartments__WEBPACK_IMPORTED_MODULE_0__["default"])(value);
+  Object(_display_hpa__WEBPACK_IMPORTED_MODULE_1__["default"])(value);
+  Object(_populate_tissues__WEBPACK_IMPORTED_MODULE_3__["default"])(value, true);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (speciesOnChange);
+
+
+/***/ }),
+
 /***/ "./chrome-extension/src/popup/listeners/toggle.js":
 /*!********************************************************!*\
   !*** ./chrome-extension/src/popup/listeners/toggle.js ***!
@@ -377,7 +513,10 @@ __webpack_require__.r(__webpack_exports__);
 
 const populate = () => {
   Object(_species__WEBPACK_IMPORTED_MODULE_0__["default"])();
-  Object(_tissues__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  chrome.storage.local.get('select_species', (storage) => {
+    const organism = storage.select_species || 'Homo-sapiens';
+    Object(_tissues__WEBPACK_IMPORTED_MODULE_1__["default"])(organism);
+  });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (populate);
@@ -437,50 +576,65 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const defaultTissues = ['HeLa', 'HEK 293', 'U-2 OS'];
+const defaultTissues = {
+  'Homo sapiens': ['HeLa', 'HEK 293', 'U-2 OS'],
+};
 
-const storedTissues = () => (
+const changeTissues = (options) => {
+  const selected = options.map(option => option.value);
+  chrome.storage.local.set({ select_tissues: selected });
+  Object(_listeners_update_tab__WEBPACK_IMPORTED_MODULE_2__["default"])({ action: 'updateTissues', selected });
+};
+
+const storedTissues = (species, restore) => (
   new Promise((resolve) => {
-    chrome.storage.local.get('select_tissues', (storage) => {
-      resolve(storage.select_tissues || defaultTissues);
-    });
+    if (restore) {
+      chrome.storage.local.set({ select_tissues: defaultTissues[species] });
+      resolve(defaultTissues[species]);
+    } else {
+      chrome.storage.local.get('select_tissues', (storage) => {
+        resolve(storage.select_tissues || defaultTissues[species]);
+      });
+    }
   })
 );
 
-const tissues = async () => {
-  // const select = document.getElementById('select_tissues');
-  const species = document.getElementById('select_species').value.replace('-', ' ');
-  const selectedTissues = await storedTissues();
-
-  new slim_select__WEBPACK_IMPORTED_MODULE_0___default.a({
-    closeOnSelect: false,
-    data: [
+const tissueSelect = async (speciesValue, restoreDefaults = false) => {
+  const species = speciesValue.replace('-', ' ');
+  if (_database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__["default"][species]) {
+    const selectedTissues = await storedTissues(species, restoreDefaults);
+    const data = [
       { placeholder: true, text: 'Select cells/tissues' },
-      {
+    ];
+    if (_database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__["default"][species].cells.length > 0) {
+      data.push({
         label: 'Cells',
         options: _database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__["default"][species].cells.map(cell => ({
           selected: selectedTissues.includes(cell),
           text: cell,
         })),
-      },
-      {
+      });
+    }
+    if (_database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__["default"][species].tissues.length > 0) {
+      data.push({
         label: 'Tissues',
         options: _database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__["default"][species].tissues.map(tissue => ({
           selected: selectedTissues.includes(tissue),
           text: tissue,
         })),
-      },
-    ],
-    onChange: (options) => {
-      const selected = options.map(option => option.value);
-      chrome.storage.local.set({ select_tissues: selected });
-      Object(_listeners_update_tab__WEBPACK_IMPORTED_MODULE_2__["default"])({ action: 'updateTissues', selected });
-    },
-    select: '.slim-select',
-  });
+      });
+    }
+
+    new slim_select__WEBPACK_IMPORTED_MODULE_0___default.a({
+      closeOnSelect: false,
+      data,
+      onChange: changeTissues,
+      select: '.slim-select',
+    });
+  }
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (tissues);
+/* harmony default export */ __webpack_exports__["default"] = (tissueSelect);
 
 
 /***/ }),
@@ -739,7 +893,17 @@ const config = {
     'sequence',
   ],
   species: [
+    'Arabidopsis thaliana',
+    'Caenorhabditis elegans',
+    'Ciona intestinalis',
+    'Danio rerio',
+    'Dictyostelium discoideum',
+    'Drosophila melanogaster',
+    'Gallus gallus',
     'Homo sapiens',
+    'Mus musculus',
+    'Saccharomyces cerevisiae',
+    'Xenopus laevis',
   ],
   speciesID: {
     9606: 'Homo sapiens',
@@ -884,7 +1048,7 @@ const rnaTissues = {
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "body {\n  --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';\n  --green: #4caf50;\n  --grey: #bdbdbd;\n  display: grid;\n  font-family: var(--font-stack);\n  font-size: 12px;\n  grid-column-gap: 10px;\n  grid-template-columns: 170px 170px;\n  grid-template-rows: auto;\n  margin: 5px 8px;\n  width: 350px;\n}\nbody > div:first-child {\n  grid-column: 1;\n  grid-row: 1;\n}\nbody > div:nth-child(2) {\n  grid-column: 2;\n  grid-row: 1;\n}\nbody > div:last-child {\n  border-top: 1px solid #A5D6A7;\n  grid-column: 1 / 3;\n  grid-row: 2;\n  padding-top: 3px;\n  text-align: center;\n  width: 100%;\n}\nbody > div > section:not(:first-child) {\n  margin-top: 10px;\n}\nem {\n  display: block;\n  margin-bottom: 5px;\n  margin-top: 2px;\n}\nsection > h1 {\n  font-size: 14px;\n  margin: 5px 0;\n}\n.activate > div,\n.display > div {\n  margin: 7px 0;\n}\n\n/* Checkbox */\n.checkbox:not(:checked),\n.checkbox:checked {\n  position: absolute;\n}\n.checkbox:not(:checked) + label,\n.checkbox:checked + label {\n  position: relative;\n  padding-left: 30px;\n  padding-top: 3px;\n  cursor: pointer;\n}\n.checkbox:not(:checked) + label:before,\n.checkbox:checked + label:before {\n  content: '';\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 1.25em; height: 1.25em;\n  border: 2px solid #ccc;\n  background: #fff;\n  border-radius: 4px;\n  box-shadow: inset 0 1px 3px rgba(0,0,0,.1);\n}\n.checkbox:not(:checked) + label:after,\n.checkbox:checked + label:after {\n  content: '\\2713';\n  position: absolute;\n  top: .1em; left: .3em;\n  font-size: 1.3em;\n  line-height: 0.8;\n  color: var(--green);\n  transition: all .2s;\n}\n.checkbox:not(:checked) + label:after {\n  opacity: 0;\n  transform: scale(0);\n}\n.checkbox:checked + label:after {\n  opacity: 1;\n  transform: scale(1);\n}\n.checkbox + label:hover:before {\n  border: 2px solid var(--green) !important;\n  transition: border .2s;\n}\n\n/* input */\n.input-search {\n  border-radius: 2px;\n  border-width: 1px;\n  height: 20px;\n  width: 98%;\n}\n.input-search:focus {\n  box-shadow: 0px 0px 1px 1px var(--green);\n  outline: none;\n}\n\n/* select */\nselect {\n  height: 25px;\n  width: 100%;\n}\nselect:focus {\n  box-shadow: 0px 0px 1px 1px var(--green);\n  outline: none;\n}\n.slim-select {\n  height: auto;\n}\n\n/* Toggle */\n.toggle-container {\n  align-items: center;\n  display: flex;\n  height: 20px;\n  line-height: 20px;\n  margin: 5px 0px 5px 0px;\n  width: 100%;\n}\n.toggle {\n  display: none;\n}\n.toggle + label {\n  margin-right: 5px;\n}\n.toggle,\n.toggle:after,\n.toggle:before,\n.toggle *,\n.toggle *:after,\n.toggle *:before,\n.toggle + label {\n  box-sizing: border-box;\n}\n.toggle::selection,\n.toggle:after::selection,\n.toggle:before::selection,\n.toggle *::selection,\n.toggle *:after::selection,\n.toggle *:before::selection,\n.toggle + label::selection {\n  background: none;\n}\n.toggle + label {\n  outline: 0;\n  display: inline-block;\n  width: 30px;\n  height: 20px;\n  position: relative;\n  cursor: pointer;\n  user-select: none;\n}\n.toggle + label:after,\n.toggle + label:before {\n  position: relative;\n  display: inline-block;\n  content: \"\";\n  width: 50%;\n  height: 100%;\n}\n.toggle + label:after {\n  left: 0;\n}\n.toggle + label:before {\n  display: none;\n}\n.toggle:checked + label:after {\n  left: 50%;\n}\n.toggle-flat + label {\n  padding: 1px;\n  transition: all .2s ease;\n  background: #fff;\n  border: 2px solid var(--grey);\n  border-radius: 2em;\n}\n.toggle-flat + label:after {\n  transition: all .2s ease;\n  background: var(--grey);\n  content: \"\";\n  border-radius: 1em;\n}\n.toggle-flat:checked + label {\n  border: 2px solid var(--green);\n}\n.toggle-flat:checked + label:after {\n  left: 50%;\n  background: var(--green);\n}\n.toggle-options {\n  border-bottom: 1px solid #A5D6A7;\n  border-top: 1px dotted #A5D6A7;\n  display: block;\n  padding: 5px 0 5px 20px;\n}\n.toggle-options > h2 {\n  font-size: 12px;\n  margin-top: 0;\n  margin-bottom: 10px;\n}\n.toggle-options > div {\n  margin: 5px 0;\n}\n.toggle-options_no-bottom_border {\n  border-bottom: none;\n}\n.toggle-options_no-padding {\n  padding-left: 0;\n}\n", ""]);
+exports.push([module.i, "body {\n  --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';\n  --green: #4caf50;\n  --grey: #bdbdbd;\n  display: grid;\n  font-family: var(--font-stack);\n  font-size: 12px;\n  grid-column-gap: 10px;\n  grid-template-columns: 170px 170px;\n  grid-template-rows: auto;\n  margin: 5px 8px;\n  width: 350px;\n}\nbody > div:first-child {\n  grid-column: 1;\n  grid-row: 1;\n}\nbody > div:nth-child(2) {\n  grid-column: 2;\n  grid-row: 1;\n}\nbody > div:last-child {\n  border-top: 1px solid #A5D6A7;\n  grid-column: 1 / 3;\n  grid-row: 2;\n  margin-top: 5px;\n  padding-top: 3px;\n  text-align: center;\n  width: 100%;\n}\nbody > div > section:not(:first-child) {\n  margin-top: 10px;\n}\nem {\n  display: block;\n  margin-bottom: 5px;\n  margin-top: 2px;\n}\nsection > h1 {\n  font-size: 14px;\n  margin: 5px 0;\n}\n.activate > div,\n.display > div {\n  margin: 7px 0;\n}\n\n/* Checkbox */\n.checkbox:not(:checked),\n.checkbox:checked {\n  position: absolute;\n}\n.checkbox:not(:checked) + label,\n.checkbox:checked + label {\n  position: relative;\n  padding-left: 30px;\n  padding-top: 3px;\n  cursor: pointer;\n}\n.checkbox:not(:checked) + label:before,\n.checkbox:checked + label:before {\n  content: '';\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 1.25em; height: 1.25em;\n  border: 2px solid #ccc;\n  background: #fff;\n  border-radius: 4px;\n  box-shadow: inset 0 1px 3px rgba(0,0,0,.1);\n}\n.checkbox:not(:checked) + label:after,\n.checkbox:checked + label:after {\n  content: '\\2713';\n  position: absolute;\n  top: .1em; left: .3em;\n  font-size: 1.3em;\n  line-height: 0.8;\n  color: var(--green);\n  transition: all .2s;\n}\n.checkbox:not(:checked) + label:after {\n  opacity: 0;\n  transform: scale(0);\n}\n.checkbox:checked + label:after {\n  opacity: 1;\n  transform: scale(1);\n}\n.checkbox + label:hover:before {\n  border: 2px solid var(--green);\n  transition: border .2s;\n}\n\n/* input */\n.input-search {\n  border-radius: 2px;\n  border-width: 1px;\n  box-sizing: border-box;\n  height: 20px;\n  padding: 0 5px;\n  width: 98%;\n}\n.input-search:focus,\n.ss-search > input:focus {\n  box-shadow: 0px 0px 1px 1px var(--green) !important;\n  outline: none !important;\n}\n\n/* select */\nselect {\n  height: 25px;\n  width: 100%;\n}\nselect:focus {\n  box-shadow: 0px 0px 1px 1px var(--green);\n  outline: none;\n}\n.slim-select {\n  height: auto;\n}\n\n/* Toggle */\n.toggle-container {\n  align-items: center;\n  display: flex;\n  height: 20px;\n  line-height: 20px;\n  margin: 5px 0px 5px 0px;\n  width: 100%;\n}\n.toggle {\n  display: none;\n}\n.toggle + label {\n  margin-right: 5px;\n}\n.toggle,\n.toggle:after,\n.toggle:before,\n.toggle *,\n.toggle *:after,\n.toggle *:before,\n.toggle + label {\n  box-sizing: border-box;\n}\n.toggle::selection,\n.toggle:after::selection,\n.toggle:before::selection,\n.toggle *::selection,\n.toggle *:after::selection,\n.toggle *:before::selection,\n.toggle + label::selection {\n  background: none;\n}\n.toggle + label {\n  outline: 0;\n  display: inline-block;\n  width: 30px;\n  height: 20px;\n  position: relative;\n  cursor: pointer;\n  user-select: none;\n}\n.toggle + label:after,\n.toggle + label:before {\n  position: relative;\n  display: inline-block;\n  content: \"\";\n  width: 50%;\n  height: 100%;\n}\n.toggle + label:after {\n  left: 0;\n}\n.toggle + label:before {\n  display: none;\n}\n.toggle:checked + label:after {\n  left: 50%;\n}\n.toggle-flat + label {\n  background: #fff;\n  border: 2px solid var(--grey);\n  border-radius: 2em;\n  padding: 1px;\n  transition: all .2s ease;\n  transition-property: background, border, border-radius, left;\n}\n.toggle-flat + label:after {\n  background: var(--grey);\n  content: \"\";\n  border-radius: 1em;\n  transition: all .2s ease;\n  transition-property: background, border, border-radius, left;\n}\n.toggle-flat:checked + label {\n  border: 2px solid var(--green);\n}\n.toggle-flat:checked + label:after {\n  left: 50%;\n  background: var(--green);\n}\n.toggle-options {\n  border-bottom: 1px solid #A5D6A7;\n  border-top: 1px dotted #A5D6A7;\n  display: block;\n  padding: 5px 0 5px 20px;\n}\n.toggle-options > h2 {\n  font-size: 12px;\n  margin-top: 0;\n  margin-bottom: 10px;\n}\n.toggle-options > div {\n  margin: 5px 0;\n}\n.toggle-options_no-padding {\n  padding-left: 0;\n}\n\n.hide {\n  display: none;\n}\n", ""]);
 
 
 

@@ -1,4 +1,5 @@
 import bindListeners from './listeners/bind-listeners';
+import display from './display/display';
 import loadPreferences from './settings/load-preferences';
 import populate from './populate/populate';
 
@@ -10,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Get user preferences on load.
   loadPreferences();
+
+  // Update displayed elements.
+  display();
 
   // Bind event handlers.
   bindListeners();

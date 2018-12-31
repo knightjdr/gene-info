@@ -37,7 +37,7 @@
       <section>
         <h1>Species:</h1>
         <hr />
-        <select class="select" data-type="species" id="select_species">
+        <select class="select-species" data-type="species" id="select_species">
         </select>
       </section>
       <section>
@@ -119,15 +119,15 @@
         </div>
         <div class="toggle-options" id="toggle_options_localization">
           <em>Localization source</em>
-          <div class="toggle-container">
+          <div class="compartments toggle-container">
             <input class="toggle toggle-flat" data-type="localization_compartments" id="toggle_localization_compartments" type="checkbox" checked />
             <label for="toggle_localization_compartments"></label>
             Compartments
           </div>
-          <div class="toggle-container">
+          <div class="hpa toggle-container">
             <input class="toggle toggle-flat" data-type="localization_hpa" id="toggle_localization_hpa" type="checkbox" checked />
             <label for="toggle_localization_hpa"></label>
-            Human Protein Atlas
+            Protein Atlas
           </div>
           <div class="toggle-container">
             <input class="toggle toggle-flat" data-type="localization_uniprot" id="toggle_localization_uniprot" type="checkbox" checked />
@@ -135,15 +135,17 @@
             UniProt
           </div>
         </div>
-        <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="rna" id="toggle_rna" type="checkbox" checked />
-          <label for="toggle_rna"></label>
-          RNA expression
-        </div>
-        <div class="toggle-options toggle-options_no-bottom_border toggle-options_no-padding" id="toggle_options_rna">
-          <em>RNA expression tissues</em>
-          <select class="slim-select" data-type="tissues" id="select_tissues" multiple>
-          </select>
+        <div class="hpa">
+          <div class="toggle-container">
+            <input class="toggle toggle-flat" data-type="rna" id="toggle_rna" type="checkbox" checked />
+            <label for="toggle_rna"></label>
+            RNA expression
+          </div>
+          <div class="toggle-options toggle-options_no-padding" id="toggle_options_rna">
+            <em>RNA expression tissues</em>
+            <select class="slim-select" data-type="tissues" id="select_tissues" multiple>
+            </select>
+          </div>
         </div>
       </section>
     </div>

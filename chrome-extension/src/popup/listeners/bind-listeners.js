@@ -3,6 +3,7 @@ import namespaceCheck from './namespace-check';
 import onChange from './on-change';
 import onEnter from './on-enter';
 import reportCheck from './report-check';
+import speciesOnChange from './species-on-change';
 import toggle from './toggle';
 
 const bindListeners = () => {
@@ -20,6 +21,9 @@ const bindListeners = () => {
   });
   document.querySelectorAll('.select').forEach((element) => {
     element.addEventListener('change', onChange);
+  });
+  document.querySelectorAll('.select-species').forEach((element) => {
+    element.addEventListener('change', speciesOnChange);
   });
   document.querySelectorAll('.toggle').forEach((element) => {
     element.addEventListener('click', toggle);
