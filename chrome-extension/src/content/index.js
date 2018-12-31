@@ -1,4 +1,6 @@
-let details = {
+import './content.css';
+
+const details = {
   displayOptions: {
     basic: true,
     description: true,
@@ -6,16 +8,16 @@ let details = {
     go: true,
     goNamespace: 'bp',
     interactors: true,
-    links: true
+    links: true,
   },
   mdTime: null,
   report: 'detailed',
-  results: []
+  results: [],
 };
 
 // get user preferences on load
 // activation method
-chrome.storage.local.get('activate', function(storage) {
+/* chrome.storage.local.get('activate', function(storage) {
   if (storage.activate === 'disable') {
     document.body.removeEventListener('dblclick', retrieveInfo);
     document.body.removeEventListener('mousedown', setMdTime);
@@ -29,13 +31,13 @@ chrome.storage.local.get('activate', function(storage) {
     document.body.removeEventListener('mousedown', setMdTime);
     document.body.removeEventListener('mouseup', retrieveInfo);
   }
-});
+}); */
 // report type
-chrome.storage.local.get('report', function(storage) {
+/* chrome.storage.local.get('report', function(storage) {
   details.report = storage.report ? storage.report : 'detailed';
-});
+}); */
 // options
-const detailTypes = ['basic', 'description', 'domain', 'go', 'interactors', 'links'];
+/* const detailTypes = ['basic', 'description', 'domain', 'go', 'interactors', 'links'];
 detailTypes.forEach(function(detail) {
   const currDetail = 'detail-' + detail;
   chrome.storage.local.get(currDetail, function(storage) {
@@ -48,10 +50,10 @@ detailTypes.forEach(function(detail) {
 });
 chrome.storage.local.get('goNamespace', function(storage) {
   details.displayOptions.goNamespace = storage.goNamespace ? storage.goNamespace : 'bp';
-});
+}); */
 
-//listener
-chrome.runtime.onMessage.addListener(
+// listener
+/* chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.action === 'ping') {
       sendResponse({ready: true});
@@ -87,4 +89,4 @@ chrome.runtime.onMessage.addListener(
     }
     return;
   }
-);
+); */

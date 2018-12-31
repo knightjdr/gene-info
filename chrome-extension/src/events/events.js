@@ -12,4 +12,5 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
     xhttp.send(request.data);
     return true;
   }
+  return false;
 });
