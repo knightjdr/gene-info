@@ -1,6 +1,8 @@
+import config from '../../config';
+
 const menuDefaults = [
   { name: 'field', value: 'gene' },
-  { name: 'species', value: 'Homo-sapiens' },
+  { name: 'species', value: config.defaultSpecies },
 ];
 
 const menus = () => {

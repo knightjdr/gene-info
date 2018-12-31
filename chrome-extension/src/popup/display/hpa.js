@@ -1,8 +1,6 @@
-/* eslint no-param-reassign: 0 */
-
 const displayHPA = (species) => {
   const elements = document.querySelectorAll('.hpa');
-  if (species === 'Homo-sapiens') {
+  if (species === 'Homo sapiens') {
     elements.forEach((element) => {
       element.classList.remove('hide');
     });

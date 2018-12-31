@@ -1,17 +1,8 @@
-/* eslint no-param-reassign: 0 */
-
-const availableSpecies = [
-  'Arabidopsis-thaliana',
-  'Caenorhabditis-elegans',
-  'Drosophila-melanogaster',
-  'Homo-sapiens',
-  'Mus-musculus',
-  'Saccharomyces-cerevisiae',
-];
+import config from '../../config';
 
 const displayCompartments = (species) => {
   const elements = document.querySelectorAll('.compartments');
-  if (availableSpecies.includes(species)) {
+  if (config.compartmentSpecies.includes(species)) {
     elements.forEach((element) => {
       element.classList.remove('hide');
     });

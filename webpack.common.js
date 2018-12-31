@@ -1,9 +1,10 @@
 const path = require('path');
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
-  entry: './chrome-extension/src/popup/index.js',
-  mode: 'development',
+  entry: {
+    events: './chrome-extension/src/events/events.js',
+    popup: './chrome-extension/src/popup/index.js',
+  },
   module: {
     rules: [
       {
@@ -16,7 +17,7 @@ module.exports = {
     ],
   },
   output: {
-    filename: 'popup.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'chrome-extension/dev-build'),
   },
 };

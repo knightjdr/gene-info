@@ -10,7 +10,6 @@ const modules = {
     src: 'chrome-extension/src/content/**/*.js',
     target: 'content.js',
   },
-  event: { src: 'chrome-extension/src/events/**/*.js', target: 'event.js' },
 };
 
 const jsBuild = module => (
@@ -34,6 +33,5 @@ const sassBuild = (module) => {
 
 gulp.task('dev', () => {
   gulp.watch(modules.content.src, jsBuild(modules.content));
-  gulp.watch(modules.event.src, jsBuild(modules.event));
   gulp.watch(modules.content.sass, sassBuild(modules.content));
 });

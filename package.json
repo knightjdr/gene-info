@@ -5,9 +5,10 @@
   "main": "package.json",
   "scripts": {
     "dev-api": "NODE_ENV=development nodemon node api/index.js",
-    "dev-ext": "webpack --watch",
+    "dev-ext": "webpack --watch --config webpack.dev.js",
     "prod-api": "NODE_ENV=production node api/index.js",
     "prod-api-forever": "NODE_ENV=production forever start -a --uid 'gene-info-api' api/index.js",
+    "prod-ext": "webpack --config webpack.prod.js",
     "test": "jest"
   },
   "repository": {
@@ -38,7 +39,8 @@
     "mini-css-extract-plugin": "^0.5.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.28.2",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-merge": "^4.1.5"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

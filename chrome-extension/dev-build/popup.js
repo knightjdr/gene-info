@@ -86,6 +86,43 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./chrome-extension/src/config.js":
+/*!****************************************!*\
+  !*** ./chrome-extension/src/config.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _database_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../database/config */ "./database/config.js");
+/* harmony import */ var _database_config__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_database_config__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../database/files/rna-tissues */ "./database/files/rna-tissues.js");
+
+
+
+const config = {
+  compartmentSpecies: [
+    'Arabidopsis thaliana',
+    'Caenorhabditis elegans',
+    'Drosophila melanogaster',
+    'Homo sapiens',
+    'Mus musculus',
+    'Saccharomyces cerevisiae',
+  ],
+  defaultSpecies: 'Homo sapiens',
+  defaultTissues: {
+    'Homo sapiens': ['HeLa', 'HEK 293', 'U-2 OS'],
+  },
+  species: _database_config__WEBPACK_IMPORTED_MODULE_0___default.a.species,
+  tissues: _database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__["default"],
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (config);
+
+
+/***/ }),
+
 /***/ "./chrome-extension/src/popup/display/compartments.js":
 /*!************************************************************!*\
   !*** ./chrome-extension/src/popup/display/compartments.js ***!
@@ -95,20 +132,12 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* eslint no-param-reassign: 0 */
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../config */ "./chrome-extension/src/config.js");
 
-const availableSpecies = [
-  'Arabidopsis-thaliana',
-  'Caenorhabditis-elegans',
-  'Drosophila-melanogaster',
-  'Homo-sapiens',
-  'Mus-musculus',
-  'Saccharomyces-cerevisiae',
-];
 
 const displayCompartments = (species) => {
   const elements = document.querySelectorAll('.compartments');
-  if (availableSpecies.includes(species)) {
+  if (_config__WEBPACK_IMPORTED_MODULE_0__["default"].compartmentSpecies.includes(species)) {
     elements.forEach((element) => {
       element.classList.remove('hide');
     });
@@ -134,15 +163,17 @@ const displayCompartments = (species) => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _compartments__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./compartments */ "./chrome-extension/src/popup/display/compartments.js");
-/* harmony import */ var _hpa__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hpa */ "./chrome-extension/src/popup/display/hpa.js");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../config */ "./chrome-extension/src/config.js");
+/* harmony import */ var _hpa__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hpa */ "./chrome-extension/src/popup/display/hpa.js");
+
 
 
 
 const display = () => {
   chrome.storage.local.get('select_species', (storage) => {
-    const species = storage.select_species || 'Homo-sapiens';
+    const species = storage.select_species || _config__WEBPACK_IMPORTED_MODULE_1__["default"].defaultSpecies;
     Object(_compartments__WEBPACK_IMPORTED_MODULE_0__["default"])(species);
-    Object(_hpa__WEBPACK_IMPORTED_MODULE_1__["default"])(species);
+    Object(_hpa__WEBPACK_IMPORTED_MODULE_2__["default"])(species);
   });
 };
 
@@ -160,11 +191,9 @@ const display = () => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* eslint no-param-reassign: 0 */
-
 const displayHPA = (species) => {
   const elements = document.querySelectorAll('.hpa');
-  if (species === 'Homo-sapiens') {
+  if (species === 'Homo sapiens') {
     elements.forEach((element) => {
       element.classList.remove('hide');
     });
@@ -370,7 +399,6 @@ __webpack_require__.r(__webpack_exports__);
 const onEnter = function enter(e) {
   if (e.keyCode === 13) {
     const { value } = this;
-    chrome.storage.local.set({ input_search: value });
     if (value) {
       Object(_update_tab__WEBPACK_IMPORTED_MODULE_0__["default"])({ action: 'searchTerm', value });
     }
@@ -506,16 +534,18 @@ const updateTab = (setting) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _species__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./species */ "./chrome-extension/src/popup/populate/species.js");
-/* harmony import */ var _tissues__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tissues */ "./chrome-extension/src/popup/populate/tissues.js");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../config */ "./chrome-extension/src/config.js");
+/* harmony import */ var _species__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./species */ "./chrome-extension/src/popup/populate/species.js");
+/* harmony import */ var _tissues__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tissues */ "./chrome-extension/src/popup/populate/tissues.js");
+
 
 
 
 const populate = () => {
-  Object(_species__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  Object(_species__WEBPACK_IMPORTED_MODULE_1__["default"])();
   chrome.storage.local.get('select_species', (storage) => {
-    const organism = storage.select_species || 'Homo-sapiens';
-    Object(_tissues__WEBPACK_IMPORTED_MODULE_1__["default"])(organism);
+    const organism = storage.select_species || _config__WEBPACK_IMPORTED_MODULE_0__["default"].defaultSpecies;
+    Object(_tissues__WEBPACK_IMPORTED_MODULE_2__["default"])(organism);
   });
 };
 
@@ -533,15 +563,14 @@ const populate = () => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _database_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../database/config */ "./database/config.js");
-/* harmony import */ var _database_config__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_database_config__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../config */ "./chrome-extension/src/config.js");
 
 
 const species = () => {
   const select = document.getElementById('select_species');
-  _database_config__WEBPACK_IMPORTED_MODULE_0___default.a.species.forEach((specie) => {
+  _config__WEBPACK_IMPORTED_MODULE_0__["default"].species.forEach((specie) => {
     const option = document.createElement('option');
-    option.value = specie.split(' ').join('-');
+    option.value = specie;
     option.innerHTML = specie;
     select.appendChild(option);
   });
@@ -563,7 +592,7 @@ const species = () => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var slim_select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! slim-select */ "./node_modules/slim-select/dist/slimselect.min.js");
 /* harmony import */ var slim_select__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(slim_select__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../database/files/rna-tissues */ "./database/files/rna-tissues.js");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../config */ "./chrome-extension/src/config.js");
 /* harmony import */ var _listeners_update_tab__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../listeners/update-tab */ "./chrome-extension/src/popup/listeners/update-tab.js");
 /* harmony import */ var _node_modules_slim_select_dist_slimselect_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/slim-select/dist/slimselect.css */ "./node_modules/slim-select/dist/slimselect.css");
 /* harmony import */ var _node_modules_slim_select_dist_slimselect_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_slim_select_dist_slimselect_css__WEBPACK_IMPORTED_MODULE_3__);
@@ -576,9 +605,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const defaultTissues = {
-  'Homo sapiens': ['HeLa', 'HEK 293', 'U-2 OS'],
-};
+const { defaultTissues, tissues } = _config__WEBPACK_IMPORTED_MODULE_1__["default"];
 
 const changeTissues = (options) => {
   const selected = options.map(option => option.value);
@@ -591,6 +618,7 @@ const storedTissues = (species, restore) => (
     if (restore) {
       chrome.storage.local.set({ select_tissues: defaultTissues[species] });
       resolve(defaultTissues[species]);
+      Object(_listeners_update_tab__WEBPACK_IMPORTED_MODULE_2__["default"])({ action: 'updateTissues', selected: defaultTissues[species] });
     } else {
       chrome.storage.local.get('select_tissues', (storage) => {
         resolve(storage.select_tissues || defaultTissues[species]);
@@ -599,26 +627,25 @@ const storedTissues = (species, restore) => (
   })
 );
 
-const tissueSelect = async (speciesValue, restoreDefaults = false) => {
-  const species = speciesValue.replace('-', ' ');
-  if (_database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__["default"][species]) {
+const tissueSelect = async (species, restoreDefaults = false) => {
+  if (tissues[species]) {
     const selectedTissues = await storedTissues(species, restoreDefaults);
     const data = [
       { placeholder: true, text: 'Select cells/tissues' },
     ];
-    if (_database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__["default"][species].cells.length > 0) {
+    if (tissues[species].cells.length > 0) {
       data.push({
         label: 'Cells',
-        options: _database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__["default"][species].cells.map(cell => ({
+        options: tissues[species].cells.map(cell => ({
           selected: selectedTissues.includes(cell),
           text: cell,
         })),
       });
     }
-    if (_database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__["default"][species].tissues.length > 0) {
+    if (tissues[species].tissues.length > 0) {
       data.push({
         label: 'Tissues',
-        options: _database_files_rna_tissues__WEBPACK_IMPORTED_MODULE_1__["default"][species].tissues.map(tissue => ({
+        options: tissues[species].tissues.map(tissue => ({
           selected: selectedTissues.includes(tissue),
           text: tissue,
         })),
@@ -708,9 +735,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _menus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./menus */ "./chrome-extension/src/popup/settings/menus.js");
 /* harmony import */ var _namespace_checkbox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./namespace-checkbox */ "./chrome-extension/src/popup/settings/namespace-checkbox.js");
 /* harmony import */ var _report_checkbox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./report-checkbox */ "./chrome-extension/src/popup/settings/report-checkbox.js");
-/* harmony import */ var _search_input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./search-input */ "./chrome-extension/src/popup/settings/search-input.js");
-/* harmony import */ var _toggles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./toggles */ "./chrome-extension/src/popup/settings/toggles.js");
-
+/* harmony import */ var _toggles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./toggles */ "./chrome-extension/src/popup/settings/toggles.js");
 
 
 
@@ -722,8 +747,7 @@ const loadPreferences = () => {
   Object(_menus__WEBPACK_IMPORTED_MODULE_1__["default"])();
   Object(_namespace_checkbox__WEBPACK_IMPORTED_MODULE_2__["default"])();
   Object(_report_checkbox__WEBPACK_IMPORTED_MODULE_3__["default"])();
-  Object(_search_input__WEBPACK_IMPORTED_MODULE_4__["default"])();
-  Object(_toggles__WEBPACK_IMPORTED_MODULE_5__["default"])();
+  Object(_toggles__WEBPACK_IMPORTED_MODULE_4__["default"])();
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (loadPreferences);
@@ -740,9 +764,12 @@ const loadPreferences = () => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../config */ "./chrome-extension/src/config.js");
+
+
 const menuDefaults = [
   { name: 'field', value: 'gene' },
-  { name: 'species', value: 'Homo-sapiens' },
+  { name: 'species', value: _config__WEBPACK_IMPORTED_MODULE_0__["default"].defaultSpecies },
 ];
 
 const menus = () => {
@@ -807,27 +834,6 @@ const reportCheckbox = () => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (reportCheckbox);
-
-
-/***/ }),
-
-/***/ "./chrome-extension/src/popup/settings/search-input.js":
-/*!*************************************************************!*\
-  !*** ./chrome-extension/src/popup/settings/search-input.js ***!
-  \*************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-const searchInput = () => {
-  chrome.storage.local.get('input_search', (storage) => {
-    const value = storage.input_search || '';
-    document.getElementById('input_search').value = value;
-  });
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (searchInput);
 
 
 /***/ }),

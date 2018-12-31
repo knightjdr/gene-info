@@ -1,10 +1,10 @@
-import dbConfig from '../../../../database/config';
+import config from '../../config';
 
 const species = () => {
   const select = document.getElementById('select_species');
-  dbConfig.species.forEach((specie) => {
+  config.species.forEach((specie) => {
     const option = document.createElement('option');
-    option.value = specie.split(' ').join('-');
+    option.value = specie;
     option.innerHTML = specie;
     select.appendChild(option);
   });
