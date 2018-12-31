@@ -22,11 +22,12 @@ npm-debug.log
 .npm
 ./**/npm
 
-# Extension builds
+# Extension
 chrome-extension/dist/**/*
 chrome-extension/dev-build/**/*
 !chrome-extension/dev-build/manifest.json
 !chrome-extension/dev-build/popup.html
+chrome-extension/dist.crx
 
-#pem key
+## pem key
 chrome-extension/dist.pem
