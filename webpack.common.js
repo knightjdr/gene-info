@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   entry: {
     events: './chrome-extension/src/events/events.js',
@@ -15,9 +13,5 @@ module.exports = {
         ],
       },
     ],
-  },
-  output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, 'chrome-extension/dev-build'),
   },
 };

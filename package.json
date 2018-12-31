@@ -23,6 +23,7 @@
   "homepage": "https://github.com/knightjdr/gene-info#readme",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^2.1.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb": "^17.1.0",

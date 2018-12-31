@@ -23,8 +23,8 @@ npm-debug.log
 ./**/npm
 
 # Extension builds
-chrome-extension/dist
-chrome-extension/dev-build
+chrome-extension/dist/**/*
+chrome-extension/dev-build/**/*
 !chrome-extension/dev-build/manifest.json
 !chrome-extension/dev-build/popup.html
 
