@@ -1,11 +1,11 @@
 const options = ['click', 'drag', 'disable'];
 
 const activationCheckbox = () => {
-  chrome.storage.local.get('check_activate', (storage) => {
-    const activate = storage.check_activate || 'click';
+  chrome.storage.local.get('activate', (storage) => {
+    const activate = storage.activate || 'click';
     options.forEach((option) => {
       const checked = option === activate;
-      document.getElementById(`check_activate_${option}`).checked = checked;
+      document.getElementById(`activate_${option}`).checked = checked;
     });
   });
 };

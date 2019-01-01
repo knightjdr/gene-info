@@ -1,11 +1,11 @@
-const options = ['bp', 'cc', 'mf'];
+import config from '../../config';
 
 const namespaceCheckbox = () => {
-  chrome.storage.local.get('check_namespace', (storage) => {
-    const namespace = storage.check_namespace || 'bp';
-    options.forEach((option) => {
+  chrome.storage.local.get('go_namespace', (storage) => {
+    const namespace = storage.go_namespace || config.defaultGoNamespace;
+    config.goNamespaces.forEach((option) => {
       const checked = option === namespace;
-      document.getElementById(`check_namespace_${option}`).checked = checked;
+      document.getElementById(`go_namespace_${option}`).checked = checked;
     });
   });
 };

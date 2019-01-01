@@ -10,15 +10,15 @@ const options = [
   'localization_compartments',
   'localization_hpa',
   'localization_uniprot',
-  'rna',
+  'rna_expression',
 ];
 
 const toggles = () => {
   options.forEach((option) => {
-    const currToggle = `toggle_${option}`;
+    const currToggle = option;
     chrome.storage.local.get(currToggle, (storage) => {
       const checked = Boolean(storage[currToggle] || storage[currToggle] === undefined);
-      document.getElementById(`toggle_${option}`).checked = checked;
+      document.getElementById(option).checked = checked;
       const el = document.getElementById(`toggle_options_${option}`);
       if (el) {
         el.style.display = checked ? 'block' : 'none';

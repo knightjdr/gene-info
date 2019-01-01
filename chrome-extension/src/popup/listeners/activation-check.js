@@ -5,12 +5,12 @@ const activatationCheck = function activate() {
   const { type } = this.dataset;
   options.forEach((option) => {
     if (option === type) {
-      chrome.storage.local.set({ check_activate: option });
+      chrome.storage.local.set({ activate: option });
     } else {
-      document.getElementById(`check_activate_${option}`).checked = false;
+      document.getElementById(`activate_${option}`).checked = false;
     }
   });
-  updateTab({ action: 'updateActivationMethod', type });
+  updateTab('updateSetting', 'activate', type);
 };
 
 export default activatationCheck;

@@ -7,7 +7,7 @@ const menuDefaults = [
 
 const menus = () => {
   menuDefaults.forEach((menu) => {
-    const currMenu = `select_${menu.name}`;
+    const currMenu = menu.name;
     chrome.storage.local.get(currMenu, (storage) => {
       const value = storage[currMenu] || menu.value;
       document.getElementById(currMenu).value = value;

@@ -1,7 +1,7 @@
 import config from '../../config';
 
 const species = () => {
-  const select = document.getElementById('select_species');
+  const select = document.getElementById('species');
   config.species.forEach((specie) => {
     const option = document.createElement('option');
     option.value = specie;

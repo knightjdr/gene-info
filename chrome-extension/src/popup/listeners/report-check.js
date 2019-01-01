@@ -5,12 +5,12 @@ const reportCheck = function report() {
   const { type } = this.dataset;
   options.forEach((option) => {
     if (option === type) {
-      chrome.storage.local.set({ check_report: option });
+      chrome.storage.local.set({ report: option });
     } else {
-      document.getElementById(`check_${option}`).checked = false;
+      document.getElementById(option).checked = false;
     }
   });
-  updateTab({ action: 'updateReportType', type });
+  updateTab('updateSetting', 'report', type);
 };
 
 export default reportCheck;

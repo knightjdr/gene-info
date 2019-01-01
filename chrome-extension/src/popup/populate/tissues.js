@@ -11,19 +11,19 @@ const { defaultTissues, tissues } = config;
 
 const changeTissues = (options) => {
   const selected = options.map(option => option.value);
-  chrome.storage.local.set({ select_tissues: selected });
-  updateTab({ action: 'updateTissues', selected });
+  chrome.storage.local.set({ rna_expression_tissues: selected });
+  updateTab('updateSetting', 'rna_expression_tissues', selected);
 };
 
 const storedTissues = (species, restore) => (
   new Promise((resolve) => {
     if (restore) {
-      chrome.storage.local.set({ select_tissues: defaultTissues[species] });
+      chrome.storage.local.set({ rna_expression_tissues: defaultTissues[species] });
       resolve(defaultTissues[species]);
-      updateTab({ action: 'updateTissues', selected: defaultTissues[species] });
+      updateTab('updateSetting', 'rna_expression_tissues', defaultTissues[species]);
     } else {
-      chrome.storage.local.get('select_tissues', (storage) => {
-        resolve(storage.select_tissues || defaultTissues[species]);
+      chrome.storage.local.get('rna_expression_tissues', (storage) => {
+        resolve(storage.rna_expression_tissues || defaultTissues[species]);
       });
     }
   })
@@ -58,7 +58,7 @@ const tissueSelect = async (species, restoreDefaults = false) => {
       closeOnSelect: false,
       data,
       onChange: changeTissues,
-      select: '.slim-select',
+      select: '#rna_expression_tissues',
     });
   }
 };

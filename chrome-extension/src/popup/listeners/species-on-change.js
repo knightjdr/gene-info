@@ -5,8 +5,8 @@ import updateTissues from '../populate/tissues';
 
 const speciesOnChange = function change() {
   const { value } = this;
-  chrome.storage.local.set({ select_species: value });
-  updateTab({ action: 'updateSelect', type: 'species', value });
+  chrome.storage.local.set({ species: value });
+  updateTab('updateSetting', 'species', value);
   displayCompartments(value);
   displayHPA(value);
   updateTissues(value, true);

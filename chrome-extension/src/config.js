@@ -10,10 +10,12 @@ const config = {
     'Mus musculus',
     'Saccharomyces cerevisiae',
   ],
+  defaultGoNamespace: 'cc',
   defaultSpecies: 'Homo sapiens',
   defaultTissues: {
-    'Homo sapiens': ['HeLa', 'HEK 293', 'U-2 OS'],
+    'Homo sapiens': ['HeLa', 'HEK 293'],
   },
+  goNamespaces: ['bp', 'cc', 'mf'],
   species: dbConfig.species,
   tissues,
 };
