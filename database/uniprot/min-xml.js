@@ -32,7 +32,7 @@ const minXml = (file, path, species, fields, skip) => (
       const accessionRegex = new RegExp(/^ {2}<accession>([^<]+)<\/accession>/);
       const fieldLineRegex = new RegExp(/^ {2}<[^/]/);
       const fieldRegex = new RegExp(/^ {2}<(\w+)[\s>]/);
-      const speciesRegex = new RegExp(/^ {4}<name type="scientific">([^<]+)<\/name>/);
+      const speciesRegex = new RegExp(/^ {4}<name type="scientific">(\S+\s*\S+)[^<]*<\/name>/);
 
       // Create stream for writing XML data.
       const streams = species.reduce((accum, specie) => {

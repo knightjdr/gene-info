@@ -7,14 +7,18 @@ const writeTissue = (species, file) => (
     Object.entries(species).forEach(([specie, tissues]) => {
       writeStream.write(`  '${specie}': {\n`);
       writeStream.write('    cells: [\n');
-      tissues.cells.forEach((cell) => {
-        writeStream.write(`      '${cell}',\n`);
-      });
+      if (tissues.cells) {
+        tissues.cells.forEach((cell) => {
+          writeStream.write(`      '${cell}',\n`);
+        });
+      }
       writeStream.write('    ],\n');
       writeStream.write('    tissues: [\n');
-      tissues.tissues.forEach((tissue) => {
-        writeStream.write(`      '${tissue}',\n`);
-      });
+      if (tissues.tissues) {
+        tissues.tissues.forEach((tissue) => {
+          writeStream.write(`      '${tissue}',\n`);
+        });
+      }
       writeStream.write('    ],\n');
       writeStream.write('  },\n');
     });

@@ -5,10 +5,10 @@
   "main": "package.json",
   "scripts": {
     "dev-api": "NODE_ENV=development nodemon node api/index.js",
-    "dev-ext": "webpack --watch --config webpack.dev.js",
+    "dev-ext": "NODE_ENV=development webpack --watch --config webpack.dev.js",
     "prod-api": "NODE_ENV=production node api/index.js",
     "prod-api-forever": "NODE_ENV=production forever start -a --uid 'gene-info-api' api/index.js",
-    "prod-ext": "webpack --config webpack.prod.js",
+    "prod-ext": "NODE_ENV=production webpack --config webpack.prod.js",
     "test": "jest"
   },
   "repository": {

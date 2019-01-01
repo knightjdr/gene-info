@@ -35,10 +35,10 @@
 
 ## Create database
 
-Databases for each species specified in configs.js will be written to `files/databases`. Javascript files containing tissues in expression databases for each species will be written to `files/rna-expression.js`.
+Databases for each species specified in configs.js will be written to `files/databases`. Javascript files containing tissues in expression databases for each species will be written to `files/rna-expression.js`. Creating the database consumes a lot of memory so increase the limit. 
 
 ```
-node index.js
+node --max-old-space-size=8192 index.js
 ```
 
 ### Flags

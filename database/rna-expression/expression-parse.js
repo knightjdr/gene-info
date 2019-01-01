@@ -42,7 +42,10 @@ const handleLines = file => (
       });
     } else {
       console.error(`Missing HPA RNA expression file: ${file}`);
-      resolve({});
+      resolve({
+        expression: {},
+        types: [],
+      });
     }
   })
 );
