@@ -1,18 +1,21 @@
-const http = (gene) => {
-  return new Promise((resolve, reject) => {
-    const paramString = `?gene=${gene}`;
+const url = process.env.NODE_ENV === 'production'
+  ? 'http://prohitstools.mshri.on.ca:8002'
+  : 'http://localhost:8002';
+
+const http = route => (
+  new Promise((resolve, reject) => {
     chrome.runtime.sendMessage({
-      method: 'GET',
       action: 'xhttp',
-      // url: `http://localhost:8002/extension${paramString}`
-      url: `http://prohitstools.mshri.on.ca:8002/extension${paramString}`
-    }, function(response) {
-      var parsedResponse = JSON.parse(response);
-      if (parsedResponse.status === 200) {
-        resolve(parsedResponse.result);
+      method: 'GET',
+      url: `${url}/extension${route}`,
+    }, (response) => {
+      if (response.status === 200) {
+        resolve(response.result);
       } else {
-        reject(parsedResponse.error);
+        reject();
       }
     });
-  });
-};
+  })
+);
+
+export default http;

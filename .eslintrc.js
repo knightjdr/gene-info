@@ -6,6 +6,7 @@ module.exports = {
   "globals": {
     "chrome": true,
     "document": true,
+    "window": true,
     "XMLHttpRequest": true,
   },
   "parser": "babel-eslint",

@@ -22,7 +22,7 @@ const report = (req, res) => {
       .then((results) => {
         const [matches] = results;
         if (!matches || matches.length === 0) {
-          res.send({ result: [] });
+          res.send([]);
         } else {
           const official = [];
           const nonOfficial = [];
@@ -33,7 +33,7 @@ const report = (req, res) => {
               nonOfficial.push(match);
             }
           });
-          res.send({ result: [...official, ...nonOfficial] });
+          res.send([...official, ...nonOfficial]);
         }
       })
       .catch(() => {

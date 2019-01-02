@@ -1,13 +1,15 @@
-function removeTooltip() {
-  const container = document.getElementById('cExtension_gene_info_tooltip_container');
-  if(container) {
-    container.removeEventListener('click', clearTooltip);
-    document.getElementById('cExtension_gene_info_tooltip_button').removeEventListener('click', removeTooltip);
-    const changeEl = document.getElementById('cExtension_gene_info_geneSelect');
+const removeTooltip = () => {
+  const tooltip = document.getElementById('gene-info__tooltip');
+  if (tooltip) {
+    tooltip.removeEventListener('click', removeTooltip);
+    document.getElementById('gene-info__tooltip-remove').removeEventListener('click', removeTooltip);
+    const changeEl = document.getElementById('gene-info__gene-select');
     if (changeEl) {
-      changeEl.removeEventListener('change', selectChange);
+      changeEl.removeEventListener('change', geneSelect);
     }
     window.removeEventListener('scroll', tooltipScroll.scroll);
-    fadeOut(container);
+    fadeOut(tooltip);
   }
 }
+
+module.exports = removeTooltip;

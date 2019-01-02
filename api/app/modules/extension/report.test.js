@@ -91,11 +91,10 @@ describe('Report', () => {
       });
 
       it('should send response', () => {
-        const results = [
+        const expected = [
           { gene: 'test', name: 'test gene' },
           { gene: 'test2', name: 'test gene2' },
         ];
-        const expected = { result: results };
         expect(res.send).toHaveBeenCalledWith(expected);
       });
     });
@@ -132,10 +131,9 @@ describe('Report', () => {
       });
 
       it('should send response', () => {
-        const results = [
+        const expected = [
           { gene: 'test', name: 'test gene' },
         ];
-        const expected = { result: results };
         expect(res.send).toHaveBeenCalledWith(expected);
       });
     });
@@ -158,8 +156,7 @@ describe('Report', () => {
         });
 
         it('should send response', () => {
-          const results = [];
-          const expected = { result: results };
+          const expected = [];
           expect(res.send).toHaveBeenCalledWith(expected);
         });
       });
@@ -181,8 +178,7 @@ describe('Report', () => {
         });
 
         it('should send response', () => {
-          const results = [];
-          const expected = { result: results };
+          const expected = [];
           expect(res.send).toHaveBeenCalledWith(expected);
         });
       });

@@ -1,9 +1,13 @@
-const fs = require('fs');
+const mkdirp = require('mkdirp');
 
 const createFolder = name => (
-  new Promise((resolve) => {
-    fs.mkdir(name, { recursive: true }, () => {
-      resolve();
+  new Promise((resolve, reject) => {
+    mkdirp(name, (err) => {
+      if (!err) {
+        resolve();
+      } else {
+        reject(err);
+      }
     });
   })
 );

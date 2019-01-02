@@ -1,15 +1,22 @@
 chrome.runtime.onMessage.addListener((request, sender, callback) => {
   if (request.action === 'xhttp') {
-    const xhttp = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     const method = request.method ? request.method.toUpperCase() : 'GET';
-    xhttp.onload = () => {
-      callback(xhttp.responseText);
+    xhr.onload = () => {
+      callback({
+        result: xhr.response,
+        status: xhr.status,
+      });
     };
-    xhttp.onerror = () => {
-      callback();
+    xhr.onerror = () => {
+      callback({
+        result: null,
+        status: xhr.status,
+      });
     };
-    xhttp.open(method, request.url, true);
-    xhttp.send(request.data);
+    xhr.open(method, request.url, true);
+    xhr.responseType = 'json';
+    xhr.send(request.data);
     return true;
   }
   return false;

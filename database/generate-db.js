@@ -1,4 +1,5 @@
 const config = require('./config');
+const createFolder = require('./helpers/create-folder');
 const domainParse = require('./domains/domain-parse');
 const expressionParse = require('./rna-expression/expression-parse');
 const intParse = require('./interactions/iterate-tab');
@@ -10,19 +11,20 @@ const uniParse = require('./uniprot/iterate-xml');
 const speciesDB = specie => (
   new Promise((resolve, reject) => {
     let rnaTissues;
-    Promise.all([
-      uniParse(`./files/uniprot/${specie}.xml`),
-      expressionParse(
-        `./files/rna-expression/cells/${specie}.tsv`,
-        `./files/rna-expression/tissues/${specie}.tsv`,
-      ),
-      domainParse(`./files/domains/${specie}.tsv`, './files/domains/domain-names.tsv'),
-      intParse(`./files/interactions/${specie}.tab`),
-      localizationParse(
-        `./files/localization/hpa/${specie}.tsv`,
-        `./files/localization/compartments/${specie}.tsv`,
-      ),
-    ])
+    createFolder('./files/databases')
+      .then(() => Promise.all([
+        uniParse(`./files/uniprot/${specie}.xml`),
+        expressionParse(
+          `./files/rna-expression/cells/${specie}.tsv`,
+          `./files/rna-expression/tissues/${specie}.tsv`,
+        ),
+        domainParse(`./files/domains/${specie}.tsv`, './files/domains/domain-names.tsv'),
+        intParse(`./files/interactions/${specie}.tab`),
+        localizationParse(
+          `./files/localization/hpa/${specie}.tsv`,
+          `./files/localization/compartments/${specie}.tsv`,
+        ),
+      ]))
       .then((values) => {
         [, { rnaTissues }] = values;
         const merged = mergeDB(values);

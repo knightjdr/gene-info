@@ -1,7 +1,7 @@
 /* eslint no-param-reassign: 0 */
 
 const fs = require('fs');
-const readline = require('readline');
+const LineByLineReader = require('line-by-line');
 
 const readJson = require('../helpers/read-json');
 
@@ -14,9 +14,7 @@ const handleLines = (file, path, speciesIDs, uniprot) => (
     }, {});
 
     let isHeader = true;
-    const lineReader = readline.createInterface({
-      input: fs.createReadStream(file),
-    });
+    const lineReader = new LineByLineReader(file);
     lineReader.on('line', (line) => {
       if (!isHeader) {
         const fields = line.split('\t');
@@ -31,7 +29,7 @@ const handleLines = (file, path, speciesIDs, uniprot) => (
       }
       isHeader = false;
     });
-    lineReader.on('close', () => {
+    lineReader.on('end', () => {
       Object.values(streams).forEach((stream) => {
         stream.end();
       });
