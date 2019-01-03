@@ -1,17 +1,15 @@
 import http from './http-promise';
+import panel from '../templates/panel';
 import State from '../state';
 
 const fetch = (species, field, gene, event) => {
   const route = `/${species.replace(' ', '-')}/${field}/${gene}`;
   http(route)
     .then((data) => {
-      console.log(data);
       State.addReport(data);
-      if (State.report === 'detailed') {
-        // removeTooltip();
-        // createDetailedTemplate(data[0], data, details.displayOptions);
+      if (State.settings.report === 'detailed') {
+        panel();
       } else {
-        // removePanel();
         // createTooltipTemplate(event, data[0], data, details.displayOptions);
       }
     })

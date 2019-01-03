@@ -5,6 +5,10 @@ class State {
     this.results.push(report);
   }
 
+  clearReports() {
+    this.results = [];
+  }
+
   removeReport(report) {
     this.results.pop(report);
   }
@@ -29,7 +33,6 @@ class State {
       species: storage.species || 'Homo sapiens',
     };
     this.mdTime = null;
-    this.report = null;
     this.results = [];
   }
 

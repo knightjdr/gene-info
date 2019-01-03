@@ -1,7 +1,7 @@
-const ensgRegex = new RegExp(/^ENS[A-Z]*G\d{11}/, 'i');
-const enspRegex = new RegExp(/^ENS[A-Z]*P\d{11}/, 'i');
+const ensgRegex = new RegExp(/^ENS[A-Z]*G\d{11}$/, 'i');
+const enspRegex = new RegExp(/^ENS[A-Z]*P\d{11}$/, 'i');
 const refseqRegex = new RegExp(/^\w{2}_/, 'i');
-const uniprotRegex = new RegExp(/^[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}/, 'i');
+const uniprotRegex = new RegExp(/^[OPQ][0-9][A-Z0-9]{3}[0-9]$|^[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$/, 'i');
 
 const detectField = (term) => {
   if (ensgRegex.test(term)) {

@@ -1,4 +1,4 @@
-import clickListener from './click-listener';
+import activateListener from './activate';
 import removePanel from '../remove/remove-panel';
 // import removeTooltip from '../remove/remove-tooltip';
 import retrieveInfo from '../retrieve/retrieve';
@@ -12,7 +12,7 @@ const messages = () => {
     } else if (action === 'updateSetting') {
       State.updateSetting(setting, value);
       if (setting === 'activate') {
-        clickListener('activate');
+        activateListener('activate');
       } else if (setting === 'report') {
         removePanel();
         // removeTooltip();

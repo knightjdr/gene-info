@@ -1,17 +1,24 @@
+import fadeOut from '../transitions/fade-out';
+import State from '../state';
+import { removeBackListener } from '../listeners/back';
+import { removeCloseListener } from '../listeners/close';
+import { removeDragListener } from '../listeners/drag';
+import { removeSelectListener } from '../listeners/select';
+
 const removePanel = () => {
   const panel = document.getElementById('gene-info__panel');
   if (panel) {
+    State.clearReports();
     window.onscroll = null;
-    document.getElementById('gene-info__panel-remove').removeEventListener('click', removePanel);
-    document.querySelectorAll('.gene-info__go-selector').forEach((element) => {
+    /* document.querySelectorAll('.gene-info__go-selector').forEach((element) => {
       element.removeEventListener('click', namespaceSelect);
-    });
-    const changeEl = document.getElementById('gene-info__gene-select');
-    if (changeEl) {
-      changeEl.removeEventListener('change', geneSelect);
-    }
+    }); */
+    removeCloseListener();
+    removeBackListener();
+    removeDragListener();
+    removeSelectListener();
     fadeOut(panel);
   }
-}
+};
 
-module.exports = removePanel;
+export default removePanel;

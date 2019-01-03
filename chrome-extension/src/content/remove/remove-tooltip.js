@@ -1,6 +1,9 @@
+import State from '../state';
+
 const removeTooltip = () => {
   const tooltip = document.getElementById('gene-info__tooltip');
   if (tooltip) {
+    State.clearReports();
     tooltip.removeEventListener('click', removeTooltip);
     document.getElementById('gene-info__tooltip-remove').removeEventListener('click', removeTooltip);
     const changeEl = document.getElementById('gene-info__gene-select');

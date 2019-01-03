@@ -27,9 +27,16 @@ describe('Detect field', () => {
     });
   });
 
-  it('should detect gene', () => {
-    const term = 'PDCD10';
-    expect(detectField(term)).toBe('gene');
+  describe('Gene name', () => {
+    it('should detect PDCD10', () => {
+      const term = 'PDCD10';
+      expect(detectField(term)).toBe('gene');
+    });
+
+    it('should detect EIF4EBP1', () => {
+      const term = 'EIF4EBP1';
+      expect(detectField(term)).toBe('gene');
+    });
   });
 
   it('should detect gene id', () => {

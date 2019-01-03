@@ -1,7 +1,7 @@
 import retrieveInfo from '../retrieve/retrieve';
 import State from '../state';
 
-const clickListener = (activate) => {
+const activateListener = (activate) => {
   if (activate === 'disable') {
     document.body.removeEventListener('dblclick', retrieveInfo);
     document.body.removeEventListener('mousedown', State.updateMdTime);
@@ -17,4 +17,4 @@ const clickListener = (activate) => {
   }
 };
 
-export default clickListener;
+export default activateListener;
