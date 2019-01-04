@@ -2,8 +2,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
+    background: './chrome-extension/src/background/events.js',
     content: './chrome-extension/src/content/index.js',
-    events: './chrome-extension/src/events/events.js',
     popup: './chrome-extension/src/popup/index.js',
   },
   module: {
@@ -11,7 +11,6 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'style-loader',
           MiniCssExtractPlugin.loader,
           'css-loader',
         ],

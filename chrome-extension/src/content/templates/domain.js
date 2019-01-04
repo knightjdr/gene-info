@@ -22,13 +22,33 @@ const domainElement = (report, settings) => {
               <table class="gene-info__domain-table">
                 <thead>
                   <tr>
-                    <th>Start-End</th>
+                    <th>Start - End</th>
                     <th>Name</th>
                   </tr>
                 </thead>
+                <tbody>
+                  ${
+                    report.domains.map(domain => (
+                      `
+                        <tr>
+                          <td>${domain.start}-${domain.end}</td>
+                          <td>
+                            <a
+                              href="http://pfam.xfam.org/family/${domain.pfam}"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              ${domain.name}
+                            </a>
+                          </td>
+                        </tr>
+                      `
+                    )).join('')
+                  }
+                </tbody>
               </table>
             `
-            : '<div>none</div>'
+            : '<div class="gene-info__none">no annotated domains</div>'
         }
       </section>
     `;

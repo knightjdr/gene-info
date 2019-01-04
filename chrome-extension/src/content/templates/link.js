@@ -1,6 +1,21 @@
 const linkElement = (report, settings) => {
   let html = '';
   if (settings.links) {
+    if (report['ensembl-gene'] && report['ensembl-gene'].length > 0) {
+      const accession = report['ensembl-gene'][0];
+      html += `
+        <section>
+          <h1>Ensembl</h1>
+          <a
+            href="https://ensembl.org/Gene/Summary?g=${accession}"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            ${accession}
+          </a>
+        </section>
+      `;
+    }
     if (report.geneid) {
       html += `
         <section>

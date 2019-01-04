@@ -10,6 +10,7 @@ const dragButton = (target) => {
     v-37.647c0-17.479,17.168-26.23,27.208-13.872l57.148,70.345C427.556,249.791,427.556,262.21,421.332,269.871z" />
     </svg>
   `;
+  button.type = 'button';
   target.appendChild(button);
 };
 

@@ -12,7 +12,13 @@
   content: none;
 }
 
-/* Restore Chrome user-agent select and table style */
+/* Restore Chrome user-agent element styles */
+.gene-info__panel div {
+  display: block;
+}
+.gene-info__panel p {
+  display: block
+}
 .gene-info__panel select {
   align-items: center;
   background-color: white;
@@ -113,11 +119,21 @@
 .gene-info__panel th {
   font-weight: bold
 }
+.gene-info__panel ul {
+  display: block;
+  list-style-type: disc;
+}
+.gene-info__panel li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
 
 .gene-info__panel {
   --primary: #658170;
   --primary-1: #b8c7be;
   --primary-2: #d4ddd8;
+  --primary-3: #e2e9e5;
+  --text-light: #f5f5f5;
   background-color: #fafafa;
   border-radius: 2px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -127,9 +143,7 @@
   max-height: calc(100vh - 25px);
   min-width: 300px;
   opacity: 0;
-  overflow-x: none;
-  overflow-y: auto;
-  padding: 5px 8px;
+  padding: 5px 0px 5px 8px;
   position: fixed;
   right: 5px;
   top: 5px;
@@ -137,7 +151,14 @@
   width: calc(.25vw);
   z-index: 2147483647;
 }
-.gene-info__panel > section:not(:last-of-type) {
+.gene-info__panel-inner {
+  display: inline-block;
+  max-height: calc(100vh - 35px);
+  overflow-x: none;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+.gene-info__panel-inner > section:not(:last-of-type) {
   margin-bottom: 5px;
 }
 .gene-info__panel:hover #gene-info__panel-back,
@@ -154,9 +175,7 @@
 .gene-info__panel a:hover,
 .gene-info__panel a:active,
 .gene-info__panel a:focus {
-  border-bottom-width: 1px;
-  border-bottom-style: dotted;
-  border-bottom-color: var(--primary);
+  border-bottom: 1px dotted var(--primary);
 }
 .gene-info__panel section {
   display: block;
@@ -173,33 +192,48 @@
   box-shadow: 0px 0px 1px var(--primary);
   outline: none;
 }
-.gene-info__panel::-webkit-scrollbar {
+.gene-info__panel-inner::-webkit-scrollbar {
   width: 8px;
 }
-.gene-info__panel::-webkit-scrollbar-thumb {
+.gene-info__panel-inner::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 20px;
 }
-.gene-info__panel::-webkit-scrollbar-track {
-  background: #ddd;
+.gene-info__panel-inner::-webkit-scrollbar-track {
+  background: #eee;
   border-radius: 20px;
 }
 .gene-info__panel table {
+  border-collapse: collapse;
   width: 100%;
 }
+.gene-info__panel thead tr {
+  background-color: var(--primary);
+  color: var(--text-light);
+}
 .gene-info__panel th {
+  padding: 2px 0;
   text-align: center;
+}
+.gene-info__panel th:first-of-type {
+  border-top-left-radius: 2px;
+}
+.gene-info__panel th:last-of-type {
+  border-top-right-radius: 2px;
+}
+.gene-info__panel td {
+  padding: 2px 0;
+}
+.gene-info__panel tbody tr:nth-child(even) {
+  background-color: var(--primary-3);
+}
+.gene-info__panel li {
+  margin: 2px 0;
 }
 
 .gene-info__alternative-names > ul {
-  display: block;
-  list-style-type: disc;
   margin: 0;
   padding-left: 30px;
-}
-.gene-info__alternative-names > ul > li {
-  display: list-item;
-  margin: 2px 0;
 }
 .gene-info__bevel {
   border-top: 2px groove #e6e6e6;
@@ -212,11 +246,17 @@
   display: inline;
   margin: 0;
 }
-.gene-info__details-header {
-  border-bottom: 1px dotted #d0d0d0;
+.gene-info__details {
+  padding-bottom: 5px;
+}
+div.gene-info__details-header {
+  border-bottom: 1px solid #d0d0d0;
   display: inline-block;
   margin-bottom: 5px;
   padding: 4px 0 3px 0;
+}
+.gene-info__details-description {
+  margin-bottom: 8px;
 }
 .gene-info__domain-table th:first-child {
   width: 35%;
@@ -224,12 +264,49 @@
 .gene-info__domain-table th:last-child {
   width: 65%;
 }
+.gene-info__domain-table td {
+  text-align: center;
+}
+#gene-info__go-buttons {
+  display: flex;
+  margin-bottom: 5px;
+}
+.gene-info__go-button {
+  background-color: var(--primary-3);
+  border: 1px solid var(--primary);
+  border-radius: 2px;
+  cursor: pointer;
+  flex-grow: 1;
+  margin: 0px 2px 0px 2px;
+  text-align: center;
+}
+.gene-info__go-button.active {
+  background-color: var(--primary);
+  color: var(--text-light);
+}
+.gene-info__go-button:focus {
+  outline: 0;
+}
+.gene-info__go-terms {
+  padding: 0 5px;
+}
+.gene-info__go-terms ul {
+  padding-left: 20px;
+}
+.gene-info__interactor-table tr td:not(:first-child) {
+  text-align: center;
+}
+.gene-info__none {
+  display: block;
+  text-align: center;
+}
 .gene-info__no-result {
   margin: 0;
 }
 .gene-info__no-result + #gene-info__panel-back,
 .gene-info__no-result + #gene-info__panel-drag,
 .gene-info__no-result + #gene-info__panel-close {
+  right: 2px;
   visibility: visible;
   top: 7px;
 }
@@ -254,23 +331,24 @@ button.gene-info__panel-button *:hover {
   box-shadow: none;
 }
 #gene-info__panel-back {
-  right: 48px;
+  right: 56px;
 }
 #gene-info__panel-close {
-  right: 2px;
+  right: 10px;
 }
 #gene-info__panel-drag {
-  right: 25px;
+  right: 33px;
 }
 .gene-info_right {
   float: right;
 }
-#gene-info__select {
-  font-size: 0.8em;
-  height: 30px;
+div.gene-info__select {
+  display: inline-block;
   max-width: 250px;
+  min-width: 100px;
+  width: 50%;
 }
-#gene-info__select > option {
+.gene-info__select > option {
   padding: 0;
 }
 .gene-info__panel_small {
@@ -278,6 +356,8 @@ button.gene-info__panel-button *:hover {
   padding: 8px 35px 8px 5px;
   width: auto;
 }
+
+/* slim select */
 
 @media (max-width: 309) {
   .gene-info__panel {

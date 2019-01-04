@@ -6,7 +6,10 @@ const geneElement = (result, reportIndex, fullname = false) => {
     return fullname ? report.fullname : report.gene;
   }
   return `
-    <select id="gene-info__select">
+    <select
+      class="gene-info__select"
+      id="gene-info__select"
+    >
       ${
         result.map((gene, index) => {
           const displayName = fullname ? gene.fullname : gene.gene;

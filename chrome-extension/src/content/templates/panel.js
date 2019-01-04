@@ -5,9 +5,11 @@ import fadeIn from '../transitions/fade-in';
 import noResult from './no-result';
 import reportDetails from './report-details';
 import State from '../state';
+import styleSelect from './select';
 import { addBackListener, removeBackListener } from '../listeners/back';
 import { addCloseListener, removeCloseListener } from '../listeners/close';
 import { addDragListener, removeDragListener } from '../listeners/drag';
+import { addGoListener, removeGoListener } from '../listeners/go';
 import { addSelectListener, removeSelectListener } from '../listeners/select';
 
 const panel = (reportIndex = 0) => {
@@ -21,6 +23,7 @@ const panel = (reportIndex = 0) => {
     removeBackListener();
     removeCloseListener();
     removeDragListener();
+    removeGoListener();
     removeSelectListener();
     shouldFade = false;
   } else {
@@ -38,8 +41,10 @@ const panel = (reportIndex = 0) => {
   if (result.length > 0) {
     backButton(targetEl, State.results.length);
     dragButton(targetEl);
+    styleSelect();
     addBackListener();
     addDragListener();
+    addGoListener();
     addSelectListener(result);
   }
   closeButton(targetEl);

@@ -3,6 +3,7 @@ import State from '../state';
 import { removeBackListener } from '../listeners/back';
 import { removeCloseListener } from '../listeners/close';
 import { removeDragListener } from '../listeners/drag';
+import { removeGoListener } from '../listeners/go';
 import { removeSelectListener } from '../listeners/select';
 
 const removePanel = () => {
@@ -16,6 +17,7 @@ const removePanel = () => {
     removeCloseListener();
     removeBackListener();
     removeDragListener();
+    removeGoListener();
     removeSelectListener();
     fadeOut(panel);
   }

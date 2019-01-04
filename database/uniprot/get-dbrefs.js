@@ -23,7 +23,7 @@ const getDBRefs = dbRefs => (
           };
         }
         return accumRef;
-      }, { id: Number(ref.$.id.split(':')[1]) });
+      }, { id: ref.$.id.split(':')[1] });
       return {
         ...accum,
         go: {
