@@ -2,10 +2,10 @@
 
 import SlimSelect from 'slim-select';
 
-const select = () => {
-  if (document.getElementById('gene-info__select')) {
+const select = (shadowRoot) => {
+  if (shadowRoot.getElementById('gene-select')) {
     new SlimSelect({
-      select: '#gene-info__select',
+      select: shadowRoot.getElementById('gene-select'),
       showSearch: false,
     });
   }

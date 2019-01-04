@@ -11,7 +11,7 @@ export function selectChange() {
 }
 
 export const removeSelectListener = () => {
-  const el = document.getElementById('gene-info__select');
+  const el = State.shadowRoot.getElementById('gene-select');
   if (el) {
     el.removeEventListener('change', selectChange);
   }
@@ -19,7 +19,7 @@ export const removeSelectListener = () => {
 
 export const addSelectListener = (results) => {
   if (results.length > 1) {
-    const el = document.getElementById('gene-info__select');
+    const el = State.shadowRoot.getElementById('gene-select');
     el.addEventListener('change', selectChange);
   }
 };

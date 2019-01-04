@@ -1,7 +1,17 @@
 import round from '../helpers/round';
 
 const basicElement = (report, settings) => {
-  let html = '';
+  let html = `
+    <style>
+      .alternative-names > ul {
+        margin: 0;
+        padding-left: 30px;
+      }
+      .right {
+        float: right;
+      }
+    </style>
+  `;
   if (settings.basic) {
     if (report.synonyms && report.synonyms.length > 0) {
       html += `
@@ -21,7 +31,7 @@ const basicElement = (report, settings) => {
     }
     if (report.alternativeNames && report.alternativeNames.length > 0) {
       html += `
-        <section class="gene-info__alternative-names">
+        <section class="alternative-names">
           <h1>Alternative Names</h1>
           <ul>
             ${report.alternativeNames.map(name => `<li>${name}</li>`).join('')}
@@ -34,7 +44,7 @@ const basicElement = (report, settings) => {
       html += `
         <section>
           <h1>Length</h1>${report.length}aa
-          <span class="gene-info_right">
+          <span class="right">
             <h1>MW</h1>${mw}kDa
           </span>
         </section>

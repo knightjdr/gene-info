@@ -7,14 +7,14 @@ const backReport = () => {
 };
 
 export const removeBackListener = () => {
-  const el = document.getElementById('gene-info__panel-back');
+  const el = State.shadowRoot.getElementById('back');
   if (el) {
     el.removeEventListener('click', backReport);
   }
 };
 
 export const addBackListener = () => {
-  const el = document.getElementById('gene-info__panel-back');
+  const el = State.shadowRoot.getElementById('back');
   if (el) {
     el.addEventListener('click', backReport);
   }

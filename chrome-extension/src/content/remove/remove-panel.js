@@ -7,13 +7,10 @@ import { removeGoListener } from '../listeners/go';
 import { removeSelectListener } from '../listeners/select';
 
 const removePanel = () => {
-  const panel = document.getElementById('gene-info__panel');
+  const panel = State.shadowRoot.getElementById('panel');
   if (panel) {
     State.clearReports();
     window.onscroll = null;
-    /* document.querySelectorAll('.gene-info__go-selector').forEach((element) => {
-      element.removeEventListener('click', namespaceSelect);
-    }); */
     removeCloseListener();
     removeBackListener();
     removeDragListener();

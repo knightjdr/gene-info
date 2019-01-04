@@ -9,12 +9,18 @@ class State {
     this.results = [];
   }
 
-  removeReport(report) {
-    this.results.pop(report);
+  createShadow() {
+    const div = document.createElement('div');
+    document.body.insertBefore(div, document.body.firstChild);
+    this.shadowRoot = div.attachShadow({ mode: 'open' });
   }
 
   clearMdTime() {
     this.mdTime = null;
+  }
+
+  removeReport(report) {
+    this.results.pop(report);
   }
 
   init(storage) {

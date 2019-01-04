@@ -7,8 +7,38 @@ const goElement = (report, settings) => {
   if (settings.go) {
     const accession = report.uniprot[0];
     html = `
-      <section class="gene-info__bevel gene-info__details">
-        <div class="gene-info__details-header">
+      <style>
+        #go-buttons {
+          display: flex;
+          margin-bottom: 5px;
+        }
+        .go-button {
+          background-color: var(--primary-3);
+          border: 1px solid var(--primary);
+          border-radius: 2px;
+          cursor: pointer;
+          flex-grow: 1;
+          font-size: 14px;
+          margin: 0px 2px 0px 2px;
+          text-align: center;
+        }
+        .go-button.active {
+          background-color: var(--primary);
+          color: var(--text-light);
+        }
+        .go-button:focus {
+          outline: 0;
+        }
+        .go-terms {
+          padding: 0 5px;
+        }
+        .go-terms ul {
+          margin: 5px 0 8px 0;
+          padding-left: 20px;
+        }
+      </style>
+      <section class="bevel details">
+        <div class="details-header">
           <h1>GO TERMS</h1>
           <a
             href="http://amigo.geneontology.org/amigo/gene_product/UniProtKB:${accession}"
@@ -18,17 +48,17 @@ const goElement = (report, settings) => {
             AmiGO
           </a>
         </div>
-        <div id="gene-info__go-buttons">
+        <div id="go-buttons">
           ${
             ['bp', 'cc', 'mf'].map((namespace) => {
               const currentClass = namespace === settings['go-namespace']
-                ? 'gene-info__go-button active'
-                : 'gene-info__go-button';
+                ? 'go-button active'
+                : 'go-button';
               return `
                 <button
                   class="${currentClass}"
                   data-type="${namespace}"
-                  id="gene-info__go-button-${namespace}"
+                  id="go-button-${namespace}"
                   type="button"
                 >
                   ${namespace.toUpperCase()}
@@ -43,8 +73,8 @@ const goElement = (report, settings) => {
             const terms = report.go[firstCharacter];
             return `
               <div
-                class="gene-info__go-terms"
-                id="gene-info__go-terms-${namespace}"
+                class="go-terms"
+                id="go-terms-${namespace}"
                 style="display: ${namespace === settings['go-namespace'] ? 'block' : 'none'}"
               >
                 ${
@@ -67,7 +97,7 @@ const goElement = (report, settings) => {
                       }
                     </ul>
                   `
-                  : '<div class="gene-info__none">no terms</div>'
+                  : '<div class="none">no terms</div>'
                 }
               </div>
             `;

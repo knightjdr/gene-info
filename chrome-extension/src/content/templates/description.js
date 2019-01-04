@@ -3,7 +3,17 @@ const descriptionElement = (report, settings) => {
   if (settings.description) {
     if (report.description) {
       html += `
-        <section class="gene-info__description">
+        <style>
+          .description {
+            text-align: justify;
+            word-spacing: -2px;
+          }
+          .description p {
+            display: inline;
+            margin: 0;
+          }
+        </style>
+        <section class="description">
           <h1>Description</h1>
           <p>
             ${report.description}

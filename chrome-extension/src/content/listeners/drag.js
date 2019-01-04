@@ -1,4 +1,5 @@
 /* eslint no-param-reassign: 0 */
+import State from '../state';
 
 let button;
 let startX;
@@ -29,15 +30,15 @@ const mouseDown = (event) => {
 };
 
 export const removeDragListener = () => {
-  button = document.getElementById('gene-info__panel-drag');
+  button = State.shadowRoot.getElementById('drag');
   if (button) {
     button.removeEventListener('mousemove', mouseDown);
   }
 };
 
 export const addDragListener = () => {
-  button = document.getElementById('gene-info__panel-drag');
-  panel = document.getElementById('gene-info__panel');
+  button = State.shadowRoot.getElementById('drag');
+  panel = State.shadowRoot.getElementById('panel');
   if (button) {
     button.addEventListener('mousedown', mouseDown);
   }

@@ -6,9 +6,20 @@ const geneElement = (result, reportIndex, fullname = false) => {
     return fullname ? report.fullname : report.gene;
   }
   return `
+    <style>
+      .gene-select {
+        display: inline-block;
+        max-width: 250px;
+        min-width: 100px;
+        width: 50%;
+      }
+      .gene-select > option {
+        padding: 0;
+      }
+    </style>
     <select
-      class="gene-info__select"
-      id="gene-info__select"
+      class="gene-select"
+      id="gene-select"
     >
       ${
         result.map((gene, index) => {

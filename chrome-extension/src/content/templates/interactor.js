@@ -5,9 +5,19 @@ const interactorElement = (report, settings) => {
   if (settings.interactors) {
     const accession = report.uniprot[0];
     html = `
-      <section class="gene-info__bevel gene-info__details">
-        <div class="gene-info__details-header">
-          <h1>Interactors</h1>
+      <style>
+        .details-header-interactors a:not(:last-child):after {
+          content: ',';
+          left: -4px;
+          position: relative;
+        }
+        .interactor-table tr td:not(:first-child) {
+          text-align: center;
+        }
+      </style>
+      <section class="bevel details">
+        <div class="details-header details-header-interactors">
+          <h1>INTERACTORS</h1>
           ${
             report.biogrid
             ? `
@@ -32,12 +42,12 @@ const interactorElement = (report, settings) => {
         ${
           report.interactors && report.interactors.length > 0
           ? `
-            <p class="gene-info__details-description">
+            <p class="details-description">
               The values in the table indicate the number of different methods
               that have been used to detect the interaction partner (target) as
-              reporting by each database.
+              reported by each database.
             </p>
-            <table class="gene-info__interactor-table">
+            <table class="interactor-table">
               <thead>
                 <tr>
                   <th>Target</th>
@@ -60,7 +70,7 @@ const interactorElement = (report, settings) => {
               </tbody>
             </table>
           `
-          : '<div class="gene-info__none">no known interactors</div>'
+          : '<div class="none">no known interactors</div>'
         }
       </section>
     `;

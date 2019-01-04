@@ -1,7 +1,7 @@
 const dragButton = (target) => {
   const button = document.createElement('button');
-  button.className = 'gene-info__panel-button';
-  button.id = 'gene-info__panel-drag';
+  button.className = 'action-button';
+  button.id = 'drag';
   button.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">
     <path fill="#78909C" d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M421.332,269.871
