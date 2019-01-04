@@ -35,6 +35,7 @@
   margin-bottom: 5px;
 }
 .gene-info__panel:hover #gene-info__panel-back,
+.gene-info__panel:hover #gene-info__panel-drag,
 .gene-info__panel:hover #gene-info__panel-remove {
   visibility: visible;
 }
@@ -160,11 +161,19 @@
   margin: 0;
 }
 .gene-info__no-result + #gene-info__panel-back,
+.gene-info__no-result + #gene-info__panel-drag,
 .gene-info__no-result + #gene-info__panel-remove {
   visibility: visible;
   top: 7px;
 }
 #gene-info__panel-back {
+  cursor: pointer;
+  position: absolute;
+  right: 48px;
+  top: 2px;
+  visibility: hidden;
+}
+#gene-info__panel-drag {
   cursor: pointer;
   position: absolute;
   right: 25px;

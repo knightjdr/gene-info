@@ -1,5 +1,6 @@
 import backButton from './back-button';
 import closeButton from './close-button';
+import dragButton from './drag-button';
 import fadeIn from '../transitions/fade-in';
 import noResult from './no-result';
 import reportDetails from './report-details';
@@ -36,6 +37,7 @@ const panel = (reportIndex = 0) => {
   document.body.insertBefore(targetEl, document.body.firstChild);
   backButton(targetEl, State.results.length);
   closeButton(targetEl);
+  dragButton(targetEl);
   addBackListener();
   addCloseListener();
   addDragListener();
