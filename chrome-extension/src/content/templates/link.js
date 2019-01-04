@@ -25,7 +25,7 @@ const linkElement = (report, settings) => {
             rel="noopener noreferrer"
             target="_blank"
           >
-            ${accession}
+            NX_${accession}
           </a>
         </section>
       `;
