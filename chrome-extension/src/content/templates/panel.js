@@ -35,13 +35,15 @@ const panel = (reportIndex = 0) => {
 
   // Add element, close button, listeners and fade in.
   document.body.insertBefore(targetEl, document.body.firstChild);
-  backButton(targetEl, State.results.length);
+  if (result.length > 0) {
+    backButton(targetEl, State.results.length);
+    dragButton(targetEl);
+    addBackListener();
+    addDragListener();
+    addSelectListener(result);
+  }
   closeButton(targetEl);
-  dragButton(targetEl);
-  addBackListener();
   addCloseListener();
-  addDragListener();
-  addSelectListener(result);
   if (shouldFade) {
     fadeIn(targetEl);
   }
