@@ -1,7 +1,120 @@
 @namespace svg "http://www.w3.org/2000/svg";
 
+/* Unset styles */
 .gene-info__panel {
   all: initial;
+}
+.gene-info__panel *:not(svg|*) {
+  all: unset;
+}
+.gene-info__panel *:after,
+.gene-info__panel *:before {
+  content: none;
+}
+
+/* Restore Chrome user-agent select and table style */
+.gene-info__panel select {
+  align-items: center;
+  background-color: white;
+  border: 1px solid rgb(166, 166, 166);
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: default;
+  display: inline-block;
+  font: -webkit-small-control;
+  font-size: 12px;
+  letter-spacing: normal;
+  line-height: normal;
+  margin: 0__qem;
+  text-align: start;
+  text-indent: 0;
+  text-rendering: auto;
+  text-shadow: none;
+  text-transform: none;
+  white-space: pre;
+  word-spacing: normal;
+  -webkit-appearance: menulist;
+  -webkit-rtl-ordering: logical;
+}
+.gene-info__panel select:not(:-internal-list-box) {
+  overflow: visible !important;
+}
+.gene-info__panel select:-internal-list-box {
+  align-items: flex-start;
+  border: 1px inset gray;
+  border-radius: initial;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  vertical-align: text-bottom;
+  white-space: nowrap;
+  -webkit-appearance: listbox;
+  -webkit-user-select: none;
+}
+.gene-info__panel select:-webkit-autofill {
+  background-color: #FAFFBD !important;
+  background-image: none !important;
+}
+.gene-info__panel select:-internal-list-box optgroup option:before {
+  content: "\00a0\00a0\00a0\00a0";;
+}
+.gene-info__panel select:-internal-list-box option,
+.gene-info__panel select:-internal-list-box optgroup {
+  line-height: initial !important;
+}
+.gene-info__panel select:-internal-list-box:focus option:checked {
+  background-color: -internal-active-list-box-selection !important;
+  color: -internal-active-list-box-selection-text !important;
+}
+.gene-info__panel select:-internal-list-box option:checked {
+  background-color: -internal-inactive-list-box-selection !important;
+  color: -internal-inactive-list-box-selection-text !important;
+}
+.gene-info__panel select:-internal-list-box:disabled option:checked,
+.gene-info__panel select:-internal-list-box option:checked:disabled {
+  color: gray !important;
+}
+.gene-info__panel table {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-color: gray
+}
+.gene-info__panel thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit
+}
+.gene-info__panel tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit
+}
+.gene-info__panel tfoot {
+  display: table-footer-group;
+  vertical-align: middle;
+  border-color: inherit
+}
+.gene-info__panel table > tr {
+  vertical-align: middle;
+}
+.gene-info__panel col {
+  display: table-column
+}
+.gene-info__panel tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit
+}
+.gene-info__panel td,
+.gene-info__panel th {
+  display: table-cell;
+  vertical-align: inherit
+}
+.gene-info__panel th {
+  font-weight: bold
+}
+
+.gene-info__panel {
   --primary: #658170;
   --primary-1: #b8c7be;
   --primary-2: #d4ddd8;
@@ -24,19 +137,12 @@
   width: calc(.25vw);
   z-index: 2147483647;
 }
-.gene-info__panel *:not(svg|*) {
-  all: unset;
-}
-.gene-info__panel *:after,
-.gene-info__panel *:before {
-  content: none;
-}
 .gene-info__panel > section:not(:last-of-type) {
   margin-bottom: 5px;
 }
 .gene-info__panel:hover #gene-info__panel-back,
-.gene-info__panel:hover #gene-info__panel-drag,
-.gene-info__panel:hover #gene-info__panel-remove {
+.gene-info__panel:hover #gene-info__panel-close,
+.gene-info__panel:hover #gene-info__panel-drag {
   visibility: visible;
 }
 .gene-info__panel a:link,
@@ -50,78 +156,18 @@
 .gene-info__panel a:focus {
   border-bottom-width: 1px;
   border-bottom-style: dotted;
-  border-bottom-color: inherit;
+  border-bottom-color: var(--primary);
 }
 .gene-info__panel section {
   display: block;
 }
-.gene-info__heading {
+.gene-info__panel section h1 {
   font-weight: bold;
   margin: 0;
 }
-.gene-info__heading::after {
+.gene-info__panel section h1::after {
   content: ':';
   margin-right: 3px;
-}
-.gene-info__panel select {
-  border-radius: 5px;
-  margin: 0__qem;
-  font: -webkit-small-control;
-  font-size: 12px;
-  text-rendering: auto;
-  letter-spacing: normal;
-  word-spacing: normal;
-  line-height: normal;
-  text-transform: none;
-  text-indent: 0;
-  text-shadow: none;
-  display: inline-block;
-  text-align: start;
-  -webkit-appearance: menulist;
-  box-sizing: border-box;
-  align-items: center;
-  border: 1px solid rgb(166, 166, 166);
-  white-space: pre;
-  -webkit-rtl-ordering: logical;
-  background-color: white;
-  cursor: default;
-}
-.gene-info__panel select:not(:-internal-list-box) {
-  overflow: visible !important;
-}
-.gene-info__panel select:-internal-list-box {
-  -webkit-appearance: listbox;
-  align-items: flex-start;
-  border: 1px inset gray;
-  border-radius: initial;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  vertical-align: text-bottom;
-  -webkit-user-select: none;
-  white-space: nowrap;
-}
-.gene-info__panel select:-webkit-autofill {
-  background-color: #FAFFBD !important;
-  background-image:none !important;
-}
-.gene-info__panel select:-internal-list-box optgroup option:before {
-  content: "\00a0\00a0\00a0\00a0";;
-}
-.gene-info__panel select:-internal-list-box option,
-.gene-info__panel select:-internal-list-box optgroup {
-  line-height: initial !important;
-}
-.gene-info__panel select:-internal-list-box:focus option:checked {
-  background-color: -internal-active-list-box-selection !important;
-  color: -internal-active-list-box-selection-text !important;
-}
-.gene-info__panel select:-internal-list-box option:checked {
-  background-color: -internal-inactive-list-box-selection !important;
-  color: -internal-inactive-list-box-selection-text !important;
-}
-.gene-info__panel select:-internal-list-box:disabled option:checked,
-.gene-info__panel select:-internal-list-box option:checked:disabled {
-  color: gray !important;
 }
 .gene-info__panel select:focus {
   box-shadow: 0px 0px 1px var(--primary);
@@ -138,6 +184,12 @@
   background: #ddd;
   border-radius: 20px;
 }
+.gene-info__panel table {
+  width: 100%;
+}
+.gene-info__panel th {
+  text-align: center;
+}
 
 .gene-info__alternative-names > ul {
   display: block;
@@ -149,6 +201,9 @@
   display: list-item;
   margin: 2px 0;
 }
+.gene-info__bevel {
+  border-top: 2px groove #e6e6e6;
+}
 .gene-info__description {
   text-align: justify;
   word-spacing: -2px;
@@ -157,35 +212,55 @@
   display: inline;
   margin: 0;
 }
+.gene-info__details-header {
+  border-bottom: 1px dotted #d0d0d0;
+  display: inline-block;
+  margin-bottom: 5px;
+  padding: 4px 0 3px 0;
+}
+.gene-info__domain-table th:first-child {
+  width: 35%;
+}
+.gene-info__domain-table th:last-child {
+  width: 65%;
+}
 .gene-info__no-result {
   margin: 0;
 }
 .gene-info__no-result + #gene-info__panel-back,
 .gene-info__no-result + #gene-info__panel-drag,
-.gene-info__no-result + #gene-info__panel-remove {
+.gene-info__no-result + #gene-info__panel-close {
   visibility: visible;
   top: 7px;
 }
-#gene-info__panel-back {
+button.gene-info__panel-button {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
   cursor: pointer;
   position: absolute;
-  right: 48px;
   top: 2px;
   visibility: hidden;
+}
+button.gene-info__panel-button:focus {
+  outline: 0;
+}
+button.gene-info__panel-button:active,
+button.gene-info__panel-button:hover,
+button.gene-info__panel-button *:active,
+button.gene-info__panel-button *:hover {
+  background-color: transparent !important;
+  border: none;
+  box-shadow: none;
+}
+#gene-info__panel-back {
+  right: 48px;
+}
+#gene-info__panel-close {
+  right: 2px;
 }
 #gene-info__panel-drag {
-  cursor: pointer;
-  position: absolute;
   right: 25px;
-  top: 2px;
-  visibility: hidden;
-}
-#gene-info__panel-remove {
-  cursor: pointer;
-  position: absolute;
-  right: 2px;
-  top: 2px;
-  visibility: hidden;
 }
 .gene-info_right {
   float: right;

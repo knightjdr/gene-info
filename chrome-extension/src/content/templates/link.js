@@ -4,7 +4,7 @@ const linkElement = (report, settings) => {
     if (report.geneid) {
       html += `
         <section>
-          <span class="gene-info__heading">NCBI</span>
+          <h1>NCBI</h1>
           <a
             href="https://www.ncbi.nlm.nih.gov/gene/?term=${report.geneid}"
             rel="noopener noreferrer"
@@ -19,7 +19,7 @@ const linkElement = (report, settings) => {
       const accession = report.uniprot[0];
       html += `
         <section>
-          <span class="gene-info__heading">neXtProt</span>
+          <h1>neXtProt</h1>
           <a
             href="https://www.nextprot.org/entry/NX_${accession}"
             rel="noopener noreferrer"
@@ -31,7 +31,7 @@ const linkElement = (report, settings) => {
       `;
       html += `
         <section>
-          <span class="gene-info__heading">UniProt</span>
+          <h1>UniProt</h1>
           <a
             href="https://www.uniprot.org/uniprot/${accession}"
             rel="noopener noreferrer"

@@ -4,7 +4,7 @@ const descriptionElement = (report, settings) => {
     if (report.description) {
       html += `
         <section class="gene-info__description">
-          <span class="gene-info__heading">Description</span>
+          <h1>Description</h1>
           <p>
             ${report.description}
           </p>

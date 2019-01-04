@@ -6,7 +6,7 @@ const basicElement = (report, settings) => {
     if (report.synonyms && report.synonyms.length > 0) {
       html += `
         <section>
-          <span class="gene-info__heading">Synonyms</span>
+          <h1>Synonyms</h1>
           ${report.synonyms.join(', ')}
         </section>
       `;
@@ -14,7 +14,7 @@ const basicElement = (report, settings) => {
     if (report.fullname) {
       html += `
         <section>
-          <span class="gene-info__heading">Name</span>
+          <h1>Name</h1>
           ${report.fullname}
         </section>
       `;
@@ -22,7 +22,7 @@ const basicElement = (report, settings) => {
     if (report.alternativeNames && report.alternativeNames.length > 0) {
       html += `
         <section class="gene-info__alternative-names">
-          <span class="gene-info__heading">Alternative Names</span>
+          <h1>Alternative Names</h1>
           <ul>
             ${report.alternativeNames.map(name => `<li>${name}</li>`).join('')}
           </ul>
@@ -33,9 +33,9 @@ const basicElement = (report, settings) => {
       const mw = report.mw ? round(report.mw / 1000) : '-';
       html += `
         <section>
-          <span class="gene-info__heading">Length</span>${report.length}aa
+          <h1>Length</h1>${report.length}aa
           <span class="gene-info_right">
-            <span class="gene-info__heading">MW</span>${mw}kDa
+            <h1>MW</h1>${mw}kDa
           </span>
         </section>
       `;
