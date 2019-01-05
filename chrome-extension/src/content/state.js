@@ -46,6 +46,7 @@ class State {
       report: storage.report || 'detailed',
       species: storage.species || 'Homo sapiens',
     };
+    this.style = {};
     this.mdTime = null;
     this.results = [];
   }
@@ -56,6 +57,10 @@ class State {
 
   updateSetting(setting, value) {
     this.settings[setting] = value;
+  }
+
+  updateStyle(setting, value) {
+    this.style[setting] = value;
   }
 }
 

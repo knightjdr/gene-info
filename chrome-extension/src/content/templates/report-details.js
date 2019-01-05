@@ -7,8 +7,19 @@ import interactorElement from './interactor';
 import linkElement from './link';
 import State from '../state';
 
-const reportDetails = (result, reportIndex) => (`
-    <aside id="panel">
+const reportDetails = (result, reportIndex, stateStyle) => {
+  let style = '';
+  if (stateStyle.right) {
+    style += `right: ${stateStyle.right};`;
+  }
+  if (stateStyle.width) {
+    style += `width: ${stateStyle.width};`;
+  }
+  return `
+    <aside
+      id="panel"
+      style="${style}"
+    >
       <div class="panel__inner">
         <section>
           <h1>Gene</h1>
@@ -22,7 +33,7 @@ const reportDetails = (result, reportIndex) => (`
         ${interactorElement(result[reportIndex], State.settings)}
       </div>
     </aside>
-  `
-);
+  `;
+};
 
 export default reportDetails;

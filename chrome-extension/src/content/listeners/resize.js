@@ -7,7 +7,9 @@ let x;
 const mouseMove = (event) => {
   const delta = x - event.clientX;
   x = event.clientX;
-  panel.style.width = `${panel.offsetWidth + delta}px`;
+  const width = `${panel.offsetWidth + delta}px`;
+  panel.style.width = width;
+  State.updateStyle('width', width);
 };
 
 const mouseUp = () => {

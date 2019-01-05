@@ -9,7 +9,9 @@ const mouseMove = (event) => {
   const delta = x - event.clientX;
   x = event.clientX;
   const right = document.documentElement.clientWidth - panel.getBoundingClientRect().right;
-  panel.style.right = `${right + delta}px`;
+  const position = `${right + delta}px`;
+  panel.style.right = position;
+  State.updateStyle('right', position);
 };
 
 const mouseUp = () => {
