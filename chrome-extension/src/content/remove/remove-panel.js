@@ -5,6 +5,7 @@ import { removeCloseListener } from '../listeners/close';
 import { removeDragListener } from '../listeners/drag';
 import { removeGoListener } from '../listeners/go';
 import { removeInteractorListener } from '../listeners/interactor';
+import { removeResizeListener } from '../listeners/resize';
 import { removeSelectListener } from '../listeners/select';
 
 const removePanel = () => {
@@ -17,6 +18,7 @@ const removePanel = () => {
     removeDragListener();
     removeGoListener();
     removeInteractorListener();
+    removeResizeListener();
     removeSelectListener();
     fadeOut(panel);
   }

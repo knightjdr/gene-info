@@ -2,6 +2,14 @@ const defaultToggleState = value => Boolean(value || value === undefined);
 
 class State {
   addReport(report) {
+    /* If there is a previous result and it was empty, remove it
+    ** before adding another */
+    if (
+      this.results.length
+      && this.results[this.results.length - 1].length === 0
+    ) {
+      this.results.pop();
+    }
     this.results.push(report);
   }
 
@@ -19,8 +27,8 @@ class State {
     this.mdTime = null;
   }
 
-  removeReport(report) {
-    this.results.pop(report);
+  removeReport() {
+    this.results.pop();
   }
 
   init(storage) {

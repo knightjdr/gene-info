@@ -7,6 +7,7 @@ const fields = [
   'ensembl-protein',
   'gene',
   'geneid',
+  'nextprot',
   'refseq',
   'uniprot',
 ];
@@ -41,6 +42,11 @@ const validate = (species, field, term) => {
   let validatedTerm = term;
   if (validatedField === 'geneid') {
     validatedTerm = Number(term);
+  } else if (validatedField === 'nextprot') {
+    validatedField = 'uniprot';
+    validatedTerm = term.replace('NX_', '');
+  } else if (validatedField === 'refseq') {
+    [validatedTerm] = term.split('.');
   }
   return {
     field: validatedField,

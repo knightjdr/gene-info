@@ -44,6 +44,23 @@ describe('Detect field', () => {
     expect(detectField(term)).toBe('geneid');
   });
 
+  describe('Nextprot', () => {
+    it('should detect O, P, Q type accession', () => {
+      const term = 'NX_Q9BUL8';
+      expect(detectField(term)).toBe('nextprot');
+    });
+
+    it('should detect other letter type accession', () => {
+      const term = 'NX_A2BC19';
+      expect(detectField(term)).toBe('nextprot');
+    });
+
+    it('should detect long accession', () => {
+      const term = 'NX_A0A022YWF9';
+      expect(detectField(term)).toBe('nextprot');
+    });
+  });
+
   describe('RefSeq', () => {
     it('should detect NP_ accession', () => {
       const term = 'NP_009148';

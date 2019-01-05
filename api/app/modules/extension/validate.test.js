@@ -66,6 +66,22 @@ describe('Validate query params', () => {
       expect(validate('Homo sapiens', 'geneid', '1234').term).toBe(expected.term);
     });
 
+    it('should convert nextprot to uniprot', () => {
+      const expected = {
+        field: 'uniprot',
+        species: 'Homo sapiens',
+        term: 'Q9BUL8',
+      };
+      expect(validate('Homo sapiens', 'nextprot', 'NX_Q9BUL8')).toEqual(expected);
+    });
+
+    it('should string trailing decimal from refseq', () => {
+      const expected = {
+        term: 'NP_009148',
+      };
+      expect(validate('Homo sapiens', 'refseq', 'NP_009148.2').term).toBe(expected.term);
+    });
+
     it('should keep non geneid fields as strings', () => {
       const expected = {
         term: 'test',

@@ -15,10 +15,10 @@ const interactorElement = (report, settings) => {
           table-layout: fixed;
         }
         .interactor-table th:first-child {
-          width: 30%;
+          width: 100px;
         }
         .interactor-table th:not(:first-child) {
-          width: 35%;
+          width: calc((100% - 100px) / 2);
         }
         .interactor-table tr td:not(:first-child) {
           cursor: pointer;

@@ -13,8 +13,8 @@ const fetch = (species, field, gene, event) => {
         // createTooltipTemplate(event, data[0], data, details.displayOptions);
       }
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
+      panel(0, true);
     });
 };
 
@@ -29,7 +29,7 @@ const retrieveInfo = (event, text) => {
     && State.mdTime
     && Date.now() - State.mdTime > 500
   ) {
-    fetch(gene, event);
+    fetch(State.settings.species, field, gene, event);
     State.clearMdTime();
   }
 };

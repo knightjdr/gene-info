@@ -9,18 +9,19 @@ const panelStyle = `
       background-color: #fafafa;
       border-radius: 2px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      box-sizing: border-box;
       color: #333333;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
       font-size: 14px;
       line-height: 1.3em;
-      max-height: calc(100vh - 25px);
+      max-height: calc(100vh - 10px);
       min-width: 300px;
       padding: 5px 0px 5px 8px;
       position: fixed;
       right: 5px;
       top: 5px;
       text-align: left;
-      width: calc(.25vw);
+      width: calc(25vw);
       z-index: 2147483647;
     }
     #panel:hover .action-button {
@@ -84,7 +85,8 @@ const panelStyle = `
     }
 
     .panel__inner {
-      max-height: calc(100vh - 35px);
+      box-sizing: border-box;
+      max-height: calc(100vh - 25px);
       overflow-x: none;
       overflow-y: auto;
       padding-right: 8px;
@@ -124,6 +126,13 @@ const panelStyle = `
     }
     #drag {
       right: 33px;
+    }
+    #resize {
+      bottom: -4px;
+      cursor: ew-resize;
+      left: -7px;
+      right: auto;
+      top: auto;
     }
 
     .bevel {
