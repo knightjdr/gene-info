@@ -84,7 +84,6 @@ const panelStyle = `
     }
 
     .panel__inner {
-      display: inline-block;
       max-height: calc(100vh - 35px);
       overflow-x: none;
       overflow-y: auto;

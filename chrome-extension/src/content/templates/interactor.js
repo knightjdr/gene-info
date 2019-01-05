@@ -11,8 +11,33 @@ const interactorElement = (report, settings) => {
           left: -4px;
           position: relative;
         }
+        .interactor-table {
+          table-layout: fixed;
+        }
+        .interactor-table th:first-child {
+          width: 30%;
+        }
+        .interactor-table th:not(:first-child) {
+          width: 35%;
+        }
         .interactor-table tr td:not(:first-child) {
+          cursor: pointer;
           text-align: center;
+          vertical-align: top;
+        }
+        .interactor__method-list {
+          border-top: 1px dotted #d0d0d0;
+          display: none;
+          font-size: 0.8em;
+          list-style: none;
+          margin: 0;
+          padding-left: 0;
+          text-align: left;
+          width: auto;
+          word-break: break-word;
+        }
+        .interactor__method-list li {
+          margin: 0;
         }
       </style>
       <section class="bevel details">
@@ -45,7 +70,8 @@ const interactorElement = (report, settings) => {
             <p class="details-description">
               The values in the table indicate the number of different methods
               that have been used to detect the interaction partner (target) as
-              reported by each database.
+              reported by each database. Click on a table cell to view the list
+              of methods.
             </p>
             <table class="interactor-table">
               <thead>
@@ -57,15 +83,37 @@ const interactorElement = (report, settings) => {
               </thead>
               <tbody>
                 ${
-                  report.interactors.map((interactor) => {
-                    return `
-                      <tr>
-                        <td>${interactor.gene}</td>
-                        <td>${interactor.biogrid.length}</td>
-                        <td>${interactor.intact.length}</td>
-                      </tr>
-                    `;
-                  }).join('')
+                  report.interactors.map(interactor => (`
+                    <tr>
+                      <td>${interactor.gene}</td>
+                      <td
+                        class="interactor-list-toggle"
+                        data-gene="${interactor.gene}"
+                      >
+                        <div>${interactor.biogrid.length}</div>
+                        <ul class="interactor__method-list interactor-list-${interactor.gene}">
+                          ${
+                            interactor.biogrid.map(method => (
+                              `<li>∙${method}</li>`
+                            )).join('')
+                          }
+                        </ul>
+                      </td>
+                      <td
+                        class="interactor-list-toggle"
+                        data-gene="${interactor.gene}"
+                      >
+                        <div>${interactor.intact.length}</div>
+                        <ul class="interactor__method-list interactor-list-${interactor.gene}">
+                          ${
+                            interactor.intact.map(method => (
+                              `<li>∙${method}</li>`
+                            )).join('')
+                          }
+                        </ul>
+                      </td>
+                    </tr>
+                  `)).join('')
                 }
               </tbody>
             </table>

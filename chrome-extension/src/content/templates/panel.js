@@ -12,6 +12,7 @@ import { addBackListener, removeBackListener } from '../listeners/back';
 import { addCloseListener, removeCloseListener } from '../listeners/close';
 import { addDragListener, removeDragListener } from '../listeners/drag';
 import { addGoListener, removeGoListener } from '../listeners/go';
+import { addInteractorListener, removeInteractorListener } from '../listeners/interactor';
 import { addSelectListener, removeSelectListener } from '../listeners/select';
 
 const createPanel = (reportIndex = 0) => {
@@ -25,6 +26,7 @@ const createPanel = (reportIndex = 0) => {
     removeCloseListener();
     removeDragListener();
     removeGoListener();
+    removeInteractorListener();
     removeSelectListener();
     shouldFade = false;
   }
@@ -46,6 +48,7 @@ const createPanel = (reportIndex = 0) => {
   }
   closeButton(panel);
   addCloseListener();
+  addInteractorListener();
   if (shouldFade) {
     fadeIn(panel);
   }
