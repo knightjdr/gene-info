@@ -32,18 +32,20 @@ const linkElement = (report, settings) => {
     }
     if (report.uniprot && report.uniprot.length > 0) {
       const accession = report.uniprot[0];
-      html += `
-        <section>
-          <h1>neXtProt</h1>
-          <a
-            href="https://www.nextprot.org/entry/NX_${accession}"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            NX_${accession}
-          </a>
-        </section>
-      `;
+      if (settings.species === 'Homo sapiens') {
+        html += `
+          <section>
+            <h1>neXtProt</h1>
+            <a
+              href="https://www.nextprot.org/entry/NX_${accession}"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              NX_${accession}
+            </a>
+          </section>
+        `;
+      }
       html += `
         <section>
           <h1>UniProt</h1>

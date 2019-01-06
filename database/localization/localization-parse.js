@@ -14,8 +14,8 @@ const handleCompartmentLines = file => (
       });
       lineReader.on('line', (line) => {
         if (!header) {
-          const [accession] = line.split('\t');
-          localization[accession] = true;
+          const [accession, gene] = line.split('\t');
+          localization[gene] = accession;
         }
         header = false;
       });

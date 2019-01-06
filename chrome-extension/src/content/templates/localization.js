@@ -100,7 +100,10 @@ const localizationElement = (report, settings) => {
           <h1>LOCALIZATION</h1>
         </div>
     `;
-    if (settings.localization_hpa) {
+    if (
+      settings.localization_hpa
+      && settings.species === 'Homo sapiens'
+    ) {
       const ensembl = report['ensembl-gene'][0];
       const fieldNumber = Object.keys(report.localization.hpa).length;
       html += `
@@ -181,8 +184,11 @@ const localizationElement = (report, settings) => {
       `;
       html += '</div>';
     }
-    if (settings.localization_compartments) {
-      const ensembl = report['ensembl-protein'][0];
+    if (
+      settings.localization_compartments
+      && config.compartmentSpecies.includes(settings.species)
+    ) {
+      const accession = report.localization.compartments;
       const speciesID = config.speciesID[settings.species];
       html += `
         <div class="localization__section">
@@ -193,11 +199,11 @@ const localizationElement = (report, settings) => {
           report.localization.compartments
           ? `
             <a
-              href="https://compartments.jensenlab.org/Entity?figures=subcell_cell_%&knowledge=10&textmining=10&experiments=10&predictions=10&type1=${speciesID}&type2=-22&id1=${ensembl}"
+              href="https://compartments.jensenlab.org/Entity?figures=subcell_cell_%&knowledge=10&textmining=10&experiments=10&predictions=10&type1=${speciesID}&type2=-22&id1=${accession}"
               rel="noopener noreferrer"
               target="_blank"
             >
-              ${ensembl}
+              ${accession}
             </a>
           `
           : '<span class="none">no data</span>'

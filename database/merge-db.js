@@ -10,7 +10,9 @@ const mergeDb = ([
     domains: entry.uniprot[0] && domains[entry.uniprot[0]] ? domains[entry.uniprot[0]] : [],
     interactors: interactions[entry.gene] || [],
     localization: {
-      compartments: entry['ensembl-protein'][0] && Boolean(localization.compartments[entry['ensembl-protein'][0]]),
+      compartments: entry.gene && localization.compartments[entry.gene]
+        ? localization.compartments[entry.gene]
+        : false,
       hpa: entry['ensembl-gene'][0] && localization.hpa[entry['ensembl-gene'][0]] ? localization.hpa[entry['ensembl-gene'][0]] : {},
       uniprot: entry.localization.uniprot,
     },
