@@ -20,7 +20,7 @@ const interactorElement = (report, settings) => {
         .interactor-table th:not(:first-child) {
           width: calc((100% - 100px) / 2);
         }
-        .interactor-table tr td:not(:first-child) {
+        .interactor-table td:not(:first-child) {
           cursor: pointer;
           text-align: center;
           vertical-align: top;

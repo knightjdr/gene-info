@@ -5,6 +5,7 @@ import geneElement from './gene';
 import goElement from './go';
 import interactorElement from './interactor';
 import linkElement from './link';
+import rnaExpressionElement from './rna-expression';
 import State from '../state';
 
 const reportDetails = (result, reportIndex, stateStyle) => {
@@ -29,6 +30,7 @@ const reportDetails = (result, reportIndex, stateStyle) => {
         ${linkElement(result[reportIndex], State.settings)}
         ${descriptionElement(result[reportIndex], State.settings)}
         ${domainElement(result[reportIndex], State.settings)}
+        ${rnaExpressionElement(result[reportIndex], State.settings)}
         ${goElement(result[reportIndex], State.settings)}
         ${interactorElement(result[reportIndex], State.settings)}
       </div>

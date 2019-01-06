@@ -1,3 +1,5 @@
+import config from '../config';
+
 const defaultToggleState = value => Boolean(value || value === undefined);
 
 class State {
@@ -32,6 +34,7 @@ class State {
   }
 
   init(storage) {
+    const species = storage.species || 'Homo sapiens';
     this.settings = {
       activate: storage.activate || 'click',
       auto: defaultToggleState(storage.auto),
@@ -44,7 +47,9 @@ class State {
       interactors: defaultToggleState(storage.interactors),
       links: defaultToggleState(storage.links),
       report: storage.report || 'detailed',
-      species: storage.species || 'Homo sapiens',
+      rna_expression: defaultToggleState(storage.rna_expression),
+      rna_expression_tissues: storage.rna_expression_tissues || config.defaultTissues[species],
+      species,
     };
     this.style = {};
     this.mdTime = null;
@@ -64,4 +69,4 @@ class State {
   }
 }
 
-module.exports = new State();
+export default new State();

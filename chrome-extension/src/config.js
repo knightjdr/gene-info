@@ -15,6 +15,12 @@ const config = {
   defaultTissues: {
     'Homo sapiens': ['HeLa', 'HEK 293'],
   },
+  expressionThresholds: {
+    none: [0, 1],
+    low: [1, 10],
+    medium: [10, 50],
+    high: [50],
+  },
   goNamespaces: ['bp', 'cc', 'mf'],
   species: dbConfig.species,
   tissues,
