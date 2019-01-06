@@ -43,7 +43,7 @@ class State {
       domain: defaultToggleState(storage.domain),
       field: storage.field || 'gene',
       go: defaultToggleState(storage.go),
-      'go-namespace': storage['go-namespace'] || 'cc',
+      go_namespace: storage.go_namespace || 'cc',
       interactors: defaultToggleState(storage.interactors),
       links: defaultToggleState(storage.links),
       report: storage.report || 'detailed',

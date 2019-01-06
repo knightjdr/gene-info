@@ -12,7 +12,7 @@ const messages = () => {
     } else if (action === 'updateSetting') {
       State.updateSetting(setting, value);
       if (setting === 'activate') {
-        activateListener('activate');
+        activateListener(value);
       } else if (setting === 'report') {
         removePanel();
         // removeTooltip();

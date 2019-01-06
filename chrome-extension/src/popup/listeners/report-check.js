@@ -6,6 +6,7 @@ const reportCheck = function report() {
   options.forEach((option) => {
     if (option === type) {
       chrome.storage.local.set({ report: option });
+      document.getElementById(option).checked = true;
     } else {
       document.getElementById(option).checked = false;
     }

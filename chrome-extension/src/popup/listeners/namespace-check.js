@@ -5,6 +5,7 @@ const namespaceCheck = function namespage() {
   ['bp', 'cc', 'mf'].forEach((option) => {
     if (option === type) {
       chrome.storage.local.set({ go_namespace: option });
+      document.getElementById(`go_namespace_${option}`).checked = true;
     } else {
       document.getElementById(`go_namespace_${option}`).checked = false;
     }

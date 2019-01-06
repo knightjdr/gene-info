@@ -51,7 +51,7 @@ const goElement = (report, settings) => {
         <div id="go-buttons">
           ${
             ['bp', 'cc', 'mf'].map((namespace) => {
-              const currentClass = namespace === settings['go-namespace']
+              const currentClass = namespace === settings.go_namespace
                 ? 'go-button active'
                 : 'go-button';
               return `
@@ -75,7 +75,7 @@ const goElement = (report, settings) => {
               <div
                 class="go-terms"
                 id="go-terms-${namespace}"
-                style="display: ${namespace === settings['go-namespace'] ? 'block' : 'none'}"
+                style="display: ${namespace === settings.go_namespace ? 'block' : 'none'}"
               >
                 ${
                   terms && terms.length > 0

@@ -137,6 +137,8 @@ const panelStyle = `
 
     .bevel {
       border-top: 2px groove #e6e6e6;
+      margin-top: 10px;
+      padding-top: 8px;
     }
     .gene-info__details {
       padding-bottom: 5px;

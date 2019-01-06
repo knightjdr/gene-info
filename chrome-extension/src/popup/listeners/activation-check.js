@@ -6,6 +6,7 @@ const activatationCheck = function activate() {
   options.forEach((option) => {
     if (option === type) {
       chrome.storage.local.set({ activate: option });
+      document.getElementById(`activate_${option}`).checked = true;
     } else {
       document.getElementById(`activate_${option}`).checked = false;
     }
