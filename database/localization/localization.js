@@ -14,27 +14,27 @@ const fsConfig = {
   hpaFolder: './files/localization/hpa',
   compartments: [
     {
-      url: 'http://download.jensenlab.org/human_compartment_integrated_full.tsv',
+      url: 'http://download.jensenlab.org/human_compartment_knowledge_full.tsv',
       file: './files/localization/compartments/Homo sapiens.tsv',
     },
     {
-      url: 'http://download.jensenlab.org/mouse_compartment_integrated_full.tsv',
+      url: 'http://download.jensenlab.org/mouse_compartment_knowledge_full.tsv',
       file: './files/localization/compartments/Mus musculus.tsv',
     },
     {
-      url: 'http://download.jensenlab.org/fly_compartment_integrated_full.tsv',
+      url: 'http://download.jensenlab.org/fly_compartment_knowledge_full.tsv',
       file: './files/localization/compartments/Drosophila melanogaster.tsv',
     },
     {
-      url: 'http://download.jensenlab.org/worm_compartment_integrated_full.tsv',
+      url: 'http://download.jensenlab.org/worm_compartment_knowledge_full.tsv',
       file: './files/localization/compartments/Caenorhabditis elegans.tsv',
     },
     {
-      url: 'http://download.jensenlab.org/yeast_compartment_integrated_full.tsv',
+      url: 'http://download.jensenlab.org/yeast_compartment_knowledge_full.tsv',
       file: './files/localization/compartments/Saccharomyces cerevisiae.tsv',
     },
     {
-      url: 'http://download.jensenlab.org/arabidopsis_compartment_integrated_full.tsv',
+      url: 'http://download.jensenlab.org/arabidopsis_compartment_knowledge_full.tsv',
       file: './files/localization/compartments/Arabidopsis thaliana.tsv',
     },
   ],

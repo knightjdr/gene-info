@@ -7,14 +7,25 @@ const noResult = (error = false) => (`
     }
     .panel_small {
       min-width: unset;
-      padding: 8px 35px 8px 5px;
       width: auto;
     }
     .panel_small .action-button:not(#resize) {
       visibility: visible;
     }
+    .panel_small #back {
+      right: 46px;
+    }
+    .panel_small #close {
+      right: 0px;
+    }
+    .panel_small #drag {
+      right: 23px;
+    }
     .panel_small #resize {
       display: none;
+    }
+    .panel_small p {
+      width: calc(100% - 60px);
     }
   </style>
   <aside
@@ -23,7 +34,17 @@ const noResult = (error = false) => (`
   >
     <p class="no-result">${
       error
-        ? 'There was error with your search'
+        ? `
+          An error occured. Please use our
+          <a
+            href="https://github.com/knightjdr/gene-info/issues"
+            rel='noopener noreferrer'
+            target="_blank"
+          >
+            issue tracker
+          </a>
+          to report bugs.
+        `
         : 'No gene information available'
     }</p>
   </aside>

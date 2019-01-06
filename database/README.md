@@ -28,7 +28,7 @@
 ## Localization
 
 ### Compartments
-* http://download.jensenlab.org/human_compartment_integrated_full.tsv
+* http://download.jensenlab.org/human_compartment_knowledge_full.tsv
 
 ### Human protein atlas
 * https://www.proteinatlas.org/download/subcellular_location.tsv.zip

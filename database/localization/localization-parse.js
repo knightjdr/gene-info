@@ -44,12 +44,19 @@ const handleHpaLines = file => (
       lineReader.on('line', (line) => {
         if (!header) {
           const [accession, , , enhanced, supported, approved, uncertain] = line.split('\t');
-          localization[accession] = {
-            approved: approved.split(';'),
-            enhanced: enhanced.split(';'),
-            supported: supported.split(';'),
-            uncertain: uncertain.split(';'),
-          };
+          localization[accession] = {};
+          if (approved) {
+            localization[accession].approved = approved.split(';');
+          }
+          if (enhanced) {
+            localization[accession].enhanced = enhanced.split(';');
+          }
+          if (supported) {
+            localization[accession].supported = supported.split(';');
+          }
+          if (uncertain) {
+            localization[accession].uncertain = uncertain.split(';');
+          }
         }
         header = false;
       });

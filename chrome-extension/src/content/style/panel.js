@@ -156,7 +156,6 @@ const panelStyle = `
     }
 
     .none {
-      display: block;
       text-align: center;
     }
 

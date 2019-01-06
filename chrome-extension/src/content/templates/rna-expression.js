@@ -57,7 +57,7 @@ const rnaExpressionElement = (report, settings) => {
             accession
             ? `
               <a
-                href="https://www.proteinatlas.org/${accession}"
+                href="https://www.proteinatlas.org/${accession}/tissue"
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -87,7 +87,7 @@ const rnaExpressionElement = (report, settings) => {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                assay details
+                HPA RNA-seq data
               </a>
               for more.
             </p>
