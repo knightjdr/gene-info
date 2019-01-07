@@ -1,5 +1,5 @@
 /* eslint indent: 0 */
-import config from '../../config';
+import config from '../../../config';
 
 const thresholds = config.expressionThresholds;
 

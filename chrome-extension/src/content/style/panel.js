@@ -1,16 +1,18 @@
+import buttonStyle from './button';
+import linkStyle from './link';
+import theme from './theme';
+
 const panelStyle = `
+  ${theme}
+  ${buttonStyle}
+  ${linkStyle}
   <style>
     #panel {
-      --primary: #658170;
-      --primary-1: #b8c7be;
-      --primary-2: #d4ddd8;
-      --primary-3: #e2e9e5;
-      --text-light: #f5f5f5;
-      background-color: #fafafa;
+      background-color: var(--background);
       border-radius: 2px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
       box-sizing: border-box;
-      color: #333333;
+      color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
       font-size: 14px;
       line-height: 1.3em;
@@ -28,20 +30,6 @@ const panelStyle = `
       visibility: visible;
     }
 
-    a {
-      text-decoration: none;
-    }
-    a:link,
-    a:visited {
-      color: var(--primary);
-      cursor: pointer;
-      border-bottom: none;
-    }
-    a:hover,
-    a:active,
-    a:focus {
-      border-bottom: 1px dotted var(--primary);
-    }
     section h1 {
       display: inline;
       font-size: 14px;
@@ -104,35 +92,6 @@ const panelStyle = `
     .panel__inner::-webkit-scrollbar-track {
       background: #eee;
       border-radius: 20px;
-    }
-
-    .action-button {
-      background-color: transparent;
-      border: none;
-      box-shadow: none;
-      cursor: pointer;
-      position: absolute;
-      top: 2px;
-      visibility: hidden;
-    }
-    .action-button:focus {
-      outline: 0;
-    }
-    #back {
-      right: 56px;
-    }
-    #close {
-      right: 10px;
-    }
-    #drag {
-      right: 33px;
-    }
-    #resize {
-      bottom: -4px;
-      cursor: ew-resize;
-      left: -7px;
-      right: auto;
-      top: auto;
     }
 
     .bevel {

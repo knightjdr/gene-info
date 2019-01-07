@@ -1,6 +1,6 @@
 import activateListener from './activate';
 import removePanel from '../remove/remove-panel';
-// import removeTooltip from '../remove/remove-tooltip';
+import removeTooltip from '../remove/remove-tooltip';
 import retrieveInfo from '../retrieve/retrieve';
 import State from '../state';
 
@@ -15,7 +15,7 @@ const messages = () => {
         activateListener(value);
       } else if (setting === 'report') {
         removePanel();
-        // removeTooltip();
+        removeTooltip();
       }
     } else if (action === 'search') {
       retrieveInfo(null, setting);

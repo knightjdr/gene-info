@@ -1,6 +1,6 @@
 /* eslint indent: 0 */
 
-import link from '../helpers/link-svg';
+import link from '../../helpers/link-svg';
 
 const goElement = (report, settings) => {
   let html = '';

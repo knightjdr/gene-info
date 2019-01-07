@@ -1,18 +1,18 @@
+import fadeOut from '../transitions/fade-out';
 import State from '../state';
+import { removeCloseListener } from '../listeners/close';
+import { removeSelectListener } from '../listeners/select';
+import { removeTooltipScrollListener } from '../listeners/tooltip-scroll';
 
 const removeTooltip = () => {
-  const tooltip = document.getElementById('gene-info__tooltip');
-  if (tooltip) {
+  const backdrop = State.shadowRoot.getElementById('backdrop');
+  if (backdrop) {
     State.clearReports();
-    tooltip.removeEventListener('click', removeTooltip);
-    document.getElementById('gene-info__tooltip-remove').removeEventListener('click', removeTooltip);
-    const changeEl = document.getElementById('gene-info__gene-select');
-    if (changeEl) {
-      changeEl.removeEventListener('change', geneSelect);
-    }
-    window.removeEventListener('scroll', tooltipScroll.scroll);
-    fadeOut(tooltip);
+    fadeOut(backdrop);
+    removeCloseListener();
+    removeSelectListener();
+    removeTooltipScrollListener();
   }
-}
+};
 
-module.exports = removeTooltip;
+export default removeTooltip;

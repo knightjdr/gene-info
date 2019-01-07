@@ -1,4 +1,4 @@
-import round from '../helpers/round';
+import round from '../../helpers/round';
 
 const basicElement = (report, settings) => {
   let html = `

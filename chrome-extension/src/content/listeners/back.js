@@ -1,4 +1,4 @@
-import panel from '../templates/panel';
+import panel from '../templates/panel/panel';
 import State from '../state';
 
 const backReport = () => {

@@ -1,5 +1,6 @@
 import http from './http-promise';
-import panel from '../templates/panel';
+import panel from '../templates/panel/panel';
+import tooltip from '../templates/tooltip/tooltip';
 import State from '../state';
 
 const fetch = (species, field, gene, event) => {
@@ -10,7 +11,7 @@ const fetch = (species, field, gene, event) => {
       if (State.settings.report === 'detailed') {
         panel();
       } else {
-        // createTooltipTemplate(event, data[0], data, details.displayOptions);
+        tooltip(event);
       }
     })
     .catch(() => {

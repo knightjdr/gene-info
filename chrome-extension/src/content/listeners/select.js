@@ -1,4 +1,5 @@
-import panel from '../templates/panel';
+import panel from '../templates/panel/panel';
+import tooltip from '../templates/tooltip/tooltip';
 import State from '../state';
 
 export function selectChange() {
@@ -6,7 +7,7 @@ export function selectChange() {
   if (State.settings.report === 'detailed') {
     panel(Number(index));
   } else {
-    // createTooltipTemplate();
+    tooltip(undefined, Number(index));
   }
 }
 
