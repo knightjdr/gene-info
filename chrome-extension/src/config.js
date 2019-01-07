@@ -13,7 +13,7 @@ const config = {
   defaultGoNamespace: 'bp',
   defaultSpecies: 'Homo sapiens',
   defaultTissues: {
-    'Homo sapiens': ['HeLa', 'HEK 293'],
+    'Homo sapiens': ['HEK 293', 'HeLa'],
   },
   expressionThresholds: {
     none: [0, 1],
