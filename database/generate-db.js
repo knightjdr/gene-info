@@ -7,12 +7,16 @@ const localizationParse = require('./localization/localization-parse');
 const mergeDB = require('./merge-db');
 const jsonStringify = require('./helpers/json-stringify');
 const uniParse = require('./uniprot/iterate-xml');
+const { readObo } = require('./go/read-obo');
 
 const speciesDB = specie => (
   new Promise((resolve, reject) => {
     let rnaTissues;
-    createFolder('./files/databases')
-      .then(() => Promise.all([
+    Promise.all([
+      readObo('./files/go/go-basic.obo'),
+      createFolder('./files/databases'),
+    ])
+      .then(([obo]) => Promise.all([
         uniParse(`./files/uniprot/${specie}.xml`),
         expressionParse(
           `./files/rna-expression/cells/${specie}.tsv`,
@@ -23,6 +27,8 @@ const speciesDB = specie => (
         localizationParse(
           `./files/localization/hpa/${specie}.tsv`,
           `./files/localization/compartments/${specie}.tsv`,
+          `./files/go/${specie}.tsv`,
+          obo,
         ),
       ]))
       .then((values) => {

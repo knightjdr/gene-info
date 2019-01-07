@@ -1,0 +1,106 @@
+format-version: 1.2
+data-version: releases/2018-12-28
+subsetdef: gocheck_do_not_annotate "Term not to be used for direct annotation"
+subsetdef: gocheck_do_not_manually_annotate "Term not to be used for direct manual annotation"
+subsetdef: goslim_agr "AGR slim"
+subsetdef: goslim_aspergillus "Aspergillus GO slim"
+subsetdef: goslim_candida "Candida GO slim"
+subsetdef: goslim_chembl "ChEMBL protein targets summary"
+subsetdef: goslim_flybase_ribbon "FlyBase Drosophila GO ribbon slim"
+subsetdef: goslim_generic "Generic GO slim"
+subsetdef: goslim_metagenomics "Metagenomics GO slim"
+subsetdef: goslim_mouse "Mouse GO slim"
+subsetdef: goslim_pir "PIR GO slim"
+subsetdef: goslim_plant "Plant GO slim"
+subsetdef: goslim_pombe "Fission yeast GO slim"
+subsetdef: goslim_synapse "synapse GO slim"
+subsetdef: goslim_yeast "Yeast GO slim"
+synonymtypedef: syngo_official_label "label approved by the SynGO project"
+synonymtypedef: systematic_synonym "Systematic synonym" EXACT
+default-namespace: gene_ontology
+remark: cvs version: use data-version
+remark: Includes Ontology(OntologyID(OntologyIRI(<http://purl.obolibrary.org/obo/go/never_in_taxon.owl>))) [Axioms: 18 Logical Axioms: 0]
+ontology: go
+
+[Term]
+id: GO:0016607
+name: nuclear speck
+namespace: cellular_component
+def: "A discrete extra-nucleolar subnuclear domain, 20-50 in number, in which splicing factors are seen to be localized by immunofluorescence microscopy." [http://www.cellnucleus.com/]
+synonym: "nuclear speckle" EXACT []
+synonym: "nuclear speckles" EXACT []
+synonym: "speckle domain" NARROW []
+synonym: "speckle focus" RELATED []
+synonym: "splicing speckle" EXACT []
+is_a: GO:0016604 ! nuclear body
+
+[Term]
+id: GO:0016604
+name: nuclear body
+namespace: cellular_component
+def: "Extra-nucleolar nuclear domains usually visualized by confocal microscopy and fluorescent antibodies to specific proteins." [GOC:ma, PMID:10330182]
+xref: NIF_Subcellular:sao505137457
+is_a: GO:0044451 ! nucleoplasm part
+
+[Term]
+id: GO:0044451
+name: nucleoplasm part
+namespace: cellular_component
+def: "Any constituent part of the nucleoplasm, that part of the nuclear content other than the chromosomes or the nucleolus." [GOC:jl]
+comment: Note that this term is in the subset of terms that should not be used for direct gene product annotation. Instead, select a child term or, if no appropriate child term exists, please request a new term. Direct annotations to this term may be amended during annotation QC.
+subset: gocheck_do_not_annotate
+is_a: GO:0044428 ! nuclear part
+relationship: part_of GO:0005654 ! nucleoplasm
+
+[Term]
+id: GO:0005654
+name: nucleoplasm
+namespace: cellular_component
+def: "That part of the nuclear content other than the chromosomes or the nucleolus." [GOC:ma, ISBN:0124325653]
+subset: goslim_chembl
+subset: goslim_generic
+subset: goslim_plant
+xref: NIF_Subcellular:sao661522542
+xref: Wikipedia:Nucleoplasm
+is_a: GO:0044428 ! nuclear part
+relationship: part_of GO:0031981 ! nuclear lumen
+
+[Term]
+id: GO:0031981
+name: nuclear lumen
+namespace: cellular_component
+def: "The volume enclosed by the nuclear inner membrane." [GOC:mah, GOC:pz]
+is_a: GO:0044428 ! nuclear part
+
+[Term]
+id: GO:0044428
+name: nuclear part
+namespace: cellular_component
+def: "Any constituent part of the nucleus, a membrane-bounded organelle of eukaryotic cells in which chromosomes are housed and replicated." [GOC:jl]
+comment: Note that this term is in the subset of terms that should not be used for direct gene product annotation. Instead, select a child term or, if no appropriate child term exists, please request a new term. Direct annotations to this term may be amended during annotation QC.
+subset: gocheck_do_not_annotate
+synonym: "nuclear subcomponent" EXACT [NIF_Subcellular:sao1499850686]
+synonym: "nucleus component" EXACT []
+xref: NIF_Subcellular:sao1499850686
+relationship: part_of GO:0005634 ! nucleus
+
+[Term]
+id: GO:0005634
+name: nucleus
+namespace: cellular_component
+def: "A membrane-bounded organelle of eukaryotic cells in which chromosomes are housed and replicated. In most cells, the nucleus contains all of the cell's chromosomes except the organellar chromosomes, and is the site of RNA synthesis and processing. In some species, or in specialized cell types, RNA metabolism or DNA replication may be absent." [GOC:go_curators]
+subset: goslim_agr
+subset: goslim_aspergillus
+subset: goslim_candida
+subset: goslim_chembl
+subset: goslim_flybase_ribbon
+subset: goslim_generic
+subset: goslim_metagenomics
+subset: goslim_mouse
+subset: goslim_pir
+subset: goslim_plant
+subset: goslim_yeast
+synonym: "cell nucleus" EXACT []
+synonym: "horsetail nucleus" NARROW [GOC:al, GOC:mah, GOC:vw, PMID:15030757]
+xref: NIF_Subcellular:sao1702920020
+xref: Wikipedia:Cell_nucleus
