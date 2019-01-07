@@ -1,4 +1,5 @@
 import activationCheck from './activation-check';
+import advancedSettings from './advanced-settings';
 import namespaceCheck from './namespace-check';
 import onChange from './on-change';
 import onEnter from './on-enter';
@@ -9,6 +10,9 @@ import toggle from './toggle';
 const bindListeners = () => {
   document.querySelectorAll('.click-activate').forEach((element) => {
     element.addEventListener('click', activationCheck);
+  });
+  document.querySelectorAll('.advanced-settings').forEach((element) => {
+    element.addEventListener('click', advancedSettings);
   });
   document.querySelectorAll('.click-display').forEach((element) => {
     element.addEventListener('click', reportCheck);

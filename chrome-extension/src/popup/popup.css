@@ -145,7 +145,24 @@ select:focus {
   height: 20px;
   line-height: 20px;
   margin: 5px 0px 5px 0px;
+  position: relative;
   width: 100%;
+}
+.toggle-container button {
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-top: 2px;
+}
+.toggle-container button:focus {
+  outline: none;
+}
+.toggle-container path {
+  fill: var(--primary);
 }
 .toggle {
   display: none;
@@ -222,8 +239,12 @@ select:focus {
 .toggle-options {
   border-bottom: 1px solid #A5D6A7;
   border-top: 1px dotted #A5D6A7;
+  display: none;
+  padding: 5px 0;
+}
+.toggle-options em {
   display: block;
-  padding: 5px 0 5px 20px;
+  padding-left: 15px;
 }
 .toggle-options > h2 {
   font-size: 12px;
@@ -233,10 +254,14 @@ select:focus {
 .toggle-options > div {
   margin: 5px 0;
 }
-.toggle-options_no-padding {
-  padding-left: 0;
+.toggle-options_padding div {
+  padding-left: 20px;
 }
-
+.toggle-options_padding em {
+  display: block;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
 .hide {
   display: none;
 }

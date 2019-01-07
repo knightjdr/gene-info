@@ -19,10 +19,6 @@ const toggles = () => {
     chrome.storage.local.get(currToggle, (storage) => {
       const checked = Boolean(storage[currToggle] || storage[currToggle] === undefined);
       document.getElementById(option).checked = checked;
-      const el = document.getElementById(`toggle_options_${option}`);
-      if (el) {
-        el.style.display = checked ? 'block' : 'none';
-      }
     });
   });
 };

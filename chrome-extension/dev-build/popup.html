@@ -88,8 +88,17 @@
           <input class="toggle toggle-flat" data-type="go" id="go" type="checkbox" checked />
           <label for="go"></label>
           GO terms
+          <button
+            class="advanced-settings"
+            data-type="toggle_options_go"
+            type="button"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
+              <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+            </svg>
+          </button>
         </div>
-        <div class="toggle-options" id="toggle_options_go">
+        <div class="toggle-options toggle-options_padding" id="toggle_options_go">
           <em>Default GO namespace</em>
           <div>
             <input class="checkbox click-namespace" data-type="bp" id="go_namespace_bp" type="checkbox" checked />
@@ -118,8 +127,17 @@
           <input class="toggle toggle-flat" data-type="localization" id="localization" type="checkbox" checked />
           <label for="localization"></label>
           Localization
+          <button
+            class="advanced-settings"
+            data-type="toggle_options_localization"
+            type="button"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
+              <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+            </svg>
+          </button>
         </div>
-        <div class="toggle-options" id="toggle_options_localization">
+        <div class="toggle-options toggle-options_padding" id="toggle_options_localization">
           <em>Localization source</em>
           <div class="compartments toggle-container">
             <input class="toggle toggle-flat" data-type="localization_compartments" id="localization_compartments" type="checkbox" checked />
@@ -142,8 +160,17 @@
             <input class="toggle toggle-flat" data-type="rna_expression" id="rna_expression" type="checkbox" checked />
             <label for="rna_expression"></label>
             RNA expression
+            <button
+              class="advanced-settings"
+              data-type="toggle_options_rna_expression"
+              type="button"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
+                <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+              </svg>
+            </button>
           </div>
-          <div class="toggle-options toggle-options_no-padding" id="toggle_options_rna_expression">
+          <div class="toggle-options" id="toggle_options_rna_expression">
             <em>RNA expression tissues</em>
             <select class="slim-select" data-type="rna_expression_tissues" id="rna_expression_tissues" multiple>
             </select>
