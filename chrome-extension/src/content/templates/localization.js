@@ -125,7 +125,7 @@ const localizationElement = (report, settings) => {
             <p>
               The Human Protein Atlas annotates localizations based on
               the supporting evidence. From best to worst the reliability
-              scores are "Enhanced", "Supported", "Approved" and "Uncertain". 
+              scores are: "Enhanced", "Supported", "Approved" and "Uncertain". 
               See
               <a
                 href="https://www.proteinatlas.org/about/assays+annotation"
