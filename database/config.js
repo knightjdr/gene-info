@@ -1,5 +1,6 @@
 const config = {
   compartmentsLimit: 5,
+  compartmentsThreshold: 5,
   fields: [
     'accession',
     'comment',

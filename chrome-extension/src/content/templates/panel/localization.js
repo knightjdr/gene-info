@@ -188,7 +188,7 @@ const localizationElement = (report, settings) => {
       settings.localization_compartments
       && config.compartmentSpecies.includes(settings.species)
     ) {
-      const accession = report.localization.compartments;
+      const { accession } = report.localization.compartments;
       const speciesID = config.speciesID[settings.species];
       html += `
         <div class="localization__section">
@@ -205,6 +205,13 @@ const localizationElement = (report, settings) => {
             >
               ${accession}
             </a>
+            <ul>
+              ${
+                report.localization.compartments.terms.map(localization => (
+                  `<li>${localization}</li>`
+                )).join('')
+              }
+            </ul>
           `
           : '<span class="none">no data</span>'
         }

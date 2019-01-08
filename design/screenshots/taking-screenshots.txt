@@ -1,0 +1,7 @@
+Taking Screenshots
+
+1. Resize browser to 960 x 600 (on HD or 4K display)
+2. Take screenshot
+3. Grab selection in Photoshop using fixed ratio of 960 x 600
+4. Resize image to 1280 x 800
+

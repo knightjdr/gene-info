@@ -22,7 +22,7 @@ const buttonStyle = `
       right: 33px;
     }
     #resize {
-      bottom: -4px;
+      bottom: -2px;
       cursor: ew-resize;
       left: -7px;
       right: auto;

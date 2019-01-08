@@ -1,6 +1,7 @@
 const LineByLineReader = require('line-by-line');
 
 const arrayUnique = require('../helpers/array-unique');
+const uppercaseFirst = require('../helpers/uppercase-first');
 
 const findImmediateParents = file => (
   new Promise((resolve, reject) => {
@@ -23,7 +24,7 @@ const findImmediateParents = file => (
       if (id) {
         parents[id] = nextTerm.parents;
       } if (id && name) {
-        map[id] = name;
+        map[id] = uppercaseFirst(name);
       }
     };
 
@@ -66,18 +67,20 @@ const allParents = (terms) => {
   const findAllParents = (id, arr) => {
     const newArr = [...arr, ...terms[id]];
     if (terms[id].length > 0) {
-      return terms[id].map(parentId => findAllParents(parentId, newArr))
-        .reduce((accum, parentArr) => ([
-          ...accum,
-          ...parentArr,
-        ]), []);
+      let parents = [];
+      terms[id].map(parentId => findAllParents(parentId, newArr))
+        .forEach((parentArr) => {
+          parents = parents.concat(parentArr);
+        });
+      return parents;
     }
     return newArr;
   };
-  return Object.keys(terms).reduce((accum, id) => ({
-    ...accum,
-    [id]: arrayUnique(findAllParents(id, [])),
-  }), {});
+  const uniqueParents = {};
+  Object.keys(terms).forEach((id) => {
+    uniqueParents[id] = arrayUnique(findAllParents(id, []));
+  });
+  return uniqueParents;
 };
 
 const readObo = file => (

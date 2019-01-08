@@ -3,10 +3,10 @@ const createFolder = require('./helpers/create-folder');
 const domainParse = require('./domains/domain-parse');
 const expressionParse = require('./rna-expression/expression-parse');
 const intParse = require('./interactions/iterate-tab');
-const localizationParse = require('./localization/localization-parse');
 const mergeDB = require('./merge-db');
 const jsonStringify = require('./helpers/json-stringify');
 const uniParse = require('./uniprot/iterate-xml');
+const { localizationParse } = require('./localization/localization-parse');
 const { readObo } = require('./go/read-obo');
 
 const speciesDB = specie => (

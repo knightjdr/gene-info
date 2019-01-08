@@ -27,9 +27,9 @@ const sortArray = {
   ),
   numericalByKey: (arr, key, dir = 'asc') => {
     if (dir !== 'asc') {
-      return arr.sort((a, b) => a[key] < b[key]);
+      return arr.sort((a, b) => b[key] - a[key]);
     }
-    return arr.sort((a, b) => a[key] > b[key]);
+    return arr.sort((a, b) => a[key] - b[key]);
   },
 };
 

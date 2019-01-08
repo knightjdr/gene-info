@@ -28,19 +28,21 @@ const termGeneList = (genes, parents) => {
   });
 
   // Remove duplicate genes from each term's list
-  return Object.entries(genesInTerm).reduce((accum, [term, termGenes]) => ({
-    ...accum,
-    [term]: arrayUnique(termGenes),
-  }), {});
+  const unique = {};
+  Object.entries(genesInTerm).forEach(([term, termGenes]) => {
+    unique[term] = arrayUnique(termGenes);
+  });
+  return unique;
 };
 
 const informationContent = (genes, parents) => {
   const terms = termGeneList(genes, parents);
   const numTerms = Object.keys(terms).length;
-  return Object.entries(terms).reduce((accum, [term, termGenes]) => ({
-    ...accum,
-    [term]: round(-Math.log10(termGenes.length / numTerms), 3),
-  }), {});
+  const ic = {};
+  Object.entries(terms).forEach(([term, termGenes]) => {
+    ic[term] = round(-Math.log10(termGenes.length / numTerms), 3);
+  });
+  return ic;
 };
 
 module.exports = {
