@@ -88,21 +88,28 @@ const handleHpaLines = file => (
   })
 );
 
-const filterCompartments = (compartments, ic) => {
-  const withIC = {};
+const filterCompartments = (compartments, ic, mapping) => {
+  const filtered = {};
 
-  // Add information content to each term and sort.
+  /* Add information content to each term and sort. After
+  ** sorting, grab compartments limit, convert GO IDs to names
+  ** and sort alphabetically. */
   Object.entries(compartments).forEach(([gene, values]) => {
     const terms = values.terms.map(term => ({
       term,
       ic: ic[term] || 0,
     }));
-    const sorted = sortArray.numericalByKey(terms, 'ic', 'des').map(term => term.term);
-    withIC[gene] = {
+    let sorted = sortArray.numericalByKey(terms, 'ic', 'des')
+      .slice(0, config.compartmentsLimit)
+      .map(term => mapping[term]);
+    sorted = sortArray.alphabetical(sorted);
+    filtered[gene] = {
       accession: values.accession,
-      terms: sorted.slice(0, config.compartmentsLimit),
+      terms: sorted,
     };
   });
+
+  return filtered;
 };
 
 const localizationParse = (hpa, compartments, annotations, obo) => (
@@ -116,7 +123,7 @@ const localizationParse = (hpa, compartments, annotations, obo) => (
         const [compartmentsData, hpaData, geneAnnotations] = values;
         const ic = informationContent(geneAnnotations, obo.parents);
         resolve({
-          compartments: filterCompartments(compartmentsData, ic),
+          compartments: filterCompartments(compartmentsData, ic, obo.map),
           hpa: hpaData,
         });
       })

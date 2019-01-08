@@ -12,7 +12,7 @@ const mergeDb = ([
     localization: {
       compartments: entry.gene && localization.compartments[entry.gene]
         ? localization.compartments[entry.gene]
-        : false,
+        : { accession: '', terms: [] },
       hpa: entry['ensembl-gene'][0] && localization.hpa[entry['ensembl-gene'][0]] ? localization.hpa[entry['ensembl-gene'][0]] : {},
       uniprot: entry.localization.uniprot,
     },
