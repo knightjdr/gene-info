@@ -12,7 +12,9 @@ import State from '../../state';
 const reportDetails = (result, reportIndex, stateStyle) => {
   let style = '';
   if (stateStyle.right) {
-    style += `right: ${stateStyle.right};`;
+    style += `left: auto; right: ${stateStyle.right};`;
+  } else if (stateStyle.left) {
+    style += `left: ${stateStyle.left}; right: 'auto'`;
   }
   if (stateStyle.width) {
     style += `width: ${stateStyle.width};`;

@@ -55,7 +55,11 @@ class State {
       rna_expression_tissues: storage.rna_expression_tissues || config.defaultTissues[species],
       species,
     };
-    this.style = {};
+    this.style = {
+      left: '',
+      right: '',
+      width: '',
+    };
     this.mdTime = null;
     this.results = [];
   }

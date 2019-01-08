@@ -5,12 +5,17 @@ let button;
 let panel;
 let x;
 
+const rightPosition = () => (
+  document.documentElement.clientWidth - panel.getBoundingClientRect().right
+);
+
 const mouseMove = (event) => {
   const delta = x - event.clientX;
   x = event.clientX;
-  const right = document.documentElement.clientWidth - panel.getBoundingClientRect().right;
+  const right = rightPosition();
   const position = `${right + delta}px`;
-  panel.style.right = position;
+  const css = `left: auto; right: ${position}`;
+  panel.style.cssText += `;${css}`;
   State.updateStyle('right', position);
 };
 
@@ -23,8 +28,10 @@ const mouseUp = () => {
 };
 
 const mouseDown = (event) => {
+  State.updateStyle('left', '');
   button.style.cursor = 'ew-resize';
-  panel.style.cursor = 'ew-resize';
+  const css = `cursor: ew-resize; left: auto; right: ${rightPosition()}px`;
+  panel.style.cssText += `;${css}`;
   panel.style.userSelect = 'none';
   x = event.clientX;
   document.addEventListener('mousemove', mouseMove);

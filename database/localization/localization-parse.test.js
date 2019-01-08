@@ -44,24 +44,6 @@ describe('Localization parsing', () => {
 
   describe('Filter compartment terms to remove parents', () => {
     it('should filter compartment terms to top 5 based on IC, and sort alphabetically', async (done) => {
-      const ic = {
-        'GO:0000139': 0.01,
-        'GO:0005575': 0.34,
-        'GO:0005622': 0.99,
-        'GO:0005623': 0.74,
-        'GO:0005737': 0.53,
-        'GO:0005739': 0.23,
-        'GO:0005783': 0.31,
-        'GO:0005789': 0.39,
-        'GO:0005794': 0.08,
-        'GO:0005829': 0.02,
-        'GO:0005886': 0.07,
-        'GO:0008250': 0.81,
-        'GO:0012505': 0.82,
-        'GO:0043226': 0.59,
-        'GO:0043227': 0.66,
-        'GO:0044464': 0.44,
-      };
       const obo = {
         map: {
           'GO:0000139': 'a',
@@ -118,7 +100,7 @@ describe('Localization parsing', () => {
           terms: ['a', 'c', 'd', 'k', 'm'],
         },
       };
-      const results = await filterCompartments(compartmentTerms, ic, obo);
+      const results = await filterCompartments(compartmentTerms, obo);
       expect(results).toEqual(expected);
       done();
     });

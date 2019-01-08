@@ -12,6 +12,7 @@ const removePanel = () => {
   const panel = State.shadowRoot.getElementById('panel');
   if (panel) {
     State.clearReports();
+    State.updateStyle('left', '');
     window.onscroll = null;
     removeCloseListener();
     removeBackListener();

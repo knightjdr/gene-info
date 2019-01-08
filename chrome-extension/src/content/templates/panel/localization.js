@@ -197,6 +197,8 @@ const localizationElement = (report, settings) => {
       html += `
         ${
           report.localization.compartments
+          && report.localization.compartments.terms
+          && report.localization.compartments.terms.length > 0
           ? `
             <a
               href="https://compartments.jensenlab.org/Entity?figures=subcell_cell_%&knowledge=10&textmining=10&experiments=10&predictions=10&type1=${speciesID}&type2=-22&id1=${accession}"

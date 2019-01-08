@@ -18,6 +18,7 @@ const messages = () => {
         removeTooltip();
       }
     } else if (action === 'search') {
+      State.updateStyle('left', '5px');
       retrieveInfo(null, setting);
     }
     return null;

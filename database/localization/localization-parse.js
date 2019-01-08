@@ -6,8 +6,6 @@ const readline = require('readline');
 const arrayUnique = require('../helpers/array-unique');
 const config = require('../config');
 const sortArray = require('../helpers/sort-array');
-const { informationContent } = require('../go/information-content');
-const readAnnotations = require('../go/read-annotations');
 
 const handleCompartmentLines = file => (
   new Promise((resolve, reject) => {
@@ -103,9 +101,8 @@ const uniqueParents = (terms, parents) => (
   ]), []))
 );
 
-/* First filter out GO terms that are parents of another term.
-** then keep top five. */
-const filterCompartments = (compartments, ic, obo) => {
+// First filter out GO terms that are parents of another term
+const filterCompartments = (compartments, obo) => {
   const filtered = {};
 
   Object.entries(compartments).forEach(([gene, values]) => {
@@ -115,17 +112,8 @@ const filterCompartments = (compartments, ic, obo) => {
     // Remove all terms that are a parent of another term.
     const deepest = removeParents(values.terms, parents);
 
-    // Add information content.
-    const withIC = deepest.map(term => ({
-      term,
-      ic: ic[term] || 0,
-    }));
-
-    // Sort by IC, grab top entries and convert from ID to name, then sort alphabetically.
-    let sorted = sortArray.numericalByKey(withIC, 'ic', 'des')
-      .slice(0, config.compartmentsLimit)
-      .map(term => obo.map[term.term]);
-    sorted = sortArray.alphabetical(sorted);
+    // Convert from ID to name, then sort alphabetically.
+    const sorted = sortArray.alphabetical(deepest.map(term => obo.map[term]));
 
     filtered[gene] = {
       accession: values.accession,
@@ -141,13 +129,11 @@ const localizationParse = (hpa, compartments, annotations, obo) => (
     Promise.all([
       handleCompartmentLines(compartments),
       handleHpaLines(hpa),
-      readAnnotations(annotations),
     ])
       .then((values) => {
-        const [compartmentsData, hpaData, geneAnnotations] = values;
-        const ic = informationContent(geneAnnotations, obo.parents);
+        const [compartmentsData, hpaData] = values;
         resolve({
-          compartments: filterCompartments(compartmentsData, ic, obo),
+          compartments: filterCompartments(compartmentsData, obo),
           hpa: hpaData,
         });
       })
