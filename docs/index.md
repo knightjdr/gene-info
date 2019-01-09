@@ -1,1 +1,0 @@
-# Gene Info Chrome extension documentation
