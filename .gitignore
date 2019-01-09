@@ -32,3 +32,5 @@ chrome-extension/dist.crx
 
 ## pem key
 chrome-extension/dist.pem
+
+*.zip
