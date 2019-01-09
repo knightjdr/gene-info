@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Gene info",
+  "name": "Gene Info",
   "version": "0.4.0",
   "version_name": "0.4.0 beta",
   "description": "View gene information by double clicking a gene name or accession on any webpage.",
