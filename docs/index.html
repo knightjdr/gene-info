@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#658170">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -14,7 +16,7 @@
       <h1>Gene Info documentation</h1>
       <p>
         The Gene Info Chrome extension allows you to retrieve information about
-        a gene directly on any webpage simply by double clicking a gene name,
+        a gene directly on any webpage simply by double clicking an official gene name,
         synonym or supported accession.
       </p>
       <p>
@@ -24,19 +26,247 @@
     </header>
     <main>
       <section>
+        <h2>Contents</h2>
+        <ul>
+          <li><a href="#settings">Settings</a></li>
+          <li><a href="#options">Information options</a></li>
+          <li><a href="#panel">Information panel</a></li>
+          <li><a href="#database">Database</a></li>
+          <li><a href="#unsupported">Unsupported websites</a></li>
+          <li><a href="#issues">Issues</a></li>
+          <li><a href="#browser">Browser support</a></li>
+        </ul>
+      </section>
+      <section id="settings">
         <h2>Settings</h2>
+        <h3>Activation method</h3>
+        <p>
+          The default method for querying a gene is to double click on it. You can instead
+          choose the drag method that requires you to mouse down on one side of the gene
+          name, drag the selection box to the other side and release the mouse button. This
+          can be useful on websites where double clicking selects more that one word (this
+          is a rare occurrence and depends on the markup used by the website).
+        </p>
+        <p>
+          If you wish to disable the extension, simply click the disable button.
+        </p>
+        <h3>Display options</h3>
+        <p>
+          The extension can display information in two ways:
+          <ol>
+            <li>
+              Detailed report: a full height panel displaying links to external resources
+              and the information from those resources.
+            </li>
+            <li>
+              Tooltip report: a small box that opens at the point of the mouse click with
+              only links to external resources.
+            </li>
+          </ol>
+        </p>
+        <h3>Species</h3>
+        <p>
+          In addition to human gene information our database contains information for
+          the following model organisms:
+        </p>
+        <ul>
+          <li><i>Arabidopsis thaliana</i></li>
+          <li><i>Caenorhabditis elegans</i></li>
+          <li><i>Danio rerio</i></li>
+          <li><i>Dictyostelium discoideum</i></li>
+          <li><i>Drosophila melanogaster</i></li>
+          <li><i>Gallus gallus</i></li>
+          <li><i>Mus musculus</i></li>
+          <li><i>Saccharomyces cerevisiae</i></li>
+          <li><i>Xenopus laevis</i></li>
+        </ul>
+        <p>
+          Some information will only be available for certain species. Human Protein Atlas
+          localization and expression information, of course, is only available for human
+          gene entries. The Compartments subcellular localization database has information
+          on six of the ten organisms we support:
+          <i>Arabidopsis</i>,
+          <i>C. elegans</i>,
+          <i>Drosophila</i>,
+          human,
+          mouse
+          and yeast.
+        </p>
+        <h3>Query type</h3>
+        <p>
+          The extension can retrieve information for any of the following query types: 
+        </p>
+        <ul>
+          <li>Ensembl gene (e.g. ENSG00000114209)</li>
+          <li>Ensembl protein (e.g. ENSP00000376506)</li>
+          <li>Gene ID (e.g. 11235)</li>
+          <li>Gene name (e.g. PDCD10)</li>
+          <li>neXtProt (e.g. NX_Q9BUL8)</li>
+          <li>RefSeq (either nucleotide or protein e.g. NM_007217.3, NP_009148.2)</li>
+          <li>UniProt (e.g. Q9BUL8)</li>
+        </ul>
+        <p>
+          By default it will autodetect the query type but you can disable this option and
+          force it to treat all queries as a specific type.
+        </p>
+        <h3>Search</h3>
+        <p>
+          The search box can be used for making queries in addition to using the mouse.
+          Simply type in a query, hit enter and the information panel will appear on the
+          current web page. Unlike mouse events, the search box will work on websites
+          with embedded content like Google Docs and PDF viewers.
+        </p>
       </section>
-      <section>
-        <h2>Information options and configuration</h2>
+      <section id="options">
+        <h2>Information options</h2>
+        <p>
+          Each pierce of information provided by Gene Info can be toggled off in the extension
+          popup and will be hidden on subsequent queries.
+        </p>
+        <p>
+          The GO term, Localization and RNA expression sections have advanced display
+          options that can be viewed by clicking the settings/ellipsis button
+          (<svg class="ellipsis" xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
+            <path fill="#658170" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+          </svg>)
+          next to the relevent field in the extension popup. For GO terms, you can set the default
+          namespace to display on the information panel: BP (biological process), CC
+          (cellular compartment) or MF (molecular function). You can choose which
+          resources to display for localization, including the Comparments subcellular
+          localization database, the Human Protein Atlas and/or UniProt. Under RNA expression
+          you can choose which cell lines and tissues to display by default in the information
+          panel. The Human Protein Atlas provides 64 cell lines and 37 tissue types to choose
+          from.
+        </p>
+        <p>
+          Certain data is only available for specific species as outlined above
+          in the species section.
+        </p>
       </section>
-      <section>
+      <section id="panel">
+        <h2>Information panel</h2>
+        <h3>Multiple results</h3>
+        <p>
+          If a query matches to multiple genes the information panel will
+          display one result and the others will be available from the dropdown menu
+          that appears next to the <strong>Gene</strong> heading. If an official gene
+          name matches the query that will be displayed by default, with other queries
+          that match by synonym listed after it in the dropdown. If there is no match
+          to official gene name but multiple matches by synonym, the first entry in our
+          database will be chosen as the default.
+        </p>
+        <h3>Buttons</h3>
+        <ul class="buttons">
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">
+              <circle fill="#FAFAFA" cx="256" cy="256" r="160" />
+              <path fill="#F44336" d="M256,8C119,8,8,119,8,256s111,248,248,248s248-111,248-248S393,8,256,8z M377.6,321.1
+                c4.7,4.7,4.7,12.301,0,17L338,377.6c-4.7,4.7-12.3,4.7-17,0L256,312l-65.1,65.6c-4.7,4.7-12.3,4.7-17,0L134.4,338
+                c-4.7-4.7-4.7-12.3,0-17l65.6-65l-65.6-65.1c-4.7-4.7-4.7-12.3,0-17l39.6-39.6c4.7-4.7,12.3-4.7,17,0l65,65.7l65.1-65.6
+                c4.7-4.7,12.301-4.7,17,0L377.7,174c4.7,4.7,4.7,12.3,0,17L312,256L377.6,321.1z" />
+            </svg>
+            close the extension
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">
+              <circle fill="#FAFAFA" cx="256" cy="256" r="175" />
+              <path fill="#9E9E9E" d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z
+                 M421.332,269.871l-57.148,70.344c-10.041,12.358-27.208,3.604-27.208-13.869v-37.65H175.024v37.65
+                c0,17.473-17.167,26.229-27.207,13.869l-57.149-70.344c-6.225-7.661-6.225-20.082,0-27.742l57.149-70.344
+                c10.041-12.357,27.207-3.606,27.207,13.873v37.647h161.952v-37.647c0-17.479,17.168-26.23,27.208-13.872l57.148,70.345
+                C427.556,249.791,427.556,262.21,421.332,269.871z" />
+            </svg>
+            reposition the extension horizontally
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">
+              <circle fill="#FAFAFA" cx="256" cy="256" r="160" />
+              <path fill="#1976D2" d="M256,504C119,504,8,393,8,256S119,8,256,8s248,111,248,248S393,504,256,504z M372,212H256v-70.9
+                c0-10.7-13-16.1-20.5-8.5L121.2,247.5c-4.7,4.7-4.7,12.2,0,16.9L235.5,379.3c7.6,7.601,20.5,2.2,20.5-8.5V300h116
+                c6.6,0,12-5.4,12-12v-64C384,217.4,378.6,212,372,212z" />
+            </svg>
+            go back to the previous result
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 501.16">
+              <path fill="#658170" d="M341.611,374.104c29.971,0,54.281,24.311,54.281,54.279c0,29.971-24.311,54.281-54.281,54.281
+                c-30.001,0-54.312-24.311-54.312-54.281C287.3,398.414,311.61,374.104,341.611,374.104z"/>
+              <path fill="#658170" d="M205.864,238.355c29.986,0,54.281,24.311,54.281,54.28c0,30.002-24.295,54.312-54.281,54.312
+                c-29.985,0-54.28-24.311-54.28-54.312C151.583,262.666,175.878,238.355,205.864,238.355z"/>
+              <path fill="#658170" d="M205.864,374.104c29.986,0,54.281,24.311,54.281,54.279c0,29.971-24.295,54.281-54.281,54.281
+                c-29.985,0-54.28-24.311-54.28-54.281C151.583,398.414,175.878,374.104,205.864,374.104z"/>
+              <path fill="#658170" d="M70.116,102.623c29.986,0,54.296,24.294,54.296,54.28c0,29.97-24.31,54.281-54.296,54.281
+                c-29.97,0-54.28-24.311-54.28-54.281C15.836,126.917,40.146,102.623,70.116,102.623z"/>
+              <path fill="#658170" d="M70.116,238.355c29.986,0,54.296,24.311,54.296,54.28c0,30.002-24.31,54.312-54.296,54.312
+                c-29.97,0-54.28-24.311-54.28-54.312C15.836,262.666,40.146,238.355,70.116,238.355z"/>
+              <path fill="#658170" d="M70.116,374.104c29.986,0,54.296,24.311,54.296,54.279c0,29.971-24.31,54.281-54.296,54.281
+                c-29.97,0-54.28-24.311-54.28-54.281C15.836,398.414,40.146,374.104,70.116,374.104z"/>
+            </svg>
+            resize the extension (bottom left corner)
+          </li>
+        </ul>
+      </section>
+      <section id="database">
         <h2>Database</h2>
         <p>
           The database will be updated on the 15th of each month or the next
           business day if the 15th falls on a weekend or holidary.
         </p>
+        <h3>Integrated resources</h3>
+        <p>
+          We integrate several databases to generate the database used for Gene Info.
+          The resources, urls and citations are listed below in alphabetical order:
+        </p>
+        <ul>
+          <li>
+            BioGrid,
+            <a href="https://thebiogrid.org">https://thebiogrid.org</a>
+            (<a href="https://www.ncbi.nlm.nih.gov/pubmed/16381927">PMID:16381927</a>)
+          </li>
+          <li>
+            Compartments,
+            <a href="https://compartments.jensenlab.org">https://compartments.jensenlab.org</a>
+            (<a href="https://www.ncbi.nlm.nih.gov/pubmed/24573882">PMID:24573882</a>)
+          </li>
+          <li>
+            Gene Ontology,
+            <a href="http://www.geneontology.org">http://www.geneontology.org</a>
+            (<a href="https://www.ncbi.nlm.nih.gov/pubmed/10802651">PMID:10802651</a>,
+            <a href="https://www.ncbi.nlm.nih.gov/pubmed/27899567">PMID:27899567</a>)
+          </li>
+          <li>
+            Human Protein Atlas,
+            <a href="https://www.proteinatlas.org">https://www.proteinatlas.org</a>
+            (<a href="https://www.ncbi.nlm.nih.gov/pubmed/25613900">PMID:25613900</a>,
+            <a href="https://www.ncbi.nlm.nih.gov/pubmed/28495876">PMID:28495876</a>)
+          </li>
+          <li>
+            IntAct,
+            <a href="https://www.ebi.ac.uk/intact">https://www.ebi.ac.uk/intact</a>
+            (<a href="https://www.ncbi.nlm.nih.gov/pubmed/24234451">PMID:24234451</a>)
+          </li>
+          <li>
+            Pfam,
+            <a href="https://pfam.xfam.org">https://pfam.xfam.org</a>
+            (<a href="https://www.ncbi.nlm.nih.gov/pubmed/30357350">PMID:30357350</a>)
+          </li>
+          <li>
+            UniProt,
+            <a href=" https://www.uniprot.org"> https://www.uniprot.org</a>
+            (<a href="https://www.ncbi.nlm.nih.gov/pubmed/29425356">PMID:29425356</a>)
+          </li>
+        </ul>
       </section>
-      <section>
+      <section id="unsupported">
+        <h2>Unsupported websites</h2>
+        <p>
+          The extension is not able to capture mouse events (double clicks, etc.)
+          on websites with embedded elements like Google Docs and PDF viewers and you
+          can not therefore perform queries in the default way. The search box in the extension
+          popup can however be used on these websites as a fall back option.
+        </p>
+      </section>
+      <section id="issues">
         <h2>Issues</h2>
         <p>
           If you would like to report a bug, request a feature or have your resource
@@ -44,6 +274,28 @@
           <a href="https://github.com/knightjdr/gene-info/issues">issue tracker</a>.
         </p>
       </section>
+      <section id="browser">
+        <h2>Browser support</h2>
+        <p>
+          In addition to working with Chrome the extension can work in any browser built
+          on top of Chromium if the developers of that browser provide support for
+          extensions. Popular Chromium browsers include Opera and Brave.
+          Microsoft Edge will also switch to Chromium in 2019. For a complete list, see
+          <a href="https://en.wikipedia.org/wiki/Chromium_(web_browser)#Other_browsers_based_on_Chromium">Chromium browsers</a>.
+        </p>
+        <p>
+          To add an extension to Brave simply go to the Chrome Webstore, find the extension
+          and click the "Add to Chrome" button.
+        </p>
+        <p>
+          To add an extension to Opera, go
+          <a href="https://addons.opera.com/en/extensions/details/install-chrome-extensions/">here</a>
+          and follow the instructions.
+        </p>
+      </section>
     </main>
+    <footer>
+      <small>© 2019 Gingras lab.</small>
+    </footer>
   </body>
 </html>

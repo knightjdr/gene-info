@@ -33,12 +33,45 @@ a:active,
 a:focus {
   border-bottom: 1px dotted var(--primary);
 }
+footer {
+  margin-top: 10px;
+}
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
+h2 {
+  text-decoration: underline;
+}
 p {
   text-align: justify;
+}
+li {
+  margin: 5px 0;
+}
+
+.buttons {
+  list-style: none;
+  padding-left: 20;
+}
+.buttons li {
+  align-items: center;
+  display: flex;
+  margin: 15px;
+}
+.buttons li svg {
+  margin-right: 10px;
+}
+.buttons li:last-child {
+  padding-left: 3px;
+}
+.buttons li:last-child svg {
+  margin-right: 7px;
+}
+.ellipsis {
+  left: 1px;
+  position: relative;
+  top: 3px;
 }
 
 @page {
