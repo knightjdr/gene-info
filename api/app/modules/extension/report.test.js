@@ -13,7 +13,6 @@ jest.mock('../tracking/tracking');
 jest.mock('./validate');
 
 const req = {
-  ip: '127.0.0.1',
   params: {
     field: 'auto',
     species: 'Homo-sapiens',
@@ -86,16 +85,16 @@ describe('Report', () => {
         expect(find).toHaveBeenCalledWith('Homo sapiens', {}, {}, { gene: 1 });
       });
 
-      it('should call tracking method', () => {
-        expect(tracking).toHaveBeenCalledWith('127.0.0.1', 'Homo sapiens', 'gene', 'test');
-      });
-
       it('should send response', () => {
         const expected = [
           { gene: 'test', name: 'test gene' },
           { gene: 'test2', name: 'test gene2' },
         ];
         expect(res.send).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call tracking method', () => {
+        expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'gene', 'test');
       });
     });
 
@@ -127,7 +126,7 @@ describe('Report', () => {
       });
 
       it('should call tracking method', () => {
-        expect(tracking).toHaveBeenCalledWith('127.0.0.1', 'Homo sapiens', 'uniprot', 'test');
+        expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'uniprot', 'test');
       });
 
       it('should send response', () => {

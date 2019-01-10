@@ -59,19 +59,26 @@ li {
   display: flex;
   margin: 15px;
 }
-.buttons li svg {
+.buttons li img {
   margin-right: 10px;
 }
 .buttons li:last-child {
   padding-left: 3px;
 }
-.buttons li:last-child svg {
+.buttons li:last-child img {
   margin-right: 7px;
 }
 .ellipsis {
   left: 1px;
   position: relative;
   top: 3px;
+}
+.funding-images {
+  display: flex;
+  justify-content: center;
+}
+.funding-images img {
+  margin: 10px;
 }
 
 @page {

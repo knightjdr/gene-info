@@ -15,12 +15,8 @@ const report = (req, res) => {
   } else {
     const findMethod = validated.field === 'gene' ? find : findOne;
     const query = createQuery(validated.field, validated.term);
-    Promise.all([
-      findMethod(validated.species, query, {}, { gene: 1 }),
-      tracking(req.ip, validated.species, validated.field, validated.term),
-    ])
-      .then((results) => {
-        const [matches] = results;
+    findMethod(validated.species, query, {}, { gene: 1 })
+      .then((matches) => {
         if (!matches || matches.length === 0) {
           res.send([]);
         } else {
@@ -34,6 +30,7 @@ const report = (req, res) => {
             }
           });
           res.send([...official, ...nonOfficial]);
+          tracking(validated.species, validated.field, validated.term);
         }
       })
       .catch(() => {
