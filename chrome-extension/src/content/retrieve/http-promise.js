@@ -1,5 +1,5 @@
 const url = process.env.NODE_ENV === 'production'
-  ? 'http://prohitstools.mshri.on.ca:8002'
+  ? 'https://prohitstools.mshri.on.ca/api'
   : 'http://localhost:8002';
 
 const http = route => (
