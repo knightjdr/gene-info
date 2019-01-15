@@ -19,6 +19,7 @@ const report = (req, res) => {
       .then((matches) => {
         if (!matches || matches.length === 0) {
           res.send([]);
+          tracking(validated.species, validated.field, 'unknown');
         } else {
           const official = [];
           const nonOfficial = [];

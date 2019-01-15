@@ -158,6 +158,10 @@ describe('Report', () => {
           const expected = [];
           expect(res.send).toHaveBeenCalledWith(expected);
         });
+
+        it('should call tracking method', () => {
+          expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'gene', 'unknown');
+        });
       });
 
       describe('empty array', () => {
@@ -179,6 +183,10 @@ describe('Report', () => {
         it('should send response', () => {
           const expected = [];
           expect(res.send).toHaveBeenCalledWith(expected);
+        });
+
+        it('should call tracking method', () => {
+          expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'gene', 'unknown');
         });
       });
     });
