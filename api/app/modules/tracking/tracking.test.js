@@ -9,7 +9,7 @@ describe('Tracking', () => {
 
     beforeAll(async (done) => {
       insert.mockResolvedValue();
-      tracking('Homo sapiens', 'gene', 'PDCD10')
+      tracking('Homo sapiens', 'gene', true)
         .then((val) => {
           result = val;
           done();
@@ -23,7 +23,7 @@ describe('Tracking', () => {
     it('should insert into tracking db', async () => {
       const expected = {
         field: 'gene',
-        gene: 'PDCD10',
+        known: true,
         species: 'Homo sapiens',
       };
       expect(insert).toHaveBeenCalledWith('tracking', expected);
@@ -35,7 +35,7 @@ describe('Tracking', () => {
 
     beforeAll(async (done) => {
       insert.mockRejectedValue(new Error('test error'));
-      tracking('Homo sapiens', 'gene', 'PDCD10')
+      tracking('Homo sapiens', 'gene', true)
         .then((val) => {
           result = val;
           done();

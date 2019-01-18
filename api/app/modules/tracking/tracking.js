@@ -1,10 +1,10 @@
 const insert = require('../db-methods/insert');
 
-const tracking = (species, field, gene) => (
+const tracking = (species, field, known) => (
   new Promise((resolve) => {
     const insertObj = {
       field,
-      gene,
+      known,
       species,
     };
     insert('tracking', insertObj)

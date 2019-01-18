@@ -94,7 +94,7 @@ describe('Report', () => {
       });
 
       it('should call tracking method', () => {
-        expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'gene', 'test');
+        expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'gene', true);
       });
     });
 
@@ -126,7 +126,7 @@ describe('Report', () => {
       });
 
       it('should call tracking method', () => {
-        expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'uniprot', 'test');
+        expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'uniprot', true);
       });
 
       it('should send response', () => {
@@ -160,7 +160,7 @@ describe('Report', () => {
         });
 
         it('should call tracking method', () => {
-          expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'gene', 'unknown');
+          expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'gene', false);
         });
       });
 
@@ -186,7 +186,7 @@ describe('Report', () => {
         });
 
         it('should call tracking method', () => {
-          expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'gene', 'unknown');
+          expect(tracking).toHaveBeenCalledWith('Homo sapiens', 'gene', false);
         });
       });
     });
