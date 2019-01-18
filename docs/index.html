@@ -33,6 +33,8 @@
           <li><a href="#panel">Information panel</a></li>
           <li><a href="#database">Database</a></li>
           <li><a href="#unsupported">Unsupported websites</a></li>
+          <li><a href="#permissions">Permissions</a></li>
+          <li><a href="#logging">Logging</a></li>
           <li><a href="#issues">Issues</a></li>
           <li><a href="#browser">Browser support</a></li>
           <li><a href="#funding">Funding</a></li>
@@ -245,6 +247,52 @@
           on websites with embedded elements like Google Docs and PDF viewers and you
           can not therefore perform queries in the default way. The search box in the extension
           popup can however still be used for performing queries on these sites.
+        </p>
+      </section>
+      <section id="permissions">
+        <h2>Permissions</h2>
+        <p>
+          When you install the extension it will alert you that it can "Read and change
+          all your data on the websites you visit".
+        </p>
+        <p>
+          To capture text from websites you visit this extension needs to be granted
+          permission to read the sites. The only thing this extension reads is the
+          text selected via double clicking or mouse dragging (if you enable that
+          option). 
+        </p>
+        <p>
+          Inserting a panel or tooltip with information about the gene you have
+          selected requires permission to modify or "change all your data". The only
+          thing we modify about the websites you visit is the addition of the
+          panel or tooltip.
+        </p>
+        <p>
+          If you would like to further restrict the access given to this extension
+          you can right click on the icon in your browser toolbar and scroll to
+          "This Can Read and Change Site Data" to view the options. Detailed
+          instructions can be found at the
+          <a href="https://support.google.com/chrome_webstore/answer/2664769?p=enable_extensions&visit_id=636834215946361040-2354360077&rd=1#extensionpermissions">
+            Web Store's Help Page</a>.
+        </p>
+      </section>
+      <section id="logging">
+        <h2>Logging</h2>
+        <p>
+          We log three pieces of information with each query: 1) whether it matched to
+          something in our database; 2) the species; and 3) the type of query, i.e. was
+          it a gene name, UniProt ID, etc. We do not log the actual query term itself.
+          Recording the total number of queries allows us to ensure the server has
+          enough hardware resources to meet the demands of the user base. Recording the
+          species allows us to prioritize development time and add resources for the
+          most used species. For example, if a model organism is only searched by 0.01%
+          of the user base, it will get less priority than one used by 95% of users. Finally,
+          recording the type of query allows us to determine whether it is worth continuing to
+          support a particular type of accession.
+        </p>
+        <p>
+          We do not record an personal information or IP addresses and the extension does
+          not use analytics.
         </p>
       </section>
       <section id="issues">
