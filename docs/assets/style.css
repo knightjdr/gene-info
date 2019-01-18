@@ -74,6 +74,7 @@ li {
   top: 3px;
 }
 .funding-images {
+  align-items: center;
   display: flex;
   justify-content: center;
 }
