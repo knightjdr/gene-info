@@ -15,7 +15,7 @@ const entryParse = (entry) => {
     const names = getNames(entry.protein[0]);
     const refs = getDBRefs(entry.dbReference);
     const sequence = getSequence(entry.sequence[0]);
-    return {
+    const parsed = {
       alternativeNames: names.alternative,
       biogrid: refs.biogrid,
       description: comments.description,
@@ -42,6 +42,14 @@ const entryParse = (entry) => {
       synonyms: sortArray.alphabetical(genes.synonyms),
       uniprot: entry.accession,
     };
+
+    // Add species specific fields to end of entry
+    if (refs.flybase) {
+      parsed.flybase = refs.flybase;
+    } if (refs.sgd) {
+      parsed.sgd = refs.sgd;
+    }
+    return parsed;
   }
   return null;
 };
