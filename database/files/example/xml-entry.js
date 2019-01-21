@@ -19,6 +19,9 @@ const xmlEntry = `
   <name type="primary">PDCD10</name>
   <name type="synonym">CCM3</name>
   <name type="synonym">TFAR15</name>
+  <name type="ordered locus">locusTest</name>
+  <name type="ORF">orfTest1</name>
+  <name type="ORF">orfTest2</name>
 </gene>
 <organism>
   <name type="scientific">Homo sapiens</name>
@@ -228,6 +231,12 @@ const xmlEntry = `
   <property type="protein sequence ID" value="AAH16353.1"/>
   <property type="molecule type" value="mRNA"/>
 </dbReference>
+<dbReference type="FlyBase" id="flybaseTest">
+  <property type="gene designation" value="ccm3"/>
+</dbReference>
+<dbReference type="SGD" id="SGDTest">
+  <property type="gene designation" value="CCM3"/>
+</dbReference>
 <dbReference type="CCDS" id="CCDS3202.1"/>
 <dbReference type="RefSeq" id="NP_009148.2">
   <property type="nucleotide sequence ID" value="NM_007217.3"/>
@@ -342,6 +351,7 @@ const xmlEntry = `
 <dbReference type="PeptideAtlas" id="Q9BUL8"/>
 <dbReference type="PRIDE" id="Q9BUL8"/>
 <dbReference type="ProteomicsDB" id="79108"/>
+<dbReference type="ProteomicsDB" id="test2"/>
 <dbReference type="TopDownProteomics" id="Q9BUL8"/>
 <dbReference type="DNASU" id="11235"/>
 <dbReference type="Ensembl" id="ENST00000392750">

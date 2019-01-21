@@ -34,7 +34,9 @@ const entryParse = (entry) => {
       localization: {
         uniprot: sortArray.alphabetical(arrayUnique(comments.localization)),
       },
+      locus: genes.locus,
       mw: sequence.mw,
+      orf: genes.orf,
       proteomicsdb: refs.proteomicsdb,
       refseq: refs.refseq,
       synonyms: sortArray.alphabetical(genes.synonyms),

@@ -2,8 +2,24 @@ const findGene = (genes) => {
   if (!genes) {
     return {};
   }
+  const obj = {
+    locus: '',
+    orf: [],
+    primary: '',
+    synonyms: [],
+  };
   return genes[0].name.reduce((accum, gene) => {
     switch (gene.$.type) {
+      case 'ordered locus':
+        return {
+          ...accum,
+          locus: gene._,
+        };
+      case 'ORF':
+        return {
+          ...accum,
+          orf: [...accum.orf, gene._],
+        };
       case 'primary':
         return {
           ...accum,
@@ -17,7 +33,7 @@ const findGene = (genes) => {
       default:
         return accum;
     }
-  }, { primary: '', synonyms: [] });
+  }, obj);
 };
 
 module.exports = findGene;

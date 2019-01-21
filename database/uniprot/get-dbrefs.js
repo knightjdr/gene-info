@@ -7,6 +7,11 @@ const getDBRefs = dbRefs => (
         ...accum,
         biogrid: Number(ref.$.id),
       };
+    } if (ref.$.type === 'FlyBase') {
+      return {
+        ...accum,
+        flybase: ref.$.id,
+      };
     } if (ref.$.type === 'GeneID') {
       return {
         ...accum,
@@ -73,6 +78,11 @@ const getDBRefs = dbRefs => (
       return {
         ...accum,
         refseq: arrayUnique([...accum.refseq, id, value]),
+      };
+    } if (ref.$.type === 'SGD') {
+      return {
+        ...accum,
+        sgd: ref.$.id,
       };
     }
     return accum;
