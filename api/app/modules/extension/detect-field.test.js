@@ -44,6 +44,20 @@ describe('Detect field', () => {
     expect(detectField(term)).toBe('geneid');
   });
 
+  describe('locus', () => {
+    it('should detect locus in yeast', () => {
+      const species = 'Saccharomyces cerevisiae';
+      const term = 'YGL190C';
+      expect(detectField(term, species)).toBe('locus');
+    });
+
+    it('should not detect locus in other species', () => {
+      const species = 'Homo sapiens';
+      const term = 'YGL190C';
+      expect(detectField(term, species)).toBe('gene');
+    });
+  });
+
   describe('Nextprot', () => {
     it('should detect O, P, Q type accession', () => {
       const term = 'NX_Q9BUL8';
@@ -58,6 +72,26 @@ describe('Detect field', () => {
     it('should detect long accession', () => {
       const term = 'NX_A0A022YWF9';
       expect(detectField(term)).toBe('nextprot');
+    });
+  });
+
+  describe('ORF', () => {
+    it('should detect 6 character orfs in flies', () => {
+      const species = 'Drosophila melanogaster';
+      const term = 'CG1217';
+      expect(detectField(term, species)).toBe('orf');
+    });
+
+    it('should detect 7 character orfs in flies', () => {
+      const species = 'Drosophila melanogaster';
+      const term = 'CG12217';
+      expect(detectField(term, species)).toBe('orf');
+    });
+
+    it('should not detect orfs in other species', () => {
+      const species = 'Homo sapiens';
+      const term = 'CG12217';
+      expect(detectField(term, species)).toBe('gene');
     });
   });
 

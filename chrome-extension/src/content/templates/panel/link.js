@@ -16,6 +16,20 @@ const linkElement = (report, settings) => {
         </section>
       `;
     }
+    if (settings.species === 'Drosophila melanogaster' && report.flybase) {
+      html += `
+        <section>
+          <h1>FlyBase</h1>
+          <a
+            href="https://flybase.org/reports/${report.flybase}"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            ${report.flybase}
+          </a>
+        </section>
+      `;
+    }
     if (report.geneid) {
       html += `
         <section>
@@ -26,6 +40,20 @@ const linkElement = (report, settings) => {
             target="_blank"
           >
             ${report.geneid}
+          </a>
+        </section>
+      `;
+    }
+    if (settings.species === 'Saccharomyces cerevisiae' && report.sgd) {
+      html += `
+        <section>
+          <h1>SGD</h1>
+          <a
+            href="https://www.yeastgenome.org/locus/${report.sgd}"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            ${report.sgd}
           </a>
         </section>
       `;

@@ -16,11 +16,15 @@
       <h1>Gene Info documentation</h1>
       <p>
         The Gene Info Chrome extension allows you to retrieve information about
-        a gene directly on any webpage simply by double clicking an official gene name,
-        synonym or supported accession.
+        a gene product directly on any webpage simply by double clicking an official
+        gene name, synonym or supported accession.
       </p>
       <p>
-        The extension can be downloaded from the
+        This extension is developed by the laboratory of Dr. Anne-Claude Gingras at the
+        Lunenfeld-Tanenbaum Research Institute in Toronto, Canada.
+      </p>
+      <p>
+        It can be downloaded from the
         <a href="https://chrome.google.com/webstore/detail/gene-info/jggendahejbhkghnachhlomkkheomchp?hl=en-US">Chrome Web Store</a>.
       </p>
     </header>
@@ -35,6 +39,7 @@
           <li><a href="#unsupported">Unsupported websites</a></li>
           <li><a href="#permissions">Permissions</a></li>
           <li><a href="#logging">Logging</a></li>
+          <li><a href="#source">Source code</a></li>
           <li><a href="#issues">Issues</a></li>
           <li><a href="#browser">Browser support</a></li>
           <li><a href="#funding">Funding</a></li>
@@ -48,7 +53,10 @@
           choose the drag method that requires you to mouse down on one side of the gene
           name, drag the selection box to the other side and release the mouse button. This
           can be useful on websites where double clicking selects more that one word (this
-          is a rare occurrence and depends on the markup used by the website).
+          is a rare occurrence and depends on the markup used by the website). The drag
+          method is also necessary for gene names that have certain special characters in
+          them. For example, double clicking a gene name with a dash '-' will only capture
+          text before or after the dash but not including it.
         </p>
         <p>
           If you wish to disable the extension, simply click the disable button.
@@ -58,8 +66,8 @@
           The extension can display information in two ways:
           <ol>
             <li>
-              Detailed report: a full height panel displaying links to external resources
-              and the information from those resources.
+              Detailed report: a panel spanning the full height of the browser window
+              displaying links to external resources and the information from those resources.
             </li>
             <li>
               Tooltip report: a small box that opens at the point of the mouse click with
@@ -84,8 +92,8 @@
           <li><i>Xenopus laevis</i></li>
         </ul>
         <p>
-          Some information will only be available for certain species. Human Protein Atlas
-          localization and expression information, of course, is only available for human
+          Some information will only be available for certain species. For instance, Human
+          Protein Atlas localization and expression information is only available for human
           gene entries. The Compartments subcellular localization database has information
           on six of the ten organisms we support:
           <i>Arabidopsis</i>,
@@ -102,8 +110,8 @@
         <ul>
           <li>Ensembl gene (e.g. ENSG00000114209)</li>
           <li>Ensembl protein (e.g. ENSP00000376506)</li>
-          <li>Gene ID (e.g. 11235)</li>
           <li>Gene name (e.g. PDCD10)</li>
+          <li>NCBI Entrez gene ID (e.g. 11235)</li>
           <li>neXtProt (e.g. NX_Q9BUL8)</li>
           <li>RefSeq (either nucleotide or protein e.g. NM_007217.3, NP_009148.2)</li>
           <li>UniProt (e.g. Q9BUL8)</li>
@@ -111,6 +119,20 @@
         <p>
           By default it will autodetect the query type but you can disable this option and
           force it to treat all queries as a specific type.
+        </p>
+        <p>
+          Genes may also have a locus and ORF associated with them that can be used for querying.
+          These were specifically included for yeast and flies respectively to enable querying by
+          commonly used nomenclature of the following formats:
+        </p>
+        <ul>
+          <li>YGL190C (yeast locus for gene CDC55)</li>
+          <li>CG12217 (fly ORF for gene PpV)</li>
+        </ul>
+        <p>
+          You can query by locus and ORF for other species, however it will only autodetect these
+          query types in yeast and flies respectively as these species adhere to specific naming
+          formats that do not hold in other species. 
         </p>
         <h3>Search</h3>
         <p>
@@ -293,6 +315,13 @@
         <p>
           We do not record an personal information or IP addresses and the extension does
           not use analytics.
+        </p>
+      </section>
+      <section id="source">
+        <h2>Source code</h2>
+        <p>
+          Source code is available at
+          <a href="https://github.com/knightjdr/gene-info/">GitHub</a>.
         </p>
       </section>
       <section id="issues">

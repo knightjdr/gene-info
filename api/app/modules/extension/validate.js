@@ -7,7 +7,9 @@ const fields = [
   'ensembl-protein',
   'gene',
   'geneid',
+  'locus',
   'nextprot',
+  'orf',
   'refseq',
   'uniprot',
 ];
@@ -37,7 +39,7 @@ const validate = (species, field, term) => {
   }
   let validatedField = field;
   if (field === 'auto') {
-    validatedField = detectField(term);
+    validatedField = detectField(term, species);
   }
   let validatedTerm = term;
   if (validatedField === 'geneid') {

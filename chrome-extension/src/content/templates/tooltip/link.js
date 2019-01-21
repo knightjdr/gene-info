@@ -8,10 +8,22 @@ const linkElement = (report, settings) => {
         href: `https://ensembl.org/Gene/Summary?g=${accession}`,
       });
     }
+    if (settings.species === 'Drosophila melanogaster' && report.flybase) {
+      links.push({
+        database: 'FlyBase',
+        href: `https://flybase.org/reports/${report.flybase}`,
+      });
+    }
     if (report.geneid) {
       links.push({
         database: 'NCBI',
         href: `https://www.ncbi.nlm.nih.gov/gene/?term=${report.geneid}`,
+      });
+    }
+    if (settings.species === 'Saccharomyces cerevisiae' && report.sgd) {
+      links.push({
+        database: 'SGD',
+        href: `https://www.yeastgenome.org/locus/${report.sgd}`,
       });
     }
     if (report.uniprot && report.uniprot.length > 0) {
