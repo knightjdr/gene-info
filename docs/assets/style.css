@@ -5,7 +5,9 @@ html {
 body {
   --background: #fdfdfd;
   --primary: #658170;
+  --primary-1: #4caf50;
   --text: #333;
+  --text-light: #fdfdfd;
   align-items: center;
   background-color: var(--background);
   color: var(--text);
@@ -18,20 +20,41 @@ body {
 header, main {
   max-width: 900px;
 }
-a {
+a:not(.link-button) {
   background-color: transparent;
   text-decoration: none;
 }
-a:link,
-a:visited {
+a:not(.link-button):link,
+a:not(.link-button):visited {
   color: var(--primary);
   cursor: pointer;
   border-bottom: none;
 }
-a:hover,
-a:active,
-a:focus {
+a:not(.link-button):hover,
+a:not(.link-button):active,
+a:not(.link-button):focus {
   border-bottom: 1px dotted var(--primary);
+  outline: none;
+}
+a.link-button {
+  border-radius: 3px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  color: var(--text-light);
+  display: inline-block;
+  margin: 0 5px;
+  padding: 6px 8px;
+  transition: background-color 0.3s linear;
+  text-decoration: none;
+}
+a.link-button:link,
+a.link-button:visited {
+  background-color: var(--primary);
+}
+a.link-button:hover,
+a.link-button:active,
+a.link-button:focus {
+  background-color: var(--primary-1);
+  outline: none;
 }
 footer {
   margin-top: 10px;
