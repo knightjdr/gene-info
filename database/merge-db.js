@@ -4,6 +4,7 @@ const mergeDb = ([
   domains,
   interactions,
   localization,
+  motifs,
 ]) => (
   db.map(entry => ({
     ...entry,
@@ -16,6 +17,7 @@ const mergeDb = ([
       hpa: entry['ensembl-gene'][0] && localization.hpa[entry['ensembl-gene'][0]] ? localization.hpa[entry['ensembl-gene'][0]] : {},
       uniprot: entry.localization.uniprot,
     },
+    motifs: entry.uniprot[0] && motifs[entry.uniprot[0]] ? motifs[entry.uniprot[0]] : [],
     'rna-expression': entry['ensembl-gene'][0] && rnaExpression[entry['ensembl-gene'][0]] ? rnaExpression[entry['ensembl-gene'][0]] : {},
   }))
 );
