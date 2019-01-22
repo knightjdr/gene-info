@@ -1,4 +1,4 @@
-const sortArray = require('./helpers/sort-array');
+const arrSortByTwoKeys = require('./helpers/arr-sort-by-two-keys');
 
 const mergeDb = ([
   db,
@@ -15,7 +15,7 @@ const mergeDb = ([
     const currRegions = entry.uniprot[0] && regions[entry.uniprot[0]]
       ? regions[entry.uniprot[0]]
       : [];
-    const domainsRegions = sortArray.numericalByKey([...currDomains, ...currRegions], 'start', 'asc');
+    const domainsRegions = arrSortByTwoKeys([...currDomains, ...currRegions], 'start', 'end', 'asc', 'numeric', 'numeric');
     return ({
       ...entry,
       domains: domainsRegions,

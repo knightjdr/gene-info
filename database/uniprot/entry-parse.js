@@ -1,10 +1,11 @@
+const arrSort = require('../helpers/arr-sort');
+const arrSortByKey = require('../helpers/arr-sort-by-key');
 const arrayUnique = require('../helpers/array-unique');
 const findGene = require('./find-gene');
 const getComments = require('./get-comments');
 const getDBRefs = require('./get-dbrefs');
 const { getNames } = require('./get-names');
 const getSequence = require('./get-sequence');
-const sortArray = require('../helpers/sort-array');
 
 /* Parses a Uniprot XML entry that has been converted to a JS object with
 ** xml2js */
@@ -25,21 +26,21 @@ const entryParse = (entry) => {
       gene: genes.primary,
       geneid: refs.geneid,
       go: {
-        c: sortArray.alphabeticalByKey(refs.go.c, 'term'),
-        f: sortArray.alphabeticalByKey(refs.go.f, 'term'),
-        p: sortArray.alphabeticalByKey(refs.go.p, 'term'),
+        c: arrSortByKey(refs.go.c, 'term'),
+        f: arrSortByKey(refs.go.f, 'term'),
+        p: arrSortByKey(refs.go.p, 'term'),
       },
       hgnc: refs.hgnc,
       length: sequence.length,
       localization: {
-        uniprot: sortArray.alphabetical(arrayUnique(comments.localization)),
+        uniprot: arrSort.alphabetical(arrayUnique(comments.localization)),
       },
       locus: genes.locus,
       mw: sequence.mw,
       orf: genes.orf,
       proteomicsdb: refs.proteomicsdb,
       refseq: refs.refseq,
-      synonyms: sortArray.alphabetical(genes.synonyms),
+      synonyms: arrSort.alphabetical(genes.synonyms),
       uniprot: entry.accession,
     };
 

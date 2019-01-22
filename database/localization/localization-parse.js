@@ -3,9 +3,9 @@
 const fs = require('fs');
 const readline = require('readline');
 
+const arrSort = require('../helpers/arr-sort');
 const arrayUnique = require('../helpers/array-unique');
 const config = require('../config');
-const sortArray = require('../helpers/sort-array');
 
 const handleCompartmentLines = file => (
   new Promise((resolve, reject) => {
@@ -113,7 +113,7 @@ const filterCompartments = (compartments, obo) => {
     const deepest = removeParents(values.terms, parents);
 
     // Convert from ID to name, then sort alphabetically.
-    const sorted = sortArray.alphabetical(deepest.map(term => obo.map[term]));
+    const sorted = arrSort.alphabetical(deepest.map(term => obo.map[term]));
 
     filtered[gene] = {
       accession: values.accession,

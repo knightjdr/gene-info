@@ -3,7 +3,7 @@
 const fs = require('fs');
 const readline = require('readline');
 
-const sortArray = require('../helpers/sort-array');
+const arrSort = require('../helpers/arr-sort');
 
 const handleLines = file => (
   new Promise((resolve, reject) => {
@@ -34,7 +34,7 @@ const handleLines = file => (
       lineReader.on('close', () => {
         resolve({
           expression,
-          types: sortArray.alphabetical(Object.keys(types)),
+          types: arrSort.alphabetical(Object.keys(types)),
         });
       });
       lineReader.on('error', (err) => {

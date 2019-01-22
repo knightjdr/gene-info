@@ -5,16 +5,14 @@ const fs = require('fs');
 
 const arrayUnique = require('../helpers/array-unique');
 const fetchJson = require('../helpers/fetch');
-const sortArray = require('../helpers/sort-array');
 
-const parseRegions = (json) => {
-  const regions = json.motifs.map(region => ({
+const parseRegions = json => (
+  json.motifs.map(region => ({
     end: region.end,
     name: region.type,
     start: region.start,
-  }));
-  return sortArray.numericalByKey(regions, 'start');
-};
+  }))
+);
 
 const fetchGraphic = id => (
   new Promise((resolve) => {

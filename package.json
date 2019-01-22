@@ -23,6 +23,7 @@
   "homepage": "https://github.com/knightjdr/gene-info#readme",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^2.1.0",
     "eslint": "^5.9.0",
@@ -34,6 +35,7 @@
     "jest": "^23.6.0",
     "jshint": "^2.9.6",
     "jshint-stylish": "^2.2.1",
+    "md5": "^2.2.1",
     "memory-streams": "^0.1.3",
     "mini-css-extract-plugin": "^0.5.0",
     "style-loader": "^0.23.1",

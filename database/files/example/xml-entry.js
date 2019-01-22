@@ -231,10 +231,27 @@ const xmlEntry = `
   <property type="protein sequence ID" value="AAH16353.1"/>
   <property type="molecule type" value="mRNA"/>
 </dbReference>
+<dbReference type="dictyBase" id="DDB_G0286499">
+  <property type="gene designation" value="pspG"/>
+</dbReference>
 <dbReference type="FlyBase" id="flybaseTest">
   <property type="gene designation" value="ccm3"/>
 </dbReference>
+<dbReference type="MGI" id="MGITest">
+  <property type="gene designation" value="CCM3"/>
+</dbReference>
 <dbReference type="SGD" id="SGDTest">
+  <property type="gene designation" value="CCM3"/>
+</dbReference>
+<dbReference type="TAIR" id="locus:2196506">
+  <property type="gene designation" value="AT1G22300"/>
+</dbReference>
+<dbReference type="WormBase" id="M117.2a">
+  <property type="protein sequence ID" value="CE06200"/>
+  <property type="gene ID" value="WBGene00003920"/>
+  <property type="gene designation" value="par-5"/>
+</dbReference>
+<dbReference type="ZFIN" id="ZFINTest">
   <property type="gene designation" value="CCM3"/>
 </dbReference>
 <dbReference type="CCDS" id="CCDS3202.1"/>

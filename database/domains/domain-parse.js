@@ -3,8 +3,8 @@
 const fs = require('fs');
 const readline = require('readline');
 
+const arrSortByTwoKeys = require('../helpers/arr-sort-by-two-keys');
 const shortNames = require('./short-names');
-const sortArray = require('../helpers/sort-array');
 
 const handleLines = (file, names) => (
   new Promise((resolve, reject) => {
@@ -39,7 +39,7 @@ const handleLines = (file, names) => (
 const sortDomains = (domains) => {
   const sortedDomains = {};
   Object.entries(domains).forEach(([gene, arr]) => {
-    sortedDomains[gene] = sortArray.numericalByKey(arr, 'start', 'asc');
+    sortedDomains[gene] = arrSortByTwoKeys(arr, 'start', 'end', 'asc', 'numeric', 'numeric');
   });
   return sortedDomains;
 };

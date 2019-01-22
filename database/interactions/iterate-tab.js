@@ -4,8 +4,9 @@
 const fs = require('fs');
 const readline = require('readline');
 
+const arrSort = require('../helpers/arr-sort');
+const arrSortByKey = require('../helpers/arr-sort-by-key');
 const arrayUnique = require('../helpers/array-unique');
-const sortArray = require('../helpers/sort-array');
 
 /* Using parameter reassigment as it is much faster as the number of
 ** interactions can be ~1M */
@@ -32,15 +33,15 @@ const sortInteractions = (interactions) => {
   const sortedInteractions = {};
   Object.keys(interactions).forEach((source) => {
     sortedInteractions[source] = Object.keys(interactions[source]).map((target) => {
-      const sortedBiogrid = sortArray.alphabetical(interactions[source][target].biogrid);
-      const sortedIntact = sortArray.alphabetical(interactions[source][target].intact);
+      const sortedBiogrid = arrSort.alphabetical(interactions[source][target].biogrid);
+      const sortedIntact = arrSort.alphabetical(interactions[source][target].intact);
       return {
         gene: target,
         biogrid: sortedBiogrid,
         intact: sortedIntact,
       };
     });
-    sortedInteractions[source] = sortArray.alphabeticalByKey(sortedInteractions[source], 'gene');
+    sortedInteractions[source] = arrSortByKey(sortedInteractions[source], 'gene');
   });
   return sortedInteractions;
 };

@@ -3,7 +3,7 @@
 const fs = require('fs');
 const readline = require('readline');
 
-const sortArray = require('../helpers/sort-array');
+const arrSortByTwoKeys = require('../helpers/arr-sort-by-two-keys');
 
 const handleLines = file => (
   new Promise((resolve, reject) => {
@@ -37,7 +37,7 @@ const handleLines = file => (
 const sortRegions = (regions) => {
   const sortedRegions = {};
   Object.entries(regions).forEach(([gene, arr]) => {
-    sortedRegions[gene] = sortArray.numericalByKey(arr, 'start', 'asc');
+    sortedRegions[gene] = arrSortByTwoKeys(arr, 'start', 'end', 'asc', 'numeric', 'numeric');
   });
   return sortedRegions;
 };

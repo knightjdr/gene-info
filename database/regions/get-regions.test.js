@@ -7,15 +7,8 @@ const { fetchGraphic, parseRegions, writeRegions } = require('./get-regions');
 
 jest.mock(('../helpers/fetch'));
 
-const sortedRegions = [
-  { name: 'sig_p', start: 1, end: 24 },
-  { name: 'low_complexity', start: 6, end: 24 },
-  { name: 'transmembrane', start: 646, end: 667 },
-  { name: 'low_complexity', start: 650, end: 665 },
-  { name: 'low_complexity', start: 674, end: 691 },
+const parsedRegions = [
   { name: 'disorder', start: 983, end: 985 },
-  { name: 'low_complexity', start: 1001, end: 1014 },
-  { name: 'low_complexity', start: 1024, end: 1045 },
   { name: 'disorder', start: 1034, end: 1037 },
   { name: 'disorder', start: 1061, end: 1064 },
   { name: 'disorder', start: 1068, end: 1085 },
@@ -25,6 +18,13 @@ const sortedRegions = [
   { name: 'disorder', start: 1157, end: 1185 },
   { name: 'disorder', start: 1187, end: 1195 },
   { name: 'disorder', start: 1198, end: 1201 },
+  { name: 'sig_p', start: 1, end: 24 },
+  { name: 'transmembrane', start: 646, end: 667 },
+  { name: 'low_complexity', start: 6, end: 24 },
+  { name: 'low_complexity', start: 650, end: 665 },
+  { name: 'low_complexity', start: 674, end: 691 },
+  { name: 'low_complexity', start: 1001, end: 1014 },
+  { name: 'low_complexity', start: 1024, end: 1045 },
 ];
 
 let json;
@@ -43,7 +43,7 @@ beforeAll(async (done) => {
 describe('Parse regions', () => {
   it('should parse regions from json', () => {
     const regions = parseRegions(json[0]);
-    expect(regions).toEqual(sortedRegions);
+    expect(regions).toEqual(parsedRegions);
   });
 });
 
@@ -62,7 +62,7 @@ describe('Fetch graphic', () => {
     });
 
     it('should resolve with regions', () => {
-      expect(regions).toEqual(sortedRegions);
+      expect(regions).toEqual(parsedRegions);
     });
   });
 
@@ -86,11 +86,11 @@ describe('Write regions', () => {
 
   beforeAll(() => {
     stream = new streams.WritableStream();
-    writeRegions('P00533', sortedRegions, stream);
+    writeRegions('P00533', parsedRegions, stream);
   });
 
   it('should write regions to file', () => {
-    const expected = 'P00533\tsig_p\t1\t24\nP00533\tlow_complexity\t6\t24\nP00533\ttransmembrane\t646\t667\nP00533\tlow_complexity\t650\t665\nP00533\tlow_complexity\t674\t691\nP00533\tdisorder\t983\t985\nP00533\tlow_complexity\t1001\t1014\nP00533\tlow_complexity\t1024\t1045\nP00533\tdisorder\t1034\t1037\nP00533\tdisorder\t1061\t1064\nP00533\tdisorder\t1068\t1085\nP00533\tdisorder\t1087\t1139\nP00533\tdisorder\t1143\t1145\nP00533\tdisorder\t1150\t1154\nP00533\tdisorder\t1157\t1185\nP00533\tdisorder\t1187\t1195\nP00533\tdisorder\t1198\t1201\n';
+    const expected = 'P00533\tdisorder\t983\t985\nP00533\tdisorder\t1034\t1037\nP00533\tdisorder\t1061\t1064\nP00533\tdisorder\t1068\t1085\nP00533\tdisorder\t1087\t1139\nP00533\tdisorder\t1143\t1145\nP00533\tdisorder\t1150\t1154\nP00533\tdisorder\t1157\t1185\nP00533\tdisorder\t1187\t1195\nP00533\tdisorder\t1198\t1201\nP00533\tsig_p\t1\t24\nP00533\ttransmembrane\t646\t667\nP00533\tlow_complexity\t6\t24\nP00533\tlow_complexity\t650\t665\nP00533\tlow_complexity\t674\t691\nP00533\tlow_complexity\t1001\t1014\nP00533\tlow_complexity\t1024\t1045\n';
     expect(stream.toString()).toBe(expected);
   });
 });
