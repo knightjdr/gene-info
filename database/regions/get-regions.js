@@ -7,21 +7,21 @@ const arrayUnique = require('../helpers/array-unique');
 const fetchJson = require('../helpers/fetch');
 const sortArray = require('../helpers/sort-array');
 
-const parseMotifs = (json) => {
-  const motifs = json.motifs.map(motif => ({
-    end: motif.end,
-    name: motif.type,
-    start: motif.start,
+const parseRegions = (json) => {
+  const regions = json.motifs.map(region => ({
+    end: region.end,
+    name: region.type,
+    start: region.start,
   }));
-  return sortArray.numericalByKey(motifs, 'start');
+  return sortArray.numericalByKey(regions, 'start');
 };
 
 const fetchGraphic = id => (
   new Promise((resolve) => {
     fetchJson(`http://pfam.xfam.org/protein/${id}/graphic`)
       .then((json) => {
-        const motifs = parseMotifs(json[0]);
-        resolve(motifs);
+        const regions = parseRegions(json[0]);
+        resolve(regions);
       })
       .catch(() => {
         resolve([]);
@@ -29,21 +29,21 @@ const fetchGraphic = id => (
   })
 );
 
-const writeMotifs = (id, motifs, stream) => {
-  motifs.forEach((motif) => {
-    stream.write(`${id}\t${motif.name}\t${motif.start}\t${motif.end}\n`);
+const writeRegions = (id, regions, stream) => {
+  regions.forEach((region) => {
+    stream.write(`${id}\t${region.name}\t${region.start}\t${region.end}\n`);
   });
 };
 
 const iterateIDs = async (ids, streams) => {
   await Object.entries(ids).reduce(async (promise, [id, specie]) => {
     await promise;
-    const motifs = await fetchGraphic(id);
-    writeMotifs(id, motifs, streams[specie]);
+    const regions = await fetchGraphic(id);
+    writeRegions(id, regions, streams[specie]);
   }, Promise.resolve());
 };
 
-const getMotifs = (path, ids) => (
+const getRegions = (path, ids) => (
   new Promise((resolve, reject) => {
     const species = arrayUnique(Object.values(ids));
     const streams = Object.values(species).reduce((accum, specie) => {
@@ -67,7 +67,7 @@ const getMotifs = (path, ids) => (
 
 module.exports = {
   fetchGraphic,
-  parseMotifs,
-  getMotifs,
-  writeMotifs,
+  parseRegions,
+  getRegions,
+  writeRegions,
 };

@@ -19,6 +19,7 @@ const handleLines = (file, names) => (
         pfam,
         start: Number(start),
         end: Number(end),
+        type: 'domain',
       };
       if (domains[uniprot]) {
         domains[uniprot].push(domain);

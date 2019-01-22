@@ -1,17 +1,17 @@
 const createFolder = require('../helpers/create-folder');
 const readJson = require('../helpers/read-json');
-const { getMotifs } = require('./get-motifs');
+const { getRegions } = require('./get-regions');
 
-/* Motifs have to be retrieved from Pfam using their api as they
+/* Regions have to be retrieved from Pfam using their api as they
 ** do not have a download on their FTP site */
-const motifs = options => (
+const regions = options => (
   new Promise((resolve, reject) => {
     if (options.skipDownload) {
       resolve();
     } else {
-      createFolder('./files/motifs')
+      createFolder('./files/regions')
         .then(() => readJson('./files/uniprot/uniprot-ids.json'))
-        .then(uniprot => getMotifs('./files/motifs', uniprot))
+        .then(uniprot => getRegions('./files/regions', uniprot))
         .then(() => {
           resolve();
         })
@@ -22,4 +22,4 @@ const motifs = options => (
   })
 );
 
-module.exports = motifs;
+module.exports = regions;

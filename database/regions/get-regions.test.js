@@ -3,11 +3,11 @@ const streams = require('memory-streams');
 
 const fetchUrl = require('../helpers/fetch');
 const readJson = require('../helpers/read-json');
-const { fetchGraphic, parseMotifs, writeMotifs } = require('./get-motifs');
+const { fetchGraphic, parseRegions, writeRegions } = require('./get-regions');
 
 jest.mock(('../helpers/fetch'));
 
-const sortedMotifs = [
+const sortedRegions = [
   { name: 'sig_p', start: 1, end: 24 },
   { name: 'low_complexity', start: 6, end: 24 },
   { name: 'transmembrane', start: 646, end: 667 },
@@ -40,20 +40,20 @@ beforeAll(async (done) => {
     });
 });
 
-describe('Parse motifs', () => {
-  it('should parse motifs from json', () => {
-    const motifs = parseMotifs(json[0]);
-    expect(motifs).toEqual(sortedMotifs);
+describe('Parse regions', () => {
+  it('should parse regions from json', () => {
+    const regions = parseRegions(json[0]);
+    expect(regions).toEqual(sortedRegions);
   });
 });
 
 describe('Fetch graphic', () => {
   describe('successful fetch', () => {
-    let motifs;
+    let regions;
 
     beforeAll(async (done) => {
       fetchUrl.mockResolvedValueOnce(json);
-      motifs = await fetchGraphic('P00533');
+      regions = await fetchGraphic('P00533');
       done();
     });
 
@@ -61,35 +61,35 @@ describe('Fetch graphic', () => {
       expect(fetchUrl).toHaveBeenCalledWith('http://pfam.xfam.org/protein/P00533/graphic');
     });
 
-    it('should resolve with motifs', () => {
-      expect(motifs).toEqual(sortedMotifs);
+    it('should resolve with regions', () => {
+      expect(regions).toEqual(sortedRegions);
     });
   });
 
   describe('unsuccessful fetch', () => {
-    let motifs;
+    let regions;
 
     beforeAll(async (done) => {
       fetchUrl.mockRejectedValueOnce(new Error());
-      motifs = await fetchGraphic('P00533');
+      regions = await fetchGraphic('P00533');
       done();
     });
 
     it('should return empty array', () => {
-      expect(motifs).toEqual([]);
+      expect(regions).toEqual([]);
     });
   });
 });
 
-describe('Write motifs', () => {
+describe('Write regions', () => {
   let stream;
 
   beforeAll(() => {
     stream = new streams.WritableStream();
-    writeMotifs('P00533', sortedMotifs, stream);
+    writeRegions('P00533', sortedRegions, stream);
   });
 
-  it('should write motifs to file', () => {
+  it('should write regions to file', () => {
     const expected = 'P00533\tsig_p\t1\t24\nP00533\tlow_complexity\t6\t24\nP00533\ttransmembrane\t646\t667\nP00533\tlow_complexity\t650\t665\nP00533\tlow_complexity\t674\t691\nP00533\tdisorder\t983\t985\nP00533\tlow_complexity\t1001\t1014\nP00533\tlow_complexity\t1024\t1045\nP00533\tdisorder\t1034\t1037\nP00533\tdisorder\t1061\t1064\nP00533\tdisorder\t1068\t1085\nP00533\tdisorder\t1087\t1139\nP00533\tdisorder\t1143\t1145\nP00533\tdisorder\t1150\t1154\nP00533\tdisorder\t1157\t1185\nP00533\tdisorder\t1187\t1195\nP00533\tdisorder\t1198\t1201\n';
     expect(stream.toString()).toBe(expected);
   });
