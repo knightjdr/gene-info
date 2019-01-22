@@ -2,7 +2,7 @@
 
 This browser extension allows for the retrieval of gene information directly on a webpage by double clicking on its name, gene ID or accession (Ensembl gene, Ensembl protein, neXtProt, RefSeq or UniProt). Double-clicking to retrieve informaiton will work on any webpage with the exception of content that has been embedded in the browser, such as Google Docs or PDF viewers. However, searching for a gene using the input in the extension popup will work even on pages with embedded elements.
 
-View the full [documentation](https://knightjdr.github.io/gene-info).
+View the full [documentation](https://gene-info.lunenfeld.ca).
 
 This extension is developed by the laboratory of Dr. Anne-Claude Gingras at the Lunenfeld-Tanenbaum Research Institute in Toronto, Canada.
 

@@ -53,6 +53,7 @@ class State {
       report: storage.report || 'detailed',
       rna_expression: defaultToggleState(storage.rna_expression),
       rna_expression_tissues: storage.rna_expression_tissues || config.defaultTissues[species],
+      region: defaultToggleState(storage.region),
       species,
     };
     this.style = {

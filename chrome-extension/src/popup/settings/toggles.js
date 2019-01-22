@@ -11,6 +11,7 @@ const options = [
   'localization_hpa',
   'localization_uniprot',
   'rna_expression',
+  'region',
 ];
 
 const toggles = () => {

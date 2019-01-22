@@ -2,8 +2,19 @@
 
 const domainElement = (report, settings) => {
   let html = '';
-  if (settings.domain) {
+  if (settings.domain || settings.region) {
     const accession = report.uniprot[0];
+    let { domains } = report;
+    let heading;
+    if (settings.domain && settings.region) {
+      heading = 'DOMAINS & REGIONS';
+    } else if (settings.domain) {
+      heading = 'DOMAINS';
+      domains = domains.filter(domain => domain.type === 'domain');
+    } else if (settings.region) {
+      heading = 'REGIONS';
+      domains = domains.filter(domain => domain.type === 'region');
+    }
     html = `
       <style>
         .domain-table th:first-child {
@@ -18,7 +29,7 @@ const domainElement = (report, settings) => {
       </style>
       <section class="bevel details">
         <div class="details-header">
-          <h1>DOMAINS</h1>
+          <h1>${heading}</h1>
           <a
             href="http://pfam.xfam.org/protein/${accession}"
             rel="noopener noreferrer"
@@ -28,7 +39,7 @@ const domainElement = (report, settings) => {
           </a>
         </div>
         ${
-          report.domains && report.domains.length > 0
+          domains && domains.length > 0
             ? `
               <table class="domain-table">
                 <thead>
@@ -39,18 +50,24 @@ const domainElement = (report, settings) => {
                 </thead>
                 <tbody>
                   ${
-                    report.domains.map(domain => (
+                    domains.map(domain => (
                       `
                         <tr>
                           <td>${domain.start}-${domain.end}</td>
                           <td>
-                            <a
-                              href="http://pfam.xfam.org/family/${domain.pfam}"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              ${domain.name}
-                            </a>
+                            ${
+                              domain.pfam
+                              ? `
+                                <a
+                                  href="http://pfam.xfam.org/family/${domain.pfam}"
+                                  rel="noopener noreferrer"
+                                  target="_blank"
+                                >
+                                  ${domain.name}
+                                </a>
+                              `
+                              : domain.name
+                            }
                           </td>
                         </tr>
                       `
