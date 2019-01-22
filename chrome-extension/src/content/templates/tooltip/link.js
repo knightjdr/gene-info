@@ -63,6 +63,12 @@ const linkElement = (report, settings) => {
         href: `https://wormbase.org/species/c_elegans/gene/${report.wormbase}`,
       });
     }
+    if (report.xenbase && settings.species === 'Xenopus laevis') {
+      links.push({
+        database: 'Xenbase',
+        href: `http://www.xenbase.org/gene/showgene.do?method=display&geneId=${report.xenbase}`,
+      });
+    }
     if (report.zfin && settings.species === 'Danio rerio') {
       links.push({
         database: 'ZFIN',

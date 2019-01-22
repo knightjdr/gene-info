@@ -251,6 +251,9 @@ const xmlEntry = `
   <property type="gene ID" value="WBGene00003920"/>
   <property type="gene designation" value="par-5"/>
 </dbReference>
+<dbReference type="Xenbase" id="XB-GENE-984751">
+  <property type="gene designation" value="htr1a"/>
+</dbReference>
 <dbReference type="ZFIN" id="ZFINTest">
   <property type="gene designation" value="CCM3"/>
 </dbReference>

@@ -108,7 +108,12 @@ const getDBRefs = dbRefs => (
         };
       }
       return accum;
-    } if (ref.$.type === 'ZFIN') {
+    } if (ref.$.type === 'Xenbase') {
+      return {
+        ...accum,
+        xenbase: ref.$.id,
+      };
+    }if (ref.$.type === 'ZFIN') {
       return {
         ...accum,
         zfin: ref.$.id,

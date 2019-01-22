@@ -159,6 +159,11 @@ describe('DB refs', () => {
       expect(refs.wormbase).toBe(expected);
     });
 
+    it('should return xenbase ID', () => {
+      const expected = 'XB-GENE-984751';
+      expect(refs.xenbase).toBe(expected);
+    });
+
     it('should return ZFIN ID', () => {
       const expected = 'ZFINTest';
       expect(refs.zfin).toBe(expected);
@@ -234,6 +239,10 @@ describe('DB refs', () => {
 
     it('should not return wormbase ID', () => {
       expect(Object.prototype.hasOwnProperty.call(refs, 'wormbase')).toBeFalsy();
+    });
+
+    it('should not return xenbase ID', () => {
+      expect(Object.prototype.hasOwnProperty.call(refs, 'xenbase')).toBeFalsy();
     });
 
     it('should not return zfin ID', () => {

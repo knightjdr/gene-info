@@ -143,6 +143,20 @@ const linkElement = (report, settings) => {
         </section>
       `;
     }
+    if (report.xenbase && settings.species === 'Xenopus laevis') {
+      html += `
+        <section>
+          <h1>Xenbase</h1>
+          <a
+            href="http://www.xenbase.org/gene/showgene.do?method=display&geneId=${report.xenbase}"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            ${report.xenbase}
+          </a>
+        </section>
+      `;
+    }
     if (report.zfin && settings.species === 'Danio rerio') {
       html += `
         <section>
