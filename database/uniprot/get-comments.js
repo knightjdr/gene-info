@@ -10,10 +10,13 @@ const getComments = (comments) => {
       let localizations;
       switch (comment.$.type) {
         case 'function':
-          return {
-            ...accum,
-            description: parseDescription(parseObjectEntry(comment.text[0])),
-          };
+          if (!accum.description) {
+            return {
+              ...accum,
+              description: parseDescription(parseObjectEntry(comment.text[0])),
+            };
+          }
+          return accum;
         case 'subcellular location':
           if (comment.subcellularLocation) {
             localizations = comment.subcellularLocation.reduce((accumLoc, localization) => (
