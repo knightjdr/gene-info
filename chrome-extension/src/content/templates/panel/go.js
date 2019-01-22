@@ -1,11 +1,12 @@
 /* eslint indent: 0 */
 
+import goURL from '../../helpers/go-url';
 import link from '../../helpers/link-svg';
 
 const goElement = (report, settings) => {
   let html = '';
   if (settings.go) {
-    const accession = report.uniprot[0];
+    const url = goURL(report, settings);
     html = `
       <style>
         #go-buttons {
@@ -40,13 +41,19 @@ const goElement = (report, settings) => {
       <section class="bevel details">
         <div class="details-header">
           <h1>GO TERMS</h1>
-          <a
-            href="http://amigo.geneontology.org/amigo/gene_product/UniProtKB:${accession}"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            AmiGO
-          </a>
+          ${
+            url
+            && `
+              <a
+                href="${url}"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                AmiGO
+              </a>
+            `
+          }
+          
         </div>
         <div id="go-buttons">
           ${

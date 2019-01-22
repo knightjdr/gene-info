@@ -1,11 +1,15 @@
+import goURL from '../../helpers/go-url';
+
 const goElement = (report, settings) => {
   const links = [];
   if (settings.go) {
-    const accession = report.uniprot[0];
-    links.push({
-      database: 'AmiGO',
-      href: `http://amigo.geneontology.org/amigo/gene_product/UniProtKB:${accession}`,
-    });
+    const url = goURL(report, settings);
+    if (url) {
+      links.push({
+        database: 'AmiGO',
+        href: url,
+      });
+    }
   }
   return links;
 };

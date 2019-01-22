@@ -30,6 +30,11 @@ describe('DB refs', () => {
       expect(refs.biogrid).toBe(expected);
     });
 
+    it('should return dictybase ID', () => {
+      const expected = 'DDB_G0286499';
+      expect(refs.dictybase).toBe(expected);
+    });
+
     it('should return flybase ID', () => {
       const expected = 'flybaseTest';
       expect(refs.flybase).toBe(expected);
@@ -103,6 +108,11 @@ describe('DB refs', () => {
       expect(refs.hgnc).toBe(expected);
     });
 
+    it('should return MGI ID', () => {
+      const expected = 'MGITest';
+      expect(refs.mgi).toBe(expected);
+    });
+
     it('should return first proteomics DB ID', () => {
       const expected = 79108;
       expect(refs.proteomicsdb).toBe(expected);
@@ -138,6 +148,21 @@ describe('DB refs', () => {
       const expected = 'SGDTest';
       expect(refs.sgd).toBe(expected);
     });
+
+    it('should return TAIR ID', () => {
+      const expected = 'locus:2196506';
+      expect(refs.tair).toBe(expected);
+    });
+
+    it('should return wormbase ID', () => {
+      const expected = 'WBGene00003920';
+      expect(refs.wormbase).toBe(expected);
+    });
+
+    it('should return ZFIN ID', () => {
+      const expected = 'ZFINTest';
+      expect(refs.zfin).toBe(expected);
+    });
   });
 
   describe('entry with no information', () => {
@@ -151,15 +176,19 @@ describe('DB refs', () => {
       expect(Object.prototype.hasOwnProperty.call(refs, 'biogrid')).toBeFalsy();
     });
 
+    it('should not return dictybase ID', () => {
+      expect(Object.prototype.hasOwnProperty.call(refs, 'dictybase')).toBeFalsy();
+    });
+
     it('should not return flybase ID', () => {
       expect(Object.prototype.hasOwnProperty.call(refs, 'flybase')).toBeFalsy();
     });
 
-    it('should return gene ID', () => {
+    it('should not return gene ID', () => {
       expect(Object.prototype.hasOwnProperty.call(refs, 'geneid')).toBeFalsy();
     });
 
-    it('should return go terms', () => {
+    it('should not return go terms', () => {
       const expected = {
         c: [],
         f: [],
@@ -168,31 +197,47 @@ describe('DB refs', () => {
       expect(refs.go).toEqual(expected);
     });
 
-    it('should return ensembl gene IDs', () => {
+    it('should return empty array for ensembl gene IDs', () => {
       const expected = [];
       expect(refs['ensembl-gene']).toEqual(expected);
     });
 
-    it('should return ensembl protein IDs', () => {
+    it('should return empty array for ensembl protein IDs', () => {
       const expected = [];
       expect(refs['ensembl-protein']).toEqual(expected);
     });
 
-    it('should return hgnc ID', () => {
+    it('should not return hgnc ID', () => {
       expect(Object.prototype.hasOwnProperty.call(refs, 'hgnc')).toBeFalsy();
     });
 
-    it('should return first proteomics DB ID', () => {
+    it('should not return mgi ID', () => {
+      expect(Object.prototype.hasOwnProperty.call(refs, 'mgi')).toBeFalsy();
+    });
+
+    it('should not return proteomics DB ID', () => {
       expect(Object.prototype.hasOwnProperty.call(refs, 'proteomicsdb')).toBeFalsy();
     });
 
-    it('should return refseq IDs', () => {
+    it('should return empty array for refseq IDs', () => {
       const expected = [];
       expect(refs.refseq).toEqual(expected);
     });
 
-    it('should return sgd ID', () => {
+    it('should not return sgd ID', () => {
       expect(Object.prototype.hasOwnProperty.call(refs, 'sgd')).toBeFalsy();
+    });
+
+    it('should not return tair ID', () => {
+      expect(Object.prototype.hasOwnProperty.call(refs, 'tair')).toBeFalsy();
+    });
+
+    it('should not return wormbase ID', () => {
+      expect(Object.prototype.hasOwnProperty.call(refs, 'wormbase')).toBeFalsy();
+    });
+
+    it('should not return zfin ID', () => {
+      expect(Object.prototype.hasOwnProperty.call(refs, 'zfin')).toBeFalsy();
     });
   });
 });

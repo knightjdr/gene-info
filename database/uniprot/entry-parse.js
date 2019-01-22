@@ -45,10 +45,20 @@ const entryParse = (entry) => {
     };
 
     // Add species specific fields to end of entry
-    if (refs.flybase) {
+    if (refs.dictybase) {
+      parsed.dictybase = refs.dictybase;
+    } if (refs.flybase) {
       parsed.flybase = refs.flybase;
+    } if (refs.mgi) {
+      parsed.mgi = refs.mgi;
     } if (refs.sgd) {
       parsed.sgd = refs.sgd;
+    } if (refs.tair) {
+      parsed.tair = refs.tair;
+    } if (refs.wormbase) {
+      parsed.wormbase = refs.wormbase;
+    } if (refs.zfin) {
+      parsed.zfin = refs.zfin;
     }
     return parsed;
   }

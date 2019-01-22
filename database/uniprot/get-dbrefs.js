@@ -7,6 +7,11 @@ const getDBRefs = dbRefs => (
         ...accum,
         biogrid: Number(ref.$.id),
       };
+    } if (ref.$.type === 'dictyBase') {
+      return {
+        ...accum,
+        dictybase: ref.$.id,
+      };
     } if (ref.$.type === 'FlyBase') {
       return {
         ...accum,
@@ -67,6 +72,11 @@ const getDBRefs = dbRefs => (
         ...accum,
         hgnc: Number(ref.$.id.split(':')[1]),
       };
+    } if (ref.$.type === 'MGI') {
+      return {
+        ...accum,
+        mgi: ref.$.id,
+      };
     } if (ref.$.type === 'ProteomicsDB' && !accum.proteomicsdb) {
       return {
         ...accum,
@@ -83,6 +93,25 @@ const getDBRefs = dbRefs => (
       return {
         ...accum,
         sgd: ref.$.id,
+      };
+    } if (ref.$.type === 'TAIR') {
+      return {
+        ...accum,
+        tair: ref.$.id,
+      };
+    } if (ref.$.type === 'WormBase') {
+      const id = ref.property.find(prop => prop.$.type === 'gene ID');
+      if (id && id.$ && id.$.value) {
+        return {
+          ...accum,
+          wormbase: id.$.value,
+        };
+      }
+      return accum;
+    } if (ref.$.type === 'ZFIN') {
+      return {
+        ...accum,
+        zfin: ref.$.id,
       };
     }
     return accum;
