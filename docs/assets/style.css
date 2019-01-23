@@ -72,6 +72,12 @@ p {
 li {
   margin: 5px 0;
 }
+video {
+  display: block;
+  margin: 0 auto;
+  max-width: 1080px;
+  width: 100%;
+}
 
 .buttons {
   list-style: none;
