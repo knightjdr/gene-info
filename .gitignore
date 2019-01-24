@@ -24,13 +24,13 @@ npm-debug.log
 ./**/npm
 
 # Extension
-chrome-extension/dist/**/*
-chrome-extension/dev-build/**/*
-!chrome-extension/dev-build/manifest.json
-!chrome-extension/dev-build/popup.html
-chrome-extension/dist.crx
+chrome-extension/dist
+chrome-extension/dist-test
+chrome-extension/dev-build/*.js*
+chrome-extension/dev-build/*.css*
 
 ## pem key
+chrome-extension/dist.crx
 chrome-extension/dist.pem
 
 .htaccess
