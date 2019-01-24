@@ -39,7 +39,7 @@ const goURL = (report, settings) => {
     default:
       return `http://amigo.geneontology.org/amigo/gene_product/UniProtKB:${report.uniprot[0]}`;
   }
-  return null;
+  return '';
 };
 
 module.exports = goURL;
