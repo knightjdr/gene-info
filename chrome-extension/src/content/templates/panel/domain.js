@@ -6,14 +6,18 @@ const domainElement = (report, settings) => {
     const accession = report.uniprot[0];
     let { domains } = report;
     let heading;
+    let warning;
     if (settings.domain && settings.region) {
       heading = 'DOMAINS & REGIONS';
+      warning = 'no annotated domains or regions';
     } else if (settings.domain) {
       heading = 'DOMAINS';
       domains = domains.filter(domain => domain.type === 'domain');
+      warning = 'no annotated domains';
     } else if (settings.region) {
       heading = 'REGIONS';
       domains = domains.filter(domain => domain.type === 'region');
+      warning = 'no annotated regions';
     }
     html = `
       <style>
@@ -76,7 +80,7 @@ const domainElement = (report, settings) => {
                 </tbody>
               </table>
             `
-            : '<div class="none">no annotated domains</div>'
+            : `<div class="none">${warning}</div>`
         }
       </section>
     `;
