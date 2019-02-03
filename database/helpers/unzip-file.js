@@ -9,11 +9,12 @@ const gunzipFile = (type, file, dest, skip) => (
     } else if (type === 'gunzip') {
       const readStream = fs.createReadStream(file);
       const writeStream = fs.createWriteStream(dest);
-      readStream.pipe(zlib.createGunzip()).pipe(writeStream);
-      readStream.on('end', () => {
-        writeStream.end();
-        resolve();
-      });
+      readStream.pipe(zlib.createGunzip())
+        .pipe(writeStream)
+        .on('finish', () => {
+          writeStream.end();
+          resolve();
+        });
       readStream.on('error', (err) => {
         writeStream.end();
         reject(err);
