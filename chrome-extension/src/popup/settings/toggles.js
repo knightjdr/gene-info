@@ -1,4 +1,4 @@
-const options = [
+const defaultCheckedOptions = [
   'auto',
   'basic',
   'description',
@@ -14,13 +14,30 @@ const options = [
   'region',
 ];
 
-const toggles = () => {
-  options.forEach((option) => {
-    const currToggle = option;
-    chrome.storage.local.get(currToggle, (storage) => {
-      const checked = Boolean(storage[currToggle] || storage[currToggle] === undefined);
-      document.getElementById(option).checked = checked;
+const defaultUncheckedOptions = [
+  'ctrl',
+];
+
+const setToggle = (toggle, undef = true) => {
+  if (undef) {
+    chrome.storage.local.get(toggle, (storage) => {
+      const checked = Boolean(storage[toggle] || storage[toggle] === undefined);
+      document.getElementById(toggle).checked = checked;
     });
+  } else {
+    chrome.storage.local.get(toggle, (storage) => {
+      const checked = Boolean(storage[toggle]);
+      document.getElementById(toggle).checked = checked;
+    });
+  }
+};
+
+const toggles = () => {
+  defaultCheckedOptions.forEach((toggle) => {
+    setToggle(toggle);
+  });
+  defaultUncheckedOptions.forEach((toggle) => {
+    setToggle(toggle, false);
   });
 };
 

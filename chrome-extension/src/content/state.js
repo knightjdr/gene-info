@@ -1,6 +1,7 @@
 import config from '../config';
 
-const defaultToggleState = value => Boolean(value || value === undefined);
+const defaultFalseToggleState = value => Boolean(value);
+const defaultTrueToggleState = value => Boolean(value || value === undefined);
 
 class State {
   addReport(report) {
@@ -37,23 +38,24 @@ class State {
     const species = storage.species || 'Homo sapiens';
     this.settings = {
       activate: storage.activate || 'click',
-      auto: defaultToggleState(storage.auto),
-      basic: defaultToggleState(storage.basic),
-      description: defaultToggleState(storage.description),
-      domain: defaultToggleState(storage.domain),
+      auto: defaultTrueToggleState(storage.auto),
+      basic: defaultTrueToggleState(storage.basic),
+      ctrl: defaultFalseToggleState(storage.ctrl),
+      description: defaultTrueToggleState(storage.description),
+      domain: defaultTrueToggleState(storage.domain),
       field: storage.field || 'gene',
-      go: defaultToggleState(storage.go),
+      go: defaultTrueToggleState(storage.go),
       go_namespace: storage.go_namespace || config.defaultGoNamespace,
-      interactors: defaultToggleState(storage.interactors),
-      links: defaultToggleState(storage.links),
-      localization: defaultToggleState(storage.links),
-      localization_compartments: defaultToggleState(storage.links),
-      localization_hpa: defaultToggleState(storage.links),
-      localization_uniprot: defaultToggleState(storage.links),
+      interactors: defaultTrueToggleState(storage.interactors),
+      links: defaultTrueToggleState(storage.links),
+      localization: defaultTrueToggleState(storage.links),
+      localization_compartments: defaultTrueToggleState(storage.links),
+      localization_hpa: defaultTrueToggleState(storage.links),
+      localization_uniprot: defaultTrueToggleState(storage.links),
       report: storage.report || 'detailed',
-      rna_expression: defaultToggleState(storage.rna_expression),
+      rna_expression: defaultTrueToggleState(storage.rna_expression),
       rna_expression_tissues: storage.rna_expression_tissues || config.defaultTissues[species],
-      region: defaultToggleState(storage.region),
+      region: defaultTrueToggleState(storage.region),
       species,
     };
     this.style = {
