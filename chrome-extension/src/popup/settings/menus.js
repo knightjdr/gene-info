@@ -3,6 +3,7 @@ import config from '../../config';
 const menuDefaults = [
   { name: 'field', value: 'gene' },
   { name: 'species', value: config.defaultSpecies },
+  { name: 'theme', value: 'light' },
 ];
 
 const menus = () => {
