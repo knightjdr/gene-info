@@ -1,4 +1,5 @@
 /* eslint indent: 0 */
+import State from '../../state';
 
 const noResult = (error = false) => (`
   <style>
@@ -29,7 +30,7 @@ const noResult = (error = false) => (`
     }
   </style>
   <aside
-    class="panel_small"
+    class="panel_small theme_${State.settings.theme}"
     id="panel"
   >
     <p class="no-result">${

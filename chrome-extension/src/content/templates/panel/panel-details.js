@@ -21,6 +21,7 @@ const reportDetails = (result, reportIndex, stateStyle) => {
   }
   return `
     <aside
+      class="theme_${State.settings.theme}"
       id="panel"
       style="${style}"
     >

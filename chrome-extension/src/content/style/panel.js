@@ -26,6 +26,14 @@ const panelStyle = `
       width: calc(25vw);
       z-index: 2147483647;
     }
+    #panel.theme_dark {
+      background-color: var(--background_dark);
+      color: var(--text_dark);
+    }
+    #panel.theme_default {
+      background-color: var(--background);
+      color: var(--text);
+    }
     #panel:hover .action-button {
       visibility: visible;
     }
