@@ -14,8 +14,6 @@ const goElement = (report, settings) => {
           margin-bottom: 5px;
         }
         .go-button {
-          background-color: var(--primary-3);
-          border: 1px solid var(--primary);
           border-radius: 2px;
           cursor: pointer;
           flex-grow: 1;
@@ -23,9 +21,23 @@ const goElement = (report, settings) => {
           margin: 0px 2px 0px 2px;
           text-align: center;
         }
-        .go-button.active {
+        .theme_dark .go-button {
+          background-color: var(--primary-1_dark);
+          border: 1px solid var(--primary_dark);
+          color: var(--text_dark);
+        }
+        .theme_default .go-button {
+          background-color: var(--primary-1);
+          border: 1px solid var(--primary);
+          color: var(--text);
+        }
+        .theme_dark .go-button.active {
+          background-color: var(--primary_dark);
+          color: var(--text-contrast_dark);
+        }
+        .theme_default .go-button.active {
           background-color: var(--primary);
-          color: var(--text-light);
+          color: var(--text-contrast);
         }
         .go-button:focus {
           outline: 0;

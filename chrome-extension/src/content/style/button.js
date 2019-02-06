@@ -22,11 +22,17 @@ const buttonStyle = `
       right: 33px;
     }
     #resize {
-      bottom: -2px;
+      bottom: -4px;
       cursor: ew-resize;
       left: -7px;
       right: auto;
       top: auto;
+    }
+    .theme_dark #resize svg path {
+      fill: var(--primary_dark);
+    }
+    .theme_default #resize svg path {
+      fill: var(--primary);
     }
   </style>
 `;

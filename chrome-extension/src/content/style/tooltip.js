@@ -17,10 +17,8 @@ const panelStyle = `
       z-index: 2147483646;
     }
     #tooltip {
-      background-color: var(--background);
       border-radius: 3px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-      color: var(--text);
       display: inline-block;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
       font-size: 14px;
@@ -31,6 +29,14 @@ const panelStyle = `
       position: relative;
       width: auto;
       z-index: 2147483647;
+    }
+    #tooltip.theme_dark {
+      background-color: var(--background_dark);
+      color: var(--text_dark);
+    }
+    #tooltip.theme_default {
+      background-color: var(--background);
+      color: var(--text);
     }
     #tooltip:hover .action-button {
       visibility: visible;

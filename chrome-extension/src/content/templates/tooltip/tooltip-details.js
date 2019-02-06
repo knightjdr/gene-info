@@ -22,7 +22,10 @@ const tooltipDetails = (result, reportIndex) => {
   const sorted = sortArray.alphabeticalByKey(links, 'database');
   return `
     <aside id="backdrop">
-      <div id="tooltip">
+      <div
+        class="theme_${State.settings.theme}"
+        id="tooltip"
+      >
         <header>
           ${geneElement(result, reportIndex)}
         </header>
