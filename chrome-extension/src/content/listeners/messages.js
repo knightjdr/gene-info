@@ -19,7 +19,7 @@ const messages = () => {
       }
     } else if (action === 'search') {
       State.updateStyle('left', '5px');
-      retrieveInfo(null, setting);
+      retrieveInfo(null, setting, true);
     }
     return null;
   });

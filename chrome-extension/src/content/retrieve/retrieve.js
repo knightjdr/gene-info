@@ -19,15 +19,16 @@ const fetch = (species, field, gene, event) => {
     });
 };
 
-const shouldActivate = (e, ctrl) => (
-  !ctrl
+const shouldActivate = (e, activate, ctrl) => (
+  activate
+  || !ctrl
   || (ctrl && e.ctrlKey)
   || (ctrl && e.metaKey)
 );
 
-const retrieveInfo = (event, text) => {
+const retrieveInfo = (event, text, activate) => {
   const gene = text || window.getSelection().toString().trim();
-  if (gene && shouldActivate(event, State.settings.ctrl)) {
+  if (gene && shouldActivate(event, activate, State.settings.ctrl)) {
     const field = State.settings.auto ? 'auto' : State.settings.field;
     if (State.settings.activate === 'click') {
       fetch(State.settings.species, field, gene, event);
