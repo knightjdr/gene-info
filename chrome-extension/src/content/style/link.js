@@ -2,6 +2,7 @@ const linkStyle = `
   <style>
     a {
       box-sizing: border-box;
+      color: var(--primary);
       text-decoration: none;
     }
     a:link,
@@ -13,12 +14,6 @@ const linkStyle = `
     a:active,
     a:focus {
       text-decoration: underline dotted;
-    }
-    .theme_dark a {
-      color: var(--primary_dark);
-    }
-    .theme_default a {
-      color: var(--primary);
     }
   </style>
 `;

@@ -1,8 +1,12 @@
 body {
+  --background: #fafafa;
   --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --grey: #bdbdbd;
   --primary: #658170;
   --primary-1: #4caf50;
-  --grey: #bdbdbd;
+  --text: #333333;
+  background-color: var(--background);
+  color: var(--text);
   display: grid;
   font-family: var(--font-stack);
   font-size: 12px;
@@ -11,6 +15,20 @@ body {
   grid-template-rows: auto;
   margin: 5px 8px;
   width: 350px;
+}
+body.theme_dark {
+  --background: #323639;
+  --grey: #bdbdbd;
+  --primary: #7FA782;
+  --primary-1: #7FA782;
+  --text: rgba(255, 255, 255, 0.7);
+}
+body.theme_light {
+  --background: #fafafa;
+  --grey: #bdbdbd;
+  --primary: #658170;
+  --primary-1: #4caf50;
+  --text: #333333;
 }
 body > div:first-child {
   grid-column: 1;

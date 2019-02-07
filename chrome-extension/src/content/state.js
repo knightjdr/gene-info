@@ -57,7 +57,7 @@ class State {
       rna_expression_tissues: storage.rna_expression_tissues || config.defaultTissues[species],
       region: defaultTrueToggleState(storage.region),
       species,
-      theme: storage.theme || 'default',
+      theme: storage.theme || 'light',
     };
     this.style = {
       left: '',

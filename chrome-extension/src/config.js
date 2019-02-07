@@ -37,6 +37,7 @@ const config = {
     'Saccharomyces cerevisiae': 4932,
     'Xenopus laevis': 8355,
   },
+  theme: 'light',
   tissues,
 };
 

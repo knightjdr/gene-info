@@ -26,14 +26,6 @@ const panelStyle = `
       width: calc(25vw);
       z-index: 2147483647;
     }
-    #panel.theme_dark {
-      background-color: var(--background_dark);
-      color: var(--text_dark);
-    }
-    #panel.theme_default {
-      background-color: var(--background);
-      color: var(--text);
-    }
     #panel:hover .action-button {
       visibility: visible;
     }
@@ -48,11 +40,7 @@ const panelStyle = `
       content: ':';
       margin-right: 3px;
     }
-    .theme_dark select:focus {
-      box-shadow: 0px 0px 1px var(--primary_dark);
-      outline: none;
-    }
-    .theme_dark select:focus {
+    select:focus {
       box-shadow: 0px 0px 1px var(--primary);
       outline: none;
     }
@@ -60,11 +48,7 @@ const panelStyle = `
       border-collapse: collapse;
       width: 100%;
     }
-    .theme_dark thead tr {
-      background-color: var(--primary_dark);
-      color: var(--text-contrast_dark);
-    }
-    .theme_default thead tr {
+    thead tr {
       background-color: var(--primary);
       color: var(--text-contrast);
     }
@@ -81,10 +65,7 @@ const panelStyle = `
     td {
       padding: 2px;
     }
-    .theme_dark tbody tr:nth-child(even) {
-      background-color: var(--primary-1_dark);
-    }
-    .theme_default tbody tr:nth-child(even) {
+    tbody tr:nth-child(even) {
       background-color: var(--primary-1);
     }
     li {
@@ -110,16 +91,10 @@ const panelStyle = `
     .panel__inner::-webkit-scrollbar-track {
       border-radius: 20px;
     }
-    .theme_dark .panel__inner::-webkit-scrollbar-thumb {
-      background: var(--thumb_dark);
-    }
-    .theme_dark .panel__inner::-webkit-scrollbar-track {
-      background: var(--track_dark);
-    }
-    .theme_default .panel__inner::-webkit-scrollbar-thumb {
+    .panel__inner::-webkit-scrollbar-thumb {
       background: var(--thumb);
     }
-    .theme_default .panel__inner::-webkit-scrollbar-track {
+    .panel__inner::-webkit-scrollbar-track {
       background: var(--track);
     }
 
