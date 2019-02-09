@@ -62,8 +62,7 @@ const interactorElement = (report, settings) => {
           border: none;
           cursor: pointer;
           height: auto;
-          margin-left: 2px;
-          padding: 0;
+          padding: 2px;
         }
         .interactor-table th button:focus {
           outline: none;
