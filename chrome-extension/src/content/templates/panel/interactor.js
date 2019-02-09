@@ -1,5 +1,8 @@
 /* eslint indent: 0 */
 
+import sort from '../assets/sort';
+import sortDown from '../assets/sort-down';
+
 const interactorElement = (report, settings) => {
   let html = '';
   if (settings.interactors) {
@@ -19,6 +22,20 @@ const interactorElement = (report, settings) => {
         }
         .interactor-table th:not(:first-child) {
           width: calc((100% - 100px) / 2);
+        }
+        .interactor-table th button {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          height: auto;
+          margin-left: 2px;
+          padding: 0;
+        }
+        .interactor-table th button:focus {
+          outline: none;
+        }
+        .interactor-table th svg path {
+          fill: var(--text-contrast);
         }
         .interactor-table td:not(:first-child) {
           cursor: pointer;
@@ -76,9 +93,18 @@ const interactorElement = (report, settings) => {
             <table class="interactor-table">
               <thead>
                 <tr>
-                  <th>Target</th>
-                  <th>BioGRID</th>
-                  <th>IntAct</th>
+                  <th id="interactor_target">
+                    Target
+                    <button type="button">${sortDown}</button>
+                  </th>
+                  <th id="interactor_biogrid">
+                    BioGRID
+                    <button type="button">${sort}</button>
+                  </th>
+                  <th id="interactor_intact">
+                    IntAct
+                    <button type="button">${sort}</button>
+                  </th>
                 </tr>
               </thead>
               <tbody>
