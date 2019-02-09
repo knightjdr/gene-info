@@ -1,7 +1,41 @@
 /* eslint indent: 0 */
 
-import sort from '../assets/sort';
-import sortDown from '../assets/sort-down';
+import sortIcon from '../assets/sort';
+import sortUpIcon from '../assets/sort-up';
+
+export const fillRows = interactors => (
+  interactors.map(interactor => (`
+    <tr>
+      <td>${interactor.gene}</td>
+      <td
+        class="interactor-list-toggle"
+        data-gene="${interactor.gene}"
+      >
+        <div>${interactor.biogrid.length}</div>
+        <ul class="interactor__method-list interactor-list-${interactor.gene}">
+          ${
+            interactor.biogrid.map(method => (
+              `<li>∙${method}</li>`
+            )).join('')
+          }
+        </ul>
+      </td>
+      <td
+        class="interactor-list-toggle"
+        data-gene="${interactor.gene}"
+      >
+        <div>${interactor.intact.length}</div>
+        <ul class="interactor__method-list interactor-list-${interactor.gene}">
+          ${
+            interactor.intact.map(method => (
+              `<li>∙${method}</li>`
+            )).join('')
+          }
+        </ul>
+      </td>
+    </tr>
+  `)).join('')
+);
 
 const interactorElement = (report, settings) => {
   let html = '';
@@ -93,54 +127,37 @@ const interactorElement = (report, settings) => {
             <table class="interactor-table">
               <thead>
                 <tr>
-                  <th id="interactor_target">
+                  <th>
                     Target
-                    <button type="button">${sortDown}</button>
+                    <button
+                      id="interactor_target"
+                      type="button"
+                    >
+                      ${sortUpIcon}
+                    </button>
                   </th>
-                  <th id="interactor_biogrid">
+                  <th>
                     BioGRID
-                    <button type="button">${sort}</button>
+                    <button
+                      id="interactor_biogrid"
+                      type="button"
+                    >
+                      ${sortIcon}
+                    </button>
                   </th>
-                  <th id="interactor_intact">
+                  <th>
                     IntAct
-                    <button type="button">${sort}</button>
+                    <button
+                      id="interactor_intact"
+                      type="button"
+                    >
+                      ${sortIcon}
+                    </button>
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                ${
-                  report.interactors.map(interactor => (`
-                    <tr>
-                      <td>${interactor.gene}</td>
-                      <td
-                        class="interactor-list-toggle"
-                        data-gene="${interactor.gene}"
-                      >
-                        <div>${interactor.biogrid.length}</div>
-                        <ul class="interactor__method-list interactor-list-${interactor.gene}">
-                          ${
-                            interactor.biogrid.map(method => (
-                              `<li>∙${method}</li>`
-                            )).join('')
-                          }
-                        </ul>
-                      </td>
-                      <td
-                        class="interactor-list-toggle"
-                        data-gene="${interactor.gene}"
-                      >
-                        <div>${interactor.intact.length}</div>
-                        <ul class="interactor__method-list interactor-list-${interactor.gene}">
-                          ${
-                            interactor.intact.map(method => (
-                              `<li>∙${method}</li>`
-                            )).join('')
-                          }
-                        </ul>
-                      </td>
-                    </tr>
-                  `)).join('')
-                }
+              <tbody id="interactor_tbody">
+                ${fillRows(report.interactors)}
               </tbody>
             </table>
           `

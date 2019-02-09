@@ -14,6 +14,7 @@ import { addCloseListener, removeCloseListener } from '../../listeners/close';
 import { addDragListener, removeDragListener } from '../../listeners/drag';
 import { addGoListener, removeGoListener } from '../../listeners/go';
 import { addInteractorListener, removeInteractorListener } from '../../listeners/interactor';
+import { addInteractorSortListener, removeInteractorSortListener } from '../../listeners/interactor-sort';
 import { addResizeListener, removeResizeListener } from '../../listeners/resize';
 import { addSelectListener, removeSelectListener } from '../../listeners/select';
 
@@ -29,6 +30,7 @@ const createPanel = (reportIndex = 0, error) => {
     removeDragListener();
     removeGoListener();
     removeInteractorListener();
+    removeInteractorSortListener();
     removeResizeListener();
     removeSelectListener();
     shouldFade = false;
@@ -41,7 +43,8 @@ const createPanel = (reportIndex = 0, error) => {
   State.shadowRoot.innerHTML = `${panelStyle}${html}`;
 
   const panel = State.shadowRoot.getElementById('panel');
-  // Add element, close button, listeners and fade in.
+  // Reset state, add element, close button, listeners and fade in.
+  State.reset();
   backButton(panel, State.results.length);
   closeButton(panel);
   dragButton(panel);
@@ -52,6 +55,7 @@ const createPanel = (reportIndex = 0, error) => {
   addDragListener();
   addGoListener();
   addInteractorListener();
+  addInteractorSortListener();
   addResizeListener();
   addSelectListener(result);
   if (shouldFade) {

@@ -30,10 +30,6 @@ class State {
     this.mdTime = null;
   }
 
-  removeReport() {
-    this.results.pop();
-  }
-
   init(storage) {
     const species = storage.species || 'Homo sapiens';
     this.settings = {
@@ -47,6 +43,8 @@ class State {
       go: defaultTrueToggleState(storage.go),
       go_namespace: storage.go_namespace || config.defaultGoNamespace,
       interactors: defaultTrueToggleState(storage.interactors),
+      interactorSortDirection: 'asc',
+      interactorSortKey: 'target',
       links: defaultTrueToggleState(storage.links),
       localization: defaultTrueToggleState(storage.links),
       localization_compartments: defaultTrueToggleState(storage.links),
@@ -66,6 +64,19 @@ class State {
     };
     this.mdTime = null;
     this.results = [];
+  }
+
+  latestReport() {
+    return this.results[this.results.length - 1][0];
+  }
+
+  removeReport() {
+    this.results.pop();
+  }
+
+  reset() {
+    this.updateSetting('interactorSortDirection', 'asc');
+    this.updateSetting('interactorSortKey', 'target');
   }
 
   updateMdTime() {
