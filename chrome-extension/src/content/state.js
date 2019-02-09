@@ -44,7 +44,7 @@ class State {
       go_namespace: storage.go_namespace || config.defaultGoNamespace,
       interactors: defaultTrueToggleState(storage.interactors),
       interactorSortDirection: 'asc',
-      interactorSortKey: 'target',
+      interactorSortKey: 'gene',
       links: defaultTrueToggleState(storage.links),
       localization: defaultTrueToggleState(storage.links),
       localization_compartments: defaultTrueToggleState(storage.links),
@@ -76,7 +76,7 @@ class State {
 
   reset() {
     this.updateSetting('interactorSortDirection', 'asc');
-    this.updateSetting('interactorSortKey', 'target');
+    this.updateSetting('interactorSortKey', 'gene');
   }
 
   updateMdTime() {

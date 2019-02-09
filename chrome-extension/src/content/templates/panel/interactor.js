@@ -130,7 +130,7 @@ const interactorElement = (report, settings) => {
                   <th>
                     Target
                     <button
-                      id="interactor_target"
+                      id="interactor_gene"
                       type="button"
                     >
                       ${sortUpIcon}
