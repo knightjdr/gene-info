@@ -1,4 +1,7 @@
+let container;
 let data;
+let dragImage;
+let placeholder;
 
 export const drag = (e) => {
   e.preventDefault();
@@ -16,47 +19,64 @@ export const dragEnd = (e) => {
   e.preventDefault();
 
   // destroy "hidden" drag image
-  document.getElementById('drag_image').outerHTML = '';
+  container.removeChild(dragImage);
+
+  // destroy "placeholder" drag image
+  container.removeChild(placeholder);
 
   // Restore element appearence
   const el = document.getElementById(data.id);
-  el.style.backgroundColor = 'transparent';
-  el.style.position = 'static';
-  el.style.width = 'auto';
-  el.style.zIndex = 'auto';
+  el.setAttribute('style', `
+    background-color: transparent;
+    position: static;
+    top: auto;
+    width: auto;
+    z-index: auto;
+  `);
 };
 
 export const dragStart = (e) => {
+  container = document.getElementById('settings-drop-container');
   const { id } = e.target;
   const { offsetTop, offsetWidth } = e.target;
 
   // Create "hidden" drag image
-  const dragImage = document.createElement('div');
+  dragImage = document.createElement('div');
   dragImage.id = 'drag_image';
   dragImage.style.display = 'none';
-  document.body.appendChild(dragImage);
+  container.appendChild(dragImage);
   e.dataTransfer.setDragImage(dragImage, 0, 0);
 
   // Set drag event.
-  data = {
-    id,
-    offset: e.clientY - offsetTop,
-  };
   e.dataTransfer.setData('text/plain', id);
   e.dataTransfer.dropEffect = 'move';
 
-  // Configure element for dragging
+  // Create placeholder
   const el = document.getElementById(id);
-  const { color } = el.style;
-  el.style.backgroundColor = color === '#333333' ? '#fafafa' : '#323639';
-  el.style.position = 'absolute';
-  el.style.top = `${offsetTop}px`;
-  el.style.width = `${offsetWidth}px`;
-  el.style.zIndex = 10;
+  placeholder = document.createElement('div');
+  placeholder.id = 'drag-placeholder';
+  placeholder.style.width = `${offsetWidth}px`;
+  container.insertBefore(placeholder, el);
+
+  // Configure element for dragging
+  const lightTheme = document.querySelector('.theme_light');
+  el.setAttribute('style', `
+    background-color: ${lightTheme ? '#fafafa' : '#323639'};
+    position: absolute;
+    top: ${offsetTop}px;
+    width: ${offsetWidth}px;
+    z-index: 10;
+  `);
 
   // Hide advanced settings if present.
   const settings = el.querySelector('.toggle-options');
   if (settings) {
     settings.style.display = 'none';
   }
+
+  // Store current data.
+  data = {
+    id,
+    offset: e.clientY - offsetTop,
+  };
 };
