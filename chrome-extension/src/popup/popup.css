@@ -128,6 +128,11 @@ section > h1 {
   transition: border .2s;
 }
 
+/* drop */
+#settings-drop-container {
+  position: "relative";
+}
+
 /* input */
 .input-search {
   border-radius: 4px;

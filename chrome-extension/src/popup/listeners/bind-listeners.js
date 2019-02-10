@@ -6,6 +6,7 @@ import onEnter from './on-enter';
 import reportCheck from './report-check';
 import speciesOnChange from './species-on-change';
 import toggle from './toggle';
+import { drag, dragEnd, dragStart } from './drag';
 
 const bindListeners = () => {
   document.querySelectorAll('.click-activate').forEach((element) => {
@@ -31,6 +32,17 @@ const bindListeners = () => {
   });
   document.querySelectorAll('.toggle').forEach((element) => {
     element.addEventListener('click', toggle);
+  });
+
+  // Drag listeners
+  document.querySelectorAll('div[draggable="true"]').forEach((element) => {
+    element.addEventListener('drag', drag);
+  });
+  document.querySelectorAll('div[draggable="true"]').forEach((element) => {
+    element.addEventListener('dragend', dragEnd);
+  });
+  document.querySelectorAll('div[draggable="true"]').forEach((element) => {
+    element.addEventListener('dragstart', dragStart);
   });
 };
 
