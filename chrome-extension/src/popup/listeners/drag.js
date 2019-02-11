@@ -3,29 +3,83 @@ let data;
 let dragImage;
 let placeholder;
 
+const containerChildren = () => {
+  const childData = [];
+  const { children } = container;
+  for (let i = 0; i < children.length; i += 1) {
+    childData.push({
+      id: children[i].id,
+      top: children[i].offsetTop,
+    });
+  }
+  return childData;
+};
+
+const mouseOverID = (mousePosition) => {
+  const numChildren = data.children.length - 1;
+  if (mousePosition < data.children[0].top) {
+    return {
+      dropBeforeID: data.children[0].id,
+      dropIndex: 0,
+    };
+  } if (
+    mousePosition >= data.children[numChildren].top
+    && mousePosition < data.containerBottom
+  ) {
+    return {
+      dropBeforeID: data.children[numChildren].id,
+      dropIndex: numChildren,
+    };
+  }
+  for (let i = 0; i < numChildren; i += 1) {
+    if (
+      mousePosition >= data.children[i].top
+      && mousePosition < data.children[i + 1].top
+    ) {
+      return {
+        dropBeforeID: data.children[i + 1].id,
+        dropIndex: i,
+      };
+    }
+  }
+  return {
+    dropBeforeID: 'drag_noelement',
+    dropIndex: numChildren,
+  };
+};
+
 export const drag = (e) => {
   e.preventDefault();
 
-  const { id } = e.target;
-  const mousePosition = e.clientY;
+  // This conditional prevents firing of the drag event on dragend.
+  if (e.screenY) {
+    const { id } = e.target;
+    const mousePosition = e.clientY;
 
-  // Update element position.
-  const el = document.getElementById(id);
-  const top = mousePosition - data.offset;
-  el.style.top = `${top}px`;
+    // Update element position.
+    const el = document.getElementById(id);
+    const top = mousePosition - data.offset;
+    el.style.top = `${top}px`;
+
+    // Get drop position and update placeholder
+    const insertPosition = mouseOverID(mousePosition, data.startIndex);
+    data.dropBeforeID = insertPosition.dropBeforeID;
+    data.dropIndex = insertPosition.dropIndex;
+    container.insertBefore(placeholder, document.getElementById(insertPosition.dropBeforeID));
+  }
 };
 
 export const dragEnd = (e) => {
   e.preventDefault();
 
-  // destroy "hidden" drag image
-  container.removeChild(dragImage);
+  // Move element.
+  const el = document.getElementById(data.id);
+  container.insertBefore(el, document.getElementById(data.dropBeforeID));
 
   // destroy "placeholder" drag image
   container.removeChild(placeholder);
 
   // Restore element appearence
-  const el = document.getElementById(data.id);
   el.setAttribute('style', `
     background-color: transparent;
     position: static;
@@ -33,28 +87,32 @@ export const dragEnd = (e) => {
     width: auto;
     z-index: auto;
   `);
+
+  // destroy "hidden" drag image
+  container.removeChild(dragImage);
 };
 
 export const dragStart = (e) => {
-  container = document.getElementById('settings-drop-container');
   const { id } = e.target;
-  const { offsetTop, offsetWidth } = e.target;
+  const { offsetHeight, offsetTop, offsetWidth } = e.target;
 
-  // Create "hidden" drag image
+  // Get drag children and find element index.
+  container = document.getElementById('settings-drop-container');
+  const children = containerChildren();
+  const startIndex = children.findIndex(child => child.id === id);
+
+  // Create hidden drag image
   dragImage = document.createElement('div');
   dragImage.id = 'drag_image';
   dragImage.style.display = 'none';
   container.appendChild(dragImage);
   e.dataTransfer.setDragImage(dragImage, 0, 0);
 
-  // Set drag event.
-  e.dataTransfer.setData('text/plain', id);
-  e.dataTransfer.dropEffect = 'move';
-
   // Create placeholder
   const el = document.getElementById(id);
   placeholder = document.createElement('div');
   placeholder.id = 'drag-placeholder';
+  placeholder.style.height = `${offsetHeight}px`;
   placeholder.style.width = `${offsetWidth}px`;
   container.insertBefore(placeholder, el);
 
@@ -68,15 +126,12 @@ export const dragStart = (e) => {
     z-index: 10;
   `);
 
-  // Hide advanced settings if present.
-  const settings = el.querySelector('.toggle-options');
-  if (settings) {
-    settings.style.display = 'none';
-  }
-
   // Store current data.
   data = {
+    children,
+    containerBottom: container.offsetTop + container.offsetHeight,
     id,
     offset: e.clientY - offsetTop,
+    startIndex,
   };
 };
