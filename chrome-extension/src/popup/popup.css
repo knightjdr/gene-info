@@ -129,7 +129,7 @@ section > h1 {
 }
 
 /* drop */
-#drag-placeholder {
+#drag_placeholder {
   background-color: var(--grey);
   border-radius: 2px;
 }

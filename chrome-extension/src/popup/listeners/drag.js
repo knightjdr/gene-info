@@ -1,11 +1,28 @@
-let container;
-let data;
-let dragImage;
-let placeholder;
+import updateTab from './update-tab';
 
-const containerChildren = () => {
+export const data = {
+  get: function getter(key) {
+    return this.values[key];
+  },
+  set: function setter(key, value) {
+    this.values[key] = value;
+  },
+  values: {},
+};
+
+// Move an item fromIndex toIndex in arr
+export const arrayMove = (arr, fromIndex, toIndex) => {
+  const reordered = [...arr];
+  const item = reordered[fromIndex];
+  reordered.splice(fromIndex, 1);
+  reordered.splice(toIndex, 0, item);
+  return reordered;
+};
+
+// Get the ID and top position of children in an element.
+export const elementChildren = (element) => {
   const childData = [];
-  const { children } = container;
+  const { children } = element;
   for (let i = 0; i < children.length; i += 1) {
     childData.push({
       id: children[i].id,
@@ -15,36 +32,29 @@ const containerChildren = () => {
   return childData;
 };
 
-const mouseOverID = (mousePosition) => {
-  const numChildren = data.children.length - 1;
-  if (mousePosition < data.children[0].top) {
+// Get ID and array index of item being moused over.
+export const mouseOverID = (mousePosition, arr) => {
+  const lastIndex = arr.length - 1;
+  if (mousePosition < arr[0].top) {
     return {
-      dropBeforeID: data.children[0].id,
+      dropBeforeID: arr[0].id,
       dropIndex: 0,
     };
-  } if (
-    mousePosition >= data.children[numChildren].top
-    && mousePosition < data.containerBottom
-  ) {
-    return {
-      dropBeforeID: data.children[numChildren].id,
-      dropIndex: numChildren,
-    };
   }
-  for (let i = 0; i < numChildren; i += 1) {
+  for (let i = 0; i < lastIndex; i += 1) {
     if (
-      mousePosition >= data.children[i].top
-      && mousePosition < data.children[i + 1].top
+      mousePosition >= arr[i].top
+      && mousePosition < arr[i + 1].top
     ) {
       return {
-        dropBeforeID: data.children[i + 1].id,
+        dropBeforeID: arr[i + 1].id,
         dropIndex: i,
       };
     }
   }
   return {
     dropBeforeID: 'drag_noelement',
-    dropIndex: numChildren,
+    dropIndex: lastIndex,
   };
 };
 
@@ -58,14 +68,17 @@ export const drag = (e) => {
 
     // Update element position.
     const el = document.getElementById(id);
-    const top = mousePosition - data.offset;
+    const top = mousePosition - data.get('offset');
     el.style.top = `${top}px`;
 
     // Get drop position and update placeholder
-    const insertPosition = mouseOverID(mousePosition, data.startIndex);
-    data.dropBeforeID = insertPosition.dropBeforeID;
-    data.dropIndex = insertPosition.dropIndex;
-    container.insertBefore(placeholder, document.getElementById(insertPosition.dropBeforeID));
+    const insertPosition = mouseOverID(mousePosition, data.get('children'));
+    data.set('dropBeforeID', insertPosition.dropBeforeID);
+    data.set('dropIndex', insertPosition.dropIndex);
+    el.parentElement.insertBefore(
+      document.getElementById('drag_placeholder'),
+      document.getElementById(insertPosition.dropBeforeID),
+    );
   }
 };
 
@@ -73,11 +86,12 @@ export const dragEnd = (e) => {
   e.preventDefault();
 
   // Move element.
-  const el = document.getElementById(data.id);
-  container.insertBefore(el, document.getElementById(data.dropBeforeID));
+  const el = document.getElementById(data.get('id'));
+  const container = el.parentElement;
+  container.insertBefore(el, document.getElementById(data.get('dropBeforeID')));
 
   // destroy "placeholder" drag image
-  container.removeChild(placeholder);
+  container.removeChild(document.getElementById('drag_placeholder'));
 
   // Restore element appearence
   el.setAttribute('style', `
@@ -89,20 +103,26 @@ export const dragEnd = (e) => {
   `);
 
   // destroy "hidden" drag image
-  container.removeChild(dragImage);
+  container.removeChild(document.getElementById('drag_image'));
+
+  // Update user settings.
+  const settingNames = data.get('children').map(child => child.id.replace('drag_', ''));
+  const newOrder = arrayMove(settingNames, data.get('startIndex'), data.get('dropIndex'));
+  chrome.storage.local.set({ setting_order: newOrder });
+  updateTab('updateSetting', 'setting_order', newOrder);
 };
 
 export const dragStart = (e) => {
   const { id } = e.target;
   const { offsetHeight, offsetTop, offsetWidth } = e.target;
 
-  // Get drag children and find element index.
-  container = document.getElementById('settings-drop-container');
-  const children = containerChildren();
+  // Get drag children and selected element index.
+  const container = document.getElementById('settings-drop-container');
+  const children = elementChildren(container);
   const startIndex = children.findIndex(child => child.id === id);
 
   // Create hidden drag image
-  dragImage = document.createElement('div');
+  const dragImage = document.createElement('div');
   dragImage.id = 'drag_image';
   dragImage.style.display = 'none';
   container.appendChild(dragImage);
@@ -110,8 +130,8 @@ export const dragStart = (e) => {
 
   // Create placeholder
   const el = document.getElementById(id);
-  placeholder = document.createElement('div');
-  placeholder.id = 'drag-placeholder';
+  const placeholder = document.createElement('div');
+  placeholder.id = 'drag_placeholder';
   placeholder.style.height = `${offsetHeight}px`;
   placeholder.style.width = `${offsetWidth}px`;
   container.insertBefore(placeholder, el);
@@ -126,12 +146,9 @@ export const dragStart = (e) => {
     z-index: 10;
   `);
 
-  // Store current data.
-  data = {
-    children,
-    containerBottom: container.offsetTop + container.offsetHeight,
-    id,
-    offset: e.clientY - offsetTop,
-    startIndex,
-  };
+  // Set current data.
+  data.set('children', children);
+  data.set('id', id);
+  data.set('offset', e.clientY - offsetTop);
+  data.set('startIndex', startIndex);
 };
