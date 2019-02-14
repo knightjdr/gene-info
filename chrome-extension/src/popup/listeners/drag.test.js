@@ -1,10 +1,34 @@
+import updateTab from './update-tab';
+
 import {
   arrayMove,
   data,
   drag,
+  dragEnd,
   elementChildren,
   mouseOverID,
 } from './drag';
+
+jest.mock('./update-tab');
+global.chrome = {
+  storage: {
+    local: {
+      set: jest.fn(),
+    },
+  },
+};
+
+describe('Drag data storage object', () => {
+  it('should set value', () => {
+    data.set('keyA', 'valueA');
+    expect(data.values.keyA).toBe('valueA');
+  });
+
+  it('should set value', () => {
+    data.set('keyA', 'valueA');
+    expect(data.get('keyA')).toBe('valueA');
+  });
+});
 
 describe('Move array item', () => {
   it('should move item in an array', () => {
@@ -72,6 +96,7 @@ describe('Drag', () => {
   afterAll(() => {
     spyGet.mockRestore();
     spySet.mockRestore();
+    document.body.innerHTML = '';
   });
 
   beforeAll(() => {
@@ -151,6 +176,107 @@ describe('Drag', () => {
       /* The placholder will be dropped between b and c, so its position
       ** in the container should be 2: ['a', 'b', 'drag_placeholder', 'c'] */
       expect(document.getElementById('container').children[2].id).toBe('drag_placeholder');
+    });
+  });
+});
+
+describe('Drag end', () => {
+  let spyGet;
+  let spySet;
+
+  afterAll(() => {
+    spyGet.mockRestore();
+    spySet.mockRestore();
+    document.body.innerHTML = '';
+  });
+
+  beforeAll(() => {
+    // Create container with children, dragImage and placeholder.
+    const container = document.createElement('div');
+    container.id = 'container';
+    document.body.appendChild(container);
+    ['a', 'b', 'c'].forEach((id) => {
+      const child = document.createElement('div');
+      child.id = id;
+      child.style.height = 20;
+      container.appendChild(child);
+    });
+    const placeholder = document.createElement('div');
+    placeholder.id = 'drag_placeholder';
+    placeholder.style.height = '20px';
+    container.insertBefore(placeholder, document.getElementById('a'));
+    const dragImage = document.createElement('div');
+    dragImage.id = 'drag_image';
+    dragImage.style.display = 'none';
+    container.appendChild(dragImage);
+
+    // Mock data getter and setter.
+    spyGet = jest.spyOn(data, 'get').mockImplementation((key) => {
+      switch (key) {
+        case 'children':
+          return [
+            { id: 'a', top: 0 },
+            { id: 'b', top: 20 },
+            { id: 'c', top: 40 },
+          ];
+        case 'dropBeforeID':
+          return 'c';
+        case 'dropIndex':
+          return 1;
+        case 'startIndex':
+          return 0;
+        default:
+          return null;
+      }
+    });
+    spySet = jest.spyOn(data, 'set');
+  });
+
+  describe('drag end', () => {
+    let el;
+    beforeAll(() => {
+      chrome.storage.local.set.mockClear();
+      updateTab.mockClear();
+      const e = {
+        preventDefault: jest.fn(),
+        target: { id: 'a' },
+      };
+      dragEnd(e);
+      el = document.getElementById('a');
+    });
+
+    it('should destory placeholder div', () => {
+      expect(document.getElementById('drag_placeholder')).toBeNull();
+    });
+
+    it('should destory dragImage div', () => {
+      expect(document.getElementById('drag_image')).toBeNull();
+    });
+
+    it('should update storage', () => {
+      const newOrder = ['b', 'a', 'c'];
+      expect(chrome.storage.local.set).toHaveBeenCalledWith({ setting_order: newOrder });
+    });
+
+    it('should update tab with new order', () => {
+      const newOrder = ['b', 'a', 'c'];
+      expect(updateTab).toHaveBeenCalledWith('updateSetting', 'setting_order', newOrder);
+    });
+
+    it('should set drag element background color', () => {
+      expect(el.style.backgroundColor).toBe('transparent');
+    });
+
+    it('should set drag element position', () => {
+      expect(el.style.position).toBe('static');
+    });
+
+    it('should set drag element width', () => {
+      expect(el.style.width).toBe('auto');
+    });
+
+    it('should set drag element zIndex', () => {
+      expect(el.style.zIndex).toBe('auto');
     });
   });
 });

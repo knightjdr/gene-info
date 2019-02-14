@@ -133,7 +133,7 @@ section > h1 {
   background-color: var(--grey);
   border-radius: 2px;
 }
-#settings-drop-container {
+#settings_drop_container {
   position: "relative";
 }
 

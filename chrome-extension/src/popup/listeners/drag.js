@@ -84,9 +84,10 @@ export const drag = (e) => {
 
 export const dragEnd = (e) => {
   e.preventDefault();
+  const { id } = e.target;
 
   // Move element.
-  const el = document.getElementById(data.get('id'));
+  const el = document.getElementById(id);
   const container = el.parentElement;
   container.insertBefore(el, document.getElementById(data.get('dropBeforeID')));
 
@@ -97,7 +98,6 @@ export const dragEnd = (e) => {
   el.setAttribute('style', `
     background-color: transparent;
     position: static;
-    top: auto;
     width: auto;
     z-index: auto;
   `);
@@ -117,7 +117,7 @@ export const dragStart = (e) => {
   const { offsetHeight, offsetTop, offsetWidth } = e.target;
 
   // Get drag children and selected element index.
-  const container = document.getElementById('settings-drop-container');
+  const container = document.getElementById('settings_drop_container');
   const children = elementChildren(container);
   const startIndex = children.findIndex(child => child.id === id);
 
@@ -148,7 +148,6 @@ export const dragStart = (e) => {
 
   // Set current data.
   data.set('children', children);
-  data.set('id', id);
   data.set('offset', e.clientY - offsetTop);
   data.set('startIndex', startIndex);
 };
