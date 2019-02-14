@@ -8,47 +8,47 @@ const fsConfig = {
   annotations: [
     {
       file: './files/go/Arabidopsis thaliana.tsv',
-      url: 'http://geneontology.org/gene-associations/gene_association.tair.gz',
+      url: 'http://current.geneontology.org/annotations/tair.gaf.gz',
       zipFile: './files/go/Arabidopsis thaliana.gz',
     },
     {
       file: './files/go/Caenorhabditis elegans.tsv',
-      url: 'http://geneontology.org/gene-associations/gene_association.wb.gz',
+      url: 'http://current.geneontology.org/annotations/wb.gaf.gz',
       zipFile: './files/go/Caenorhabditis elegans.gz',
     },
     {
       file: './files/go/Danio rerio.tsv',
-      url: 'http://geneontology.org/gene-associations/gene_association.zfin.gz',
+      url: 'http://current.geneontology.org/annotations/zfin.gaf.gz',
       zipFile: './files/go/Danio rerio.gz',
     },
     {
       file: './files/go/Dictyostelium discoideum.tsv',
-      url: 'http://geneontology.org/gene-associations/gene_association.dictyBase.gz',
+      url: 'http://current.geneontology.org/annotations/dictybase.gaf.gz',
       zipFile: './files/go/Dictyostelium discoideum.gz',
     },
     {
       file: './files/go/Drosophila melanogaster.tsv',
-      url: 'http://geneontology.org/gene-associations/gene_association.fb.gz',
+      url: 'http://current.geneontology.org/annotations/fb.gaf.gz',
       zipFile: './files/go/Drosophila melanogaster.gz',
     },
     {
       file: './files/go/Gallus gallus.tsv',
-      url: 'http://geneontology.org/gene-associations/goa_chicken.gaf.gz',
+      url: 'http://current.geneontology.org/annotations/goa_chicken.gaf.gz',
       zipFile: './files/go/Gallus gallus.gz',
     },
     {
       file: './files/go/Homo sapiens.tsv',
-      url: 'http://geneontology.org/gene-associations/goa_human.gaf.gz',
+      url: 'http://current.geneontology.org/annotations/goa_human.gaf.gz',
       zipFile: './files/go/Homo sapiens.gz',
     },
     {
       file: './files/go/Mus musculus.tsv',
-      url: 'http://geneontology.org/gene-associations/gene_association.mgi.gz',
+      url: 'http://current.geneontology.org/annotations/mgi.gaf.gz',
       zipFile: './files/go/Mus musculus.gz',
     },
     {
       file: './files/go/Saccharomyces cerevisiae.tsv',
-      url: 'http://geneontology.org/gene-associations/gene_association.sgd.gz',
+      url: 'http://current.geneontology.org/annotations/sgd.gaf.gz',
       zipFile: './files/go/Saccharomyces cerevisiae.gz',
     },
   ],

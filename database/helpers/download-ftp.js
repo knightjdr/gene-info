@@ -11,8 +11,13 @@ const downloadFile = (host, file, dest, skip) => (
       client.on('ready', () => {
         client.get(file, (err, stream) => {
           if (err) {
-            fs.unlink(dest);
-            reject(err);
+            fs.unlink(dest, (unlinkErr) => {
+              if (!unlinkErr) {
+                reject(err);
+              } else {
+                reject(unlinkErr);
+              }
+            });
           }
           stream.once('close', () => {
             client.end();

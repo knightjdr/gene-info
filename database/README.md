@@ -35,6 +35,7 @@
 
 ## Create database
 
+Use at least node v10.13.0 (yauzl module produces an error otherwise).
 Databases for each species specified in configs.js will be written to `files/databases`. Javascript files containing tissues in expression databases for each species will be written to `files/rna-expression.js`. Creating the database consumes a lot of memory so increase the limit. 
 
 ```

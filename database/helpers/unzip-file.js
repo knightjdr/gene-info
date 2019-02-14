@@ -2,6 +2,8 @@ const fs = require('fs');
 const yauzl = require('yauzl');
 const zlib = require('zlib');
 
+const joinError = require('../helpers/join-error');
+
 const gunzipFile = (type, file, dest, skip) => (
   new Promise((resolve, reject) => {
     if (skip) {
@@ -11,13 +13,16 @@ const gunzipFile = (type, file, dest, skip) => (
       const writeStream = fs.createWriteStream(dest);
       readStream.pipe(zlib.createGunzip())
         .pipe(writeStream)
+        .on('error', (err) => {
+          reject(joinError(err, file));
+        })
         .on('finish', () => {
           writeStream.end();
           resolve();
         });
       readStream.on('error', (err) => {
         writeStream.end();
-        reject(err);
+        reject(joinError(err, file));
       });
     } else if (type === 'unzip') {
       yauzl.open(file, { lazyEntries: true }, (openErr, zipfile) => {
@@ -32,16 +37,16 @@ const gunzipFile = (type, file, dest, skip) => (
                 });
                 readStream.pipe(writeStream);
               } else {
-                reject(readErr);
+                reject(joinError(readErr, file));
               }
             });
           });
         } else {
-          reject(openErr);
+          reject(joinError(openErr, file));
         }
       });
     } else {
-      reject(new Error('Unknown compression type'));
+      reject(new Error(`${file}: Unknown compression type`));
     }
   })
 );
