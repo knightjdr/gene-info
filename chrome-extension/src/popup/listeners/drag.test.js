@@ -5,6 +5,7 @@ import {
   data,
   drag,
   dragEnd,
+  dragStart,
   elementChildren,
   mouseOverID,
 } from './drag';
@@ -102,7 +103,7 @@ describe('Drag', () => {
   beforeAll(() => {
     // Create container with children and placeholder.
     const container = document.createElement('div');
-    container.id = 'container';
+    container.id = 'settings_drop_container';
     document.body.appendChild(container);
     ['a', 'b', 'c'].forEach((id) => {
       const child = document.createElement('div');
@@ -175,12 +176,13 @@ describe('Drag', () => {
     it('should move placeholder div to new drop position', () => {
       /* The placholder will be dropped between b and c, so its position
       ** in the container should be 2: ['a', 'b', 'drag_placeholder', 'c'] */
-      expect(document.getElementById('container').children[2].id).toBe('drag_placeholder');
+      expect(document.getElementById('settings_drop_container').children[2].id).toBe('drag_placeholder');
     });
   });
 });
 
 describe('Drag end', () => {
+  let el;
   let spyGet;
   let spySet;
 
@@ -193,7 +195,7 @@ describe('Drag end', () => {
   beforeAll(() => {
     // Create container with children, dragImage and placeholder.
     const container = document.createElement('div');
-    container.id = 'container';
+    container.id = 'settings_drop_container';
     document.body.appendChild(container);
     ['a', 'b', 'c'].forEach((id) => {
       const child = document.createElement('div');
@@ -230,53 +232,210 @@ describe('Drag end', () => {
       }
     });
     spySet = jest.spyOn(data, 'set');
+
+    chrome.storage.local.set.mockClear();
+    updateTab.mockClear();
+    const e = {
+      preventDefault: jest.fn(),
+      target: { id: 'a' },
+    };
+    dragEnd(e);
+    el = document.getElementById('a');
   });
 
-  describe('drag end', () => {
+  it('should destory placeholder div', () => {
+    expect(document.getElementById('drag_placeholder')).toBeNull();
+  });
+
+  it('should destory dragImage div', () => {
+    expect(document.getElementById('drag_image')).toBeNull();
+  });
+
+  it('should update storage', () => {
+    const newOrder = ['b', 'a', 'c'];
+    expect(chrome.storage.local.set).toHaveBeenCalledWith({ setting_order: newOrder });
+  });
+
+  it('should update tab with new order', () => {
+    const newOrder = ['b', 'a', 'c'];
+    expect(updateTab).toHaveBeenCalledWith('updateSetting', 'setting_order', newOrder);
+  });
+
+  it('should set drag element background color', () => {
+    expect(el.style.backgroundColor).toBe('transparent');
+  });
+
+  it('should set drag element position', () => {
+    expect(el.style.position).toBe('static');
+  });
+
+  it('should set drag element width', () => {
+    expect(el.style.width).toBe('auto');
+  });
+
+  it('should set drag element zIndex', () => {
+    expect(el.style.zIndex).toBe('auto');
+  });
+});
+
+describe('Drag start', () => {
+  let spySet;
+
+  afterAll(() => {
+    spySet.mockRestore();
+  });
+
+  beforeAll(() => {
+    // Mock data setter.
+    spySet = jest.spyOn(data, 'set');
+  });
+
+  describe('light theme', () => {
     let el;
+
+    afterAll(() => {
+      document.body.innerHTML = '';
+    });
+
     beforeAll(() => {
-      chrome.storage.local.set.mockClear();
-      updateTab.mockClear();
+      // Create container with children, dragImage and placeholder.
+      const container = document.createElement('div');
+      container.className = 'theme_light';
+      container.id = 'settings_drop_container';
+      document.body.appendChild(container);
+      ['a', 'b', 'c'].forEach((id) => {
+        const child = document.createElement('div');
+        child.id = id;
+        child.style.height = 20;
+        container.appendChild(child);
+      });
+
+      // Create event and call dragStart.
       const e = {
-        preventDefault: jest.fn(),
-        target: { id: 'a' },
+        clientY: 10,
+        dataTransfer: {
+          setDragImage: jest.fn(),
+        },
+        target: {
+          id: 'a',
+          offsetHeight: 20,
+          offsetTop: 0,
+          offsetWidth: 100,
+        },
       };
-      dragEnd(e);
+      dragStart(e);
       el = document.getElementById('a');
     });
 
-    it('should destory placeholder div', () => {
-      expect(document.getElementById('drag_placeholder')).toBeNull();
+    describe('drag image', () => {
+      it('should append div as last child', () => {
+        expect(document.getElementById('settings_drop_container').children[4].id).toBe('drag_image');
+      });
+
+      it('should make hidden', () => {
+        expect(document.getElementById('drag_image').style.display).toBe('none');
+      });
     });
 
-    it('should destory dragImage div', () => {
-      expect(document.getElementById('drag_image')).toBeNull();
+    describe('placeholder', () => {
+      it('should create div', () => {
+        expect(document.getElementById('drag_placeholder')).not.toBeNull();
+      });
+
+      it('should append before target element', () => {
+        expect(document.getElementById('settings_drop_container').children[0].id).toBe('drag_placeholder');
+      });
+
+      it('should have height equal to target', () => {
+        expect(document.getElementById('drag_placeholder').style.height).toBe('20px');
+      });
+
+      it('should have width equal to target', () => {
+        expect(document.getElementById('drag_placeholder').style.width).toBe('100px');
+      });
     });
 
-    it('should update storage', () => {
-      const newOrder = ['b', 'a', 'c'];
-      expect(chrome.storage.local.set).toHaveBeenCalledWith({ setting_order: newOrder });
+    describe('drag element', () => {
+      it('should set background color', () => {
+        expect(el.style.backgroundColor).toBe('rgb(250, 250, 250)');
+      });
+
+      it('should set position', () => {
+        expect(el.style.position).toBe('absolute');
+      });
+
+      it('should set top', () => {
+        expect(el.style.top).toBe('0px');
+      });
+
+      it('should set width', () => {
+        expect(el.style.width).toBe('100px');
+      });
+
+      it('should set zIndex', () => {
+        expect(el.style.zIndex).toBe('10');
+      });
     });
 
-    it('should update tab with new order', () => {
-      const newOrder = ['b', 'a', 'c'];
-      expect(updateTab).toHaveBeenCalledWith('updateSetting', 'setting_order', newOrder);
+    describe('set data', () => {
+      it('should set children', () => {
+        const children = [
+          { id: 'a', top: 0 },
+          { id: 'b', top: 0 },
+          { id: 'c', top: 0 },
+        ];
+        expect(spySet).toHaveBeenCalledWith('children', children);
+      });
+
+      it('should set offset', () => {
+        expect(spySet).toHaveBeenCalledWith('offset', 10);
+      });
+
+      it('should set startIndex', () => {
+        expect(spySet).toHaveBeenCalledWith('startIndex', 0);
+      });
+    });
+  });
+
+  describe('dark theme', () => {
+    let el;
+
+    afterAll(() => {
+      document.body.innerHTML = '';
+    });
+
+    beforeAll(() => {
+      // Create container with children, dragImage and placeholder.
+      const container = document.createElement('div');
+      container.className = 'theme_dark';
+      container.id = 'settings_drop_container';
+      document.body.appendChild(container);
+      ['a', 'b', 'c'].forEach((id) => {
+        const child = document.createElement('div');
+        child.id = id;
+        child.style.height = 20;
+        container.appendChild(child);
+      });
+
+      // Create event and call dragStart.
+      const e = {
+        clientY: 10,
+        dataTransfer: {
+          setDragImage: jest.fn(),
+        },
+        target: {
+          id: 'a',
+          offsetHeight: 20,
+          offsetTop: 0,
+          offsetWidth: 100,
+        },
+      };
+      dragStart(e);
+      el = document.getElementById('a');
     });
 
     it('should set drag element background color', () => {
-      expect(el.style.backgroundColor).toBe('transparent');
-    });
-
-    it('should set drag element position', () => {
-      expect(el.style.position).toBe('static');
-    });
-
-    it('should set drag element width', () => {
-      expect(el.style.width).toBe('auto');
-    });
-
-    it('should set drag element zIndex', () => {
-      expect(el.style.zIndex).toBe('auto');
+      expect(el.style.backgroundColor).toBe('rgb(50, 54, 57)');
     });
   });
 });
