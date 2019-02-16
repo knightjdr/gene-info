@@ -99,6 +99,15 @@
           <div
             class="toggle-container"
             draggable="true"
+            id="drag_links"
+          >
+            <input class="toggle toggle-flat" data-type="links" id="links" type="checkbox" checked />
+            <label for="links"></label>
+            Links
+          </div>
+          <div
+            class="toggle-container"
+            draggable="true"
             id="drag_description"
           >
             <input class="toggle toggle-flat" data-type="description" id="description" type="checkbox" checked />
@@ -106,13 +115,44 @@
             Description
           </div>
           <div
-            class="toggle-container"
             draggable="true"
-            id="drag_domains"
+            id="drag_domain"
           >
-            <input class="toggle toggle-flat" data-type="domain" id="domain" type="checkbox" checked />
-            <label for="domain"></label>
-            Domains
+            <div class="toggle-container">
+              <input class="toggle toggle-flat" data-type="domain" id="domain" type="checkbox" checked />
+              <label for="domain"></label>
+              Domains
+            </div>
+            <div class="toggle-container">
+              <input class="toggle toggle-flat" data-type="region" id="region" type="checkbox" checked />
+              <label for="region"></label>
+              Regions
+            </div>
+          </div>
+          <div
+            class="hpa"
+            draggable="true"
+            id="drag_rna_expression"
+          >
+            <div class="toggle-container">
+              <input class="toggle toggle-flat" data-type="rna_expression" id="rna_expression" type="checkbox" checked />
+              <label for="rna_expression"></label>
+              RNA expression
+              <button
+                class="advanced-settings"
+                data-type="toggle_options_rna_expression"
+                type="button"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
+                  <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+                </svg>
+              </button>
+            </div>
+            <div class="toggle-options" id="toggle_options_rna_expression">
+              <em>RNA expression tissues</em>
+              <select class="slim-select" data-type="rna_expression_tissues" id="rna_expression_tissues" multiple>
+              </select>
+            </div>
           </div>
           <div
             draggable="true"
@@ -147,24 +187,6 @@
                 <label for="go_namespace_mf">MF</label>
               </div>
             </div>
-          </div>
-          <div
-            class="toggle-container"
-            draggable="true"
-            id="drag_interactors"
-          >
-            <input class="toggle toggle-flat" data-type="interactors" id="interactors" type="checkbox" checked/>
-            <label for="interactors"></label>
-            Interactors
-          </div>
-          <div
-            class="toggle-container"
-            draggable="true"
-            id="drag_links"
-          >
-            <input class="toggle toggle-flat" data-type="links" id="links" type="checkbox" checked />
-            <label for="links"></label>
-            Links
           </div>
           <div
             draggable="true"
@@ -206,36 +228,11 @@
           <div
             class="toggle-container"
             draggable="true"
-            id="drag_regions"
+            id="drag_interactors"
           >
-            <input class="toggle toggle-flat" data-type="region" id="region" type="checkbox" checked />
-            <label for="region"></label>
-            Regions
-          </div>
-          <div
-            class="hpa"
-            draggable="true"
-            id="drag_rna_expression"
-          >
-            <div class="toggle-container">
-              <input class="toggle toggle-flat" data-type="rna_expression" id="rna_expression" type="checkbox" checked />
-              <label for="rna_expression"></label>
-              RNA expression
-              <button
-                class="advanced-settings"
-                data-type="toggle_options_rna_expression"
-                type="button"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
-                  <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
-                </svg>
-              </button>
-            </div>
-            <div class="toggle-options" id="toggle_options_rna_expression">
-              <em>RNA expression tissues</em>
-              <select class="slim-select" data-type="rna_expression_tissues" id="rna_expression_tissues" multiple>
-              </select>
-            </div>
+            <input class="toggle toggle-flat" data-type="interactors" id="interactors" type="checkbox" checked/>
+            <label for="interactors"></label>
+            Interactors
           </div>
         </div>
       </section>
