@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Gene Info - test version",
-  "version": "0.10.0",
-  "version_name": "0.10.0 test",
+  "version": "0.11.0",
+  "version_name": "0.11.0 test",
   "description": "View gene information by double clicking a gene name or accession on any webpage.",
   "icons": {
     "16": "icon/icon16.png",
