@@ -31,7 +31,7 @@ const domainElement = (report, settings) => {
           text-align: center;
         }
       </style>
-      <section class="bevel details">
+      <section class="details">
         <div class="details-header">
           <h1>${heading}</h1>
           <a

@@ -39,7 +39,7 @@ const goElement = (report, settings) => {
           padding-left: 20px;
         }
       </style>
-      <section class="bevel details">
+      <section class="details">
         <div class="details-header">
           <h1>GO TERMS</h1>
           ${

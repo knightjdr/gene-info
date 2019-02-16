@@ -84,116 +84,155 @@
       <section>
         <h1>Information options:</h1>
         <hr />
-        <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="basic" id="basic" type="checkbox" checked />
-          <label for="basic"></label>
-          Basic
-        </div>
-        <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="description" id="description" type="checkbox" checked />
-          <label for="description"></label>
-          Description
-        </div>
-        <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="domain" id="domain" type="checkbox" checked />
-          <label for="domain"></label>
-          Domains
-        </div>
-        <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="go" id="go" type="checkbox" checked />
-          <label for="go"></label>
-          GO terms
-          <button
-            class="advanced-settings"
-            data-type="toggle_options_go"
-            type="button"
+        <div
+          id="settings_drop_container"
+        >
+          <div
+            class="toggle-container"
+            draggable="true"
+            id="drag_basic"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
-              <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
-            </svg>
-          </button>
-        </div>
-        <div class="toggle-options toggle-options_padding" id="toggle_options_go">
-          <em>Default GO namespace</em>
-          <div>
-            <input class="checkbox click-namespace" data-type="bp" id="go_namespace_bp" type="checkbox" checked />
-            <label for="go_namespace_bp">BP</label>
+            <input class="toggle toggle-flat" data-type="basic" id="basic" type="checkbox" checked />
+            <label for="basic"></label>
+            Basic
           </div>
-          <div>
-            <input class="checkbox click-namespace" data-type="cc" id="go_namespace_cc" type="checkbox" />
-            <label for="go_namespace_cc">CC</label>
-          </div>
-          <div>
-            <input class="checkbox click-namespace" data-type="mf" id="go_namespace_mf" type="checkbox" />
-            <label for="go_namespace_mf">MF</label>
-          </div>
-        </div>
-        <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="interactors" id="interactors" type="checkbox" checked/>
-          <label for="interactors"></label>
-          Interactors
-        </div>
-        <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="links" id="links" type="checkbox" checked />
-          <label for="links"></label>
-          Links
-        </div>
-        <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="localization" id="localization" type="checkbox" checked />
-          <label for="localization"></label>
-          Localization
-          <button
-            class="advanced-settings"
-            data-type="toggle_options_localization"
-            type="button"
+          <div
+            class="toggle-container"
+            draggable="true"
+            id="drag_links"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
-              <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
-            </svg>
-          </button>
-        </div>
-        <div class="toggle-options toggle-options_padding" id="toggle_options_localization">
-          <em>Localization source</em>
-          <div class="compartments toggle-container">
-            <input class="toggle toggle-flat" data-type="localization_compartments" id="localization_compartments" type="checkbox" checked />
-            <label for="localization_compartments"></label>
-            Compartments
+            <input class="toggle toggle-flat" data-type="links" id="links" type="checkbox" checked />
+            <label for="links"></label>
+            Links
           </div>
-          <div class="hpa toggle-container">
-            <input class="toggle toggle-flat" data-type="localization_hpa" id="localization_hpa" type="checkbox" checked />
-            <label for="localization_hpa"></label>
-            Protein Atlas
+          <div
+            class="toggle-container"
+            draggable="true"
+            id="drag_description"
+          >
+            <input class="toggle toggle-flat" data-type="description" id="description" type="checkbox" checked />
+            <label for="description"></label>
+            Description
           </div>
-          <div class="toggle-container">
-            <input class="toggle toggle-flat" data-type="localization_uniprot" id="localization_uniprot" type="checkbox" checked />
-            <label for="localization_uniprot"></label>
-            UniProt
+          <div
+            draggable="true"
+            id="drag_domain"
+          >
+            <div class="toggle-container">
+              <input class="toggle toggle-flat" data-type="domain" id="domain" type="checkbox" checked />
+              <label for="domain"></label>
+              Domains
+            </div>
+            <div class="toggle-container">
+              <input class="toggle toggle-flat" data-type="region" id="region" type="checkbox" checked />
+              <label for="region"></label>
+              Regions
+            </div>
           </div>
-        </div>
-        <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="region" id="region" type="checkbox" checked />
-          <label for="region"></label>
-          Regions
-        </div>
-        <div class="hpa">
-          <div class="toggle-container">
-            <input class="toggle toggle-flat" data-type="rna_expression" id="rna_expression" type="checkbox" checked />
-            <label for="rna_expression"></label>
-            RNA expression
-            <button
-              class="advanced-settings"
-              data-type="toggle_options_rna_expression"
-              type="button"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
-                <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
-              </svg>
-            </button>
+          <div
+            class="hpa"
+            draggable="true"
+            id="drag_rna_expression"
+          >
+            <div class="toggle-container">
+              <input class="toggle toggle-flat" data-type="rna_expression" id="rna_expression" type="checkbox" checked />
+              <label for="rna_expression"></label>
+              RNA expression
+              <button
+                class="advanced-settings"
+                data-type="toggle_options_rna_expression"
+                type="button"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
+                  <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+                </svg>
+              </button>
+            </div>
+            <div class="toggle-options" id="toggle_options_rna_expression">
+              <em>RNA expression tissues</em>
+              <select class="slim-select" data-type="rna_expression_tissues" id="rna_expression_tissues" multiple>
+              </select>
+            </div>
           </div>
-          <div class="toggle-options" id="toggle_options_rna_expression">
-            <em>RNA expression tissues</em>
-            <select class="slim-select" data-type="rna_expression_tissues" id="rna_expression_tissues" multiple>
-            </select>
+          <div
+            draggable="true"
+            id="drag_go"
+          >
+            <div class="toggle-container">
+              <input class="toggle toggle-flat" data-type="go" id="go" type="checkbox" checked />
+              <label for="go"></label>
+              GO terms
+              <button
+                class="advanced-settings"
+                data-type="toggle_options_go"
+                type="button"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
+                  <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+                </svg>
+              </button>
+            </div>
+            <div class="toggle-options toggle-options_padding" id="toggle_options_go">
+              <em>Default GO namespace</em>
+              <div>
+                <input class="checkbox click-namespace" data-type="bp" id="go_namespace_bp" type="checkbox" checked />
+                <label for="go_namespace_bp">BP</label>
+              </div>
+              <div>
+                <input class="checkbox click-namespace" data-type="cc" id="go_namespace_cc" type="checkbox" />
+                <label for="go_namespace_cc">CC</label>
+              </div>
+              <div>
+                <input class="checkbox click-namespace" data-type="mf" id="go_namespace_mf" type="checkbox" />
+                <label for="go_namespace_mf">MF</label>
+              </div>
+            </div>
+          </div>
+          <div
+            draggable="true"
+            id="drag_localization"
+          >
+            <div class="toggle-container">
+              <input class="toggle toggle-flat" data-type="localization" id="localization" type="checkbox" checked />
+              <label for="localization"></label>
+              Localization
+              <button
+                class="advanced-settings"
+                data-type="toggle_options_localization"
+                type="button"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
+                  <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+                </svg>
+              </button>
+            </div>
+            <div class="toggle-options toggle-options_padding" id="toggle_options_localization">
+              <em>Localization source</em>
+              <div class="compartments toggle-container">
+                <input class="toggle toggle-flat" data-type="localization_compartments" id="localization_compartments" type="checkbox" checked />
+                <label for="localization_compartments"></label>
+                Compartments
+              </div>
+              <div class="hpa toggle-container">
+                <input class="toggle toggle-flat" data-type="localization_hpa" id="localization_hpa" type="checkbox" checked />
+                <label for="localization_hpa"></label>
+                Protein Atlas
+              </div>
+              <div class="toggle-container">
+                <input class="toggle toggle-flat" data-type="localization_uniprot" id="localization_uniprot" type="checkbox" checked />
+                <label for="localization_uniprot"></label>
+                UniProt
+              </div>
+            </div>
+          </div>
+          <div
+            class="toggle-container"
+            draggable="true"
+            id="drag_interactors"
+          >
+            <input class="toggle toggle-flat" data-type="interactors" id="interactors" type="checkbox" checked/>
+            <label for="interactors"></label>
+            Interactors
           </div>
         </div>
       </section>

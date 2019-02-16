@@ -50,6 +50,7 @@ class State {
       localization_compartments: defaultTrueToggleState(storage.links),
       localization_hpa: defaultTrueToggleState(storage.links),
       localization_uniprot: defaultTrueToggleState(storage.links),
+      setting_order: storage.setting_order || config.defaultSettingOrder,
       report: storage.report || 'detailed',
       rna_expression: defaultTrueToggleState(storage.rna_expression),
       rna_expression_tissues: storage.rna_expression_tissues || config.defaultTissues[species],

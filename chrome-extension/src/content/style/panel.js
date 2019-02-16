@@ -72,6 +72,34 @@ const panelStyle = `
       margin: 2px 0;
     }
 
+    .details-header {
+      border-bottom: 1px solid #d0d0d0;
+      display: inline-block;
+      margin-bottom: 5px;
+      padding: 4px 0 3px 0;
+    }
+    .details-description {
+      margin-top: 0px;
+      margin-bottom: 8px;
+      text-align: justify;
+    }
+
+    .gene {
+      margin-top: 5px;
+    }
+    .gene,
+    .gene h1 {
+      font-size: 16px;
+    }
+
+    .gene-info__details {
+      padding-bottom: 5px;
+    }
+
+    .none {
+      text-align: center;
+    }
+
     .panel__inner {
       box-sizing: border-box;
       max-height: calc(100vh - 25px);
@@ -80,7 +108,9 @@ const panelStyle = `
       padding-right: 8px;
     }
     .panel__inner > section:not(:last-of-type) {
-      margin-bottom: 5px;
+      border-bottom: 2px groove #e6e6e6;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
     }
     .panel__inner::-webkit-scrollbar {
       width: 8px;
@@ -96,30 +126,6 @@ const panelStyle = `
     }
     .panel__inner::-webkit-scrollbar-track {
       background: var(--track);
-    }
-
-    .bevel {
-      border-top: 2px groove #e6e6e6;
-      margin-top: 10px;
-      padding-top: 8px;
-    }
-    .gene-info__details {
-      padding-bottom: 5px;
-    }
-    .details-header {
-      border-bottom: 1px solid #d0d0d0;
-      display: inline-block;
-      margin-bottom: 5px;
-      padding: 4px 0 3px 0;
-    }
-    .details-description {
-      margin-top: 0px;
-      margin-bottom: 8px;
-      text-align: justify;
-    }
-
-    .none {
-      text-align: center;
     }
 
     @media (max-width: 309) {

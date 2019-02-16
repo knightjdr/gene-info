@@ -1,22 +1,4 @@
-const defaultCheckedOptions = [
-  'auto',
-  'basic',
-  'description',
-  'domain',
-  'go',
-  'interactors',
-  'links',
-  'localization',
-  'localization_compartments',
-  'localization_hpa',
-  'localization_uniprot',
-  'rna_expression',
-  'region',
-];
-
-const defaultUncheckedOptions = [
-  'ctrl',
-];
+import config from '../../config';
 
 const setToggle = (toggle, undef = true) => {
   if (undef) {
@@ -33,10 +15,10 @@ const setToggle = (toggle, undef = true) => {
 };
 
 const toggles = () => {
-  defaultCheckedOptions.forEach((toggle) => {
+  config.defaultCheckedOptions.forEach((toggle) => {
     setToggle(toggle);
   });
-  defaultUncheckedOptions.forEach((toggle) => {
+  config.defaultUncheckedOptions.forEach((toggle) => {
     setToggle(toggle, false);
   });
 };

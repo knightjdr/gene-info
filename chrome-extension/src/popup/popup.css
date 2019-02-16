@@ -128,6 +128,15 @@ section > h1 {
   transition: border .2s;
 }
 
+/* drop */
+#drag_placeholder {
+  background-color: var(--grey);
+  border-radius: 2px;
+}
+#settings_drop_container {
+  position: "relative";
+}
+
 /* input */
 .input-search {
   border-radius: 4px;

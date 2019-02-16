@@ -9,6 +9,17 @@ import localizationElement from './localization';
 import rnaExpressionElement from './rna-expression';
 import State from '../../state';
 
+const sections = {
+  basic: basicElement,
+  description: descriptionElement,
+  domain: domainElement,
+  go: goElement,
+  interactors: interactorElement,
+  links: linkElement,
+  localization: localizationElement,
+  rna_expression: rnaExpressionElement,
+};
+
 const reportDetails = (result, reportIndex, stateStyle) => {
   let style = '';
   if (stateStyle.right) {
@@ -26,18 +37,11 @@ const reportDetails = (result, reportIndex, stateStyle) => {
       style="${style}"
     >
       <div class="panel__inner">
-        <section>
+        <section class="gene">
           <h1>Gene</h1>
           ${geneElement(result, reportIndex)}
         </section>
-        ${basicElement(result[reportIndex], State.settings)}
-        ${linkElement(result[reportIndex], State.settings)}
-        ${descriptionElement(result[reportIndex], State.settings)}
-        ${domainElement(result[reportIndex], State.settings)}
-        ${rnaExpressionElement(result[reportIndex], State.settings)}
-        ${goElement(result[reportIndex], State.settings)}
-        ${localizationElement(result[reportIndex], State.settings)}
-        ${interactorElement(result[reportIndex], State.settings)}
+        ${State.settings.setting_order.map(section => sections[section](result[reportIndex], State.settings)).join('')}
       </div>
     </aside>
   `;
