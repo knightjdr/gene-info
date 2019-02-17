@@ -1,25 +1,51 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Gene Info</title>
-    <meta name="Description" content="Gene Info Chrome extension for retrieving gene information on any webpage.">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="theme-color" content="#658170">
-    <meta name="google-site-verification" content="_wWGZ3N0eO2YUHJv82oMCd1ikQXhMNMH-vPdXouEMcI" />
-  
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#658170">
-    <meta name="msapplication-TileColor" content="#fdfdfd">
-    <meta name="theme-color" content="#658170">
-    
-    <link rel="stylesheet" href="assets/style.GbkSe8.css">
-  </head>
-  <body>
+
+<head>
+  <title>Gene Info</title>
+  <meta name="Description" content="Gene Info Chrome extension for retrieving gene information on any webpage.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#658170">
+  <meta name="google-site-verification" content="_wWGZ3N0eO2YUHJv82oMCd1ikQXhMNMH-vPdXouEMcI" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#658170">
+  <meta name="msapplication-TileColor" content="#fdfdfd">
+  <meta name="theme-color" content="#658170">
+
+  <link rel="stylesheet" href="assets/style.rLu9WK.css">
+</head>
+
+<body>
+  <nav class="nav">
+    <div class="nav__inner">
+      <h1>Gene Info</h1>
+      <ul class="nav__links">
+        <li><a href="#video">Video tutorial</a></li>
+        <li><a href="#settings">Settings</a></li>
+        <li><a href="#options">Information options</a></li>
+        <li><a href="#panel">Information panel</a></li>
+        <li><a href="#database">Database</a></li>
+        <li><a href="#unsupported">Unsupported websites</a></li>
+        <li><a href="#permissions">Permissions</a></li>
+        <li><a href="#logging">Logging</a></li>
+        <li><a href="#source">Source code</a></li>
+        <li><a href="#issues">Issues</a></li>
+        <li><a href="#browser">Browser support</a></li>
+        <li><a href="#funding">Funding</a></li>
+      </ul>
+      <hr>
+      <small>
+        Version 0.7.0
+      </small>
+    </div>
+  </nav>
+  <div class="documentation">
     <header>
       <h1>Gene Info documentation</h1>
       <p>
@@ -31,18 +57,15 @@
         This extension is developed by the laboratory of Dr. Anne-Claude Gingras at the
         Lunenfeld-Tanenbaum Research Institute in Toronto, Canada.
       </p>
-      <p>
-        <a
-          class="link-button"
-          href="https://chrome.google.com/webstore/detail/gene-info/jggendahejbhkghnachhlomkkheomchp?hl=en-US"
-        >
+      <p class="no-print">
+        <a class="link-button" href="https://chrome.google.com/webstore/detail/gene-info/jggendahejbhkghnachhlomkkheomchp?hl=en-US">
           Download
         </a>
         from the Chrome Web Store.
       </p>
     </header>
     <main>
-      <section>
+      <section class="documentation__links no-print">
         <h2>Contents</h2>
         <ul>
           <li><a href="#video">Video tutorial</a></li>
@@ -59,17 +82,11 @@
           <li><a href="#funding">Funding</a></li>
         </ul>
       </section>
-      <section id="video">
+      <section class="no-print" id="video">
         <h2>Video tutorial</h2>
-        <video
-          controls
-          preload="metadata"
-        >
-            <source 
-              src="media/tutorial.mp4"
-              type="video/mp4"
-            >
-            Sorry, your browser doesn't support embedded videos.
+        <video controls preload="metadata">
+          <source src="media/tutorial.mp4" type="video/mp4">
+          Sorry, your browser doesn't support embedded videos.
         </video>
       </section>
       <section id="settings">
@@ -132,7 +149,7 @@
         </p>
         <h3>Query type</h3>
         <p>
-          The extension can retrieve information for any of the following query types: 
+          The extension can retrieve information for any of the following query types:
         </p>
         <ul>
           <li>Ensembl gene (e.g. ENSG00000114209)</li>
@@ -159,7 +176,7 @@
         <p>
           You can query by locus and ORF for other species, however it will only autodetect these
           query types in yeast and flies respectively as these species adhere to specific naming
-          formats that do not hold in other species. 
+          formats that do not hold in other species.
         </p>
         <h3>Search</h3>
         <p>
@@ -209,31 +226,19 @@
         <h3>Buttons</h3>
         <ul class="buttons">
           <li>
-            <img
-              alt="Close button"
-              src="assets/close-button.svg"
-            >
+            <img alt="Close button" src="assets/close-button.svg">
             close the extension
           </li>
           <li>
-            <img
-              alt="Drag button"
-              src="assets/drag-button.svg"
-            >
+            <img alt="Drag button" src="assets/drag-button.svg">
             reposition the extension horizontally
           </li>
           <li>
-            <img
-              alt="Back button"
-              src="assets/back-button.svg"
-            >
+            <img alt="Back button" src="assets/back-button.svg">
             go back to the previous result
           </li>
           <li>
-            <img
-              alt="Resize button"
-              src="assets/resize-button.svg"
-            >
+            <img alt="Resize button" src="assets/resize-button.svg">
             resize the extension (bottom left corner)
           </li>
         </ul>
@@ -313,7 +318,7 @@
           To capture text from websites you visit this extension needs to be granted
           permission to read the sites. The only thing this extension reads is the
           text selected via double clicking or mouse dragging (if you enable that
-          option). 
+          option).
         </p>
         <p>
           Adding an information panel or tooltip to a webpage with information about the gene you have
@@ -378,7 +383,8 @@
           In addition to working with Chrome the extension can work in any browser built
           on top of Chromium if the developers of that browser provide support for
           extensions. For a complete list of Chromium browsers, see
-          <a href="https://en.wikipedia.org/wiki/Chromium_(web_browser)#Other_browsers_based_on_Chromium">Chromium browsers</a>.
+          <a href="https://en.wikipedia.org/wiki/Chromium_(web_browser)#Other_browsers_based_on_Chromium">Chromium
+            browsers</a>.
           Currently the extension is known to work in the Brave browser.
         </p>
         <p>
@@ -397,46 +403,26 @@
           <a href="https://www.ontario.ca/page/ontario-research-fund">Ontario Research Fund</a>.
         </p>
         <div class="funding-images">
-          <img
-            alt="CIHR"
-            height="50"
-            src="assets/cihr.svg"
-          >
-          <img
-            alt="Genome Canada"
-            height="42"
-            src="assets/genome-canada.svg"
-          >
-          <img
-            alt="National Institutes of Health"
-            height="42"
-            src="assets/nih.png"
-            srcset="
+          <img alt="CIHR" height="50" src="assets/cihr.svg">
+          <img alt="Genome Canada" height="42" src="assets/genome-canada.svg">
+          <img alt="National Institutes of Health" height="42" src="assets/nih.png" srcset="
               assets/nih.png 1x,
               assets/nih2x.png 2x,
               assets/nih3x.png 3x"
-            width={146}
-          />
-          <img
-            alt="Ontario genomics"
-            height="42"
-            src="assets/ontario-genomics.svg"
-          >
-          <img
-            alt="Ontario Research Fund"
-            height="42"
-            src="assets/orf.png"
-            srcset="
+            width={146} />
+          <img alt="Ontario genomics" height="42" src="assets/ontario-genomics.svg">
+          <img alt="Ontario Research Fund" height="42" src="assets/orf.png" srcset="
               assets/orf.png 1x,
               assets/orf2x.png 2x,
               assets/orf3x.png 3x"
-            width={146}
-          />
+            width={146} />
         </div>
       </section>
     </main>
     <footer>
       <small>© 2019 Gingras lab.</small>
     </footer>
-  </body>
+  </div>
+</body>
+
 </html>
