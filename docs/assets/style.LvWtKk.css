@@ -4,12 +4,13 @@ html {
 }
 body {
   --background: #fdfdfd;
+  --background-nav: #8da597;
   --link-dark: #587E65;
   --primary: #658170;
   --primary-1: #4caf50;
   --text: #333;
   --text-light: #fdfdfd;
-  --text-nav: #230504;
+  --text-nav: #4B2020;
   background-color: var(--background);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -72,7 +73,7 @@ video {
   flex-direction: column;
   flex-grow: 1;
   margin-left: 220px;
-  padding: 0 20px 20px 20px;
+  padding: 0 40px 20px 40px;
 }
 .documentation a:not(.link-button) {
   background-color: transparent;
@@ -125,7 +126,7 @@ video {
   color: var(--text);
 }
 .nav {
-  background-color: var(--primary);
+  background-color: var(--background-nav);
   color: var(--text-nav);
   height: 100vh;
   left: 0;
@@ -146,10 +147,18 @@ video {
   padding-left: 0;
 }
 .nav__links li {
-  margin: 10px 0;
+  margin: 5px 0;
+}
+.nav__links a {
+  background-color: transparent;
+  display: inline-block;
+  padding: 5px;
+  transition: background-color 0.2s linear;
+  width: 100%;
 }
 .nav__links a:link,
 .nav__links a:visited {
+  background-color: transparent;
   color: var(--text-nav);
   cursor: pointer;
   border-bottom: none;
@@ -157,10 +166,10 @@ video {
 .nav__links a:hover,
 .nav__links a:active,
 .nav__links a:focus {
-  border-bottom: 1px dotted var(--text-nav);
+  background-color: var(--text-light);
 }
 
-@media (max-width: 749px) {
+@media (max-width: 799px) {
   .documentation {
     margin-left: 0;
   }
