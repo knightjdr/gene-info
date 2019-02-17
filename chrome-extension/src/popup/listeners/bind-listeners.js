@@ -2,11 +2,11 @@ import activationCheck from './activation-check';
 import advancedSettings from './advanced-settings';
 import namespaceCheck from './namespace-check';
 import onChange from './on-change';
-import onEnter from './on-enter';
 import reportCheck from './report-check';
 import speciesOnChange from './species-on-change';
 import toggle from './toggle';
 import { drag, dragEnd, dragStart } from './drag';
+import { onSearchClick, search } from './search';
 
 const bindListeners = () => {
   document.querySelectorAll('.click-activate').forEach((element) => {
@@ -21,9 +21,6 @@ const bindListeners = () => {
   document.querySelectorAll('.click-namespace').forEach((element) => {
     element.addEventListener('click', namespaceCheck);
   });
-  document.querySelectorAll('.input-search').forEach((element) => {
-    element.addEventListener('keypress', onEnter);
-  });
   document.querySelectorAll('.select').forEach((element) => {
     element.addEventListener('change', onChange);
   });
@@ -33,6 +30,10 @@ const bindListeners = () => {
   document.querySelectorAll('.toggle').forEach((element) => {
     element.addEventListener('click', toggle);
   });
+
+  // Search listeners
+  document.getElementById('button_search').addEventListener('click', onSearchClick);
+  document.getElementById('input_search').addEventListener('keypress', search);
 
   // Drag listeners
   document.querySelectorAll('div[draggable="true"]').forEach((element) => {
