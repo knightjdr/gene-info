@@ -24,12 +24,12 @@ const bindListeners = () => {
   document.querySelectorAll('.select').forEach((element) => {
     element.addEventListener('change', onChange);
   });
-  document.querySelectorAll('.select-species').forEach((element) => {
-    element.addEventListener('change', speciesOnChange);
-  });
   document.querySelectorAll('.toggle').forEach((element) => {
     element.addEventListener('click', toggle);
   });
+
+  // Species select menu.
+  document.getElementById('species').addEventListener('change', speciesOnChange);
 
   // Search listeners
   document.getElementById('button_search').addEventListener('click', onSearchClick);

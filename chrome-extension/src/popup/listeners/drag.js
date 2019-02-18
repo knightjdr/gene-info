@@ -113,8 +113,13 @@ export const dragEnd = (e) => {
 };
 
 export const dragStart = (e) => {
-  const { id } = e.target;
-  const { offsetHeight, offsetTop, offsetWidth } = e.target;
+  const { dataTransfer, target } = e;
+  const {
+    id,
+    offsetHeight,
+    offsetTop,
+    offsetWidth,
+  } = target;
 
   // Get drag children and selected element index.
   const container = document.getElementById('settings_drop_container');
@@ -126,7 +131,7 @@ export const dragStart = (e) => {
   dragImage.id = 'drag_image';
   dragImage.style.display = 'none';
   container.appendChild(dragImage);
-  e.dataTransfer.setDragImage(dragImage, 0, 0);
+  dataTransfer.setDragImage(dragImage, 0, 0);
 
   // Create placeholder
   const el = document.getElementById(id);
