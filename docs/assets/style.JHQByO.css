@@ -23,11 +23,12 @@ a {
 a:focus {
   outline: none;
 }
-header, main {
-  max-width: 900px;
-}
 footer {
   margin-top: 10px;
+}
+header,
+main {
+  max-width: 900px;
 }
 h1 {
   font-size: 2em;
@@ -37,6 +38,7 @@ h2 {
   text-decoration: underline;
 }
 p {
+  line-height: 1.5em;
   text-align: justify;
 }
 li {
@@ -75,18 +77,24 @@ video {
   margin-left: 220px;
   padding: 0 40px 20px 40px;
 }
-.documentation a:not(.link-button) {
+.documentation a:not(.link-button),
+.workspace a {
   background-color: transparent;
 }
 .documentation a:not(.link-button):link,
-.documentation a:not(.link-button):visited {
+.documentation a:not(.link-button):visited,
+.workspace a:link,
+.workspace a:visited {
   color: var(--link-dark);
   cursor: pointer;
   border-bottom: none;
 }
 .documentation a:not(.link-button):hover,
 .documentation a:not(.link-button):active,
-.documentation a:not(.link-button):focus {
+.documentation a:not(.link-button):focus,
+.workspace a:hover,
+.workspace a:active,
+.workspace a:focus {
   border-bottom: 1px dotted var(--link-dark);
 }
 .documentation__links {
@@ -167,6 +175,29 @@ video {
 .nav__links a:active,
 .nav__links a:focus {
   background-color: var(--text-light);
+}
+.workspace {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 0 40px 20px 40px;
+}
+.workspace header,
+.workspace p {
+  display: block;
+  width: 100%;
+}
+.workspace main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.workspace textarea {
+  flex-grow: 1;
+  padding: 5px;
+  width: 100%;
 }
 
 @media (max-width: 799px) {
