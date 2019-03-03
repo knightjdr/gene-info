@@ -1,1 +1,1 @@
-Sitemap: https://nbcc.lunenfeld.ca/sitemap.xml
+Sitemap: https://gene-info.lunenfeld.ca/sitemap.xml
