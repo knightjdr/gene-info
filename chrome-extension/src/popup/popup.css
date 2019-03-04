@@ -166,8 +166,9 @@ section > h1 {
   box-sizing: border-box;
   flex-grow: 1;
   height: 30px;
+  min-width: 0;
   padding: 1px 8px;
-  width: 100%;
+  width: 0;
 }
 .search > label {
   display: none;

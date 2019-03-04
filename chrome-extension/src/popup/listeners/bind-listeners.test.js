@@ -61,6 +61,11 @@ describe('Bind listeners', () => {
     drag2.setAttribute('draggable', true);
     document.body.appendChild(drag2);
 
+    // Create species select.
+    const speciesSelect = document.createElement('select');
+    speciesSelect.id = 'species';
+    document.body.appendChild(speciesSelect);
+
     bindListeners();
   });
 

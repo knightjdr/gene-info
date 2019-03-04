@@ -33,7 +33,7 @@ export const elementChildren = (element) => {
 };
 
 // Get ID and array index of item being moused over.
-export const mouseOverID = (mousePosition, arr) => {
+export const mouseOverID = (mousePosition, arr, startIndex) => {
   const lastIndex = arr.length - 1;
   if (mousePosition < arr[0].top) {
     return {
@@ -48,7 +48,7 @@ export const mouseOverID = (mousePosition, arr) => {
     ) {
       return {
         dropBeforeID: arr[i + 1].id,
-        dropIndex: i,
+        dropIndex: i < startIndex ? i + 1 : i,
       };
     }
   }
@@ -59,27 +59,27 @@ export const mouseOverID = (mousePosition, arr) => {
 };
 
 export const drag = (e) => {
+  const { id } = e.target;
   e.preventDefault();
 
-  // This conditional prevents firing of the drag event on dragend.
-  if (e.screenY) {
-    const { id } = e.target;
-    const mousePosition = e.clientY;
+  // Update element position.
+  const el = document.getElementById(id);
+  const mousePosition = data.get('y');
+  const top = mousePosition - data.get('offset');
+  el.style.top = `${top}px`;
 
-    // Update element position.
-    const el = document.getElementById(id);
-    const top = mousePosition - data.get('offset');
-    el.style.top = `${top}px`;
+  // Get drop position and update placeholder
+  const insertPosition = mouseOverID(mousePosition, data.get('children'), data.get('startIndex'));
+  data.set('dropBeforeID', insertPosition.dropBeforeID);
+  data.set('dropIndex', insertPosition.dropIndex);
+  el.parentElement.insertBefore(
+    document.getElementById('drag_placeholder'),
+    document.getElementById(insertPosition.dropBeforeID),
+  );
+};
 
-    // Get drop position and update placeholder
-    const insertPosition = mouseOverID(mousePosition, data.get('children'));
-    data.set('dropBeforeID', insertPosition.dropBeforeID);
-    data.set('dropIndex', insertPosition.dropIndex);
-    el.parentElement.insertBefore(
-      document.getElementById('drag_placeholder'),
-      document.getElementById(insertPosition.dropBeforeID),
-    );
-  }
+export const dragOver = (e) => {
+  data.set('y', e.clientY);
 };
 
 export const dragEnd = (e) => {
@@ -105,6 +105,9 @@ export const dragEnd = (e) => {
   // destroy "hidden" drag image
   container.removeChild(document.getElementById('drag_image'));
 
+  // Remove drag over listener from document.
+  document.removeEventListener('dragover', dragOver);
+
   // Update user settings.
   const settingNames = data.get('children').map(child => child.id.replace('drag_', ''));
   const newOrder = arrayMove(settingNames, data.get('startIndex'), data.get('dropIndex'));
@@ -113,7 +116,7 @@ export const dragEnd = (e) => {
 };
 
 export const dragStart = (e) => {
-  const { dataTransfer, target } = e;
+  const { clientY, dataTransfer, target } = e;
   const {
     id,
     offsetHeight,
@@ -126,10 +129,19 @@ export const dragStart = (e) => {
   const children = elementChildren(container);
   const startIndex = children.findIndex(child => child.id === id);
 
+  // Firefox requires setData to be called.
+  dataTransfer.setData('text/plain', '');
+
+  /* Add drag over listener from document. This is needed because Firefox
+  ** does not attach clientY to drag events. */
+  document.addEventListener('dragover', dragOver);
+
   // Create hidden drag image
   const dragImage = document.createElement('div');
   dragImage.id = 'drag_image';
-  dragImage.style.display = 'none';
+  dragImage.style.height = '1px';
+  dragImage.style.opacity = 0;
+  dragImage.style.width = '1px';
   container.appendChild(dragImage);
   dataTransfer.setDragImage(dragImage, 0, 0);
 
@@ -153,6 +165,7 @@ export const dragStart = (e) => {
 
   // Set current data.
   data.set('children', children);
-  data.set('offset', e.clientY - offsetTop);
+  data.set('offset', clientY - offsetTop);
   data.set('startIndex', startIndex);
+  data.set('y', clientY);
 };

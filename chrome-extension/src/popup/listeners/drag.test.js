@@ -5,6 +5,7 @@ import {
   data,
   drag,
   dragEnd,
+  dragOver,
   dragStart,
   elementChildren,
   mouseOverID,
@@ -18,6 +19,8 @@ global.chrome = {
     },
   },
 };
+global.document.addEventListener = jest.fn();
+global.document.removeEventListener = jest.fn();
 
 describe('Drag data storage object', () => {
   it('should set value', () => {
@@ -76,17 +79,22 @@ describe('Mouse over element', () => {
 
   it('should return 0 element when mouse position is above first child', () => {
     const expected = { dropBeforeID: 'a', dropIndex: 0 };
-    expect(mouseOverID(-10, arr)).toEqual(expected);
+    expect(mouseOverID(-10, arr, 2)).toEqual(expected);
   });
 
-  it('should return next element ID and current index when dropping within children', () => {
+  it('should return previous element ID and its index when rising within children', () => {
+    const expected = { dropBeforeID: 'b', dropIndex: 1 };
+    expect(mouseOverID(15, arr, 2)).toEqual(expected);
+  });
+
+  it('should return next element ID and its index when dropping within children', () => {
     const expected = { dropBeforeID: 'c', dropIndex: 1 };
-    expect(mouseOverID(25, arr)).toEqual(expected);
+    expect(mouseOverID(25, arr, 0)).toEqual(expected);
   });
 
   it('should return "blank" element ID and last index when mouse position is below last element', () => {
     const expected = { dropBeforeID: 'drag_noelement', dropIndex: 2 };
-    expect(mouseOverID(46, arr)).toEqual(expected);
+    expect(mouseOverID(46, arr, 0)).toEqual(expected);
   });
 });
 
@@ -127,6 +135,8 @@ describe('Drag', () => {
           ];
         case 'offset':
           return 5;
+        case 'y':
+          return 25;
         default:
           return null;
       }
@@ -134,28 +144,10 @@ describe('Drag', () => {
     spySet = jest.spyOn(data, 'set');
   });
 
-  describe('final mouseup', () => {
-    beforeAll(() => {
-      const e = {
-        clientY: 25,
-        preventDefault: jest.fn(),
-        screenY: false,
-        target: { id: 'a' },
-      };
-      drag(e);
-    });
-
-    it('should not call setter', () => {
-      expect(spySet).not.toHaveBeenCalled();
-    });
-  });
-
   describe('dragging item', () => {
     beforeAll(() => {
       const e = {
-        clientY: 25,
         preventDefault: jest.fn(),
-        screenY: true,
         target: { id: 'a' },
       };
       drag(e);
@@ -181,6 +173,27 @@ describe('Drag', () => {
   });
 });
 
+describe('Drag over', () => {
+  let spySet;
+
+  afterAll(() => {
+    spySet.mockRestore();
+  });
+
+  beforeAll(() => {
+    // Mock data setter.
+    spySet = jest.spyOn(data, 'set');
+    const e = {
+      clientY: 10,
+    };
+    dragOver(e);
+  });
+
+  it('should set mouse position', () => {
+    expect(spySet).toHaveBeenCalledWith('y', 10);
+  });
+});
+
 describe('Drag end', () => {
   let el;
   let spyGet;
@@ -193,6 +206,7 @@ describe('Drag end', () => {
   });
 
   beforeAll(() => {
+    global.document.removeEventListener.mockClear();
     // Create container with children, dragImage and placeholder.
     const container = document.createElement('div');
     container.id = 'settings_drop_container';
@@ -251,6 +265,10 @@ describe('Drag end', () => {
     expect(document.getElementById('drag_image')).toBeNull();
   });
 
+  it('should remove drag over listener', () => {
+    expect(global.document.removeEventListener).toHaveBeenCalledWith('dragover', dragOver);
+  });
+
   it('should update storage', () => {
     const newOrder = ['b', 'a', 'c'];
     expect(chrome.storage.local.set).toHaveBeenCalledWith({ setting_order: newOrder });
@@ -279,6 +297,7 @@ describe('Drag end', () => {
 });
 
 describe('Drag start', () => {
+  let setData;
   let spySet;
 
   afterAll(() => {
@@ -286,6 +305,7 @@ describe('Drag start', () => {
   });
 
   beforeAll(() => {
+    setData = jest.fn();
     // Mock data setter.
     spySet = jest.spyOn(data, 'set');
   });
@@ -298,6 +318,7 @@ describe('Drag start', () => {
     });
 
     beforeAll(() => {
+      document.addEventListener.mockClear();
       // Create container with children, dragImage and placeholder.
       const container = document.createElement('div');
       container.className = 'theme_light';
@@ -314,6 +335,7 @@ describe('Drag start', () => {
       const e = {
         clientY: 10,
         dataTransfer: {
+          setData,
           setDragImage: jest.fn(),
         },
         target: {
@@ -327,13 +349,21 @@ describe('Drag start', () => {
       el = document.getElementById('a');
     });
 
+    it('should set data for Firefox', () => {
+      expect(setData).toHaveBeenCalledWith('text/plain', '');
+    });
+
+    it('should at drag over event listenter', () => {
+      expect(document.addEventListener).toHaveBeenCalledWith('dragover', dragOver);
+    });
+
     describe('drag image', () => {
       it('should append div as last child', () => {
         expect(document.getElementById('settings_drop_container').children[4].id).toBe('drag_image');
       });
 
       it('should make hidden', () => {
-        expect(document.getElementById('drag_image').style.display).toBe('none');
+        expect(document.getElementById('drag_image').style.opacity).toBe('0');
       });
     });
 
@@ -394,6 +424,10 @@ describe('Drag start', () => {
       it('should set startIndex', () => {
         expect(spySet).toHaveBeenCalledWith('startIndex', 0);
       });
+
+      it('should set mouse position', () => {
+        expect(spySet).toHaveBeenCalledWith('y', 10);
+      });
     });
   });
 
@@ -421,6 +455,7 @@ describe('Drag start', () => {
       const e = {
         clientY: 10,
         dataTransfer: {
+          setData: jest.fn(),
           setDragImage: jest.fn(),
         },
         target: {
