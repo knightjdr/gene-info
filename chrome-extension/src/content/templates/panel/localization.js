@@ -95,7 +95,7 @@ const localizationElement = (report, settings) => {
           padding-top: 6px;
         }
       </style>
-      <section class="bevel details localization">
+      <section class="details localization">
         <div class="details-header">
           <h1>LOCALIZATION</h1>
         </div>

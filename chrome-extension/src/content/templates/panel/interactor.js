@@ -90,7 +90,7 @@ const interactorElement = (report, settings) => {
           margin: 0;
         }
       </style>
-      <section class="bevel details">
+      <section class="details">
         <div class="details-header details-header-interactors">
           <h1>INTERACTORS</h1>
           ${

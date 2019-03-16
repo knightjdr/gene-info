@@ -5,6 +5,7 @@ module.exports = {
   "extends": "airbnb",
   "globals": {
     "chrome": true,
+    "Event": true,
     "document": true,
     "requestAnimationFrame": true,
     "window": true,

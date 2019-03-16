@@ -6,8 +6,9 @@
   "scripts": {
     "dev-api": "NODE_ENV=development nodemon node api/index.js",
     "dev-ext": "NODE_ENV=development webpack --watch --config webpack.dev.js",
+    "dev-ext-ff": "NODE_ENV=development webpack --watch --config webpack.dev-ff.js",
     "doc-server": "http-server docs",
-    "prod-api": "NODE_ENV=production n use 10.13.0 api/index.js",
+		"prod-api": "NODE_ENV=production n use 10.13.0 api/index.js",
     "prod-api-forever": "NODE_ENV=production forever start -c /usr/local/n/versions/node/10.13.0/bin/node -a --uid 'gene-info-api' -l /mnt/prohitsdata/html/ProhitsTools/forever/gene-info.log --pidFile /mnt/prohitsdata/html/ProhitsTools/forever/pids/gene-info.pid api/index.js",
     "prod-ext": "NODE_ENV=production webpack --config webpack.prod.js",
     "prod-test-ext": "NODE_ENV=production webpack --config webpack.prod-test.js",

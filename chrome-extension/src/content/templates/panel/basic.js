@@ -7,49 +7,54 @@ const basicElement = (report, settings) => {
         margin: 0;
         padding-left: 30px;
       }
+      .basic > div {
+        margin-top: 5px;
+      }
       .right {
         float: right;
       }
     </style>
   `;
   if (settings.basic) {
+    html += '<section class="basic">';
     if (report.synonyms && report.synonyms.length > 0) {
       html += `
-        <section>
+        <div>
           <h1>Synonyms</h1>
           ${report.synonyms.join(', ')}
-        </section>
+        </div>
       `;
     }
     if (report.fullname) {
       html += `
-        <section>
+        <div>
           <h1>Name</h1>
           ${report.fullname}
-        </section>
+        </div>
       `;
     }
     if (report.alternativeNames && report.alternativeNames.length > 0) {
       html += `
-        <section class="alternative-names">
+        <div class="alternative-names">
           <h1>Alternative Names</h1>
           <ul>
             ${report.alternativeNames.map(name => `<li>${name}</li>`).join('')}
           </ul>
-        </section>
+        </div>
       `;
     }
     if (report.length) {
       const mw = report.mw ? round(report.mw / 1000) : '-';
       html += `
-        <section>
+        <div>
           <h1>Length</h1>${report.length}aa
           <span class="right">
             <h1>MW</h1>${mw}kDa
           </span>
-        </section>
+        </div>
       `;
     }
+    html += '</section>';
   }
   return html;
 };
