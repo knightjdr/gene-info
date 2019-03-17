@@ -13,6 +13,7 @@ const linkStyle = `
     a:hover,
     a:active,
     a:focus {
+      outline: none;
       text-decoration: underline dotted;
     }
   </style>
