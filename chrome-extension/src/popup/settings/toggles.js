@@ -1,25 +1,34 @@
 import config from '../../config';
+import storageGet from '../helpers/storage';
 
-const setToggle = (toggle, undef = true) => {
-  if (undef) {
-    chrome.storage.local.get(toggle, (storage) => {
-      const checked = Boolean(storage[toggle] || storage[toggle] === undefined);
-      document.getElementById(toggle).checked = checked;
-    });
-  } else {
-    chrome.storage.local.get(toggle, (storage) => {
-      const checked = Boolean(storage[toggle]);
-      document.getElementById(toggle).checked = checked;
-    });
-  }
+/* setTransitionDuration gets the parent node for a toggle and then
+** changes the transition duration on the adjacent label so that
+** it will only transition after loading */
+export const setTransitionDuration = (el) => {
+  const label = el.parentNode.querySelector('label');
+  window.setTimeout(() => {
+    label.style.transitionDuration = '0.2s';
+  }, 50);
 };
 
-const toggles = () => {
+export const setChecked = (toggle, storageValue, undefIsChecked, updateElement) => {
+  let checked;
+  if (storageValue === undefined && undefIsChecked) {
+    checked = true;
+  } else {
+    checked = Boolean(storageValue);
+  }
+  const toggleEl = document.getElementById(toggle);
+  toggleEl.checked = checked;
+  updateElement(toggleEl);
+};
+
+export const toggles = () => {
   config.defaultCheckedOptions.forEach((toggle) => {
-    setToggle(toggle);
+    storageGet(toggle, setChecked, true, setTransitionDuration);
   });
   config.defaultUncheckedOptions.forEach((toggle) => {
-    setToggle(toggle, false);
+    storageGet(toggle, setChecked, false, setTransitionDuration);
   });
 };
 

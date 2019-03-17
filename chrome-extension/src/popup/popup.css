@@ -316,15 +316,17 @@ select:focus {
   border: 2px solid var(--grey);
   border-radius: 2em;
   padding: 1px;
-  transition: all .2s ease;
+  transition-duration: 0s;
   transition-property: background, border, border-radius, left;
+  transition-timing-function: ease;
 }
 .toggle-flat + label:after {
   background: var(--grey);
   content: "";
   border-radius: 1em;
-  transition: all .2s ease;
-  transition-property: background, border, border-radius, left;
+  transition-duration: inherit;
+  transition-property: inherit;
+  transition-timing-function: inherit;
 }
 .toggle-flat:checked + label {
   border: 2px solid var(--primary-1);
