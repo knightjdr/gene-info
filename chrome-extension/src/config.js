@@ -63,6 +63,7 @@ const config = {
     'Homo sapiens': 9606,
     'Mus musculus': 10090,
     'Saccharomyces cerevisiae': 4932,
+    'Schizosaccharomyces pombe': 284812,
     'Xenopus laevis': 8355,
   },
   theme: 'light',

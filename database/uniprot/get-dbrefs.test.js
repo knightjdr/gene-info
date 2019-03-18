@@ -113,6 +113,11 @@ describe('DB refs', () => {
       expect(refs.mgi).toBe(expected);
     });
 
+    it('should return PomBase ID', () => {
+      const expected = 'SPAC24B11.06c';
+      expect(refs.pombase).toBe(expected);
+    });
+
     it('should return first proteomics DB ID', () => {
       const expected = 79108;
       expect(refs.proteomicsdb).toBe(expected);

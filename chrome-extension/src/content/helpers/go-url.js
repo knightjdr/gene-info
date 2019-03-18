@@ -36,8 +36,18 @@ const goURL = (report, settings) => {
         return `${base}SGD:${report.sgd}`;
       }
       break;
+    case 'Schizosaccharomyces pombe':
+      if (report.pombase) {
+        return `${base}PomBase:${report.pombase}`;
+      }
+      break;
     default:
-      return `http://amigo.geneontology.org/amigo/gene_product/UniProtKB:${report.uniprot[0]}`;
+      if (
+        report.uniprot
+        && report.uniprot.length > 0
+      ) {
+        return `${base}UniProtKB:${report.uniprot[0]}`;
+      }
   }
   return '';
 };

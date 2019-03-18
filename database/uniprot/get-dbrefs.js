@@ -77,6 +77,11 @@ const getDBRefs = dbRefs => (
         ...accum,
         mgi: ref.$.id,
       };
+    } if (ref.$.type === 'PomBase') {
+      return {
+        ...accum,
+        pombase: ref.$.id,
+      };
     } if (ref.$.type === 'ProteomicsDB' && !accum.proteomicsdb) {
       return {
         ...accum,

@@ -19,6 +19,7 @@ const config = {
     'Homo sapiens',
     'Mus musculus',
     'Saccharomyces cerevisiae',
+    'Schizosaccharomyces pombe',
     'Xenopus laevis',
   ],
   speciesID: {
@@ -31,6 +32,7 @@ const config = {
     9606: 'Homo sapiens',
     10090: 'Mus musculus',
     559292: 'Saccharomyces cerevisiae',
+    284812: 'Schizosaccharomyces pombe',
     8355: 'Xenopus laevis',
   },
 };

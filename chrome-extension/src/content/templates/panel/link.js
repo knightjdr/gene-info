@@ -1,24 +1,101 @@
+export const allSpeciesLinks = (report) => {
+  let html = '';
+  if (report['ensembl-gene'] && report['ensembl-gene'].length > 0) {
+    const accession = report['ensembl-gene'][0];
+    html += `
+      <div>
+        <h1>Ensembl</h1>
+        <a
+          href="https://ensembl.org/Gene/Summary?g=${accession}"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          ${accession}
+        </a>
+      </div>
+    `;
+  }
+  if (report.geneid) {
+    html += `
+      <div>
+        <h1>NCBI</h1>
+        <a
+          href="https://www.ncbi.nlm.nih.gov/gene/?term=${report.geneid}"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          ${report.geneid}
+        </a>
+      </div>
+    `;
+  }
+  if (report.uniprot && report.uniprot.length > 0) {
+    const accession = report.uniprot[0];
+    html += `
+      <div>
+        <h1>UniProt</h1>
+        <a
+          href="https://www.uniprot.org/uniprot/${accession}"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          ${accession}
+        </a>
+      </div>
+    `;
+  }
+  return html;
+};
+
 const linkElement = (report, settings) => {
   let html = `
     <style>
-    .links > div {
-      margin-top: 5px;
-    }
-  </style>
+      .links > div {
+        margin-top: 5px;
+      }
+    </style>
   `;
   if (settings.links) {
     html += '<section class="links">';
-    if (report['ensembl-gene'] && report['ensembl-gene'].length > 0) {
-      const accession = report['ensembl-gene'][0];
+    html += allSpeciesLinks(report);
+    if (report.tair && settings.species === 'Arabidopsis thaliana') {
       html += `
         <div>
-          <h1>Ensembl</h1>
+          <h1>TAIR</h1>
           <a
-            href="https://ensembl.org/Gene/Summary?g=${accession}"
+            href="https://www.arabidopsis.org/servlets/TairObject?accession=${report.tair}"
             rel="noopener noreferrer"
             target="_blank"
           >
-            ${accession}
+            ${report.tair}
+          </a>
+        </div>
+      `;
+    }
+    if (report.wormbase && settings.species === 'Caenorhabditis elegans') {
+      html += `
+        <div>
+          <h1>WormBase</h1>
+          <a
+            href="https://wormbase.org/species/c_elegans/gene/${report.wormbase}"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            ${report.wormbase}
+          </a>
+        </div>
+      `;
+    }
+    if (report.zfin && settings.species === 'Danio rerio') {
+      html += `
+        <div>
+          <h1>ZFIN</h1>
+          <a
+            href="https://zfin.org/${report.zfin}"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            ${report.zfin}
           </a>
         </div>
       `;
@@ -51,16 +128,21 @@ const linkElement = (report, settings) => {
         </div>
       `;
     }
-    if (report.geneid) {
+    if (
+      report.uniprot
+      && report.uniprot.length > 0
+      && settings.species === 'Homo sapiens'
+    ) {
+      const accession = report.uniprot[0];
       html += `
         <div>
-          <h1>NCBI</h1>
+          <h1>neXtProt</h1>
           <a
-            href="https://www.ncbi.nlm.nih.gov/gene/?term=${report.geneid}"
+            href="https://www.nextprot.org/entry/NX_${accession}"
             rel="noopener noreferrer"
             target="_blank"
           >
-            ${report.geneid}
+            NX_${accession}
           </a>
         </div>
       `;
@@ -93,59 +175,16 @@ const linkElement = (report, settings) => {
         </div>
       `;
     }
-    if (report.tair && settings.species === 'Arabidopsis thaliana') {
+    if (report.pombase && settings.species === 'Schizosaccharomyces pombe') {
       html += `
         <div>
-          <h1>TAIR</h1>
+          <h1>PomBase</h1>
           <a
-            href="https://www.arabidopsis.org/servlets/TairObject?accession=${report.tair}"
+            href="https://www.pombase.org/gene/${report.pombase}"
             rel="noopener noreferrer"
             target="_blank"
           >
-            ${report.tair}
-          </a>
-        </div>
-      `;
-    }
-    if (report.uniprot && report.uniprot.length > 0) {
-      const accession = report.uniprot[0];
-      if (settings.species === 'Homo sapiens') {
-        html += `
-          <div>
-            <h1>neXtProt</h1>
-            <a
-              href="https://www.nextprot.org/entry/NX_${accession}"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              NX_${accession}
-            </a>
-          </div>
-        `;
-      }
-      html += `
-        <div>
-          <h1>UniProt</h1>
-          <a
-            href="https://www.uniprot.org/uniprot/${accession}"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            ${accession}
-          </a>
-        </div>
-      `;
-    }
-    if (report.wormbase && settings.species === 'Caenorhabditis elegans') {
-      html += `
-        <div>
-          <h1>WormBase</h1>
-          <a
-            href="https://wormbase.org/species/c_elegans/gene/${report.wormbase}"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            ${report.wormbase}
+            ${report.pombase}
           </a>
         </div>
       `;
@@ -160,20 +199,6 @@ const linkElement = (report, settings) => {
             target="_blank"
           >
             ${report.xenbase}
-          </a>
-        </div>
-      `;
-    }
-    if (report.zfin && settings.species === 'Danio rerio') {
-      html += `
-        <div>
-          <h1>ZFIN</h1>
-          <a
-            href="https://zfin.org/${report.zfin}"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            ${report.zfin}
           </a>
         </div>
       `;

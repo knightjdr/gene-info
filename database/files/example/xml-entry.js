@@ -240,6 +240,9 @@ const xmlEntry = `
 <dbReference type="MGI" id="MGITest">
   <property type="gene designation" value="CCM3"/>
 </dbReference>
+<dbReference type="PomBase" id="SPAC24B11.06c">
+  <property type="gene designation" value="HOG1"/>
+</dbReference>
 <dbReference type="SGD" id="SGDTest">
   <property type="gene designation" value="CCM3"/>
 </dbReference>

@@ -51,6 +51,11 @@ const fsConfig = {
       url: 'http://current.geneontology.org/annotations/sgd.gaf.gz',
       zipFile: './files/go/Saccharomyces cerevisiae.gz',
     },
+    {
+      file: './files/go/Schizosaccharomyces pombe.tsv',
+      url: 'http://current.geneontology.org/annotations/pombase.gaf.gz',
+      zipFile: './files/go/Schizosaccharomyces pombe.gz',
+    },
   ],
   goFolder: './files/go',
   obo: {
