@@ -4,7 +4,8 @@ import namspaceCheckbox from './namespace-checkbox';
 import reportCheckbox from './report-checkbox';
 import settingOrder from './setting-order';
 import theme from './theme';
-import toggles from './toggles';
+import warning from './warning';
+import { toggles } from './toggles';
 
 const loadPreferences = () => {
   activationCheckbox();
@@ -14,6 +15,7 @@ const loadPreferences = () => {
   settingOrder();
   theme();
   toggles();
+  warning();
 };
 
 export default loadPreferences;

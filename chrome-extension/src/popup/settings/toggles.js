@@ -31,5 +31,3 @@ export const toggles = () => {
     storageGet(toggle, setChecked, false, setTransitionDuration);
   });
 };
-
-export default toggles;
