@@ -1,7 +1,9 @@
+const regexpEscape = require('./regexp-escape');
+
 const createQuery = (field, term) => {
   let queryObj;
   if (field === 'gene') {
-    const searchString = `^${term}$`;
+    const searchString = `^${regexpEscape(term)}$`;
     const re = new RegExp(searchString, 'i');
     queryObj = {
       $or: [
