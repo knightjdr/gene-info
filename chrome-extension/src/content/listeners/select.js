@@ -19,7 +19,7 @@ export const removeSelectListener = () => {
 };
 
 export const addSelectListener = (results) => {
-  if (results.length > 1) {
+  if (results && results.length > 1) {
     const el = State.shadowRoot.getElementById('gene-select');
     el.addEventListener('change', selectChange);
   }
