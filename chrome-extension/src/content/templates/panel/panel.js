@@ -38,7 +38,7 @@ const createPanel = (reportIndex = 0, error) => {
 
   // Get class, html and style to apply
   const html = error || result.length < 1
-    ? noResult(error)
+    ? noResult(error, State.style)
     : `${selectStyle}${panelDetails(result, reportIndex, State.style)}`;
   State.shadowRoot.innerHTML = `${panelStyle}${html}`;
 
