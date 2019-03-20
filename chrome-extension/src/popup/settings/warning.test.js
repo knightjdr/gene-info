@@ -9,48 +9,144 @@ describe('Check URL', () => {
     div.className = 'warning';
     div.style.display = 'none';
     document.body.appendChild(div);
+    const button = document.createElement('button');
+    button.id = 'button_search';
+    document.body.appendChild(button);
+    const input = document.createElement('input');
+    input.id = 'input_search';
+    document.body.appendChild(input);
   });
 
-  it('should display div when tabs is undefined', () => {
-    const tabs = undefined;
-    checkURL(tabs);
-    const div = document.querySelector('.warning');
-    expect(div.style.display).toBe('flex');
+  describe('tabs arg is undefined', () => {
+    beforeAll(() => {
+      const tabs = undefined;
+      checkURL(tabs);
+    });
+
+    it('should display div', () => {
+      const div = document.querySelector('.warning');
+      expect(div.style.display).toBe('flex');
+    });
+
+    it('should disable button', () => {
+      const button = document.getElementById('button_search');
+      expect(button.disabled).toBeTruthy();
+    });
+
+    it('should disable input', () => {
+      const input = document.getElementById('input_search');
+      expect(input.disabled).toBeTruthy();
+    });
   });
 
-  it('should display div when first tab entry is undefined', () => {
-    const tabs = [];
-    checkURL(tabs);
-    const div = document.querySelector('.warning');
-    expect(div.style.display).toBe('flex');
+  describe('first tab entry is undefined', () => {
+    beforeAll(() => {
+      const tabs = [];
+      checkURL(tabs);
+    });
+
+    it('should display div', () => {
+      const div = document.querySelector('.warning');
+      expect(div.style.display).toBe('flex');
+    });
+
+    it('should disable button', () => {
+      const button = document.getElementById('button_search');
+      expect(button.disabled).toBeTruthy();
+    });
+
+    it('should disable input', () => {
+      const input = document.getElementById('input_search');
+      expect(input.disabled).toBeTruthy();
+    });
   });
 
-  it('should display div when url is falsy', () => {
-    const tabs = [{ url: '' }];
-    checkURL(tabs);
-    const div = document.querySelector('.warning');
-    expect(div.style.display).toBe('flex');
+  describe('tab url is falsy', () => {
+    beforeAll(() => {
+      const tabs = [{ url: '' }];
+      checkURL(tabs);
+    });
+
+    it('should display div', () => {
+      const div = document.querySelector('.warning');
+      expect(div.style.display).toBe('flex');
+    });
+
+    it('should disable button', () => {
+      const button = document.getElementById('button_search');
+      expect(button.disabled).toBeTruthy();
+    });
+
+    it('should disable input', () => {
+      const input = document.getElementById('input_search');
+      expect(input.disabled).toBeTruthy();
+    });
   });
 
-  it('should display div when url starts with chrome', () => {
-    const tabs = [{ url: 'chrome://extenstions' }];
-    checkURL(tabs);
-    const div = document.querySelector('.warning');
-    expect(div.style.display).toBe('flex');
+  describe('url starts with chrome', () => {
+    beforeAll(() => {
+      const tabs = [{ url: 'chrome://extenstions' }];
+      checkURL(tabs);
+    });
+
+    it('should display div', () => {
+      const div = document.querySelector('.warning');
+      expect(div.style.display).toBe('flex');
+    });
+
+    it('should disable button', () => {
+      const button = document.getElementById('button_search');
+      expect(button.disabled).toBeTruthy();
+    });
+
+    it('should disable input', () => {
+      const input = document.getElementById('input_search');
+      expect(input.disabled).toBeTruthy();
+    });
   });
 
-  it('should display div when url starts with about', () => {
-    const tabs = [{ url: 'chrome://extenstions' }];
-    checkURL(tabs);
-    const div = document.querySelector('.warning');
-    expect(div.style.display).toBe('flex');
+  describe('url starts with about', () => {
+    beforeAll(() => {
+      const tabs = [{ url: 'about:settings' }];
+      checkURL(tabs);
+    });
+
+    it('should display div', () => {
+      const div = document.querySelector('.warning');
+      expect(div.style.display).toBe('flex');
+    });
+
+    it('should disable button', () => {
+      const button = document.getElementById('button_search');
+      expect(button.disabled).toBeTruthy();
+    });
+
+    it('should disable input', () => {
+      const input = document.getElementById('input_search');
+      expect(input.disabled).toBeTruthy();
+    });
   });
 
-  it('should not display div when url starts with http', () => {
-    const tabs = [{ url: 'https://page.org' }];
-    checkURL(tabs);
-    const div = document.querySelector('.warning');
-    expect(div.style.display).toBe('none');
+  describe('url starts with http', () => {
+    beforeAll(() => {
+      const tabs = [{ url: 'https://page.org' }];
+      checkURL(tabs);
+    });
+
+    it('should not display div', () => {
+      const div = document.querySelector('.warning');
+      expect(div.style.display).toBe('none');
+    });
+
+    it('should not disable button', () => {
+      const button = document.getElementById('button_search');
+      expect(button.disabled).toBeFalsy();
+    });
+
+    it('should not disable input', () => {
+      const input = document.getElementById('input_search');
+      expect(input.disabled).toBeFalsy();
+    });
   });
 });
 

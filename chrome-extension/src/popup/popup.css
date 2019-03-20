@@ -178,11 +178,19 @@ section > h1 {
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
   box-sizing: border-box;
+  cursor: default;
   flex-grow: 1;
   height: 30px;
   min-width: 0;
   padding: 1px 8px;
   width: 0;
+}
+.search > button:disabled,
+.search > input:disabled {
+  cursor: not-allowed;
+}
+.search > input:disabled {
+  background-color: #ffcdd2;
 }
 .search > label {
   display: none;
@@ -345,8 +353,6 @@ select:focus {
 }
 .toggle:checked:focus + label {
   border: 2px solid var(--focus);
-}
-.toggle ~ span {
 }
 .toggle-options {
   border-bottom: 1px solid #A5D6A7;
