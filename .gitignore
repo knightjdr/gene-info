@@ -8,6 +8,7 @@
 # database files
 /database/files/*
 !/database/files/example
+!/database/files/rna-tissues.js
 
 # Mac folder
 .DS_Store
