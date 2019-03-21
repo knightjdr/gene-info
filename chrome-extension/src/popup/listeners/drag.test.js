@@ -1,4 +1,4 @@
-import updateTab from './update-tab';
+import { updateTab } from '../helpers/message';
 
 import {
   arrayMove,
@@ -11,7 +11,7 @@ import {
   mouseOverID,
 } from './drag';
 
-jest.mock('./update-tab');
+jest.mock('../helpers/message');
 global.chrome = {
   storage: {
     local: {

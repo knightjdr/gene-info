@@ -1,10 +1,10 @@
-import { searchTab } from './update-tab';
+import { activeTab } from '../helpers/message';
 
 export const search = function enter(e) {
   if (e.keyCode === 13) {
     const { value } = e.target;
     if (value) {
-      searchTab('search', value);
+      activeTab('search', value);
     }
   }
 };

@@ -1,4 +1,4 @@
-import updateTab from './update-tab';
+import { updateTab } from '../helpers/message';
 
 const reportCheck = function report() {
   const options = ['detailed', 'tooltip'];

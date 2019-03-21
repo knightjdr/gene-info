@@ -1,4 +1,4 @@
-import updateTab from './update-tab';
+import { updateTab } from '../helpers/message';
 
 export const data = {
   get: function getter(key) {

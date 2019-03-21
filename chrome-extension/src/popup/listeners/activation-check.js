@@ -1,4 +1,4 @@
-import updateTab from './update-tab';
+import { updateTab } from '../helpers/message';
 
 const activatationCheck = function activate() {
   const options = ['click', 'drag', 'disable'];

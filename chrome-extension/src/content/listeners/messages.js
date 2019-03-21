@@ -8,7 +8,7 @@ const messages = () => {
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const { action, setting, value } = request;
     if (action === 'ping') {
-      sendResponse({ ready: true });
+      sendResponse(true);
     } else if (action === 'updateSetting') {
       State.updateSetting(setting, value);
       if (setting === 'activate') {

@@ -1,6 +1,6 @@
 import displayCompartments from '../display/compartments';
 import displayHPA from '../display/hpa';
-import updateTab from './update-tab';
+import { updateTab } from '../helpers/message';
 import updateTissues from '../populate/tissues';
 
 const speciesOnChange = function change() {

@@ -1,136 +1,31 @@
-import tabQuery from '../helpers/tabs';
-import warning, { checkURL } from './warning';
+import { activeTab } from '../helpers/message';
+import warning from './warning';
 
-jest.mock('../helpers/tabs');
+jest.mock('../helpers/message');
 
-describe('Check URL', () => {
-  beforeAll(() => {
-    const div = document.createElement('div');
-    div.className = 'warning';
-    div.style.display = 'none';
-    document.body.appendChild(div);
-    const button = document.createElement('button');
-    button.id = 'button_search';
-    document.body.appendChild(button);
-    const input = document.createElement('input');
-    input.id = 'input_search';
-    document.body.appendChild(input);
-  });
+const sleep = ms => (
+  new Promise(resolve => setTimeout(resolve, ms))
+);
 
-  describe('tabs arg is undefined', () => {
-    beforeAll(() => {
-      const tabs = undefined;
-      checkURL(tabs);
-    });
+describe('Warning', () => {
+  describe('tab has injected content script', () => {
+    beforeAll(async (done) => {
+      // Setup elements
+      const div = document.createElement('div');
+      div.className = 'warning';
+      div.style.display = 'none';
+      document.body.appendChild(div);
+      const button = document.createElement('button');
+      button.id = 'button_search';
+      document.body.appendChild(button);
+      const input = document.createElement('input');
+      input.id = 'input_search';
+      document.body.appendChild(input);
 
-    it('should display div', () => {
-      const div = document.querySelector('.warning');
-      expect(div.style.display).toBe('flex');
-    });
-
-    it('should disable button', () => {
-      const button = document.getElementById('button_search');
-      expect(button.disabled).toBeTruthy();
-    });
-
-    it('should disable input', () => {
-      const input = document.getElementById('input_search');
-      expect(input.disabled).toBeTruthy();
-    });
-  });
-
-  describe('first tab entry is undefined', () => {
-    beforeAll(() => {
-      const tabs = [];
-      checkURL(tabs);
-    });
-
-    it('should display div', () => {
-      const div = document.querySelector('.warning');
-      expect(div.style.display).toBe('flex');
-    });
-
-    it('should disable button', () => {
-      const button = document.getElementById('button_search');
-      expect(button.disabled).toBeTruthy();
-    });
-
-    it('should disable input', () => {
-      const input = document.getElementById('input_search');
-      expect(input.disabled).toBeTruthy();
-    });
-  });
-
-  describe('tab url is falsy', () => {
-    beforeAll(() => {
-      const tabs = [{ url: '' }];
-      checkURL(tabs);
-    });
-
-    it('should display div', () => {
-      const div = document.querySelector('.warning');
-      expect(div.style.display).toBe('flex');
-    });
-
-    it('should disable button', () => {
-      const button = document.getElementById('button_search');
-      expect(button.disabled).toBeTruthy();
-    });
-
-    it('should disable input', () => {
-      const input = document.getElementById('input_search');
-      expect(input.disabled).toBeTruthy();
-    });
-  });
-
-  describe('url starts with chrome', () => {
-    beforeAll(() => {
-      const tabs = [{ url: 'chrome://extenstions' }];
-      checkURL(tabs);
-    });
-
-    it('should display div', () => {
-      const div = document.querySelector('.warning');
-      expect(div.style.display).toBe('flex');
-    });
-
-    it('should disable button', () => {
-      const button = document.getElementById('button_search');
-      expect(button.disabled).toBeTruthy();
-    });
-
-    it('should disable input', () => {
-      const input = document.getElementById('input_search');
-      expect(input.disabled).toBeTruthy();
-    });
-  });
-
-  describe('url starts with about', () => {
-    beforeAll(() => {
-      const tabs = [{ url: 'about:settings' }];
-      checkURL(tabs);
-    });
-
-    it('should display div', () => {
-      const div = document.querySelector('.warning');
-      expect(div.style.display).toBe('flex');
-    });
-
-    it('should disable button', () => {
-      const button = document.getElementById('button_search');
-      expect(button.disabled).toBeTruthy();
-    });
-
-    it('should disable input', () => {
-      const input = document.getElementById('input_search');
-      expect(input.disabled).toBeTruthy();
-    });
-  });
-
-  describe('url starts with http', () => {
-    beforeAll(() => {
-      const tabs = [{ url: 'https://page.org' }];
-      checkURL(tabs);
+      activeTab.mockResolvedValue(true);
+      warning();
+      sleep(200);
+      done();
     });
 
     it('should not display div', () => {
@@ -148,12 +43,40 @@ describe('Check URL', () => {
       expect(input.disabled).toBeFalsy();
     });
   });
-});
 
-describe('Warning', () => {
-  it('should call tab query', () => {
-    tabQuery.mockClear();
-    warning();
-    expect(tabQuery).toHaveBeenCalledWith({ active: true, lastFocusedWindow: true }, checkURL);
+  describe('tab does not have injected content script', () => {
+    beforeAll(async (done) => {
+      // Setup elements
+      const div = document.createElement('div');
+      div.className = 'warning';
+      div.style.display = 'none';
+      document.body.appendChild(div);
+      const button = document.createElement('button');
+      button.id = 'button_search';
+      document.body.appendChild(button);
+      const input = document.createElement('input');
+      input.id = 'input_search';
+      document.body.appendChild(input);
+
+      activeTab.mockResolvedValue(undefined);
+      warning();
+      sleep(200);
+      done();
+    });
+
+    it('should display div', () => {
+      const div = document.querySelector('.warning');
+      expect(div.style.display).toBe('flex');
+    });
+
+    it('should disable button', () => {
+      const button = document.getElementById('button_search');
+      expect(button.disabled).toBeTruthy();
+    });
+
+    it('should disable input', () => {
+      const input = document.getElementById('input_search');
+      expect(input.disabled).toBeTruthy();
+    });
   });
 });

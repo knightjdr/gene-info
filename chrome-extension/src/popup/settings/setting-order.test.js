@@ -1,10 +1,10 @@
-import updateTab from '../listeners/update-tab';
+import { updateTab } from '../helpers/message';
 import settingOrder, { confirmOrder, setElementOrder } from './setting-order';
 
 jest.mock('../../config', () => ({
   defaultSettingOrder: ['a', 'b', 'c', 'd'],
 }));
-jest.mock('../listeners/update-tab');
+jest.mock('../helpers/message');
 
 global.chrome = {
   storage: {
