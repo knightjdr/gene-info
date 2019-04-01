@@ -2,6 +2,7 @@
 
 const args = require('./args');
 const domains = require('./domains/domains');
+const geneNames = require('./gene-names/gene-names');
 const generateDB = require('./generate-db');
 const go = require('./go/go');
 const interactions = require('./interactions/interactions');
@@ -20,6 +21,7 @@ const options = args();
 ** as splitting domains to individual files requires a list of Uniprot IDs to
 ** keep. */
 Promise.all([
+  geneNames(options),
   go(options),
   interactions(options),
   localization(options),

@@ -25,6 +25,7 @@ beforeAll(async (done) => {
     // Insert some documents
     const docs = [
       { _id: 1, name: 'test' },
+      { _id: 2, name: 'p38β' },
     ];
     db.collection('test_documents').insertMany(docs, () => {
       done();
@@ -41,8 +42,15 @@ describe('Query for a single entry', () => {
       })
     ));
 
+    it('should find record with greek letter', () => (
+      findOne('documents', { name: 'p38β' }).then((getCollection) => {
+        const expected = [{ _id: 2, name: 'p38β' }];
+        expect(getCollection).toEqual(expected);
+      })
+    ));
+
     it('should subset returned documents from database', () => (
-      findOne('documents', {}, { _id: 0, name: 1 }).then((getCollection) => {
+      findOne('documents', { name: 'test' }, { _id: 0, name: 1 }).then((getCollection) => {
         const expected = [{ name: 'test' }];
         expect(getCollection).toEqual(expected);
       })

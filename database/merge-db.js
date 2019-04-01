@@ -1,14 +1,17 @@
 const arrSortByTwoKeys = require('./helpers/arr-sort-by-two-keys');
+const defineGeneNames = require('./gene-names/define');
 
 const mergeDb = ([
   db,
   { rnaExpression },
   domains,
+  geneNames,
   interactions,
   localization,
   regions,
 ]) => (
   db.map((entry) => {
+    const gene = defineGeneNames(entry, geneNames);
     const currDomains = entry.uniprot[0] && domains[entry.uniprot[0]]
       ? domains[entry.uniprot[0]]
       : [];
@@ -18,6 +21,8 @@ const mergeDb = ([
     const domainsRegions = arrSortByTwoKeys([...currDomains, ...currRegions], 'start', 'end', 'asc', 'numeric', 'numeric');
     return ({
       ...entry,
+      gene: gene.symbol,
+      synonyms: gene.synonyms,
       domains: domainsRegions,
       interactors: interactions[entry.gene] || [],
       localization: {
