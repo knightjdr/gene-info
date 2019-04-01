@@ -1,4 +1,5 @@
 /* eslint indent: 0 */
+import links from './link';
 import position from '../position';
 import State from '../../state';
 
@@ -12,6 +13,12 @@ const noResult = (error = false, stateStyle) => {
       .panel_small {
         min-width: unset;
         width: auto;
+      }
+      .panel_small h1 {
+        font-size: 1em;
+      }
+      .panel_small ul {
+        margin: 10px 0 5px 0;
       }
       .panel_small .action-button:not(#resize) {
         visibility: visible;
@@ -37,9 +44,9 @@ const noResult = (error = false, stateStyle) => {
       id="panel"
       style="${style}"
     >
-      <p class="no-result">${
+      ${
         error
-          ? `
+        ? `<p class="no-result">
             An error occured. Please use our
             <a
               href="https://github.com/knightjdr/gene-info/issues"
@@ -49,9 +56,16 @@ const noResult = (error = false, stateStyle) => {
               issue tracker
             </a>
             to report bugs.
+          </p>`
+        : `<p class="no-result">
+            No search result
+          </p>
+          <h1>
+            Search at:
+          </h1>
+          ${links(State.searchTerm, State.settings)}
           `
-          : 'No gene information available'
-      }</p>
+      }
     </aside>
   `;
 };

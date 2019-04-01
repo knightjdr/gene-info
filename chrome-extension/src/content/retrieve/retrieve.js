@@ -1,23 +1,5 @@
-import http from './http-promise';
-import panel from '../templates/panel/panel';
-import tooltip from '../templates/tooltip/tooltip';
+import fetch from './fetch';
 import State from '../state';
-
-const fetch = (species, field, gene, event) => {
-  const route = `/${species.replace(' ', '-')}/${field}/${gene}`;
-  http(route)
-    .then((data) => {
-      State.addReport(data);
-      if (State.settings.report === 'detailed') {
-        panel();
-      } else {
-        tooltip(event);
-      }
-    })
-    .catch(() => {
-      panel(0, true);
-    });
-};
 
 const shouldActivate = (e, activate, ctrl) => (
   activate

@@ -32,6 +32,7 @@ class State {
 
   init(storage) {
     const species = storage.species || 'Homo sapiens';
+    this.searchTerm = '';
     this.settings = {
       activate: storage.activate || 'click',
       auto: defaultTrueToggleState(storage.auto),
@@ -78,6 +79,10 @@ class State {
   reset() {
     this.updateSetting('interactorSortDirection', 'asc');
     this.updateSetting('interactorSortKey', 'gene');
+  }
+
+  setSearchTerm(value) {
+    this.searchTerm = value;
   }
 
   updateMdTime() {

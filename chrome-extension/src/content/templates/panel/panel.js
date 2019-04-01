@@ -2,7 +2,7 @@ import backButton from '../back-button';
 import closeButton from '../close-button';
 import dragButton from '../drag-button';
 import fadeIn from '../../transitions/fade-in';
-import noResult from './no-result';
+import noResult from '../no-result/panel';
 import panelDetails from './panel-details';
 import panelStyle from '../../style/panel';
 import resizeButton from './resize-button';
