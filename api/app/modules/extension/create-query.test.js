@@ -12,6 +12,7 @@ describe('Create query', () => {
       $or: [
         { gene: { $regex: re } },
         { synonyms: re },
+        { geneAlternateSymbols: re },
       ],
     };
     expect(createQuery('gene', 'test')).toEqual(expected);

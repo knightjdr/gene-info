@@ -23,6 +23,7 @@ const mergeDb = ([
       ...entry,
       gene: gene.symbol,
       synonyms: gene.synonyms,
+      geneAlternateSymbols: gene.geneAlternateSymbols,
       domains: domainsRegions,
       interactors: interactions[entry.gene] || [],
       localization: {

@@ -7,7 +7,8 @@ const fsConfig = {
   files: [
     {
       file: './files/gene-names/hgnc.json',
-      url: 'ftp://ftp.ebi.ac.uk/pub/databases/genenames/new/json/locus_groups/protein-coding_gene.json',
+      host: 'ftp.ebi.ac.uk',
+      hostFile: '/pub/databases/genenames/new/json/locus_groups/protein-coding_gene.json',
     },
   ],
 };
@@ -17,7 +18,12 @@ const geneName = options => (
   new Promise((resolve, reject) => {
     createFolder(fsConfig.folder)
       .then(() => Promise.all([
-        downloadFtp(fsConfig.files[0].url, fsConfig.files[0].file, options.skipDownload),
+        downloadFtp(
+          fsConfig.files[0].host,
+          fsConfig.files[0].hostFile,
+          fsConfig.files[0].file,
+          options.skipDownload,
+        ),
       ]))
       .then(() => Promise.all([
         minHuman(fsConfig.files[0].file, fsConfig.folder, options.skipMin),

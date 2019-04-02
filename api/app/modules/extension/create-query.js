@@ -9,6 +9,7 @@ const createQuery = (field, term) => {
       $or: [
         { gene: { $regex: re } },
         { synonyms: re },
+        { geneAlternateSymbols: re },
       ],
     };
   } else {

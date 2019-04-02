@@ -26,9 +26,14 @@ describe('Define gene names', () => {
       expect(definedNames.symbol).toBe('p38Beta');
     });
 
-    it('should include greek letters, for synonyms and official name', () => {
-      const expected = ['MAPK11', 'p38β', 'PRKM11', 'SAPK2', 'SAPKgamma', 'SAPKγ'];
+    it('should return synonyms with UniProt offical name', () => {
+      const expected = ['MAPK11', 'PRKM11', 'SAPK2', 'SAPKgamma'];
       expect(definedNames.synonyms).toEqual(expected);
+    });
+
+    it('should include greek letters, for synonyms and official name', () => {
+      const expected = ['p38β', 'SAPKγ'];
+      expect(definedNames.geneAlternateSymbols).toEqual(expected);
     });
   });
 
@@ -49,8 +54,13 @@ describe('Define gene names', () => {
     });
 
     it('should return uniprot synonyms', () => {
-      const expected = ['SAPK2', 'SAPKgamma', 'SAPKγ'];
+      const expected = ['SAPK2', 'SAPKgamma'];
       expect(definedNames.synonyms).toEqual(expected);
+    });
+
+    it('should return greek synonyms', () => {
+      const expected = ['SAPKγ'];
+      expect(definedNames.geneAlternateSymbols).toEqual(expected);
     });
   });
 
@@ -79,8 +89,13 @@ describe('Define gene names', () => {
     });
 
     it('should return uniprot synonyms', () => {
-      const expected = ['SAPK2', 'SAPKgamma', 'SAPKγ'];
+      const expected = ['SAPK2', 'SAPKgamma'];
       expect(definedNames.synonyms).toEqual(expected);
+    });
+
+    it('should return greek synonyms', () => {
+      const expected = ['SAPKγ'];
+      expect(definedNames.geneAlternateSymbols).toEqual(expected);
     });
   });
 
@@ -105,8 +120,13 @@ describe('Define gene names', () => {
     });
 
     it('should return uniprot synonyms', () => {
-      const expected = ['SAPK2', 'SAPKgamma', 'SAPKγ'];
+      const expected = ['SAPK2', 'SAPKgamma'];
       expect(definedNames.synonyms).toEqual(expected);
+    });
+
+    it('should return greek synonyms', () => {
+      const expected = ['SAPKγ'];
+      expect(definedNames.geneAlternateSymbols).toEqual(expected);
     });
   });
 
@@ -135,8 +155,13 @@ describe('Define gene names', () => {
     });
 
     it('should return uniprot synonyms', () => {
-      const expected = ['SAPK2', 'SAPKgamma', 'SAPKγ'];
+      const expected = ['SAPK2', 'SAPKgamma'];
       expect(definedNames.synonyms).toEqual(expected);
+    });
+
+    it('should return greek synonyms', () => {
+      const expected = ['SAPKγ'];
+      expect(definedNames.geneAlternateSymbols).toEqual(expected);
     });
   });
 });

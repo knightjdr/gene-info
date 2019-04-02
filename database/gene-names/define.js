@@ -32,14 +32,15 @@ const defineGeneNames = (entry, official) => {
     synonyms = arrayUnique(synonyms);
   } else {
     symbol = uniprotSymbol;
-    synonyms = uniprotSynonyms;
+    synonyms = arrayUnique(uniprotSynonyms);
   }
 
   // Append gene names with greek words as gene name with greek letter
-  synonyms.push(...convertGreek([symbol, ...synonyms]));
+  const geneAlternateSymbols = convertGreek([symbol, ...synonyms]);
   return {
+    geneAlternateSymbols,
     symbol,
-    synonyms: arrSort.alphabetical(arrayUnique(synonyms)),
+    synonyms: arrSort.alphabetical(synonyms),
   };
 };
 

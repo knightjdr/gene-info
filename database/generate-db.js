@@ -45,24 +45,22 @@ const speciesDB = (specie, obo) => (
   })
 );
 
-const generateDB = () => (
-  new Promise((resolve, reject) => {
-    try {
-      await createFolder('./files/databases');
-      const obo = await readObo('./files/go/go-basic.obo');
+const generateDB = async () => {
+  try {
+    await createFolder('./files/databases');
+    const obo = await readObo('./files/go/go-basic.obo');
 
-      const rnaTissues = {};
-      const iterator = async (species) => {
-        await Promise.all(species.map(async (specie) => {
-          rnaTissues[specie] = await speciesDB(specie, obo);
-        }));
-        resolve(rnaTissues);
-      };
-      iterator(config.species);
-    } catch (err) {
-      reject(err);
-    }
-  })
-);
+    const rnaTissues = {};
+    const iterator = async (species) => {
+      await Promise.all(species.map(async (specie) => {
+        rnaTissues[specie] = await speciesDB(specie, obo);
+      }));
+      return rnaTissues;
+    };
+    iterator(config.species);
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 
 module.exports = generateDB;
