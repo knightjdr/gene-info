@@ -24,6 +24,9 @@ npm-debug.log
 .npm
 ./**/npm
 
+# VScode
+.vscode
+
 # Extension
 chrome-extension/dist
 chrome-extension/dist-test

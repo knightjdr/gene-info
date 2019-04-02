@@ -157,6 +157,20 @@ describe('Parse xml entry', () => {
       expect(parsed.orf).toEqual(expected);
     });
 
+    it('should return pathways', () => {
+      const expected = [
+        {
+          id: 'R-HSA-69231',
+          term: 'Cyclin D associated events in G1',
+        },
+        {
+          id: 'R-HSA-2995383',
+          term: 'Initiation of Nuclear Envelope Reformation',
+        },
+      ];
+      expect(parsed.pathway).toEqual(expected);
+    });
+
     it('should return ProteomicsDB ID', () => {
       const expected = 79108;
       expect(parsed.proteomicsdb).toBe(expected);

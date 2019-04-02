@@ -43,7 +43,8 @@ const goElement = (report, settings) => {
         .go-terms a svg {
           fill: var(--primary);
         }
-        .go-terms a:focus svg {
+        .go-terms a:focus svg,
+        .go-terms a:hover svg {
           fill: var(--text);
         }
       </style>

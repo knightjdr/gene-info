@@ -38,6 +38,7 @@ const entryParse = (entry) => {
       locus: genes.locus,
       mw: sequence.mw,
       orf: genes.orf,
+      pathway: arrSortByKey(refs.pathway, 'term'),
       proteomicsdb: refs.proteomicsdb,
       refseq: refs.refseq,
       synonyms: arrSort.alphabetical(genes.synonyms),

@@ -6,6 +6,7 @@ import goElement from './go';
 import interactorElement from './interactor';
 import linkElement from './link';
 import localizationElement from './localization';
+import pathwayElement from './pathway';
 import position from '../position';
 import rnaExpressionElement from './rna-expression';
 import State from '../../state';
@@ -18,6 +19,7 @@ const sections = {
   interactors: interactorElement,
   links: linkElement,
   localization: localizationElement,
+  pathway: pathwayElement,
   rna_expression: rnaExpressionElement,
 };
 

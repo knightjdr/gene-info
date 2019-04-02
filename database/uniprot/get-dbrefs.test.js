@@ -113,6 +113,20 @@ describe('DB refs', () => {
       expect(refs.mgi).toBe(expected);
     });
 
+    it('should return pathways', () => {
+      const expected = [
+        {
+          id: 'R-HSA-2995383',
+          term: 'Initiation of Nuclear Envelope Reformation',
+        },
+        {
+          id: 'R-HSA-69231',
+          term: 'Cyclin D associated events in G1',
+        },
+      ];
+      expect(refs.pathway).toEqual(expected);
+    });
+
     it('should return PomBase ID', () => {
       const expected = 'SPAC24B11.06c';
       expect(refs.pombase).toBe(expected);

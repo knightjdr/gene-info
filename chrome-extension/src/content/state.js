@@ -1,7 +1,7 @@
 import config from '../config';
 
-const defaultFalseToggleState = value => Boolean(value);
-const defaultTrueToggleState = value => Boolean(value || value === undefined);
+export const defaultFalseToggleState = value => Boolean(value);
+export const defaultTrueToggleState = value => Boolean(value || value === undefined);
 
 class State {
   addReport(report) {
@@ -51,6 +51,7 @@ class State {
       localization_compartments: defaultTrueToggleState(storage.links),
       localization_hpa: defaultTrueToggleState(storage.links),
       localization_uniprot: defaultTrueToggleState(storage.links),
+      pathway: defaultTrueToggleState(storage.pathway),
       setting_order: storage.setting_order || config.defaultSettingOrder,
       report: storage.report || 'detailed',
       rna_expression: defaultTrueToggleState(storage.rna_expression),

@@ -617,6 +617,12 @@ const xmlEntry = `
   <property type="entry name" value="PTHR13250"/>
   <property type="match status" value="1"/>
 </dbReference>
+<dbReference type="Reactome" id="R-HSA-2995383">
+  <property type="pathway name" value="Initiation of Nuclear Envelope Reformation"/>
+</dbReference>
+<dbReference type="Reactome" id="R-HSA-69231">
+  <property type="pathway name" value="Cyclin D associated events in G1"/>
+</dbReference>
 <sequence length="212" mass="24702" checksum="5AA613F71FAAEF56" modified="2001-06-01" version="1">MRMTMEEMKNEAETTSMVSMPLYAVMYPVFNELERVNLSAAQTLRAAFIKAEKENPGLTQDIIMKILEKKSVEVNFTESLLRMAADDVEEYMIERPEPEFQDLNEKARALKQILSKIPDEINDRVRFLQTIKDIASAIKELLDTVNNVFKKYQYQNRRALEHQKKEFVKYSKSFSDTLKTYFKDGKAINVFVSANRLIHQTNLILQTFKTVA</sequence>
 </entry>`;
 
