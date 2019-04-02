@@ -12,11 +12,7 @@ describe('Resonse headers', () => {
   });
 
   it('should set three headers', () => {
-    expect(res.setHeader).toHaveBeenCalledTimes(4);
-  });
-
-  it('should set Access header', () => {
-    expect(res.setHeader).toHaveBeenCalledWith('Access-Control-Allow-Origin', '*');
+    expect(res.setHeader).toHaveBeenCalledTimes(3);
   });
 
   it('should set XSS header', () => {
