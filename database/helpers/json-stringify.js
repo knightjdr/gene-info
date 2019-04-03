@@ -3,6 +3,9 @@ const fs = require('fs');
 const stringify = (file, content) => (
   new Promise((resolve) => {
     const stream = fs.createWriteStream(file, { flags: 'w' });
+    stream.on('finish', () => {
+      resolve();
+    });
     stream.write('[\n');
     content.forEach((entry, index) => {
       stream.write(`${JSON.stringify(entry, null, 2)}`);
@@ -13,7 +16,6 @@ const stringify = (file, content) => (
     });
     stream.write(']\n');
     stream.end();
-    resolve();
   })
 );
 

@@ -57,7 +57,7 @@ const generateDB = async () => {
       }));
       return rnaTissues;
     };
-    iterator(config.species);
+    await iterator(config.species);
   } catch (err) {
     throw new Error(err);
   }

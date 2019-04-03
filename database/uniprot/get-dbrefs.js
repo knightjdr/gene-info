@@ -77,6 +77,11 @@ const getDBRefs = dbRefs => (
         ...accum,
         mgi: ref.$.id,
       };
+    } if (ref.$.type === 'MIM') {
+      return {
+        ...accum,
+        mim: Number(ref.$.id),
+      };
     } if (ref.$.type === 'PomBase') {
       return {
         ...accum,

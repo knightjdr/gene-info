@@ -48,6 +48,10 @@ describe('Content state', () => {
     });
 
     describe('after initialization', () => {
+      it('should set pathology setting to true', () => {
+        expect(State.settings.pathology).toBeTruthy();
+      });
+
       it('should set pathway setting to true', () => {
         expect(State.settings.pathway).toBeTruthy();
       });
@@ -74,12 +78,17 @@ describe('Content state', () => {
   describe('defined storage settings', () => {
     beforeAll(() => {
       const storage = {
+        pathology: false,
         pathway: false,
       };
       State.init(storage);
     });
 
     describe('after initialization', () => {
+      it('should set pathology setting to false', () => {
+        expect(State.settings.pathology).toBeFalsy();
+      });
+
       it('should set pathway setting to false', () => {
         expect(State.settings.pathway).toBeFalsy();
       });

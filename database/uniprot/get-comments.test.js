@@ -5,6 +5,24 @@ const getComments = require('./get-comments');
 
 const xmlEntry = `
 <entry>
+  <comment type="disease" evidence="8">
+    <disease id="DI-00257">
+      <name>Cerebral cavernous malformations 3</name>
+      <acronym>CCM3</acronym>
+      <description>A congenital vascular anomaly of the central nervous system that can result in hemorrhagic stroke (PubMed:11111111).</description>
+      <dbReference type="MIM" id="603285"/>
+    </disease>
+    <text>The disease is caused by mutations affecting the gene represented in this entry (PubMed:11111111).</text>
+  </comment>
+  <comment type="disruption phenotype">
+    <text evidence="2">Animals are sterile and develop slowly.</text>
+  </comment>
+  <comment type="disease">
+    <text evidence="7">ACTA2 mutations predispose patients to a variety of diffuse and diverse vascular diseases.</text>
+  </comment>
+  <comment type="disease">
+    <text>Increased levels of C3 and its cleavage product ASP, are associated with obesity.</text>
+  </comment>
   <comment type="function">
     <text evidence="69 77 78 79 80 81 82 83 85 89 90 91 101 112 119 120 132 133 138 139 142" status="by similarity">Receptor tyrosine kinase binding ligands of the EGF family and activating several signaling cascades to convert extracellular cues into appropriate cellular responses (PubMed:2790960, PubMed:10805725, PubMed:27153536). Known ligands include EGF, TGFA/TGF-alpha, AREG, epigen/EPGN, BTC/betacellulin, epiregulin/EREG and HBEGF/heparin-binding EGF (PubMed:2790960, PubMed:7679104, PubMed:8144591, PubMed:9419975, PubMed:15611079, PubMed:12297049, PubMed:27153536, PubMed:20837704). Ligand binding triggers receptor homo- and/or heterodimerization and autophosphorylation on key cytoplasmic residues. The phosphorylated receptor recruits adapter proteins like GRB2 which in turn activates complex downstream signaling cascades. Activates at least 4 major downstream signaling cascades including the RAS-RAF-MEK-ERK, PI3 kinase-AKT, PLCgamma-PKC and STATs modules (PubMed:27153536). May also activate the NF-kappa-B signaling cascade (PubMed:11116146). Also directly phosphorylates other proteins like RGS16, activating its GTPase activity and probably coupling the EGF receptor signaling to the G protein-coupled receptor signaling (PubMed:11602604). Also phosphorylates MUC1 and increases its interaction with SRC and CTNNB1/beta-catenin (PubMed:11483589). Plays a role in enhancing learning and memory performance.</text>
   </comment>
@@ -65,7 +83,7 @@ beforeAll(async (done) => {
 });
 
 describe('Get comments', () => {
-  describe('with function and localization', () => {
+  describe('with applicable comments', () => {
     let result;
 
     beforeAll(() => {
@@ -90,9 +108,39 @@ describe('Get comments', () => {
       ];
       expect(result.localization).toEqual(expected);
     });
+
+    it('should return pathologies', () => {
+      const expected = [
+        {
+          description: 'A congenital vascular anomaly of the central nervous system that can result in hemorrhagic stroke.',
+          mim: 603285,
+          name: 'Cerebral cavernous malformations 3',
+          uniprotID: 'DI-00257',
+        },
+        {
+          description: 'Animals are sterile and develop slowly.',
+          mim: undefined,
+          name: '',
+          uniprotID: '',
+        },
+        {
+          description: 'ACTA2 mutations predispose patients to a variety of diffuse and diverse vascular diseases.',
+          mim: undefined,
+          name: '',
+          uniprotID: '',
+        },
+        {
+          description: 'Increased levels of C3 and its cleavage product ASP, are associated with obesity.',
+          mim: undefined,
+          name: '',
+          uniprotID: '',
+        },
+      ];
+      expect(result.pathology).toEqual(expected);
+    });
   });
 
-  describe('without function and localization', () => {
+  describe('withoutout applicable comments', () => {
     let result;
 
     beforeAll(() => {
@@ -107,6 +155,11 @@ describe('Get comments', () => {
     it('should return empty array for localizations', () => {
       const expected = [];
       expect(result.localization).toEqual(expected);
+    });
+
+    it('should return emptry array for pathologies', () => {
+      const expected = [];
+      expect(result.pathology).toEqual(expected);
     });
   });
 });

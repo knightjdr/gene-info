@@ -41,12 +41,34 @@ const interactorElement = (report, settings) => {
   let html = '';
   if (settings.interactors) {
     const accession = report.uniprot[0];
+    const links = [];
+    if (report.biogrid) {
+      links.push(`
+        <a
+          href="https://thebiogrid.org/${report.biogrid}"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          BioGRID
+        </a>
+      `);
+    }
+    links.push(`
+      <a
+        href="https://www.ebi.ac.uk/intact/query/${accession}"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        IntAct
+      </a>
+    `);
     html = `
       <style>
-        .details-header-interactors a:not(:last-child):after {
-          content: ',';
-          left: -4px;
-          position: relative;
+        .interactor .links {
+          display: inline-flex;
+        }
+        .interactor .links a:not(:first-child) {
+          margin-left: 4px;
         }
         .interactor-table {
           table-layout: fixed;
@@ -90,29 +112,10 @@ const interactorElement = (report, settings) => {
           margin: 0;
         }
       </style>
-      <section class="details">
-        <div class="details-header details-header-interactors">
+      <section class="details interactor">
+        <div class="details-header details-header">
           <h1>INTERACTORS</h1>
-          ${
-            report.biogrid
-            ? `
-              <a
-                href="https://thebiogrid.org/${report.biogrid}"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                BioGRID
-              </a>
-            `
-            : ''
-          }
-          <a
-            href="https://www.ebi.ac.uk/intact/query/${accession}"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            IntAct
-          </a>
+          <span class="links">${links.join(',')}</span
         </div>
         ${
           report.interactors && report.interactors.length > 0

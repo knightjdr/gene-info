@@ -1,3 +1,4 @@
+// Remove Pubmed IDs from text.
 const parseDescription = (description) => {
   const re = new RegExp(/\s*\([^P]*PubMed:[^)]+\)/g);
   return description.replace(re, '');

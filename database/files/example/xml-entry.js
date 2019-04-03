@@ -171,10 +171,13 @@ const xmlEntry = `
   <disease id="DI-00257">
     <name>Cerebral cavernous malformations 3</name>
     <acronym>CCM3</acronym>
-    <description>A congenital vascular anomaly of the central nervous system that can result in hemorrhagic stroke, seizures, recurrent headaches, and focal neurologic deficits. The lesions are characterized by grossly enlarged blood vessels consisting of a single layer of endothelium and without any intervening neural tissue, ranging in diameter from a few millimeters to several centimeters.</description>
+    <description>A congenital vascular anomaly of the central nervous system that can result in hemorrhagic stroke (PubMed:11111111).</description>
     <dbReference type="MIM" id="603285"/>
   </disease>
   <text>The disease is caused by mutations affecting the gene represented in this entry.</text>
+</comment>
+<comment type="disruption phenotype">
+  <text evidence="2">Animals are sterile and develop slowly (PubMed:11111111).</text>
 </comment>
 <comment type="similarity">
   <text evidence="14">Belongs to the PDCD10 family.</text>

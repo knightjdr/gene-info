@@ -157,6 +157,24 @@ describe('Parse xml entry', () => {
       expect(parsed.orf).toEqual(expected);
     });
 
+    it('should return pathologies', () => {
+      const expected = [
+        {
+          description: 'A congenital vascular anomaly of the central nervous system that can result in hemorrhagic stroke.',
+          mim: 603285,
+          name: 'Cerebral cavernous malformations 3',
+          uniprotID: 'DI-00257',
+        },
+        {
+          description: 'Animals are sterile and develop slowly.',
+          mim: undefined,
+          name: '',
+          uniprotID: '',
+        },
+      ];
+      expect(parsed.pathology).toEqual(expected);
+    });
+
     it('should return pathways', () => {
       const expected = [
         {
@@ -230,6 +248,11 @@ describe('Parse xml entry', () => {
     it('should return MGI ID', () => {
       const expected = 'MGITest';
       expect(parsed.mgi).toBe(expected);
+    });
+
+    it('should return MIM ID', () => {
+      const expected = 609118;
+      expect(parsed.mim).toBe(expected);
     });
 
     it('should return PomBase ID', () => {

@@ -51,6 +51,7 @@ class State {
       localization_compartments: defaultTrueToggleState(storage.links),
       localization_hpa: defaultTrueToggleState(storage.links),
       localization_uniprot: defaultTrueToggleState(storage.links),
+      pathology: defaultTrueToggleState(storage.pathology),
       pathway: defaultTrueToggleState(storage.pathway),
       setting_order: storage.setting_order || config.defaultSettingOrder,
       report: storage.report || 'detailed',

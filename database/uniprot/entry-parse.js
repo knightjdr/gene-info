@@ -38,6 +38,7 @@ const entryParse = (entry) => {
       locus: genes.locus,
       mw: sequence.mw,
       orf: genes.orf,
+      pathology: arrSortByKey(comments.pathology, 'name'),
       pathway: arrSortByKey(refs.pathway, 'term'),
       proteomicsdb: refs.proteomicsdb,
       refseq: refs.refseq,
@@ -52,6 +53,8 @@ const entryParse = (entry) => {
       parsed.flybase = refs.flybase;
     } if (refs.mgi) {
       parsed.mgi = refs.mgi;
+    } if (refs.mim) {
+      parsed.mim = refs.mim;
     } if (refs.pombase) {
       parsed.pombase = refs.pombase;
     } if (refs.sgd) {

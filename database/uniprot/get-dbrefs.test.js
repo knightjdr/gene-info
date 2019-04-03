@@ -113,6 +113,11 @@ describe('DB refs', () => {
       expect(refs.mgi).toBe(expected);
     });
 
+    it('should return MIM ID', () => {
+      const expected = 609118;
+      expect(refs.mim).toBe(expected);
+    });
+
     it('should return pathways', () => {
       const expected = [
         {
