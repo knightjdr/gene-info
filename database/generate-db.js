@@ -2,6 +2,7 @@ const config = require('./config');
 const createFolder = require('./helpers/create-folder');
 const domainParse = require('./domains/domain-parse');
 const expressionParse = require('./rna-expression/expression-parse');
+const idList = require('./helpers/id-list');
 const intParse = require('./interactions/iterate-tab');
 const mergeDB = require('./merge-db');
 const regionParse = require('./regions/region-parse');
@@ -33,8 +34,11 @@ const speciesDB = (specie, obo) => (
     ])
       .then((values) => {
         [, { rnaTissues }] = values;
-        const merged = mergeDB(values);
-        return jsonStringify(`./files/databases/${specie}.json`, merged);
+        const [merged, ids] = mergeDB(values);
+        return Promise.all([
+          jsonStringify(`./files/databases/${specie}.json`, merged),
+          idList(`./files/ids/${specie}.json`, ids),
+        ]);
       })
       .then(() => {
         resolve(rnaTissues);

@@ -8,7 +8,7 @@ const replace = (node, genes) => {
     const start = match.index;
     const end = start + word.length;
     nodeList.appendChild(document.createTextNode(searchText.substring(0, start)));
-    if (genes[word.toLowerCase()]) {
+    if (genes[word]) {
       const span = document.createElement('span');
       span.className = 'gix-highlight';
       span.style.backgroundColor = 'yellow';

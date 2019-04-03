@@ -9,8 +9,9 @@ const mergeDb = ([
   interactions,
   localization,
   regions,
-]) => (
-  db.map((entry) => {
+]) => {
+  const ids = [];
+  const merged = db.map((entry) => {
     const gene = defineGeneNames(entry, geneNames);
     const currDomains = entry.uniprot[0] && domains[entry.uniprot[0]]
       ? domains[entry.uniprot[0]]
@@ -19,6 +20,16 @@ const mergeDb = ([
       ? regions[entry.uniprot[0]]
       : [];
     const domainsRegions = arrSortByTwoKeys([...currDomains, ...currRegions], 'start', 'end', 'asc', 'numeric', 'numeric');
+    const currIDs = [
+      gene.symbol,
+      ...gene.geneAlternateSymbols,
+      ...gene.synonyms,
+      ...entry.uniprot,
+      ...entry['ensembl-gene'],
+      ...entry['ensembl-protein'],
+      ...entry.refseq,
+    ];
+    ids.push(...currIDs);
     return ({
       ...entry,
       gene: gene.symbol,
@@ -35,7 +46,8 @@ const mergeDb = ([
       },
       'rna-expression': entry['ensembl-gene'][0] && rnaExpression[entry['ensembl-gene'][0]] ? rnaExpression[entry['ensembl-gene'][0]] : {},
     });
-  })
-);
+  });
+  return [merged, ids];
+};
 
 module.exports = mergeDb;

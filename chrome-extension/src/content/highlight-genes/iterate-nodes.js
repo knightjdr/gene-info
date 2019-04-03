@@ -13,7 +13,11 @@ const interateNodes = () => {
       children.forEach((child) => {
         if (child.nodeType === 3) {
           replace(child, genes);
-        } else if (child.nodeType === 1) {
+        } else if (
+          child.nodeType === 1
+          && child.nodeName !== 'A'
+          && child.nodeName !== 'BUTTON'
+        ) {
           iterator(child);
         }
       });
