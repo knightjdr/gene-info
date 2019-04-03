@@ -55,9 +55,9 @@ const generateDB = async () => {
       await Promise.all(species.map(async (specie) => {
         rnaTissues[specie] = await speciesDB(specie, obo);
       }));
-      return rnaTissues;
     };
     await iterator(config.species);
+    return rnaTissues;
   } catch (err) {
     throw new Error(err);
   }

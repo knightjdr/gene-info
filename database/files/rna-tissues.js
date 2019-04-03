@@ -1,11 +1,11 @@
 const rnaTissues = {
-  'Arabidopsis thaliana': {
+  'Xenopus laevis': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Caenorhabditis elegans': {
+  'Gallus gallus': {
     cells: [
     ],
     tissues: [
@@ -23,13 +23,37 @@ const rnaTissues = {
     tissues: [
     ],
   },
+  'Caenorhabditis elegans': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Schizosaccharomyces pombe': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
   'Drosophila melanogaster': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Gallus gallus': {
+  'Saccharomyces cerevisiae': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Arabidopsis thaliana': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Mus musculus': {
     cells: [
     ],
     tissues: [
@@ -140,30 +164,6 @@ const rnaTissues = {
       'thyroid gland',
       'tonsil',
       'urinary bladder',
-    ],
-  },
-  'Mus musculus': {
-    cells: [
-    ],
-    tissues: [
-    ],
-  },
-  'Saccharomyces cerevisiae': {
-    cells: [
-    ],
-    tissues: [
-    ],
-  },
-  'Schizosaccharomyces pombe': {
-    cells: [
-    ],
-    tissues: [
-    ],
-  },
-  'Xenopus laevis': {
-    cells: [
-    ],
-    tissues: [
     ],
   },
 };
