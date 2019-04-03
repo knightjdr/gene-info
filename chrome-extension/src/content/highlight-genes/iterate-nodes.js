@@ -1,13 +1,13 @@
 import replace from './replace';
 
 const interateNodes = () => {
-  const genes = { PDCD10: 1, p38β: 1 };
-  const iterator = (p) => {
-    if (p === null) {
+  const genes = { pdcd10: 1, p38β: 1 };
+  const iterator = (node) => {
+    if (node === null) {
       return;
     }
 
-    const children = Array.prototype.slice.call(p.childNodes);
+    const children = Array.prototype.slice.call(node.childNodes);
 
     if (children.length) {
       children.forEach((child) => {
