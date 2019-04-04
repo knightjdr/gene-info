@@ -113,9 +113,9 @@ const interactorElement = (report, settings) => {
         }
       </style>
       <section class="details interactor">
-        <div class="details-header details-header">
+        <div class="details-header">
           <h1>INTERACTORS</h1>
-          <span class="links">${links.join(',')}</span
+          <span class="links">${links.join(',')}</span>
         </div>
         ${
           report.interactors && report.interactors.length > 0
