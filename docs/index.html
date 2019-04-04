@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-  <title>Gene Info documentation</title>
-  <meta name="Description" content="Gene Info Chrome extension for retrieving gene information on any webpage.">
+  <title>Gene Info eXtension (GIX)</title>
+  <meta name="Description" content="Gene Info eXtension (GIX) is a browser extension for retrieving gene information on any webpage.">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,13 +18,13 @@
   <meta name="msapplication-TileColor" content="#fdfdfd">
   <meta name="theme-color" content="#658170">
 
-  <link rel="stylesheet" href="assets/style.JHQByO.css">
+  <link rel="stylesheet" href="assets/style.63edc9ac.css">
 </head>
 
 <body>
   <nav class="nav">
     <div class="nav__inner">
-      <h1>Gene Info</h1>
+      <h1>GIX</h1>
       <ul class="nav__links">
         <li><a href="#video">Video tutorial</a></li>
         <li><a href="#settings">Settings</a></li>
@@ -42,15 +42,15 @@
       </ul>
       <hr>
       <small>
-        Version 0.7.0
+        Version 1.1.0
       </small>
     </div>
   </nav>
   <div class="documentation">
     <header>
-      <h1>Gene Info documentation</h1>
+      <h1>Gene Info eXtension (GIX)</h1>
       <p>
-        The Gene Info Chrome extension allows you to retrieve information about
+        GIX is a browser extensions that allows you to retrieve information about
         a gene product directly on any webpage simply by double clicking an official
         gene name, synonym or supported accession.
       </p>
@@ -84,6 +84,9 @@
           <li><a href="/workspace">Workspace</a></li>
         </ul>
       </section>
+      <section class="new-features">
+        <h2>New features (Version 1.1.0)</h2>
+      </section>
       <section class="no-print" id="video">
         <h2>Video tutorial</h2>
         <video controls preload="metadata">
@@ -105,7 +108,14 @@
           text before or after the dash but not including it.
         </p>
         <p>
-          If you wish to disable the extension, simply click the disable button.
+          If you enable the "CTRL/⌘ required" option then double-clicking
+          (or dragging) on its own will not initiate a query. On Linux and Windows systems
+          you will have to hold the CTRL key while clicking to perform a query, or on Mac
+          it is the Command/⌘ key. This restriction can ensure that the extension only activates
+          when you want, rather than whenever you double-click.
+        </p>
+        <p>
+          If you wish to completely disable the extension, simply click the disable button.
         </p>
         <h3>Display options</h3>
         <p>
@@ -135,13 +145,14 @@
           <li><i>Gallus gallus</i></li>
           <li><i>Mus musculus</i></li>
           <li><i>Saccharomyces cerevisiae</i></li>
+          <li><i>Schizosaccharomyces pombe</i></li>
           <li><i>Xenopus laevis</i></li>
         </ul>
         <p>
           Some information will only be available for certain species. For instance, Human
           Protein Atlas localization and expression information is only available for human
           gene entries. The Compartments subcellular localization database has information
-          on six of the ten organisms we support:
+          on six of the organisms we support:
           <i>Arabidopsis</i>,
           <i>C. elegans</i>,
           <i>Drosophila</i>,
@@ -191,7 +202,7 @@
       <section id="options">
         <h2>Information options</h2>
         <p>
-          Each pierce of information provided by Gene Info can be toggled off in the extension
+          Each pierce of information provided by GIX can be toggled off in the extension
           popup and will be hidden on subsequent queries.
         </p>
         <p>
@@ -208,6 +219,10 @@
           you can choose which cell lines and tissues to display by default in the information
           panel. There are 64 cell lines and 37 tissue types to choose from that we have
           incorporated from the Human Protein Atlas.
+        </p>
+        <p>
+          You can control the order in which information appears on the results panel
+          by dragging and dropping the settings in the extension popup.
         </p>
         <p>
           Certain data is only available for specific species as outlined above
@@ -274,6 +289,11 @@
             <a href="https://www.ncbi.nlm.nih.gov/pubmed/27899567">PMID:27899567</a>)
           </li>
           <li>
+            HGNC,
+            <a href="https://www.genenames.org">https://www.genenames.org</a>
+            (<a href="https://www.ncbi.nlm.nih.gov/pubmed/27799471">PMID:27799471</a>)
+          </li>
+          <li>
             Human Protein Atlas,
             <a href="https://www.proteinatlas.org">https://www.proteinatlas.org</a>
             (<a href="https://www.ncbi.nlm.nih.gov/pubmed/25613900">PMID:25613900</a>,
@@ -285,9 +305,19 @@
             (<a href="https://www.ncbi.nlm.nih.gov/pubmed/24234451">PMID:24234451</a>)
           </li>
           <li>
+            OMIM,
+            <a href="https://www.omim.org">https://www.omim.org</a>
+            (<a href="https://www.ncbi.nlm.nih.gov/pubmed/30445645">PMID:30445645</a>)
+          </li>
+          <li>
             Pfam,
             <a href="https://pfam.xfam.org">https://pfam.xfam.org</a>
             (<a href="https://www.ncbi.nlm.nih.gov/pubmed/30357350">PMID:30357350</a>)
+          </li>
+          <li>
+            Reactome,
+            <a href="https://reactome.org">https://reactome.org</a>
+            (<a href="https://www.ncbi.nlm.nih.gov/pubmed/29145629">PMID:29145629</a>)
           </li>
           <li>
             UniProt,
@@ -306,8 +336,8 @@
         </p>
         <p>
           Chrome blocks extensions from running on the tab homepage - the page you see when
-          opening a new tab - and so neither double clicking nor the search bar will work
-          in this context.
+          opening a new tab - as well as a few other privileged pages, and so neither double
+          clicking nor the search bar will work in these contexts.
         </p>
       </section>
       <section id="permissions">
@@ -392,6 +422,10 @@
         <p>
           To add an extension to Brave simply go to the Chrome Web Store, find the extension
           and click the "Add to Chrome" button.
+        </p>
+        <p>
+          We are currently working on porting the extension to Firefox and Safari but
+          cannot provide an ETA.
         </p>
       </section>
       <section id="funding">

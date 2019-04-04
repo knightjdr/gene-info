@@ -37,6 +37,9 @@ h1 {
 h2 {
   text-decoration: underline;
 }
+ol {
+  line-height: 1.5em;
+}
 p {
   line-height: 1.5em;
   text-align: justify;
@@ -99,6 +102,9 @@ video {
 }
 .documentation__links {
   display: none;
+}
+.documentation__links li{
+  margin: 10px 0;
 }
 .ellipsis {
   left: 1px;
@@ -175,6 +181,9 @@ video {
 .nav__links a:active,
 .nav__links a:focus {
   background-color: var(--text-light);
+}
+.new-features h2 {
+  text-decoration: none;
 }
 .workspace {
   align-items: center;
