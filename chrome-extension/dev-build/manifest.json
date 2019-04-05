@@ -11,7 +11,7 @@
   },
   "author": "James Knight",
   "background": {
-    "persistant": false,
+    "persistent": false,
     "scripts": ["background.js"]
   },
   "browser_action": {
