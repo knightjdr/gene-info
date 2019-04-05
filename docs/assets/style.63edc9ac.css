@@ -38,12 +38,19 @@ h1 {
 h2 {
   text-decoration: underline;
 }
+li {
+  margin: 5px 0;
+}
 p {
   line-height: 1.5em;
   text-align: justify;
 }
-li {
-  margin: 5px 0;
+section {
+  position: relative;
+}
+section .anchor {
+  position: absolute;
+  top: -60px;
 }
 video {
   display: block;
@@ -124,13 +131,19 @@ video {
   margin: 10px;
 }
 .link-button {
+  align-items: center;
+  background-color: var(--link-dark);
   border-radius: 3px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   color: var(--text-light);
-  display: inline-block;
+  display: inline-flex;
+  fill: var(--text-light);
   margin: 0 5px;
   padding: 6px 8px;
-  transition: background-color 0.3s linear, color 0.3s linear;
+  transition: all 0.3s linear;
+}
+.link-button svg {
+  margin-right: 5px;
 }
 .link-button:link,
 .link-button:visited {
@@ -141,7 +154,9 @@ video {
 .link-button:focus {
   background-color: var(--primary-1);
   color: var(--text);
+  fill: var(--text);
 }
+
 .nav {
   align-items: center;
   background-color: var(--nav-background);
@@ -177,25 +192,25 @@ video {
 .nav .nav-right :not(:last-child) {
   margin-right: 15px;
 }
-.nav-right__github {
+.nav-right svg {
   fill: var(--background);
   height: 35px;
-  transition: all 0.3s ease;
+  transition: fill 0.3s ease;
   width: 36px;
 }
-.nav-right__github:hover {
+.nav-right svg:hover {
   fill: var(--primary-1);
 }
 .nav a {
+  color: var(--background);
   font-size: 1.1em;
+  transition: color 0.3s ease;
 }
 .nav a:link,
 .nav a:visited {
-  background-color: transparent;
   color: var(--background);
   cursor: pointer;
   border-bottom: none;
-  transition: all 0.3s ease;
 }
 .nav a:hover,
 .nav a:active,
@@ -344,6 +359,9 @@ video {
   }
   .documentation__links {
     display: block;
+  }
+  .nav {
+    padding-right: 20px;
   }
   .nav-right__workspace {
     display: none;
