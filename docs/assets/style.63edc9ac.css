@@ -37,9 +37,6 @@ h1 {
 h2 {
   text-decoration: underline;
 }
-ol {
-  line-height: 1.5em;
-}
 p {
   line-height: 1.5em;
   text-align: justify;
@@ -79,6 +76,10 @@ video {
   flex-grow: 1;
   margin-left: 220px;
   padding: 0 40px 20px 40px;
+}
+.documentation ol,
+.documentation ul {
+  line-height: 1.5em;
 }
 .documentation a:not(.link-button),
 .workspace a {
