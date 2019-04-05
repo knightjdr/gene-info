@@ -8,6 +8,7 @@
 # database files
 /database/files/*
 !/database/files/example
+!/database/files/rna-tissues.js
 
 # Mac folder
 .DS_Store
@@ -22,6 +23,9 @@ npm-debug.log
 # Optional npm cache directory
 .npm
 ./**/npm
+
+# VScode
+.vscode
 
 # Extension
 chrome-extension/dist

@@ -171,10 +171,13 @@ const xmlEntry = `
   <disease id="DI-00257">
     <name>Cerebral cavernous malformations 3</name>
     <acronym>CCM3</acronym>
-    <description>A congenital vascular anomaly of the central nervous system that can result in hemorrhagic stroke, seizures, recurrent headaches, and focal neurologic deficits. The lesions are characterized by grossly enlarged blood vessels consisting of a single layer of endothelium and without any intervening neural tissue, ranging in diameter from a few millimeters to several centimeters.</description>
+    <description>A congenital vascular anomaly of the central nervous system that can result in hemorrhagic stroke (PubMed:11111111).</description>
     <dbReference type="MIM" id="603285"/>
   </disease>
   <text>The disease is caused by mutations affecting the gene represented in this entry.</text>
+</comment>
+<comment type="disruption phenotype">
+  <text evidence="2">Animals are sterile and develop slowly (PubMed:11111111).</text>
 </comment>
 <comment type="similarity">
   <text evidence="14">Belongs to the PDCD10 family.</text>
@@ -239,6 +242,9 @@ const xmlEntry = `
 </dbReference>
 <dbReference type="MGI" id="MGITest">
   <property type="gene designation" value="CCM3"/>
+</dbReference>
+<dbReference type="PomBase" id="SPAC24B11.06c">
+  <property type="gene designation" value="HOG1"/>
 </dbReference>
 <dbReference type="SGD" id="SGDTest">
   <property type="gene designation" value="CCM3"/>
@@ -613,6 +619,12 @@ const xmlEntry = `
 <dbReference type="PANTHER" id="PTHR13250">
   <property type="entry name" value="PTHR13250"/>
   <property type="match status" value="1"/>
+</dbReference>
+<dbReference type="Reactome" id="R-HSA-2995383">
+  <property type="pathway name" value="Initiation of Nuclear Envelope Reformation"/>
+</dbReference>
+<dbReference type="Reactome" id="R-HSA-69231">
+  <property type="pathway name" value="Cyclin D associated events in G1"/>
 </dbReference>
 <sequence length="212" mass="24702" checksum="5AA613F71FAAEF56" modified="2001-06-01" version="1">MRMTMEEMKNEAETTSMVSMPLYAVMYPVFNELERVNLSAAQTLRAAFIKAEKENPGLTQDIIMKILEKKSVEVNFTESLLRMAADDVEEYMIERPEPEFQDLNEKARALKQILSKIPDEINDRVRFLQTIKDIASAIKELLDTVNNVFKKYQYQNRRALEHQKKEFVKYSKSFSDTLKTYFKDGKAINVFVSANRLIHQTNLILQTFKTVA</sequence>
 </entry>`;

@@ -1,6 +1,6 @@
 import closeButton from '../close-button';
 import fadeIn from '../../transitions/fade-in';
-import noResult from './no-result';
+import noResult from '../no-result/tooltip';
 import tooltipPosition from '../../helpers/tooltip-position';
 import selectStyle from '../../style/select';
 import State from '../../state';
@@ -11,7 +11,7 @@ import { addCloseListener, removeCloseListener } from '../../listeners/close';
 import { addSelectListener, removeSelectListener } from '../../listeners/select';
 import { addTooltipScrollListener, removeTooltipScrollListener } from '../../listeners/tooltip-scroll';
 
-const createTooltip = (event, reportIndex = 0) => {
+const createTooltip = (event, error) => {
   const result = State.results[State.results.length - 1];
 
   /* Use target element if it already exists, but remove listeners as they will
@@ -24,7 +24,9 @@ const createTooltip = (event, reportIndex = 0) => {
     shouldFade = false;
   }
 
-  const html = result.length < 1 ? noResult() : `${selectStyle}${tooltipDetails(result, reportIndex)}`;
+  const html = error || result.length < 1
+    ? noResult(error)
+    : `${selectStyle}${tooltipDetails(result, 0)}`;
   State.shadowRoot.innerHTML = `${tooltipStyle}${html}`;
 
   const tooltip = State.shadowRoot.getElementById('tooltip');

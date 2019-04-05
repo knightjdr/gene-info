@@ -3,7 +3,7 @@
 import SlimSelect from 'slim-select';
 
 import config from '../../config';
-import updateTab from '../listeners/update-tab';
+import { updateTab } from '../helpers/message';
 
 import '../../../../node_modules/slim-select/dist/slimselect.css';
 

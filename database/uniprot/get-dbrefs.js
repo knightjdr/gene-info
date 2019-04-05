@@ -77,10 +77,27 @@ const getDBRefs = dbRefs => (
         ...accum,
         mgi: ref.$.id,
       };
+    } if (ref.$.type === 'MIM') {
+      return {
+        ...accum,
+        mim: Number(ref.$.id),
+      };
+    } if (ref.$.type === 'PomBase') {
+      return {
+        ...accum,
+        pombase: ref.$.id,
+      };
     } if (ref.$.type === 'ProteomicsDB' && !accum.proteomicsdb) {
       return {
         ...accum,
         proteomicsdb: Number(ref.$.id),
+      };
+    } if (ref.$.type === 'Reactome') {
+      const { id } = ref.$;
+      const term = ref.property[0].$.value;
+      return {
+        ...accum,
+        pathway: arrayUnique([...accum.pathway, { id, term }]),
       };
     } if (ref.$.type === 'RefSeq') {
       const id = ref.$.id.split('.')[0];
@@ -113,7 +130,7 @@ const getDBRefs = dbRefs => (
         ...accum,
         xenbase: ref.$.id,
       };
-    }if (ref.$.type === 'ZFIN') {
+    } if (ref.$.type === 'ZFIN') {
       return {
         ...accum,
         zfin: ref.$.id,
@@ -124,6 +141,7 @@ const getDBRefs = dbRefs => (
     'ensembl-gene': [],
     'ensembl-protein': [],
     go: { c: [], f: [], p: [] },
+    pathway: [],
     refseq: [],
   })
 );

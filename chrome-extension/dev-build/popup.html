@@ -24,9 +24,9 @@
           <label for="activate_disable">Disable</label>
         </div>
         <div class="toggle-container">
-          <input class="toggle toggle-flat" data-type="ctrl" id="ctrl" type="checkbox" checked />
+          <input class="toggle toggle-flat" data-type="ctrl" id="ctrl" type="checkbox" />
           <label for="ctrl"></label>
-          CTRL/&#8984; required
+          <span>CTRL/&#8984; required</span>
         </div>
       </section>
       <section class="display">
@@ -72,7 +72,7 @@
         <div class="toggle-container">
           <input class="toggle toggle-flat" data-type="auto" id="auto" type="checkbox" checked />
           <label for="auto"></label>
-          Auto detect
+          <span>Auto detect</span>
         </div>
       </section>
       <section>
@@ -80,7 +80,7 @@
         <hr />
         <div class="search">
           <label for="input_search">search</label>
-          <input id="input_search" placeholder="Accession/ID/name..." spellcheck="false" type="text" />
+          <input id="input_search" autofocus placeholder="ID/symbol..." spellcheck="false" type="text" />
           <button id="button_search">
             <span>submit</span>
             <svg
@@ -108,7 +108,7 @@
           >
             <input class="toggle toggle-flat" data-type="basic" id="basic" type="checkbox" checked />
             <label for="basic"></label>
-            Basic
+            <span>Basic</span>
           </div>
           <div
             class="toggle-container"
@@ -117,7 +117,7 @@
           >
             <input class="toggle toggle-flat" data-type="links" id="links" type="checkbox" checked />
             <label for="links"></label>
-            Links
+            <span>Links</span>
           </div>
           <div
             class="toggle-container"
@@ -126,7 +126,7 @@
           >
             <input class="toggle toggle-flat" data-type="description" id="description" type="checkbox" checked />
             <label for="description"></label>
-            Description
+            <span>Description</span>
           </div>
           <div
             draggable="true"
@@ -135,12 +135,12 @@
             <div class="toggle-container">
               <input class="toggle toggle-flat" data-type="domain" id="domain" type="checkbox" checked />
               <label for="domain"></label>
-              Domains
+              <span>Domains</span>
             </div>
             <div class="toggle-container">
               <input class="toggle toggle-flat" data-type="region" id="region" type="checkbox" checked />
               <label for="region"></label>
-              Regions
+              <span>Regions</span>
             </div>
           </div>
           <div
@@ -151,7 +151,7 @@
             <div class="toggle-container">
               <input class="toggle toggle-flat" data-type="rna_expression" id="rna_expression" type="checkbox" checked />
               <label for="rna_expression"></label>
-              RNA expression
+              <span>RNA expression</span>
               <button
                 class="advanced-settings"
                 data-type="toggle_options_rna_expression"
@@ -175,7 +175,7 @@
             <div class="toggle-container">
               <input class="toggle toggle-flat" data-type="go" id="go" type="checkbox" checked />
               <label for="go"></label>
-              GO terms
+              <span>GO terms</span>
               <button
                 class="advanced-settings"
                 data-type="toggle_options_go"
@@ -209,7 +209,7 @@
             <div class="toggle-container">
               <input class="toggle toggle-flat" data-type="localization" id="localization" type="checkbox" checked />
               <label for="localization"></label>
-              Localization
+              <span>Localization</span>
               <button
                 class="advanced-settings"
                 data-type="toggle_options_localization"
@@ -225,19 +225,37 @@
               <div class="compartments toggle-container">
                 <input class="toggle toggle-flat" data-type="localization_compartments" id="localization_compartments" type="checkbox" checked />
                 <label for="localization_compartments"></label>
-                Compartments
+                <span>Compartments</span>
               </div>
               <div class="hpa toggle-container">
                 <input class="toggle toggle-flat" data-type="localization_hpa" id="localization_hpa" type="checkbox" checked />
                 <label for="localization_hpa"></label>
-                Protein Atlas
+                Protein Atlas<span></span>
               </div>
               <div class="toggle-container">
                 <input class="toggle toggle-flat" data-type="localization_uniprot" id="localization_uniprot" type="checkbox" checked />
                 <label for="localization_uniprot"></label>
-                UniProt
+                <span>UniProt</span>
               </div>
             </div>
+          </div>
+          <div
+            class="toggle-container"
+            draggable="true"
+            id="drag_pathology"
+          >
+            <input class="toggle toggle-flat" data-type="pathology" id="pathology" type="checkbox" checked />
+            <label for="pathology"></label>
+            <span>Pathology</span>
+          </div>
+          <div
+            class="toggle-container"
+            draggable="true"
+            id="drag_pathway"
+          >
+            <input class="toggle toggle-flat" data-type="pathway" id="pathway" type="checkbox" checked />
+            <label for="pathway"></label>
+            <span>Pathways</span>
           </div>
           <div
             class="toggle-container"
@@ -246,10 +264,25 @@
           >
             <input class="toggle toggle-flat" data-type="interactors" id="interactors" type="checkbox" checked/>
             <label for="interactors"></label>
-            Interactors
+            <span>Interactors</span>
           </div>
         </div>
       </section>
+    </div>
+    <div class="warning">
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 666 592">
+          <path d="M658.504,508.765C679.846,545.758,653.057,592,610.431,592H55.562c-42.708,0-69.374-46.313-48.073-83.235L284.927,27.733
+          c21.353-37.01,74.832-36.943,96.146,0L658.504,508.765L658.504,508.765z M333,409.312c-29.375,0-53.188,23.812-53.188,53.188
+          s23.813,53.188,53.188,53.188c29.375,0,53.188-23.812,53.188-53.188S362.375,409.312,333,409.312z M282.503,218.132l8.577,157.249
+          c0.401,7.358,6.485,13.119,13.854,13.119h56.131c7.369,0,13.453-5.761,13.854-13.119l8.577-157.249
+          c0.434-7.948-5.895-14.632-13.854-14.632h-73.287C288.396,203.5,282.069,210.184,282.503,218.132L282.503,218.132z"/>
+        </svg>
+      </span>
+      <span>
+        Either your browser does not allow queries on this page, or you may need to hit
+        refresh if you've just installed the extension.
+      </span>
     </div>
     <footer>
       <a

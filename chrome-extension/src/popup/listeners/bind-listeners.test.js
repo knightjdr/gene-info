@@ -1,6 +1,7 @@
 import activationCheck from './activation-check';
 import advancedSettings from './advanced-settings';
 import bindListeners from './bind-listeners';
+import onChange from './on-change';
 import { drag, dragEnd, dragStart } from './drag';
 import { onSearchClick, search } from './search';
 
@@ -66,6 +67,16 @@ describe('Bind listeners', () => {
     speciesSelect.id = 'species';
     document.body.appendChild(speciesSelect);
 
+    // Create generic select elements.
+    const select1 = document.createElement('select');
+    select1.className = 'select';
+    select1.id = 'select_one';
+    document.body.appendChild(select1);
+    const select2 = document.createElement('select');
+    select2.className = 'select';
+    select2.id = 'select_two';
+    document.body.appendChild(select2);
+
     bindListeners();
   });
 
@@ -98,22 +109,6 @@ describe('Bind listeners', () => {
       const button = document.getElementById('as_button_two');
       button.dispatchEvent(new Event('click', {}));
       expect(advancedSettings).toHaveBeenCalled();
-    });
-  });
-
-  describe('search', () => {
-    it('should bind click listener to button', () => {
-      onSearchClick.mockClear();
-      const input = document.getElementById('button_search');
-      input.dispatchEvent(new Event('click', {}));
-      expect(onSearchClick).toHaveBeenCalled();
-    });
-
-    it('should bind enter listener to input', () => {
-      search.mockClear();
-      const input = document.getElementById('input_search');
-      input.dispatchEvent(new Event('keypress', { keyCode: 13 }));
-      expect(search).toHaveBeenCalled();
     });
   });
 
@@ -168,6 +163,38 @@ describe('Bind listeners', () => {
         div.dispatchEvent(new Event('dragstart', {}));
         expect(dragStart).toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('search', () => {
+    it('should bind click listener to button', () => {
+      onSearchClick.mockClear();
+      const input = document.getElementById('button_search');
+      input.dispatchEvent(new Event('click', {}));
+      expect(onSearchClick).toHaveBeenCalled();
+    });
+
+    it('should bind enter listener to input', () => {
+      search.mockClear();
+      const input = document.getElementById('input_search');
+      input.dispatchEvent(new Event('keypress', { keyCode: 13 }));
+      expect(search).toHaveBeenCalled();
+    });
+  });
+
+  describe('select', () => {
+    it('should bind change handler on first select', () => {
+      onChange.mockClear();
+      const select = document.getElementById('select_one');
+      select.dispatchEvent(new Event('change'));
+      expect(onChange).toHaveBeenCalled();
+    });
+
+    it('should bind change handler on second select', () => {
+      onChange.mockClear();
+      const select = document.getElementById('select_two');
+      select.dispatchEvent(new Event('change'));
+      expect(onChange).toHaveBeenCalled();
     });
   });
 });

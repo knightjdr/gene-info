@@ -1,4 +1,4 @@
-import updateTab from './update-tab';
+import { updateTab } from '../helpers/message';
 
 const namespaceCheck = function namespage() {
   const { type } = this.dataset;

@@ -1,79 +1,96 @@
-process.env.NODE_ENV = test;
+const mongodb = require('mongo-mock');
+
 const database = require('../../connections/database');
 const find = require('./find');
-const { ObjectID } = require('mongodb');
 
-// mock config
 jest.mock('../../../config', () => (
   {
     database: {
-      name: 'sandbox',
       prefix: 'test_',
-      pw: 'sandboxpw',
-      user: 'sandbox',
     },
   }
 ));
-// mock logger
+jest.mock('../../connections/database', () => ({
+  connection: null,
+}));
 jest.mock('../../../logger');
 
-// expected return values
-const response = {
-  all: [
-    { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
-    { _id: ObjectID('5aa6ac98c63eb43ab21a072d'), name: 'test2', field: 'b' },
-  ],
-  limit: [
-    { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
-  ],
-  one: [
-    { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
-  ],
-  sorted: [
-    { _id: ObjectID('5aa6ac98c63eb43ab21a072d'), name: 'test2', field: 'b' },
-    { _id: ObjectID('5aa6ac91c63eb43ab21a072c'), name: 'test', field: 'a' },
-  ],
-  subset: [
-    { field: 'a' },
-    { field: 'b' },
-  ],
-};
-
-beforeAll(() => (
-  database.init()
-));
-afterAll(() => (
-  database.close()
-));
+beforeAll(async (done) => {
+  mongodb.max_delay = 0;
+  const { MongoClient } = mongodb;
+  const url = 'mongodb://localhost:27017/test';
+  // Use connect method to connect to the Server
+  MongoClient.connect(url, {}, (err, db) => {
+    database.connection = db;
+    // Insert some documents
+    const docs = [
+      { _id: 1, name: 'test', field: 'a' },
+      { _id: 2, name: 'test2', field: 'b' },
+    ];
+    db.collection('test_documents').insertMany(docs, () => {
+      done();
+    });
+  });
+});
 
 describe('find', () => {
   it('should find all records in the database', () => (
-    find('get').then((getCollection) => {
-      expect(getCollection).toEqual(response.all);
+    find('documents').then((getCollection) => {
+      const expected = [
+        { _id: 1, name: 'test', field: 'a' },
+        { _id: 2, name: 'test2', field: 'b' },
+      ];
+      expect(getCollection).toEqual(expected);
     })
   ));
 
   it('should find one record in the database', () => (
-    find('get', { name: 'test' }).then((getCollection) => {
-      expect(getCollection).toEqual(response.one);
+    find('documents', { name: 'test' }).then((getCollection) => {
+      const expected = [
+        { _id: 1, name: 'test', field: 'a' },
+      ];
+      expect(getCollection).toEqual(expected);
     })
   ));
 
   it('should find subset returned documents from database', () => (
-    find('get', {}, { _id: 0, field: 1 }).then((getCollection) => {
-      expect(getCollection).toEqual(response.subset);
+    find('documents', {}, { _id: 0, field: 1 }).then((getCollection) => {
+      const expected = [
+        { field: 'a' },
+        { field: 'b' },
+      ];
+      expect(getCollection).toEqual(expected);
     })
   ));
 
   it('should find sort returned documents from database', () => (
-    find('get', {}, {}, { _id: -1 }).then((getCollection) => {
-      expect(getCollection).toEqual(response.sorted);
+    find('documents', {}, {}, { _id: -1 }).then((getCollection) => {
+      const expected = [
+        { _id: 2, name: 'test2', field: 'b' },
+        { _id: 1, name: 'test', field: 'a' },
+      ];
+      expect(getCollection).toEqual(expected);
     })
   ));
 
   it('should find limit returned documents from database', () => (
-    find('get', {}, {}, {}, 1).then((getCollection) => {
-      expect(getCollection).toEqual(response.limit);
+    find('documents', {}, {}, {}, 1).then((getCollection) => {
+      const expected = [
+        { _id: 1, name: 'test', field: 'a' },
+      ];
+      expect(getCollection).toEqual(expected);
     })
   ));
 });
+
+describe('Query throwing an error', () => {
+  beforeAll(() => {
+    // Make database undefined to cause an error to throw.
+    database.connection = undefined;
+  });
+
+  it('should throw an error', () => (
+    expect(find('documents', { name: 'test' })).rejects.not.toBeNull()
+  ));
+});
+

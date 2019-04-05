@@ -1,22 +1,20 @@
 import { onSearchClick, search } from './search';
-import * as updateTab from './update-tab';
+import { activeTab } from '../helpers/message';
 
-jest.mock('./update-tab', () => ({
-  searchTab: jest.fn(),
-}));
+jest.mock('../helpers/message');
 
 describe('Search', () => {
   it('should not submit search when enter key is not pressed', () => {
-    updateTab.searchTab.mockClear();
+    activeTab.mockClear();
     const e = {
       keyCode: 12,
     };
     search(e);
-    expect(updateTab.searchTab).not.toHaveBeenCalled();
+    expect(activeTab).not.toHaveBeenCalled();
   });
 
   it('should not submit search when the input has no value', () => {
-    updateTab.searchTab.mockClear();
+    activeTab.mockClear();
     const e = {
       keyCode: 12,
       target: {
@@ -24,11 +22,11 @@ describe('Search', () => {
       },
     };
     search(e);
-    expect(updateTab.searchTab).not.toHaveBeenCalled();
+    expect(activeTab).not.toHaveBeenCalled();
   });
 
   it('should submit search when input has value and enter is pressed', () => {
-    updateTab.searchTab.mockClear();
+    activeTab.mockClear();
     const e = {
       keyCode: 13,
       target: {
@@ -36,13 +34,13 @@ describe('Search', () => {
       },
     };
     search(e);
-    expect(updateTab.searchTab).toHaveBeenCalledWith('search', 'test');
+    expect(activeTab).toHaveBeenCalledWith('search', 'test');
   });
 });
 
 describe('Search click', () => {
   beforeAll(() => {
-    updateTab.searchTab.mockClear();
+    activeTab.mockClear();
     const input = document.createElement('input');
     input.id = 'input_search';
     input.value = 'click_test';
@@ -51,6 +49,6 @@ describe('Search click', () => {
 
   it('should call search method on click', () => {
     onSearchClick();
-    expect(updateTab.searchTab).toHaveBeenCalledWith('search', 'click_test');
+    expect(activeTab).toHaveBeenCalledWith('search', 'click_test');
   });
 });

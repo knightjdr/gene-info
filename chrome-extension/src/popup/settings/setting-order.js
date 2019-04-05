@@ -1,5 +1,5 @@
 import config from '../../config';
-import updateTab from '../listeners/update-tab';
+import { updateTab } from '../helpers/message';
 
 /* Need to ensure that the elements listed in the user's stored settings
 ** are still available and see if there are any new settings that have

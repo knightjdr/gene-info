@@ -4,8 +4,8 @@ const arrayUnique = require('../helpers/array-unique');
 const findGene = require('./find-gene');
 const getComments = require('./get-comments');
 const getDBRefs = require('./get-dbrefs');
-const { getNames } = require('./get-names');
 const getSequence = require('./get-sequence');
+const { getNames } = require('./get-names');
 
 /* Parses a Uniprot XML entry that has been converted to a JS object with
 ** xml2js */
@@ -38,6 +38,8 @@ const entryParse = (entry) => {
       locus: genes.locus,
       mw: sequence.mw,
       orf: genes.orf,
+      pathology: arrSortByKey(comments.pathology, 'name'),
+      pathway: arrSortByKey(refs.pathway, 'term'),
       proteomicsdb: refs.proteomicsdb,
       refseq: refs.refseq,
       synonyms: arrSort.alphabetical(genes.synonyms),
@@ -51,6 +53,10 @@ const entryParse = (entry) => {
       parsed.flybase = refs.flybase;
     } if (refs.mgi) {
       parsed.mgi = refs.mgi;
+    } if (refs.mim) {
+      parsed.mim = refs.mim;
+    } if (refs.pombase) {
+      parsed.pombase = refs.pombase;
     } if (refs.sgd) {
       parsed.sgd = refs.sgd;
     } if (refs.tair) {

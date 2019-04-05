@@ -29,7 +29,9 @@ const goElement = (report, settings) => {
           color: var(--text-contrast);
         }
         .go-button:focus {
-          outline: 0;
+          background-color: var(--primary);
+          color: var(--text-contrast);
+          outline: none;
         }
         .go-terms {
           padding: 0 5px;
@@ -37,6 +39,13 @@ const goElement = (report, settings) => {
         .go-terms ul {
           margin: 5px 0 8px 0;
           padding-left: 20px;
+        }
+        .go-terms a svg {
+          fill: var(--primary);
+        }
+        .go-terms a:focus svg,
+        .go-terms a:hover svg {
+          fill: var(--text);
         }
       </style>
       <section class="details">

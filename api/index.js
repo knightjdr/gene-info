@@ -5,6 +5,7 @@ const express = require('express');
 const http = require('http');
 
 const config = require('./config');
+const corsSetup = require('./setup/cors');
 const database = require('./app/connections/database');
 const logger = require('./logger');
 const responseHeaders = require('./setup/response-headers');
@@ -15,6 +16,7 @@ const initApp = () => {
   const app = express();
   const server = http.createServer(app);
   app.use(responseHeaders);
+  app.use(corsSetup());
   app.use(compression());
   app.use(config.base, router);
 

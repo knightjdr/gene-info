@@ -6,6 +6,9 @@ import goElement from './go';
 import interactorElement from './interactor';
 import linkElement from './link';
 import localizationElement from './localization';
+import pathologyElement from './pathology';
+import pathwayElement from './pathway';
+import position from '../position';
 import rnaExpressionElement from './rna-expression';
 import State from '../../state';
 
@@ -17,19 +20,13 @@ const sections = {
   interactors: interactorElement,
   links: linkElement,
   localization: localizationElement,
+  pathology: pathologyElement,
+  pathway: pathwayElement,
   rna_expression: rnaExpressionElement,
 };
 
 const reportDetails = (result, reportIndex, stateStyle) => {
-  let style = '';
-  if (stateStyle.right) {
-    style += `left: auto; right: ${stateStyle.right};`;
-  } else if (stateStyle.left) {
-    style += `left: ${stateStyle.left}; right: 'auto'`;
-  }
-  if (stateStyle.width) {
-    style += `width: ${stateStyle.width};`;
-  }
+  const style = position(stateStyle);
   return `
     <aside
       class="theme_${State.settings.theme}"

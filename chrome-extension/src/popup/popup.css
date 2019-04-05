@@ -18,17 +18,21 @@ body {
 }
 body.theme_dark {
   --background: #323639;
+  --focus: #5b6fd8;
   --grey: #bdbdbd;
   --primary: #7FA782;
   --primary-1: #7FA782;
   --text: rgba(255, 255, 255, 0.7);
+  --warning: #f44336;
 }
 body.theme_light {
   --background: #fafafa;
+  --focus: #5490f2;
   --grey: #bdbdbd;
   --primary: #658170;
   --primary-1: #4caf50;
   --text: #333333;
+  --warning: #f44336;
 }
 body > div:first-child {
   grid-column: 1;
@@ -41,7 +45,7 @@ body > div:last-child() {
 body > footer {
   border-top: 1px solid #A5D6A7;
   grid-column: 1 / 3;
-  grid-row: 2;
+  grid-row: 3;
   margin-top: 7px;
   padding-top: 3px;
   text-align: center;
@@ -66,6 +70,7 @@ a:hover,
 a:active,
 a:focus {
   border-bottom: 1px dotted var(--primary);
+  outline: none;
 }
 em {
   display: block;
@@ -82,37 +87,35 @@ section > h1 {
 }
 
 /* Checkbox */
-.checkbox:not(:checked),
-.checkbox:checked {
+.checkbox {
+  opacity: 0;
   position: absolute;
 }
-.checkbox:not(:checked) + label,
-.checkbox:checked + label {
+.checkbox + label {
   position: relative;
   padding-left: 30px;
   padding-top: 3px;
   cursor: pointer;
 }
-.checkbox:not(:checked) + label:before,
-.checkbox:checked + label:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1.25em; height: 1.25em;
-  border: 2px solid #ccc;
+.checkbox + label:before {
   background: #fff;
+  border: 2px solid #ccc;
   border-radius: 4px;
   box-shadow: inset 0 1px 3px rgba(0,0,0,.1);
-}
-.checkbox:not(:checked) + label:after,
-.checkbox:checked + label:after {
-  content: '\2713';
+  content: '';
+  height: 1.25em;
+  left: 0;
   position: absolute;
-  top: .1em; left: .3em;
+  top: 0;
+  width: 1.25em; 
+}
+.checkbox + label:after {
+  color: var(--primary-1);
+  content: '\2713';
   font-size: 1.3em;
   line-height: 0.8;
-  color: var(--primary-1);
+  position: absolute;
+  top: .1em; left: .3em;
   transition: all .2s;
 }
 .checkbox:not(:checked) + label:after {
@@ -123,9 +126,20 @@ section > h1 {
   opacity: 1;
   transform: scale(1);
 }
+.checkbox:focus + label:before,
+.checkbox + label:hover:before {
+  outline: none;
+  transition: border .2s;
+}
+.checkbox:focus + label:before {
+  border: 2px solid var(--focus);
+}
 .checkbox + label:hover:before {
   border: 2px solid var(--primary-1);
-  transition: border .2s;
+}
+.checkbox:focus,
+.checkbox + label:focus {
+  outline: none;
 }
 
 /* drop */
@@ -164,11 +178,19 @@ section > h1 {
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
   box-sizing: border-box;
+  cursor: default;
   flex-grow: 1;
   height: 30px;
   min-width: 0;
   padding: 1px 8px;
   width: 0;
+}
+.search > button:disabled,
+.search > input:disabled {
+  cursor: not-allowed;
+}
+.search > input:disabled {
+  background-color: #ffcdd2;
 }
 .search > label {
   display: none;
@@ -219,7 +241,7 @@ section > h1 {
 .search > button:focus,
 .search > input:focus,
 .ss-search > input:focus {
-  box-shadow: 0px 0px 1px 1px var(--primary-1) !important;
+  box-shadow: 0px 0px 1px 1px var(--focus) !important;
   outline: none !important;
 }
 
@@ -229,7 +251,7 @@ select {
   width: 100%;
 }
 select:focus {
-  box-shadow: 0px 0px 1px var(--primary);
+  box-shadow: 0px 0px 1px 1px var(--focus);
   outline: none;
 }
 .slim-select {
@@ -243,70 +265,61 @@ select:focus {
   height: 20px;
   margin: 5px 0px 5px 0px;
   position: relative;
-  width: 100%;
 }
 .toggle-container button {
   align-items: center;
   background-color: transparent;
-  border: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  box-sizing: border-box;
   cursor: pointer;
   display: inline-flex;
   justify-content: center;
   margin-left: auto;
   margin-top: 2px;
+  transition: border 0.2s ease;
 }
 .toggle-container button:focus {
+  border: 1px solid var(--focus);
   outline: none;
 }
 .toggle-container path {
   fill: var(--primary);
 }
 .toggle {
-  display: none;
+  background-color: transparent;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  outline: none;
+  position: absolute;
+  width: 1px;
 }
 .toggle + label {
   margin-right: 5px;
 }
 .toggle,
-.toggle:after,
-.toggle:before,
-.toggle *,
-.toggle *:after,
-.toggle *:before,
 .toggle + label {
   box-sizing: border-box;
 }
-.toggle::selection,
-.toggle:after::selection,
-.toggle:before::selection,
-.toggle *::selection,
-.toggle *:after::selection,
-.toggle *:before::selection,
-.toggle + label::selection {
-  background: none;
-}
 .toggle + label {
-  outline: 0;
-  display: inline-block;
-  width: 30px;
-  height: 20px;
-  position: relative;
   cursor: pointer;
-  user-select: none;
-}
-.toggle + label:after,
-.toggle + label:before {
-  position: relative;
   display: inline-block;
+  height: 20px;
+  outline: 0;
+  user-select: none;
+  width: 30px;
+  z-index: 2;
+}
+.toggle + label:after {
   content: "";
-  width: 50%;
+  display: inline-block;
   height: 100%;
+  position: relative;
+  width: 50%;
 }
 .toggle + label:after {
   left: 0;
-}
-.toggle + label:before {
-  display: none;
 }
 .toggle:checked + label:after {
   left: 50%;
@@ -316,15 +329,17 @@ select:focus {
   border: 2px solid var(--grey);
   border-radius: 2em;
   padding: 1px;
-  transition: all .2s ease;
+  transition-duration: 0s;
   transition-property: background, border, border-radius, left;
+  transition-timing-function: ease;
 }
 .toggle-flat + label:after {
   background: var(--grey);
   content: "";
   border-radius: 1em;
-  transition: all .2s ease;
-  transition-property: background, border, border-radius, left;
+  transition-duration: inherit;
+  transition-property: inherit;
+  transition-timing-function: inherit;
 }
 .toggle-flat:checked + label {
   border: 2px solid var(--primary-1);
@@ -332,6 +347,12 @@ select:focus {
 .toggle-flat:checked + label:after {
   left: 50%;
   background: var(--primary-1);
+}
+.toggle:focus + label {
+  border: 2px solid var(--focus);
+}
+.toggle:checked:focus + label {
+  border: 2px solid var(--focus);
 }
 .toggle-options {
   border-bottom: 1px solid #A5D6A7;
@@ -361,4 +382,23 @@ select:focus {
 }
 .hide {
   display: none;
+}
+
+.warning {
+  align-items: center;
+  border-top: 1px solid #A5D6A7;
+  display: none;
+  font-weight: bold;
+  grid-column: 1/3;
+  grid-row: 2;
+  justify-content: center;
+  margin-top: 7px;
+  padding-top: 5px;
+  text-align: justify;
+  width: 100%;
+}
+.warning svg {
+  fill: var(--warning);
+  margin: 3px 8px 0 0;
+  width: 16px;
 }

@@ -1,7 +1,7 @@
 import activationCheck from './activation-check';
-import updateTab from './update-tab';
+import { updateTab } from '../helpers/message';
 
-jest.mock('./update-tab');
+jest.mock('../helpers/message');
 
 global.chrome = {
   storage: {
