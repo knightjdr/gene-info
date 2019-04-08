@@ -59,7 +59,7 @@ const pathologyElement = (report, settings) => {
         rel="noopener noreferrer"
         target="_blank"
       >
-        UniProt
+        UniProt - pathology
       </a>
     `);
     html.push(`

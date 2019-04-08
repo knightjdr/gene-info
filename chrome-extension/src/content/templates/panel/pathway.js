@@ -27,7 +27,7 @@ const pathwayElement = (report, settings) => {
             rel="noopener noreferrer"
             target="_blank"
           >
-            UniProt
+            UniProt - pathway
           </a>
         </div>
         ${
