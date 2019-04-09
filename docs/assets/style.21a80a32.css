@@ -157,7 +157,7 @@ video {
   fill: var(--text);
 }
 
-.missing {
+.error {
   align-items: center;
   background: linear-gradient(160deg,#323639,#2b465c,#215682,#2163aa,#0073b8,#007e9d,#33817e,#658170);
   box-sizing: border-box;
@@ -169,25 +169,25 @@ video {
   padding: 40px;
   width: 100vw;
 }
-.missing * {
+.error * {
   margin: 10px 0;
 }
-.missing h1 {
+.error h1 {
   font-size: 4em;
 }
-.missing-button {
+.error-button {
   color: var(--nav-background);
 }
-.missing-button:link,
-.missing-button:visited {
+.error-button:link,
+.error-button:visited {
   background-color: var(--text-light);
 }
-.missing-button:hover,
-.missing-button:active,
-.missing-button:focus {
+.error-button:hover,
+.error-button:active,
+.error-button:focus {
   background-color: var(--primary-1);
 }
-.missing-links * {
+.error-links * {
   margin: 0 10px;
 }
 

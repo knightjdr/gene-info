@@ -1,1 +1,1 @@
-Sitemap: https://gene-info.lunenfeld.ca/sitemap.xml
+Sitemap: https://gene-info.org/sitemap.xml
