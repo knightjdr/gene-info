@@ -1,5 +1,5 @@
 const url = process.env.NODE_ENV === 'production'
-  ? 'https://prohitstools.mshri.on.ca/api'
+  ? 'https://gene-info.org/api'
   : 'http://localhost:8002';
 
 chrome.runtime.onMessage.addListener((request, sender, callback) => {
