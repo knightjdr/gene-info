@@ -9,7 +9,7 @@
     "dev-ext-ff": "NODE_ENV=development webpack --watch --config webpack.dev-ff.js",
     "doc-server": "http-server docs",
     "prod-api": "NODE_ENV=production node api/index.js",
-    "prod-api-forever": "NODE_ENV=production forever start --uid 'gene-info-api' api/index.js",
+    "prod-api-forever": "NODE_ENV=production forever start -a --uid 'gene-info-api' api/index.js",
     "prod-ext": "NODE_ENV=production webpack --config webpack.prod.js",
     "prod-test-ext": "NODE_ENV=production webpack --config webpack.prod-test.js",
     "test": "jest"
