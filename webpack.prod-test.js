@@ -14,7 +14,6 @@ module.exports = env => merge(common(env), {
   plugins: [
     new CopyWebpackPlugin([
       { from: 'chrome-extension/dev-build/manifest.json', to: 'manifest.json' },
-      { from: 'chrome-extension/dev-build/popup.html', to: 'popup.html' },
       { from: 'chrome-extension/dev-build/icon-test', to: 'icon/' },
     ]),
     new MiniCssExtractPlugin({
