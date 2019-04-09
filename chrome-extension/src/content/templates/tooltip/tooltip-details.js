@@ -11,7 +11,7 @@ import pathologyElement from './pathology';
 import sortArray from '../../helpers/sort-array';
 import State from '../../state';
 
-const tooltipDetails = (result, reportIndex) => {
+const tooltipDetails = (result, reportIndex, opaque) => {
   const links = [
     ...linkElement(result[reportIndex], State.settings),
     ...domainElement(result[reportIndex], State.settings),
@@ -27,6 +27,7 @@ const tooltipDetails = (result, reportIndex) => {
       <div
         class="theme_${State.settings.theme}"
         id="tooltip"
+        style="opacity: ${opaque ? 0 : 1};"
       >
         <header>
           ${geneElement(result, reportIndex)}

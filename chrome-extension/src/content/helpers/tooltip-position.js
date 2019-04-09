@@ -1,9 +1,12 @@
 import State from '../state';
 
-const tooltipPosition = (event, tooltip) => {
+const tooltipPosition = (event, tooltip, previousPosition) => {
   let x;
   let y;
-  if (event) {
+  if (previousPosition) {
+    x = previousPosition.left.replace('px', '');
+    y = previousPosition.top.replace('px', '');
+  } else if (event) {
     const divHeight = tooltip.offsetHeight;
     const divWidth = tooltip.offsetWidth;
     const scrollOffset = window.innerWidth > document.documentElement.clientWidth ? 15 : 0;

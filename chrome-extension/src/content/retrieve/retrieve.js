@@ -1,4 +1,5 @@
 import fetch from './fetch';
+import selectGene from './select-gene';
 import State from '../state';
 
 const shouldActivate = (e, activate, ctrl) => (
@@ -9,7 +10,7 @@ const shouldActivate = (e, activate, ctrl) => (
 );
 
 const retrieveInfo = (event, text, activate) => {
-  const gene = text || window.getSelection().toString().trim();
+  const gene = selectGene(event, text);
   if (gene && shouldActivate(event, activate, State.settings.ctrl)) {
     const field = State.settings.auto ? 'auto' : State.settings.field;
     if (State.settings.activate === 'click') {

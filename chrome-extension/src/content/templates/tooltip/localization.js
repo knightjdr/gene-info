@@ -7,7 +7,7 @@ const localizationElement = (report, settings) => {
     && config.compartmentSpecies.includes(settings.species)
     && settings.localization_compartments
   ) {
-    const accession = report.localization.compartments;
+    const { accession } = report.localization.compartments;
     const speciesID = config.speciesID[settings.species];
     links.push({
       database: 'Compartments',

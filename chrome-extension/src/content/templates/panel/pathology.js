@@ -29,7 +29,8 @@ export const diseaseSection = (path) => {
       ${path.name ? `<h2>${path.name}</h2>` : ''}
       ${
         links.length > 0
-        && `<span class="links">${links.join(',')}</span>`
+        ? `<span class="links">${links.join(',')}</span>`
+        : ''
       }
       <p>${path.description}</p>
     </div>
@@ -58,7 +59,7 @@ const pathologyElement = (report, settings) => {
         rel="noopener noreferrer"
         target="_blank"
       >
-        UniProt
+        UniProt - pathology
       </a>
     `);
     html.push(`
