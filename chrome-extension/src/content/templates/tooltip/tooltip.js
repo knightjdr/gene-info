@@ -11,34 +11,42 @@ import { addCloseListener, removeCloseListener } from '../../listeners/close';
 import { addSelectListener, removeSelectListener } from '../../listeners/select';
 import { addTooltipScrollListener, removeTooltipScrollListener } from '../../listeners/tooltip-scroll';
 
-const createTooltip = (event, error) => {
+const createTooltip = (event, error, reportIndex = 0) => {
   const result = State.results[State.results.length - 1];
 
   /* Use target element if it already exists, but remove listeners as they will
-   ** be recreated. Otherwise create element. */
+   ** be recreated. */
+  let position;
   let shouldFade = true;
-  if (State.shadowRoot.getElementById('panel')) {
+  let tooltip;
+  if (State.shadowRoot.getElementById('tooltip')) {
+    tooltip = State.shadowRoot.getElementById('tooltip');
+    position = {
+      left: tooltip.style.left,
+      top: tooltip.style.top,
+    };
     removeCloseListener();
     removeSelectListener();
     removeTooltipScrollListener();
     shouldFade = false;
   }
 
+  // Create content.
   const html = error || result.length < 1
     ? noResult(error)
-    : `${selectStyle}${tooltipDetails(result, 0)}`;
+    : `${selectStyle}${tooltipDetails(result, reportIndex, shouldFade)}`;
   State.shadowRoot.innerHTML = `${tooltipStyle}${html}`;
 
-  const tooltip = State.shadowRoot.getElementById('tooltip');
-
-  // Add element, close button, listeners and fade in.
+  // Attach listeners
+  tooltip = State.shadowRoot.getElementById('tooltip');
   closeButton(tooltip);
   styleSelect(State.shadowRoot);
   addCloseListener();
   addSelectListener(result);
   addTooltipScrollListener();
 
-  const position = tooltipPosition(event, tooltip);
+  // Set position, using previous position if the tooltip is already visible.
+  position = tooltipPosition(event, tooltip, position);
   tooltip.style.left = `${position.x}px`;
   tooltip.style.top = `${position.y}px`;
 
