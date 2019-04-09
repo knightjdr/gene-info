@@ -1,9 +1,11 @@
+import animationStyle from './animation';
 import buttonStyle from './button';
 import linkStyle from './link';
 import theme from './theme';
 
 const panelStyle = `
   ${theme}
+  ${animationStyle}
   ${buttonStyle}
   ${linkStyle}
   <style>

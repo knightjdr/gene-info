@@ -1,5 +1,4 @@
 import closeButton from '../close-button';
-import fadeIn from '../../transitions/fade-in';
 import noResult from '../no-result/tooltip';
 import tooltipPosition from '../../helpers/tooltip-position';
 import selectStyle from '../../style/select';
@@ -16,8 +15,8 @@ const createTooltip = (event, error, reportIndex = 0) => {
 
   /* Use target element if it already exists, but remove listeners as they will
    ** be recreated. */
+  let fadeClass = 'panel_animate-fade';
   let position;
-  let shouldFade = true;
   let tooltip;
   if (State.shadowRoot.getElementById('tooltip')) {
     tooltip = State.shadowRoot.getElementById('tooltip');
@@ -28,13 +27,13 @@ const createTooltip = (event, error, reportIndex = 0) => {
     removeCloseListener();
     removeSelectListener();
     removeTooltipScrollListener();
-    shouldFade = false;
+    fadeClass = 'panel_animate-show';
   }
 
   // Create content.
   const html = error || result.length < 1
     ? noResult(error)
-    : `${selectStyle}${tooltipDetails(result, reportIndex, shouldFade)}`;
+    : `${selectStyle}${tooltipDetails(result, reportIndex, fadeClass)}`;
   State.shadowRoot.innerHTML = `${tooltipStyle}${html}`;
 
   // Attach listeners
@@ -49,10 +48,6 @@ const createTooltip = (event, error, reportIndex = 0) => {
   position = tooltipPosition(event, tooltip, position);
   tooltip.style.left = `${position.x}px`;
   tooltip.style.top = `${position.y}px`;
-
-  if (shouldFade) {
-    fadeIn(tooltip);
-  }
 };
 
 export default createTooltip;
