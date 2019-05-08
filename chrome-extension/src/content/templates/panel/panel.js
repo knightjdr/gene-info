@@ -1,7 +1,6 @@
 import backButton from '../back-button';
 import closeButton from '../close-button';
 import dragButton from '../drag-button';
-import fadeIn from '../../transitions/fade-in';
 import noResult from '../no-result/panel';
 import panelDetails from './panel-details';
 import panelStyle from '../../style/panel';
@@ -23,7 +22,7 @@ const createPanel = (reportIndex = 0, error) => {
 
   /* Use target element if it already exists, but remove listeners as they will
   ** be recreated. Otherwise create element. */
-  let shouldFade = true;
+  let fadeClass = 'panel_animate-fade';
   if (State.shadowRoot.getElementById('panel')) {
     removeBackListener();
     removeCloseListener();
@@ -33,13 +32,13 @@ const createPanel = (reportIndex = 0, error) => {
     removeInteractorSortListener();
     removeResizeListener();
     removeSelectListener();
-    shouldFade = false;
+    fadeClass = 'panel_animate-show';
   }
 
   // Get class, html and style to apply
   const html = error || result.length < 1
     ? noResult(error, State.style)
-    : `${selectStyle}${panelDetails(result, reportIndex, State.style)}`;
+    : `${selectStyle}${panelDetails(result, reportIndex, State.style, fadeClass)}`;
   State.shadowRoot.innerHTML = `${panelStyle}${html}`;
 
   const panel = State.shadowRoot.getElementById('panel');
@@ -58,9 +57,6 @@ const createPanel = (reportIndex = 0, error) => {
   addInteractorSortListener();
   addResizeListener();
   addSelectListener(result);
-  if (shouldFade) {
-    fadeIn(panel);
-  }
 };
 
 export default createPanel;

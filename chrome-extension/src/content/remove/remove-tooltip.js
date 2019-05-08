@@ -8,10 +8,10 @@ const removeTooltip = () => {
   const backdrop = State.shadowRoot.getElementById('backdrop');
   if (backdrop) {
     State.clearReports();
-    fadeOut(backdrop);
     removeCloseListener();
     removeSelectListener();
     removeTooltipScrollListener();
+    fadeOut(backdrop);
   }
 };
 

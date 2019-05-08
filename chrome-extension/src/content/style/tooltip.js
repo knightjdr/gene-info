@@ -1,9 +1,11 @@
+import animationStyle from './animation';
 import buttonStyle from './button';
 import linkStyle from './link';
 import theme from './theme';
 
 const panelStyle = `
   ${theme}
+  ${animationStyle}
   ${buttonStyle}
   ${linkStyle}
   <style>
@@ -26,7 +28,6 @@ const panelStyle = `
       font-size: 14px;
       height: auto;
       max-width: 300px;
-      opacity: 0;
       padding: 5px 10px 5px 10px;
       position: relative;
       width: auto;

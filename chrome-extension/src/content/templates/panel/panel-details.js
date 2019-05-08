@@ -25,11 +25,11 @@ const sections = {
   rna_expression: rnaExpressionElement,
 };
 
-const reportDetails = (result, reportIndex, stateStyle) => {
+const reportDetails = (result, reportIndex, stateStyle, fadeClass) => {
   const style = position(stateStyle);
   return `
     <aside
-      class="theme_${State.settings.theme}"
+      class="theme_${State.settings.theme} ${fadeClass}"
       id="panel"
       style="${style}"
     >
