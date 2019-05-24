@@ -32,7 +32,7 @@ const createTooltip = (event, error, reportIndex = 0) => {
 
   // Create content.
   const html = error || result.length < 1
-    ? noResult(error)
+    ? noResult(error, fadeClass)
     : `${selectStyle}${tooltipDetails(result, reportIndex, fadeClass)}`;
   State.shadowRoot.innerHTML = `${tooltipStyle}${html}`;
 

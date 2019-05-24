@@ -2,7 +2,7 @@
 import links from './link';
 import State from '../../state';
 
-const noResult = error => (`
+const noResult = (error, fadeClass) => (`
   <style>
     .no-result {
       margin: 0;
@@ -15,7 +15,7 @@ const noResult = error => (`
     }
   </style>
   <aside
-    class="theme_${State.settings.theme} close-on-click-outside"
+    class="theme_${State.settings.theme} close-on-click-outside ${fadeClass}"
     id="tooltip"
   >
     ${

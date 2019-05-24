@@ -8,6 +8,7 @@ import { removeInteractorListener } from '../listeners/interactor';
 import { removeInteractorSortListener } from '../listeners/interactor-sort';
 import { removeResizeListener } from '../listeners/resize';
 import { removeSelectListener } from '../listeners/select';
+import { removeSpeciesListener } from '../listeners/species-change';
 
 const removePanel = () => {
   const panel = State.shadowRoot.getElementById('panel');
@@ -23,6 +24,7 @@ const removePanel = () => {
     removeInteractorSortListener();
     removeResizeListener();
     removeSelectListener();
+    removeSpeciesListener();
     fadeOut(panel);
   }
 };

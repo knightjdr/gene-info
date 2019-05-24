@@ -19,7 +19,7 @@ describe('No result tooltip', () => {
     });
 
     it('should set theme', () => {
-      const div = document.querySelector('aside div');
+      const div = document.querySelector('aside');
       expect(div.classList.contains('theme_dark')).toBeTruthy();
     });
 

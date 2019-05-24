@@ -34,11 +34,6 @@ describe('No result panel', () => {
         expect(aside.style.top).toBe('10px');
       });
 
-      it('should set panel text', () => {
-        const par = document.querySelector('p');
-        expect(par.textContent.trim()).toBe('No search result');
-      });
-
       it('should call links function', () => {
         const settings = {
           ctrl: false,

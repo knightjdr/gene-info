@@ -58,7 +58,7 @@ describe('Remove select listener', () => {
     State.createShadow();
     const select = document.createElement('select');
     select.addEventListener('change', selectChange);
-    select.id = 'gene-select';
+    select.className = 'slim-select-style';
     select.removeEventListener = jest.fn();
     State.shadowRoot.appendChild(select);
     removeSelectListener();
@@ -74,7 +74,7 @@ describe('Add select listener', () => {
     State.createShadow();
     select = document.createElement('select');
     select.addEventListener = jest.fn();
-    select.id = 'gene-select';
+    select.className = 'slim-select-style';
     State.shadowRoot.appendChild(select);
   });
 

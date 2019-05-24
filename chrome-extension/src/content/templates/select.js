@@ -3,9 +3,10 @@
 import SlimSelect from 'slim-select';
 
 const select = (shadowRoot) => {
-  if (shadowRoot.getElementById('gene-select')) {
+  const el = shadowRoot.querySelector('select.slim-select-style');
+  if (el) {
     new SlimSelect({
-      select: shadowRoot.getElementById('gene-select'),
+      select: el,
       showSearch: false,
     });
   }

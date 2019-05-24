@@ -1,9 +1,10 @@
 /* eslint indent: 0 */
 import links from './link';
 import position from '../position';
+import speciesSelect from './species';
 import State from '../../state';
 
-const noResult = (error = false, stateStyle) => {
+const noResult = (error = false, stateStyle, fadeClass) => {
   const style = position(stateStyle, false);
   return `
     <style>
@@ -52,9 +53,18 @@ const noResult = (error = false, stateStyle) => {
       .panel_small .no-result {
         width: calc(100% - 60px);
       }
+      .slim-select-style {
+        max-width: calc(100% - 15px);
+      }
+      .slim-select-style > option {
+        padding: 0;
+      }
+      .species-notification {
+        margin: 5px 10px 5px 0;
+      }
     </style>
     <aside
-      class="panel_small theme_${State.settings.theme} close-on-click-outside"
+      class="panel_small theme_${State.settings.theme} close-on-click-outside ${fadeClass}"
       id="panel"
       style="${style}"
     >
@@ -71,7 +81,11 @@ const noResult = (error = false, stateStyle) => {
             </a>
             to report bugs.
           </p>`
-        : `<p class="no-result">No search result</p>
+        : `<h1 class="no-result">No search result</h1>
+          <p class="species-notification">
+            Your currently selected species is:
+          </p>
+          ${speciesSelect(State.settings.species)}
           <h1>Search at:</h1>
           ${links(State.searchTerm, State.settings)}
           ${
