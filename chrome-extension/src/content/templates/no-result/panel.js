@@ -17,7 +17,7 @@ const noResult = (error = false, stateStyle, fadeClass) => {
         text-align: justify;
       }
       .ctrl-notification strong {
-        color: #F44336;
+        color: var(--warning);
         display: block;
         margin-bottom: 5px;
       }

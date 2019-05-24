@@ -8,6 +8,7 @@ const theme = `
       --text-contrast: #1F3C1D;
       --thumb: #999;
       --track: #bfbfbf;
+      --warning: #F4887E;
     }
     aside.theme_light {
       --background: #fafafa;
@@ -17,6 +18,7 @@ const theme = `
       --text-contrast: #f5f5f5;
       --thumb: #ccc;
       --track: #eee;
+      --warning: #F44336;
     }
   </style>
 `;
