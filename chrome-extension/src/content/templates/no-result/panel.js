@@ -54,7 +54,7 @@ const noResult = (error = false, stateStyle) => {
       }
     </style>
     <aside
-      class="panel_small theme_${State.settings.theme}"
+      class="panel_small theme_${State.settings.theme} close-on-click-outside"
       id="panel"
       style="${style}"
     >

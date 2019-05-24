@@ -1,22 +1,14 @@
+import clickOutside from './click-outside';
 import removePanel from '../remove/remove-panel';
 import removeTooltip from '../remove/remove-tooltip';
 import State from '../state';
 
 let method;
 
-const stopPropogation = (event) => {
-  event.stopPropagation();
-};
-
 export const removeCloseListener = () => {
   const button = State.shadowRoot.getElementById('close');
   if (button) {
     button.removeEventListener('click', method);
-  }
-  const backdrop = State.shadowRoot.getElementById('backdrop');
-  if (backdrop) {
-    backdrop.removeEventListener('click', method);
-    State.shadowRoot.getElementById('tooltip').addEventListener('click', stopPropogation);
   }
 };
 
@@ -26,9 +18,9 @@ export const addCloseListener = () => {
   if (button) {
     button.addEventListener('click', method);
   }
-  const backdrop = State.shadowRoot.getElementById('backdrop');
-  if (backdrop) {
-    backdrop.addEventListener('click', method);
-    State.shadowRoot.getElementById('tooltip').addEventListener('click', stopPropogation);
+
+  const el = State.shadowRoot.querySelector('.close-on-click-outside');
+  if (el) {
+    clickOutside(el, method);
   }
 };

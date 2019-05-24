@@ -9,15 +9,6 @@ const panelStyle = `
   ${buttonStyle}
   ${linkStyle}
   <style>
-    #backdrop {
-      height: 100vh;
-      left: 0px;
-      position: fixed;
-      top: 0px;
-      width: 100vw;
-      z-index: 10000;
-      z-index: 2147483646;
-    }
     #tooltip {
       background-color: var(--background);
       border-radius: 3px;
@@ -29,7 +20,7 @@ const panelStyle = `
       height: auto;
       max-width: 300px;
       padding: 5px 10px 5px 10px;
-      position: relative;
+      position: fixed;
       width: auto;
       z-index: 2147483647;
     }

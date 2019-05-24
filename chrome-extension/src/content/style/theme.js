@@ -1,7 +1,6 @@
 const theme = `
   <style>
-    aside.theme_dark,
-    #backdrop > .theme_dark {
+    aside.theme_dark {
       --background: #323639;
       --primary: #7FA782;
       --primary-1: #445054;
@@ -10,8 +9,7 @@ const theme = `
       --thumb: #999;
       --track: #bfbfbf;
     }
-    aside.theme_light,
-    #backdrop > .theme_light {
+    aside.theme_light {
       --background: #fafafa;
       --primary: #658170;
       --primary-1: #e2e9e5;

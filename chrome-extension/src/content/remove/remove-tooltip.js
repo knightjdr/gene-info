@@ -5,13 +5,13 @@ import { removeSelectListener } from '../listeners/select';
 import { removeTooltipScrollListener } from '../listeners/tooltip-scroll';
 
 const removeTooltip = () => {
-  const backdrop = State.shadowRoot.getElementById('backdrop');
-  if (backdrop) {
+  const tooltip = State.shadowRoot.getElementById('tooltip');
+  if (tooltip) {
     State.clearReports();
     removeCloseListener();
     removeSelectListener();
     removeTooltipScrollListener();
-    fadeOut(backdrop);
+    fadeOut(tooltip);
   }
 };
 

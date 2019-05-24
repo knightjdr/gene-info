@@ -14,34 +14,32 @@ const noResult = error => (`
       margin: 10px 0 5px 0;
     }
   </style>
-  <aside id="backdrop">
-    <div
-      class="theme_${State.settings.theme}"
-      id="tooltip"
-    >
-      ${
-        error
-        ? `<header>An error occured</header>
-          <p class="no-result">
-            Please use our
-            <a
-              href="https://github.com/knightjdr/gene-info/issues"
-              rel='noopener noreferrer'
-              target="_blank"
-            >
-              issue tracker
-            </a>
-            to report bugs.
-          </p>`
-        : `<header>No search result</header>
-          <h1>
-            Search at:
-          </h1>
-          ${links(State.searchTerm, State.settings)}
-          `
-      }
-    </div>
-  </aside>
+  <aside
+    class="theme_${State.settings.theme} close-on-click-outside"
+    id="tooltip"
+  >
+    ${
+      error
+      ? `<header>An error occured</header>
+        <p class="no-result">
+          Please use our
+          <a
+            href="https://github.com/knightjdr/gene-info/issues"
+            rel='noopener noreferrer'
+            target="_blank"
+          >
+            issue tracker
+          </a>
+          to report bugs.
+        </p>`
+      : `<header>No search result</header>
+        <h1>
+          Search at:
+        </h1>
+        ${links(State.searchTerm, State.settings)}
+        `
+    }
+  </class>
 `);
 
 export default noResult;
