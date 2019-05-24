@@ -20,10 +20,12 @@ const createTooltip = (event, error, reportIndex = 0) => {
   let tooltip;
   if (State.shadowRoot.getElementById('tooltip')) {
     tooltip = State.shadowRoot.getElementById('tooltip');
-    position = {
-      left: tooltip.style.left,
-      top: tooltip.style.top,
-    };
+    if (reportIndex > 0) {
+      position = {
+        left: tooltip.style.left,
+        top: tooltip.style.top,
+      };
+    }
     removeCloseListener();
     removeSelectListener();
     removeTooltipScrollListener();
