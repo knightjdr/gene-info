@@ -355,6 +355,7 @@ video {
 .workspace textarea {
   border: 1px solid var(--nav-background);
   flex-grow: 1;
+  font-size: 0.9em;
   padding: 5px;
   width: 100%;
 }
