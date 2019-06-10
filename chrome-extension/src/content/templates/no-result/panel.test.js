@@ -1,6 +1,7 @@
 import links from './link';
 import panel from './panel';
 import position from '../position';
+import State from '../../state';
 
 jest.mock('./link');
 jest.mock('../position');
@@ -8,6 +9,7 @@ position.mockReturnValue('top: 10px;');
 jest.mock('../../state', () => ({
   searchTerm: 'test',
   settings: {
+    ctrl: false,
     species: 'Homo sapiens',
     theme: 'dark',
   },
@@ -15,33 +17,48 @@ jest.mock('../../state', () => ({
 
 
 describe('No result panel', () => {
-  describe('No error', () => {
-    beforeAll(() => {
-      links.mockClear();
-      document.body.innerHTML = panel(false, {});
+  describe('no error', () => {
+    describe('ctrl requirement not set', () => {
+      beforeAll(() => {
+        links.mockClear();
+        document.body.innerHTML = panel(false, {});
+      });
+
+      it('should set theme', () => {
+        const aside = document.querySelector('aside');
+        expect(aside.classList.contains('theme_dark')).toBeTruthy();
+      });
+
+      it('should set inline style', () => {
+        const aside = document.querySelector('aside');
+        expect(aside.style.top).toBe('10px');
+      });
+
+      it('should call links function', () => {
+        const settings = {
+          ctrl: false,
+          species: 'Homo sapiens',
+          theme: 'dark',
+        };
+        expect(links).toHaveBeenCalledWith('test', settings);
+      });
+
+      it('should add ctrl-notification div', () => {
+        const div = document.querySelector('.ctrl-notification');
+        expect(div).not.toBeNull();
+      });
     });
 
-    it('should set theme', () => {
-      const aside = document.querySelector('aside');
-      expect(aside.classList.contains('theme_dark')).toBeTruthy();
-    });
+    describe('ctrl requirement set', () => {
+      beforeAll(() => {
+        State.settings.ctrl = true;
+        document.body.innerHTML = panel(false, {});
+      });
 
-    it('should set inline style', () => {
-      const aside = document.querySelector('aside');
-      expect(aside.style.top).toBe('10px');
-    });
-
-    it('should set panel text', () => {
-      const par = document.querySelector('p');
-      expect(par.textContent.trim()).toBe('No search result');
-    });
-
-    it('should call links function', () => {
-      const settings = {
-        species: 'Homo sapiens',
-        theme: 'dark',
-      };
-      expect(links).toHaveBeenCalledWith('test', settings);
+      it('should not add ctrl-notification div', () => {
+        const div = document.querySelector('.ctrl-notification');
+        expect(div).toBeNull();
+      });
     });
   });
 

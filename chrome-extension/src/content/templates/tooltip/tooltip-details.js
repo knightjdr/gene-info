@@ -23,28 +23,26 @@ const tooltipDetails = (result, reportIndex, fadeClass) => {
   ];
   const sorted = sortArray.alphabeticalByKey(links, 'database');
   return `
-    <aside id="backdrop">
-      <div
-        class="theme_${State.settings.theme} ${fadeClass}"
-        id="tooltip"
-      >
-        <header>
-          ${geneElement(result, reportIndex)}
-        </header>
-        <section>
-          ${
-            sorted.map(link => (
-              `<a
-                href="${link.href}"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                ${link.database}
-              </a>`
-            )).join('')
-          }
-        </section>
-      </div>
+    <aside
+      class="theme_${State.settings.theme} ${fadeClass} close-on-click-outside"
+      id="tooltip"
+    >
+      <header>
+        ${geneElement(result, reportIndex)}
+      </header>
+      <section>
+        ${
+          sorted.map(link => (
+            `<a
+              href="${link.href}"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              ${link.database}
+            </a>`
+          )).join('')
+        }
+      </section>
     </aside>
   `;
 };

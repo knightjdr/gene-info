@@ -16,6 +16,7 @@ import { addInteractorListener, removeInteractorListener } from '../../listeners
 import { addInteractorSortListener, removeInteractorSortListener } from '../../listeners/interactor-sort';
 import { addResizeListener, removeResizeListener } from '../../listeners/resize';
 import { addSelectListener, removeSelectListener } from '../../listeners/select';
+import { addSpeciesListener } from '../../listeners/species-change';
 
 const createPanel = (reportIndex = 0, error) => {
   const result = State.results[State.results.length - 1];
@@ -37,9 +38,9 @@ const createPanel = (reportIndex = 0, error) => {
 
   // Get class, html and style to apply
   const html = error || result.length < 1
-    ? noResult(error, State.style)
-    : `${selectStyle}${panelDetails(result, reportIndex, State.style, fadeClass)}`;
-  State.shadowRoot.innerHTML = `${panelStyle}${html}`;
+    ? noResult(error, State.style, fadeClass)
+    : `${panelDetails(result, reportIndex, State.style, fadeClass)}`;
+  State.shadowRoot.innerHTML = `${selectStyle}${panelStyle}${html}`;
 
   const panel = State.shadowRoot.getElementById('panel');
   // Reset state, add element, close button, listeners and fade in.
@@ -57,6 +58,7 @@ const createPanel = (reportIndex = 0, error) => {
   addInteractorSortListener();
   addResizeListener();
   addSelectListener(result);
+  addSpeciesListener();
 };
 
 export default createPanel;

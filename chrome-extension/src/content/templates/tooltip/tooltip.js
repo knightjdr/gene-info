@@ -20,10 +20,12 @@ const createTooltip = (event, error, reportIndex = 0) => {
   let tooltip;
   if (State.shadowRoot.getElementById('tooltip')) {
     tooltip = State.shadowRoot.getElementById('tooltip');
-    position = {
-      left: tooltip.style.left,
-      top: tooltip.style.top,
-    };
+    if (reportIndex > 0) {
+      position = {
+        left: tooltip.style.left,
+        top: tooltip.style.top,
+      };
+    }
     removeCloseListener();
     removeSelectListener();
     removeTooltipScrollListener();
@@ -32,7 +34,7 @@ const createTooltip = (event, error, reportIndex = 0) => {
 
   // Create content.
   const html = error || result.length < 1
-    ? noResult(error)
+    ? noResult(error, fadeClass)
     : `${selectStyle}${tooltipDetails(result, reportIndex, fadeClass)}`;
   State.shadowRoot.innerHTML = `${tooltipStyle}${html}`;
 

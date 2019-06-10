@@ -7,20 +7,17 @@ const geneElement = (result, reportIndex, fullname = false) => {
   }
   return `
     <style>
-      .gene-select {
+      .slim-select-style {
         display: inline-block;
         max-width: 250px;
         min-width: 100px;
         width: 50%;
       }
-      .gene-select > option {
+      .slim-select-style > option {
         padding: 0;
       }
     </style>
-    <select
-      class="gene-select"
-      id="gene-select"
-    >
+    <select class="slim-select-style">
       ${
         result.map((gene, index) => {
           const displayName = fullname ? gene.fullname : gene.gene;

@@ -12,7 +12,7 @@ export function selectChange() {
 }
 
 export const removeSelectListener = () => {
-  const el = State.shadowRoot.getElementById('gene-select');
+  const el = State.shadowRoot.querySelector('.slim-select-style');
   if (el) {
     el.removeEventListener('change', selectChange);
   }
@@ -20,7 +20,7 @@ export const removeSelectListener = () => {
 
 export const addSelectListener = (results) => {
   if (results && results.length > 1) {
-    const el = State.shadowRoot.getElementById('gene-select');
+    const el = State.shadowRoot.querySelector('.slim-select-style');
     el.addEventListener('change', selectChange);
   }
 };
