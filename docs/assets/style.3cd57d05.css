@@ -113,6 +113,16 @@ video {
 .buttons li:last-child img {
   margin-right: 7px;
 }
+
+.changelog {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 60px 40px 20px 40px;
+}
+
 .documentation {
   align-items: center;
   display: flex;
