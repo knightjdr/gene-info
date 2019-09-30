@@ -55,8 +55,11 @@ class State {
       pathway: defaultTrueToggleState(storage.pathway),
       setting_order: storage.setting_order || config.defaultSettingOrder,
       report: storage.report || 'detailed',
+      protein_expression: defaultTrueToggleState(storage.protein_expression),
+      protein_expression_tissues: storage.protein_expression_tissues
+        || config.defaultTissues.protein[species],
       rna_expression: defaultTrueToggleState(storage.rna_expression),
-      rna_expression_tissues: storage.rna_expression_tissues || config.defaultTissues[species],
+      rna_expression_tissues: storage.rna_expression_tissues || config.defaultTissues.rna[species],
       region: defaultTrueToggleState(storage.region),
       species,
       theme: storage.theme || 'light',

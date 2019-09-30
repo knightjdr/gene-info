@@ -83,7 +83,6 @@ const panelStyle = `
     .details-description {
       margin-top: 0px;
       margin-bottom: 8px;
-      text-align: justify;
     }
 
     .gene {

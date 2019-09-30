@@ -9,6 +9,7 @@ const config = {
     'protein',
     'sequence',
   ],
+  proteomicsDBSpecies: [9606],
   species: [
     'Arabidopsis thaliana',
     'Caenorhabditis elegans',

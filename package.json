@@ -5,13 +5,15 @@
   "main": "package.json",
   "scripts": {
     "dev-api": "NODE_ENV=development nodemon node api/index.js",
-    "dev-ext": "NODE_ENV=development webpack --watch --config webpack.dev.js --env.browser=chrome",
-    "dev-ext-ff": "NODE_ENV=development webpack --watch --config webpack.dev-ff.js --env.browser=firefox",
+    "dev-ext:chrome": "NODE_ENV=development webpack --watch --config webpack.dev.js --env.browser=chrome",
+    "dev-ext:firefox": "NODE_ENV=development webpack --watch --config webpack.dev.js --env.browser=firefox",
     "doc-server": "http-server docs",
     "prod-api": "NODE_ENV=production node api/index.js",
     "prod-api-forever": "NODE_ENV=production forever start -a --uid 'gene-info-api' api/index.js",
     "prod-ext": "NODE_ENV=production webpack --config webpack.prod.js",
-    "prod-test-ext": "NODE_ENV=production webpack --config webpack.prod-test.js",
+    "prod-ext:test": "NODE_ENV=production webpack --config webpack.prod-test.js",
+    "start:chrome": "web-ext run --target chromium --source-dir ./chrome-extension/dev-build/",
+    "start:firefox": "web-ext --source-dir ./chrome-extension/dev-build/",
     "test": "jest"
   },
   "repository": {

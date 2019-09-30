@@ -1,15 +1,14 @@
-import displayCompartments from '../display/compartments';
-import displayHPA from '../display/hpa';
 import { updateTab } from '../helpers/message';
-import updateTissues from '../populate/tissues';
+import { updateDisplay } from '../display/display';
+import updateTissues from '../populate/rna-tissues';
 
 const speciesOnChange = function change() {
   const { value } = this;
   chrome.storage.local.set({ species: value });
   updateTab('updateSetting', 'species', value);
-  displayCompartments(value);
-  displayHPA(value);
-  updateTissues(value, true);
+  updateDisplay(value);
+  updateTissues('protein', value, true);
+  updateTissues('rna', value, true);
 };
 
 export default speciesOnChange;

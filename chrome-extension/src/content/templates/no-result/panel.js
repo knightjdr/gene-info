@@ -14,7 +14,6 @@ const noResult = (error = false, stateStyle, fadeClass) => {
         padding-top: 10px;
         margin-right: 10px;
         margin-top: 10px;
-        text-align: justify;
       }
       .ctrl-notification strong {
         color: var(--warning);

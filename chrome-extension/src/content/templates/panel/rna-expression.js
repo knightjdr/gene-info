@@ -33,7 +33,11 @@ const tissueRow = (tissue, data) => {
 
 const rnaExpressionElement = (report, settings) => {
   let html = '';
-  if (settings.rna_expression && settings.species === 'Homo sapiens') {
+  const availableSpecies = Object.keys(config.defaultTissues.protein);
+  if (
+    settings.rna_expression
+    && availableSpecies.includes(settings.species)
+  ) {
     const accession = report['ensembl-gene'][0];
     html = `
       <style>

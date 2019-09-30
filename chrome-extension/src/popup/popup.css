@@ -11,10 +11,10 @@ body {
   font-family: var(--font-stack);
   font-size: 12px;
   grid-column-gap: 10px;
-  grid-template-columns: 170px 170px;
+  grid-template-columns: 180px 180px;
   grid-template-rows: auto;
   margin: 5px 8px;
-  width: 350px;
+  width: 370px;
 }
 body.theme_dark {
   --background: #323639;
@@ -394,7 +394,6 @@ select:focus {
   justify-content: center;
   margin-top: 7px;
   padding-top: 5px;
-  text-align: justify;
   width: 100%;
 }
 .warning svg {

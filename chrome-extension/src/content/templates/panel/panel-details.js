@@ -9,6 +9,7 @@ import localizationElement from './localization';
 import pathologyElement from './pathology';
 import pathwayElement from './pathway';
 import position from '../position';
+import proteinExpressionElement from './protein-expression';
 import rnaExpressionElement from './rna-expression';
 import State from '../../state';
 
@@ -22,6 +23,7 @@ const sections = {
   localization: localizationElement,
   pathology: pathologyElement,
   pathway: pathwayElement,
+  protein_expression: proteinExpressionElement,
   rna_expression: rnaExpressionElement,
 };
 
