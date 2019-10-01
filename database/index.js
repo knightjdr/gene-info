@@ -4,12 +4,13 @@ const args = require('./args');
 const domains = require('./domains/domains');
 const geneNames = require('./gene-names/gene-names');
 const generateDB = require('./generate-db');
+const getProteinExpressionData = require('./expression/protein/get-data');
+const getRNAExpressionData = require('./expression/rna/get-data');
 const go = require('./go/go');
 const interactions = require('./interactions/interactions');
 const localization = require('./localization/localization');
 const regions = require('./regions/regions');
-const rnaExpression = require('./rna-expression/rna-expression.js');
-const proteinExpression = require('./protein-expression/protein-expression');
+
 const uniprot = require('./uniprot/uniprot');
 const writeTissues = require('./write-tissues');
 
@@ -26,11 +27,11 @@ const main = async () => {
   try {
     await Promise.all([
       geneNames(options),
+      getProteinExpressionData(options),
+      getRNAExpressionData(options),
       go(options),
       interactions(options),
       localization(options),
-      proteinExpression(options),
-      rnaExpression(options),
       uniprot(options),
     ]);
 

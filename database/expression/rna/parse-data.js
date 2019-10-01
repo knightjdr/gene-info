@@ -1,11 +1,10 @@
-/* eslint no-console: 0 */
-
 const fs = require('fs');
 const readline = require('readline');
 
-const arrSort = require('../helpers/arr-sort');
+const arrSort = require('../../helpers/arr-sort');
+const mergeTissues = require('../merge-tissues');
 
-const handleLines = file => (
+const parseTissue = file => (
   new Promise((resolve, reject) => {
     if (fs.existsSync(file)) {
       const expression = {};
@@ -41,7 +40,6 @@ const handleLines = file => (
         reject(err);
       });
     } else {
-      console.error(`Missing HPA RNA expression file: ${file}`);
       resolve({
         expression: {},
         types: [],
@@ -50,40 +48,22 @@ const handleLines = file => (
   })
 );
 
-const mergeExpression = (cells, tissues) => {
-  const keys = [...new Set([...Object.keys(cells), ...Object.keys(tissues)])];
-  const merged = {};
-  keys.forEach((key) => {
-    merged[key] = {
-      cells: cells[key] || {},
-      tissues: tissues[key] || {},
-    };
-  });
-  return merged;
+const parseData = async (cells, tissues) => {
+  const [cellData, tissueData] = await Promise.all([
+    parseTissue(cells),
+    parseTissue(tissues),
+  ]);
+
+  const availableLines = {
+    cells: cellData.types,
+    tissues: tissueData.types,
+  };
+  const merged = mergeTissues(cellData.expression, tissueData.expression);
+
+  return {
+    rnaExpression: merged,
+    rnaTissues: availableLines,
+  };
 };
 
-const expressionParse = (cells, tissues) => (
-  new Promise((resolve, reject) => {
-    Promise.all([
-      handleLines(cells),
-      handleLines(tissues),
-    ])
-      .then((values) => {
-        const [cellData, tissueData] = values;
-        const lines = {
-          cells: cellData.types,
-          tissues: tissueData.types,
-        };
-        const merged = mergeExpression(cellData.expression, tissueData.expression);
-        resolve({
-          rnaExpression: merged,
-          rnaTissues: lines,
-        });
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  })
-);
-
-module.exports = expressionParse;
+module.exports = parseData;

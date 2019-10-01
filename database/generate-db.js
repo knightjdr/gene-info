@@ -4,21 +4,21 @@ const domainParse = require('./domains/domain-parse');
 const intParse = require('./interactions/iterate-tab');
 const jsonStringify = require('./helpers/json-stringify');
 const mergeDB = require('./merge-db');
-const proteinExpressionParse = require('./protein-expression/expression-parse');
+const parseRNAExpression = require('./expression/rna/parse-data');
 const regionParse = require('./regions/region-parse');
-const rnaExpressionParse = require('./rna-expression/expression-parse');
 const uniParse = require('./uniprot/iterate-xml');
 const { geneNameParse } = require('./gene-names/gene-name-parse');
 const { localizationParse } = require('./localization/localization-parse');
+const { parseProteinExpression } = require('./expression/protein/parse-data');
 const { readObo } = require('./go/read-obo');
 
 const speciesDB = async (specie, obo) => {
   const parsedData = await Promise.all([
-    proteinExpressionParse(
+    parseProteinExpression(
       `./files/protein-expression/cells/${specie}.json`,
       `./files/protein-expression/tissues/${specie}.json`,
     ),
-    rnaExpressionParse(
+    parseRNAExpression(
       `./files/rna-expression/cells/${specie}.tsv`,
       `./files/rna-expression/tissues/${specie}.tsv`,
     ),

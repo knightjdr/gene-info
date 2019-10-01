@@ -2,20 +2,19 @@ const mockFS = require('mock-fs');
 
 const { defineField, geneNameParse } = require('./gene-name-parse');
 
-const json = `
-{
-  "1": {
-    "official": "a",
-    "synonyms": []
+const data = {
+  1: {
+    official: 'a',
+    synonyms: [],
   },
-  "2": {
-    "official": "b",
-    "synonyms": ["g2"]
-  }
-}`;
+  2: {
+    official: 'b',
+    synonyms: ['g2'],
+  },
+};
 
 const mockedFileSystem = {
-  'Homo sapiens.json': json,
+  'Homo sapiens.json': JSON.stringify(data),
 };
 mockFS(mockedFileSystem);
 

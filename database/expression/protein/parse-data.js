@@ -1,8 +1,9 @@
 const fs = require('fs');
 
-const arrSort = require('../helpers/arr-sort');
-const readJSON = require('../helpers/read-json');
-const round = require('../helpers/round');
+const arrSort = require('../../helpers/arr-sort');
+const mergeTissues = require('../merge-tissues');
+const readJSON = require('../../helpers/read-json');
+const round = require('../../helpers/round');
 
 const parseTissue = async (file) => {
   const expression = {};
@@ -41,38 +42,29 @@ const parseTissue = async (file) => {
 
   return {
     expression,
-    types: arrSort.alphabetical(Object.keys(types)),
+    lines: arrSort.alphabetical(Object.keys(types)),
   };
 };
 
-const mergeExpression = (cells, tissues) => {
-  const keys = [...new Set([...Object.keys(cells), ...Object.keys(tissues)])];
-  const merged = {};
-  keys.forEach((key) => {
-    merged[key] = {
-      cells: cells[key] || {},
-      tissues: tissues[key] || {},
-    };
-  });
-  return merged;
-};
-
-const expressionParse = async (cells, tissues) => {
+const parseData = async (cells, tissues) => {
   const [cellData, tissueData] = await Promise.all([
     parseTissue(cells),
     parseTissue(tissues),
   ]);
 
-  const lines = {
-    cells: cellData.types,
-    tissues: tissueData.types,
+  const availableLines = {
+    cells: cellData.lines,
+    tissues: tissueData.lines,
   };
-  const merged = mergeExpression(cellData.expression, tissueData.expression);
+  const merged = mergeTissues(cellData.expression, tissueData.expression);
 
   return {
     proteinExpression: merged,
-    proteinTissues: lines,
+    proteinTissues: availableLines,
   };
 };
 
-module.exports = expressionParse;
+module.exports = {
+  parseData,
+  parseTissue,
+};
