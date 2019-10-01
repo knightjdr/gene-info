@@ -1,6 +1,6 @@
 import { updateTab } from '../helpers/message';
 import { updateDisplay } from '../display/display';
-import updateTissues from '../populate/rna-tissues';
+import updateTissues from '../populate/tissues';
 
 const speciesOnChange = function change() {
   const { value } = this;

@@ -13,8 +13,8 @@
     "prod-ext": "NODE_ENV=production webpack --config webpack.prod.js",
     "prod-ext:test": "NODE_ENV=production webpack --config webpack.prod-test.js",
     "start:chrome": "web-ext run --target chromium --source-dir ./chrome-extension/dev-build/",
-    "start:firefox": "web-ext --source-dir ./chrome-extension/dev-build/",
-    "test": "jest"
+    "start:firefox": "web-ext run --source-dir ./chrome-extension/dev-build/",
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
+    "html-minifier": "^4.0.0",
     "html-replace-webpack-plugin": "^2.5.5",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.8.0",
@@ -45,11 +46,10 @@
     "md5": "^2.2.1",
     "memory-streams": "^0.1.3",
     "mini-css-extract-plugin": "^0.5.0",
-    "mock-fs": "^4.8.0",
+    "mock-fs": "^4.10.1",
     "mongo-mock": "^3.4.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.28.2",
-    "webpack-chrome-extension-reloader": "^1.1.1",
     "webpack-cli": "^3.1.2",
     "webpack-merge": "^4.1.5"
   },

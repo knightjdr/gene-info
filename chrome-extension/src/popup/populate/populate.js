@@ -1,6 +1,6 @@
 import config from '../../config';
 import species from './species';
-import rnaTissues from './rna-tissues';
+import rnaTissues from './tissues';
 
 const populate = () => {
   species();

@@ -1,13 +1,13 @@
-import compartments from './compartments';
 import config from '../../config';
-import expression from './expression';
-import hpa from './hpa';
+import toggleCompartments from './toggle-compartments';
+import toggleExpression from './toggle-expression';
+import toggleHPA from './toggle-hpa';
 
 export const updateDisplay = (species) => {
-  compartments(species);
-  expression('protein', species);
-  expression('rna', species);
-  hpa(species);
+  toggleCompartments(species);
+  toggleExpression('protein', species);
+  toggleExpression('rna', species);
+  toggleHPA(species);
 };
 
 const display = () => {

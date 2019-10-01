@@ -1,4 +1,5 @@
 import link, { allSpeciesLinks } from './link';
+import minifyHTML from '../../../test-utils/minify-html';
 
 const style = `
   <style>
@@ -8,15 +9,6 @@ const style = `
   </style>
 `;
 
-const removeWhitespace = (str) => {
-  const newlineRegex = new RegExp(/\n/g);
-  const whitespaceRegex = new RegExp(/\s{2,}/g);
-  let formatted = str;
-  formatted = formatted.replace(newlineRegex, ' ');
-  formatted = formatted.replace(whitespaceRegex, ' ');
-  return formatted.trim();
-};
-
 describe('Links for all species', () => {
   describe('all links IDs present', () => {
     it('should return expected links', () => {
@@ -25,7 +17,7 @@ describe('Links for all species', () => {
         geneid: 1234,
         uniprot: ['abcd'],
       };
-      const expected = removeWhitespace(`
+      const expected = minifyHTML(`
         <div>
           <h1>Ensembl</h1>
           <a
@@ -57,7 +49,7 @@ describe('Links for all species', () => {
         </a>
       </div>
       `);
-      const templateString = removeWhitespace(allSpeciesLinks(report));
+      const templateString = minifyHTML(allSpeciesLinks(report));
       expect(templateString).toEqual(expected);
     });
   });
@@ -157,7 +149,7 @@ describe('Panel links', () => {
         };
         const id = specie.name === 'Homo sapiens' ? report.uniprot : report[specie.key];
         const text = specie.name === 'Homo sapiens' ? `NX_${report.uniprot}` : report[specie.key];
-        const expected = removeWhitespace(`
+        const expected = minifyHTML(`
           ${style}
           <section class="links">
             <div>
@@ -182,7 +174,7 @@ describe('Panel links', () => {
             </div>
           </section>
         `);
-        const templateString = removeWhitespace(link(report, settings));
+        const templateString = minifyHTML(link(report, settings));
         expect(templateString).toEqual(expected);
       });
     });
@@ -208,7 +200,7 @@ describe('Panel links', () => {
           links: true,
           species: specie.name,
         };
-        const expected = removeWhitespace(`
+        const expected = minifyHTML(`
           ${style}
           <section class="links">
             <div>
@@ -223,7 +215,7 @@ describe('Panel links', () => {
             </div>
           </section>
         `);
-        const templateString = removeWhitespace(link(report, settings));
+        const templateString = minifyHTML(link(report, settings));
         expect(templateString).toEqual(expected);
       });
     });
@@ -240,8 +232,8 @@ describe('Panel links', () => {
 
     it('should only return style', () => {
       const report = {};
-      const expected = removeWhitespace(style);
-      const templateString = removeWhitespace(link(report, settings));
+      const expected = minifyHTML(style);
+      const templateString = minifyHTML(link(report, settings));
       expect(templateString).toEqual(expected);
     });
   });
