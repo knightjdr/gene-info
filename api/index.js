@@ -10,6 +10,7 @@ const database = require('./app/connections/database');
 const logger = require('./logger');
 const responseHeaders = require('./setup/response-headers');
 const router = require('./app/routes/router');
+const uriError = require('./setup/uri-error');
 
 // Initialize app
 const initApp = () => {
@@ -18,6 +19,7 @@ const initApp = () => {
   app.use(responseHeaders);
   app.use(corsSetup());
   app.use(compression());
+  app.use(uriError);
   app.use(config.base, router);
 
   // Start server

@@ -47,7 +47,7 @@ describe('Protein expression element', () => {
       });
 
       it('should not display table', () => {
-        expect(html.includes('<table class="expression__table">')).toBeFalsy();
+        expect(html.includes('<table class="expression__table expression__table-protein">')).toBeFalsy();
       });
 
       it('should not display data warning', () => {
@@ -82,7 +82,7 @@ describe('Protein expression element', () => {
       });
 
       it('should not display table', () => {
-        expect(html.includes('<table class="expression__table">')).toBeFalsy();
+        expect(html.includes('<table class="expression__table expression__table-protein">')).toBeFalsy();
       });
 
       it('should not display data warning', () => {
@@ -118,7 +118,7 @@ describe('Protein expression element', () => {
     });
 
     it('should display table', () => {
-      expect(html.includes('<table class="expression__table">')).toBeTruthy();
+      expect(html.includes('<table class="expression__table expression__table-protein">')).toBeTruthy();
     });
 
     it('should not display data warning', () => {
