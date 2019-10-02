@@ -33,7 +33,7 @@ const parseTissue = file => (
       lineReader.on('close', () => {
         resolve({
           expression,
-          types: arrSort.alphabetical(Object.keys(types)),
+          lines: arrSort.alphabetical(Object.keys(types)),
         });
       });
       lineReader.on('error', (err) => {
@@ -42,7 +42,7 @@ const parseTissue = file => (
     } else {
       resolve({
         expression: {},
-        types: [],
+        lines: [],
       });
     }
   })
@@ -55,8 +55,8 @@ const parseData = async (cells, tissues) => {
   ]);
 
   const availableLines = {
-    cells: cellData.types,
-    tissues: tissueData.types,
+    cells: cellData.lines,
+    tissues: tissueData.lines,
   };
   const merged = mergeTissues(cellData.expression, tissueData.expression);
 
@@ -66,4 +66,7 @@ const parseData = async (cells, tissues) => {
   };
 };
 
-module.exports = parseData;
+module.exports = {
+  parseData,
+  parseTissue,
+};
