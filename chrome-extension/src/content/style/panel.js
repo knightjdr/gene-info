@@ -80,6 +80,9 @@ const panelStyle = `
       margin-bottom: 5px;
       padding: 4px 0 3px 0;
     }
+    .details-header h1 {
+      color: var(--heading);
+    }
     .details-description {
       margin-top: 0px;
       margin-bottom: 8px;

@@ -29,8 +29,8 @@ const expressionElement = (report, settings) => {
         .expression p {
           margin: 5px 0 10px 0;
         }
-        .expression table {
-          margin-bottom: 10px;
+        .expression p.expression__help {
+          margin-top: 0;
         }
         .expression__section {
           margin-top: 5px;
@@ -39,9 +39,6 @@ const expressionElement = (report, settings) => {
           border-top: 1px solid #d0d0d0;
           margin-top: 6px;
           padding-top: 10px;
-        }
-        .expression-table {
-          table-layout: fixed;
         }
         .expression__table th:first-child {
           width: 40%px;
@@ -52,12 +49,15 @@ const expressionElement = (report, settings) => {
         .expression__table td:not(:first-child) {
           text-align: center;
         }
+        .expression__table-protein {
+          margin-bottom: 10px;
+        }
       </style>
       <section class="expression">
         <div class="details-header">
           <h1>EXPRESSION</h1>
         </div>
-        <p>
+        <p class="expression__help">
           Expression values are binned into qualitative
           levels: no expression (none), low, medium or high.
         </p>

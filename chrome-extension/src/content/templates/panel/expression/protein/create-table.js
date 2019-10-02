@@ -11,7 +11,7 @@ const createTable = (report, tissues) => (`
     Protein expression values are reported as the log<sub>10</sub>
     normalized MS1 iBAQ itensity.
   </p>
-  <table class="expression__table">
+  <table class="expression__table expression__table-protein">
     <thead>
       <tr>
         <th>Tissue</th>

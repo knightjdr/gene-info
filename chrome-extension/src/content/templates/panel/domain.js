@@ -21,6 +21,9 @@ const domainElement = (report, settings) => {
     }
     html = `
       <style>
+        .domain-table {
+          margin-top: 5px;
+        }
         .domain-table th:first-child {
           width: 35%;
         }
