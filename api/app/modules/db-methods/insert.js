@@ -8,7 +8,7 @@ const find = (
   new Promise((resolve, reject) => {
     const db = database.connection;
     db.collection(`${config.database.prefix}${collection}`)
-      .insert(insertObject)
+      .insertOne(insertObject)
       .then(() => {
         resolve();
       })
