@@ -144,28 +144,50 @@
             </div>
           </div>
           <div
-            class="hpa"
             draggable="true"
-            id="drag_rna_expression"
+            id="drag_expression"
           >
-            <div class="toggle-container">
-              <input class="toggle toggle-flat" data-type="rna_expression" id="rna_expression" type="checkbox" checked />
-              <label for="rna_expression"></label>
-              <span>RNA expression</span>
-              <button
-                class="advanced-settings"
-                data-type="toggle_options_rna_expression"
-                type="button"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
-                  <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
-                </svg>
-              </button>
+            <div class="protein-expression">
+              <div class="toggle-container">
+                <input class="toggle toggle-flat" data-type="protein_expression" id="protein_expression" type="checkbox" checked />
+                <label for="protein_expression"></label>
+                <span>Protein expression</span>
+                <button
+                  class="advanced-settings"
+                  data-type="toggle_options_protein_expression"
+                  type="button"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
+                    <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+                  </svg>
+                </button>
+              </div>
+              <div class="toggle-options" id="toggle_options_protein_expression">
+                <em>Protein expression tissues</em>
+                <select class="slim-select" data-type="protein_expression_tissues" id="protein_expression_tissues" multiple>
+                </select>
+              </div>
             </div>
-            <div class="toggle-options" id="toggle_options_rna_expression">
-              <em>RNA expression tissues</em>
-              <select class="slim-select" data-type="rna_expression_tissues" id="rna_expression_tissues" multiple>
-              </select>
+            <div class="rna-expression">
+              <div class="toggle-container">
+                <input class="toggle toggle-flat" data-type="rna_expression" id="rna_expression" type="checkbox" checked />
+                <label for="rna_expression"></label>
+                <span>RNA expression</span>
+                <button
+                  class="advanced-settings"
+                  data-type="toggle_options_rna_expression"
+                  type="button"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
+                    <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+                  </svg>
+                </button>
+              </div>
+              <div class="toggle-options" id="toggle_options_rna_expression">
+                <em>RNA expression tissues</em>
+                <select class="slim-select" data-type="rna_expression_tissues" id="rna_expression_tissues" multiple>
+                </select>
+              </div>
             </div>
           </div>
           <div

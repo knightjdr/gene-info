@@ -1,13 +1,5 @@
 import link, { allSpeciesLinks } from './link';
-
-const removeWhitespace = (str) => {
-  const newlineRegex = new RegExp(/\n/g);
-  const whitespaceRegex = new RegExp(/\s{2,}/g);
-  let formatted = str;
-  formatted = formatted.replace(newlineRegex, ' ');
-  formatted = formatted.replace(whitespaceRegex, ' ');
-  return formatted.trim();
-};
+import minifyHTML from '../../../test-utils/minify-html';
 
 const genericLinks = term => `
 <li>
@@ -51,8 +43,8 @@ const genericLinks = term => `
 describe('Links for all species', () => {
   it('should return expected links', () => {
     const term = 'test';
-    const expected = removeWhitespace(genericLinks(term));
-    const templateString = removeWhitespace(allSpeciesLinks(term));
+    const expected = minifyHTML(genericLinks(term));
+    const templateString = minifyHTML(allSpeciesLinks(term));
     expect(templateString).toEqual(expected);
   });
 });
@@ -108,7 +100,7 @@ describe('Panel links', () => {
         links: true,
         species: specie.name,
       };
-      const expected = removeWhitespace(`
+      const expected = minifyHTML(`
         <ul>
           ${generic}
           <li>
@@ -122,7 +114,7 @@ describe('Panel links', () => {
           </li>
         </ul>
       `);
-      const templateString = removeWhitespace(link(term, settings));
+      const templateString = minifyHTML(link(term, settings));
       expect(templateString).toEqual(expected);
     });
   });

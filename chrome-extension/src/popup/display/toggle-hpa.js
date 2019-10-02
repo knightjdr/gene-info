@@ -1,4 +1,4 @@
-const displayHPA = (species) => {
+const toggleHPA = (species) => {
   const elements = document.querySelectorAll('.hpa');
   if (species === 'Homo sapiens') {
     elements.forEach((element) => {
@@ -11,4 +11,4 @@ const displayHPA = (species) => {
   }
 };
 
-export default displayHPA;
+export default toggleHPA;

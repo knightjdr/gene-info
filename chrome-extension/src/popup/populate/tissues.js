@@ -7,47 +7,68 @@ import { updateTab } from '../helpers/message';
 
 import '../../../../node_modules/slim-select/dist/slimselect.css';
 
-const { defaultTissues, tissues } = config;
-
-const changeTissues = (options) => {
+const changeTissues = selectID => (options) => {
   const selected = options.map(option => option.value);
-  chrome.storage.local.set({ rna_expression_tissues: selected });
-  updateTab('updateSetting', 'rna_expression_tissues', selected);
+  chrome.storage.local.set({ [selectID]: selected });
+  updateTab('updateSetting', selectID, selected);
 };
 
-const storedTissues = (species, restore) => (
+const defineDefaultTissues = (expressionType, species, tissueData) => {
+  const defaultTissues = [];
+  if (
+    config.defaultTissues[expressionType][species]
+    && config.defaultTissues[expressionType][species].length > 0
+  ) {
+    defaultTissues.push(...config.defaultTissues[expressionType][species]);
+  } else if (tissueData) {
+    if (tissueData.cells && tissueData.cells.length > 0) {
+      defaultTissues.push(tissueData.cells[0]);
+    }
+    if (tissueData.tissues && tissueData.tissues.length > 0) {
+      defaultTissues.push(tissueData.tissues[0]);
+    }
+  }
+
+  return defaultTissues;
+};
+
+const storedTissues = (defaultTissues, selectID, restore) => (
   new Promise((resolve) => {
     if (restore) {
-      chrome.storage.local.set({ rna_expression_tissues: defaultTissues[species] });
-      resolve(defaultTissues[species]);
-      updateTab('updateSetting', 'rna_expression_tissues', defaultTissues[species]);
+      chrome.storage.local.set({ [selectID]: defaultTissues });
+      resolve(defaultTissues);
+      updateTab('updateSetting', selectID, defaultTissues);
     } else {
-      chrome.storage.local.get('rna_expression_tissues', (storage) => {
-        resolve(storage.rna_expression_tissues || defaultTissues[species]);
+      chrome.storage.local.get(selectID, (storage) => {
+        resolve(storage[selectID] || defaultTissues);
       });
     }
   })
 );
 
-const tissueSelect = async (species, restoreDefaults = false) => {
-  if (tissues[species]) {
-    const selectedTissues = await storedTissues(species, restoreDefaults);
+const tissueSelect = async (expressionType, species, restoreDefaults = false) => {
+  const selectID = `${expressionType}_expression_tissues`;
+  const tissueData = config.tissues[expressionType][species];
+  const defaultTissues = defineDefaultTissues(expressionType, species, tissueData);
+
+  if (tissueData) {
+    const selectedTissues = await storedTissues(defaultTissues, selectID, restoreDefaults);
     const data = [
       { placeholder: true, text: 'Select cells/tissues' },
     ];
-    if (tissues[species].cells.length > 0) {
+    if (tissueData.cells.length > 0) {
       data.push({
         label: 'Cells',
-        options: tissues[species].cells.map(cell => ({
+        options: tissueData.cells.map(cell => ({
           selected: selectedTissues.includes(cell),
           text: cell,
         })),
       });
     }
-    if (tissues[species].tissues.length > 0) {
+    if (tissueData.tissues.length > 0) {
       data.push({
         label: 'Tissues',
-        options: tissues[species].tissues.map(tissue => ({
+        options: tissueData.tissues.map(tissue => ({
           selected: selectedTissues.includes(tissue),
           text: tissue,
         })),
@@ -57,8 +78,8 @@ const tissueSelect = async (species, restoreDefaults = false) => {
     new SlimSelect({
       closeOnSelect: false,
       data,
-      onChange: changeTissues,
-      select: '#rna_expression_tissues',
+      onChange: changeTissues(selectID),
+      select: `#${selectID}`,
     });
   }
 };

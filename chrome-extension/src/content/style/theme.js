@@ -2,6 +2,7 @@ const theme = `
   <style>
     aside.theme_dark {
       --background: #323639;
+      --heading: #8E99DD;
       --primary: #7FA782;
       --primary-1: #445054;
       --text: rgba(255, 255, 255, 0.7);
@@ -12,6 +13,7 @@ const theme = `
     }
     aside.theme_light {
       --background: #fafafa;
+      --heading: #3f51b5;
       --primary: #658170;
       --primary-1: #e2e9e5;
       --text: #333333;

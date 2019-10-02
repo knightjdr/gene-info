@@ -73,7 +73,6 @@ const pathologyElement = (report, settings) => {
         }
         .pathology p {
           margin: 5px 0 0 0;
-          text-align: justify;
         }
         .pathology .links {
           display: inline-flex;

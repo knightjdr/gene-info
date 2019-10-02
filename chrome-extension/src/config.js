@@ -1,5 +1,6 @@
 import dbConfig from '../../database/config';
-import tissues from '../../database/files/rna-tissues';
+import proteinTissues from '../../database/files/protein-tissues';
+import rnaTissues from '../../database/files/rna-tissues';
 
 const config = {
   compartmentSpecies: [
@@ -24,6 +25,7 @@ const config = {
     'localization_uniprot',
     'pathology',
     'pathway',
+    'protein_expression',
     'rna_expression',
     'region',
   ],
@@ -33,7 +35,7 @@ const config = {
     'links',
     'description',
     'domain',
-    'rna_expression',
+    'expression',
     'go',
     'localization',
     'pathology',
@@ -42,7 +44,12 @@ const config = {
   ],
   defaultSpecies: 'Homo sapiens',
   defaultTissues: {
-    'Homo sapiens': ['HEK 293', 'HeLa', 'Hep G2', 'U-2 OS'],
+    protein: {
+      'Homo sapiens': ['HEK-293', 'HeLa', 'Hep-G2', 'U2-OS'],
+    },
+    rna: {
+      'Homo sapiens': ['HEK 293', 'HeLa', 'Hep G2', 'U-2 OS'],
+    },
   },
   defaultUncheckedOptions: [
     'ctrl',
@@ -71,7 +78,10 @@ const config = {
     'Xenopus laevis': 8355,
   },
   theme: 'light',
-  tissues,
+  tissues: {
+    protein: proteinTissues,
+    rna: rnaTissues,
+  },
 };
 
 export default config;

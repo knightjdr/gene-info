@@ -8,6 +8,7 @@ import localizationElement from './localization';
 import goElement from './go';
 import hpaElement from './hpa';
 import pathologyElement from './pathology';
+import proteomicsDBElement from './proteomics-db';
 import sortArray from '../../helpers/sort-array';
 import State from '../../state';
 
@@ -20,6 +21,7 @@ const tooltipDetails = (result, reportIndex, fadeClass) => {
     ...hpaElement(result[reportIndex], State.settings),
     ...interactorElement(result[reportIndex], State.settings),
     ...pathologyElement(result[reportIndex], State.settings),
+    ...proteomicsDBElement(result[reportIndex], State.settings),
   ];
   const sorted = sortArray.alphabeticalByKey(links, 'database');
   return `
