@@ -90,8 +90,6 @@ video {
   color: #F44336;
   margin-left: -3px;
 }
-.browser-support tbody tr:nth-child(2n+1) {
-}
 .browser-support tbody tr:nth-child(2n+2) {
   background-color: #EEEEEE;
 }
@@ -132,6 +130,7 @@ video {
   margin-left: 220px;
   padding: 60px 40px 20px 40px;
 }
+.changelog ul,
 .documentation ol,
 .documentation ul {
   line-height: 1.5em;
@@ -140,6 +139,8 @@ video {
 .workspace a {
   background-color: transparent;
 }
+.changelog a:link,
+.changelog a:visited,
 .documentation a:not(.link-button):link,
 .documentation a:not(.link-button):visited,
 .workspace a:link,
@@ -148,6 +149,9 @@ video {
   cursor: pointer;
   border-bottom: none;
 }
+.changelog a:hover,
+.changelog a:active,
+.changelog a:focus,
 .documentation a:not(.link-button):hover,
 .documentation a:not(.link-button):active,
 .documentation a:not(.link-button):focus,
