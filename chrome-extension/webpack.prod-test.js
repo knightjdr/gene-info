@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
@@ -5,16 +6,19 @@ const path = require('path');
 const common = require('./webpack.common.js');
 
 module.exports = env => merge(common(env), {
-  devtool: 'cheap-module-source-map',
-  mode: 'development',
+  mode: 'production',
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'chrome-extension/dev-build'),
+    path: path.resolve(__dirname, 'dist-test'),
   },
   plugins: [
+    new CopyWebpackPlugin([
+      { from: 'dev-build/manifest.json', to: 'manifest.json' },
+      { from: 'dev-build/icon-test', to: 'icon/' },
+    ]),
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      path: path.resolve(__dirname, 'chrome-extension/dev-build'),
+      path: path.resolve(__dirname, 'dist-test'),
     }),
   ],
 });

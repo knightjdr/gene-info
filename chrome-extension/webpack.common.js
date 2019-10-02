@@ -2,13 +2,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlReplaceWebpackPlugin = require('html-replace-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const buildVariables = require('./chrome-extension/build-variables');
+const buildVariables = require('./build-variables');
 
 module.exports = env => ({
   entry: {
-    background: './chrome-extension/src/background/events.js',
-    content: './chrome-extension/src/content/index.js',
-    popup: './chrome-extension/src/popup/index.js',
+    background: './src/background/events.js',
+    content: './src/content/index.js',
+    popup: './src/popup/index.js',
   },
   module: {
     rules: [
@@ -24,7 +24,7 @@ module.exports = env => ({
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'popup.html',
-      template: './chrome-extension/dev-build/index.html',
+      template: './dev-build/index.html',
       inject: false,
       minify: false,
     }),

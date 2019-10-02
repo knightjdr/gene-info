@@ -4,7 +4,9 @@
   "description": "GIX API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev-api": "NODE_ENV=development nodemon node index.js",
+    "prod-api": "NODE_ENV=production node index.js",
+    "prod-api-forever": "NODE_ENV=production forever start -a --uid 'gene-info-api' index.js"
   },
   "author": "James Knight",
   "license": "MIT",

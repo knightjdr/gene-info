@@ -5,7 +5,7 @@ import SlimSelect from 'slim-select';
 import config from '../../config';
 import { updateTab } from '../helpers/message';
 
-import '../../../../node_modules/slim-select/dist/slimselect.css';
+import '../../../node_modules/slim-select/dist/slimselect.css';
 
 const changeTissues = selectID => (options) => {
   const selected = options.map(option => option.value);

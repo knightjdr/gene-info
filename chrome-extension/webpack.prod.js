@@ -9,16 +9,16 @@ module.exports = env => merge(common(env), {
   mode: 'production',
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'chrome-extension/dist-test'),
+    path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: 'chrome-extension/dev-build/manifest.json', to: 'manifest.json' },
-      { from: 'chrome-extension/dev-build/icon-test', to: 'icon/' },
+      { from: 'dev-build/manifest.json', to: 'manifest.json' },
+      { from: 'dev-build/icon', to: 'icon/' },
     ]),
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      path: path.resolve(__dirname, 'chrome-extension/dist-test'),
+      path: path.resolve(__dirname, 'dist'),
     }),
   ],
 });
