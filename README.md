@@ -1,10 +1,10 @@
-# Gene Info Chrome extension
+# Gene Info eXtension (GIX)
 
 This browser extension allows for the retrieval of gene information directly on a webpage by double clicking on its name, gene ID or accession (Ensembl gene, Ensembl protein, Entrez, neXtProt, RefSeq or UniProt). Double-clicking to retrieve information will work on any webpage with the exception of content that has been embedded in the browser, such as Google Docs or PDF viewers. However, searching for a gene using the input in the extension popup will work even on pages with embedded elements.
 
-View the full [documentation](https://gene-info.lunenfeld.ca).
+View the full [documentation](https://gene-info.org).
 
-This extension is developed by the laboratory of Dr. Anne-Claude Gingras at the Lunenfeld-Tanenbaum Research Institute in Toronto, Canada.
+GIX is developed by the laboratory of Dr. Anne-Claude Gingras at the Lunenfeld-Tanenbaum Research Institute in Toronto, Canada.
 
 If you have a bug to report or would like to request a feature, please use our [issue tracker](https://github.com/knightjdr/gene-info/issues)
 

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>GIX changelog</title>
+  <meta name="Description" content="Gene Info eXtension (GIX) is a browser extension for retrieving gene information on any webpage.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#658170">
+  <meta name="msapplication-TileColor" content="#fdfdfd">
+  <meta name="theme-color" content="#658170">
+
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+
+<body>
+  <nav class="nav no-print">
+    <div class="nav-left">
+      <a href="/">
+        <img alt="GIX logo" src="/assets/gix.svg" height="35px">
+      </a>
+      <span>GIX changelog</span>
+    </div>
+  </nav>
+  <div class="changelog">
+    <main>
+      <h2>1.2</h2>
+      <ul>
+        <li>
+          The currently selected species will now be shown on the panel that is
+          displayed when a query term cannot be matched to anything in our database,
+          and changing the species on this panel will immediately re-query the term
+          against the new species
+        </li>
+        <li>
+          When the no-result panel opens, it can now be closed by clicking anywhere
+          outside the panel in addition to clicking the close button on the panel itself 
+        </li>
+      </ul>
+      <h2>1.1</h2>
+      <ul>
+        <li>
+          Developed a version of the extension for Firefox that can be found at the
+          <a href="https://addons.mozilla.org/addon/gene-info">Add-on store</a>
+        </li>
+        <li>
+          Users can prevent the extension from activating except when the control
+          (Linux/Windows) or command (Mac) keys are pressed through the "CTRL/⌘ required"
+          option
+        </li>
+        <li>
+          The order of information on the results panel can be set by dragging and
+          dropping the settings on the extension popup
+        </li>
+        <li>
+          There is now a dark theme in addition to the light theme that will apply
+          to both the information panel and the extension popup
+        </li>
+        <li>
+          Click the arrows on the interactor table to sort by gene or evidence numbers
+        </li>
+        <li>
+          We've created an online workspace where users can paste lists of genes or text
+          of any kind to make it easy to retrieve information on genes that may be contained
+          in excel or word documents for example. A link to the workspace can be found
+          at the bottom of the extension popup or at
+          <a href="/workspace">gene-info.org/workspace</a>
+        </li>
+        <li>
+          <i>Schizosaccharomyces pombe</i> has been added to our list of species
+        </li>
+        <li>
+          Pathology and pathway data from UniProt and Reactome respectively are now
+          included on the information panel
+        </li>
+        <li>
+          Users will be offered links to open search results at various sites when the
+          extension is not able to find a match to a queried term 
+        </li>
+      </ul>
+    </main>
+  </div>
+</body>
+</html>

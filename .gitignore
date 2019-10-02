@@ -36,6 +36,9 @@ chrome-extension/dist-test
 chrome-extension/dev-build/*.js*
 chrome-extension/dev-build/*.css*
 
+# Docs
+docs/build
+
 ## pem key
 chrome-extension/dist.crx
 chrome-extension/dist.pem

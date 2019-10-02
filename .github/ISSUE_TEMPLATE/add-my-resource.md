@@ -4,6 +4,8 @@ about: Suggest a resource to add to our database
 
 ---
 
+If you would prefer to share this information privately, send me an e-mail at knightjdr@gmail.com
+
 **Describe the resource**
 * name and url
 * what does it do and what makes it unique from data we already incorporate?
