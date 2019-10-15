@@ -117,10 +117,12 @@ const getDBRefs = dbRefs => (
         tair: ref.$.id,
       };
     } if (ref.$.type === 'WormBase') {
+      const isoform = ref.$.id;
       const id = ref.property.find(prop => prop.$.type === 'gene ID');
       if (id && id.$ && id.$.value) {
         return {
           ...accum,
+          wormIsoforms: [...accum.wormIsoforms, isoform],
           wormbase: id.$.value,
         };
       }
@@ -141,6 +143,7 @@ const getDBRefs = dbRefs => (
     'ensembl-gene': [],
     'ensembl-protein': [],
     go: { c: [], f: [], p: [] },
+    wormIsoforms: [],
     pathway: [],
     refseq: [],
   })

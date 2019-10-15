@@ -5,16 +5,8 @@ const entryParse = require('./entry-parse');
 const xmlEntry = require('../files/example/xml-entry');
 
 let exampleEntry;
-beforeAll(async (done) => {
-  convertXML(xmlEntry)
-    .then((converted) => {
-      exampleEntry = converted.entry;
-      done();
-    })
-    .catch((err) => {
-      console.log(err);
-      done();
-    });
+beforeAll(async () => {
+  ({ entry: exampleEntry } = await convertXML(xmlEntry));
 });
 
 describe('Parse xml entry', () => {
@@ -153,7 +145,12 @@ describe('Parse xml entry', () => {
     });
 
     it('should return ORF', () => {
-      const expected = ['orfTest1', 'orfTest2'];
+      const expected = [
+        'M117.2a',
+        'M117.2b',
+        'orfTest1',
+        'orfTest2',
+      ];
       expect(parsed.orf).toEqual(expected);
     });
 

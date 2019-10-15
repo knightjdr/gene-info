@@ -183,6 +183,11 @@ describe('DB refs', () => {
       expect(refs.wormbase).toBe(expected);
     });
 
+    it('should return wormbase wormIsoforms', () => {
+      const expected = ['M117.2a', 'M117.2b'];
+      expect(refs.wormIsoforms).toEqual(expected);
+    });
+
     it('should return xenbase ID', () => {
       const expected = 'XB-GENE-984751';
       expect(refs.xenbase).toBe(expected);
