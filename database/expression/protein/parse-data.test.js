@@ -14,7 +14,7 @@ const data = {
       {
         EXPRESSION_LEVEL: 'medium',
         NORMALIZED_INTENSITY: 5.6666,
-        TISSUE_NAME: 'cellY',
+        TISSUE_NAME: 'cell.Y',
         UNIPROT_ACCESSION: 'P123456',
       },
       {
@@ -49,7 +49,7 @@ describe('Parse protein expression file', () => {
       const expected = {
         P123456: {
           cellX: { intensity: 2.333, level: 'low' },
-          cellY: { intensity: 5.667, level: 'medium' },
+          cell_Y: { intensity: 5.667, level: 'medium' },
         },
         P789101: {
           cellX: { intensity: 8.333, level: 'high' },
@@ -59,7 +59,7 @@ describe('Parse protein expression file', () => {
     });
 
     it('should parse tissue lines', () => {
-      const expected = ['cellX', 'cellY'];
+      const expected = ['cell_Y', 'cellX'];
       expect(result.lines).toEqual(expected);
     });
   });

@@ -5,6 +5,14 @@ const mergeTissues = require('../merge-tissues');
 const readJSON = require('../../helpers/read-json');
 const round = require('../../helpers/round');
 
+const mongoKeyRE = new RegExp(/[.]/g);
+
+const formatCellName = (originalName) => {
+  let cellName = originalName;
+  cellName = originalName.replace(/ cell(?: line)*$/, '');
+  return cellName.replace(mongoKeyRE, '_');
+};
+
 const parseTissue = async (file) => {
   const expression = {};
   const types = {};
@@ -22,7 +30,7 @@ const parseTissue = async (file) => {
       } = sample;
 
       const accession = UNIPROT_ACCESSION;
-      const cell = TISSUE_NAME.replace(/ cell$/, '');
+      const cell = formatCellName(TISSUE_NAME);
       const expressionLevel = EXPRESSION_LEVEL.toLowerCase();
       const value = round(NORMALIZED_INTENSITY, 3);
 

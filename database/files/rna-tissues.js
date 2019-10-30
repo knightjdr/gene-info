@@ -1,4 +1,64 @@
 const rnaTissues = {
+  'Xenopus laevis': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Gallus gallus': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Danio rerio': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Dictyostelium discoideum': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Schizosaccharomyces pombe': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Caenorhabditis elegans': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Saccharomyces cerevisiae': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Drosophila melanogaster': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Arabidopsis thaliana': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Mus musculus': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
   'Homo sapiens': {
     cells: [
       'A-431',
