@@ -4,11 +4,13 @@ const args = require('./args');
 const domains = require('./domains/domains');
 const geneNames = require('./gene-names/gene-names');
 const generateDB = require('./generate-db');
+const getProteinExpressionData = require('./expression/protein/get-data');
+const getRNAExpressionData = require('./expression/rna/get-data');
 const go = require('./go/go');
 const interactions = require('./interactions/interactions');
 const localization = require('./localization/localization');
 const regions = require('./regions/regions');
-const rnaExpression = require('./rna-expression/rna-expression.js');
+
 const uniprot = require('./uniprot/uniprot');
 const writeTissues = require('./write-tissues');
 
@@ -20,23 +22,32 @@ const options = args();
 ** memort otherwise. Pfam retrieval and processing is done after Uniprot
 ** as splitting domains to individual files requires a list of Uniprot IDs to
 ** keep. */
-Promise.all([
-  geneNames(options),
-  go(options),
-  interactions(options),
-  localization(options),
-  rnaExpression(options),
-  uniprot(options),
-])
-  .then(() => Promise.all([
-    domains(options),
-    regions(options),
-  ]))
-  .then(() => generateDB())
-  .then(rnaTissues => writeTissues(rnaTissues, './files/rna-tissues.js'))
-  .then(() => {
+
+const main = async () => {
+  try {
+    await Promise.all([
+      geneNames(options),
+      getProteinExpressionData(options),
+      getRNAExpressionData(options),
+      go(options),
+      interactions(options),
+      localization(options),
+      uniprot(options),
+    ]);
+
+    await Promise.all([
+      domains(options),
+      regions(options),
+    ]);
+
+    const { protein, rna } = await generateDB();
+    await writeTissues(rna, './files/rna-tissues.js');
+    await writeTissues(protein, './files/protein-tissues.js');
+
     console.log('complete');
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error(err);
-  });
+  }
+};
+
+main();

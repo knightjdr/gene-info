@@ -11,7 +11,7 @@ const goElement = (report, settings) => {
       <style>
         #go-buttons {
           display: flex;
-          margin-bottom: 5px;
+          margin: 5px 0;
         }
         .go-button {
           background-color: var(--primary-1);

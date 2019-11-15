@@ -1,8 +1,6 @@
-const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
-
 
 const common = require('./webpack.common.js');
 
@@ -11,19 +9,12 @@ module.exports = env => merge(common(env), {
   mode: 'development',
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'chrome-extension/dev-build'),
+    path: path.resolve(__dirname, 'dev-build'),
   },
   plugins: [
-    new ChromeExtensionReloader({
-      reloadPage: false,
-      entries: {
-        contentScript: 'content',
-        background: 'background',
-      },
-    }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      path: path.resolve(__dirname, 'chrome-extension/dev-build'),
+      path: path.resolve(__dirname, 'dev-build'),
     }),
   ],
 });

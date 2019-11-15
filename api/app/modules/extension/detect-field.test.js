@@ -133,4 +133,23 @@ describe('Detect field', () => {
       expect(detectField(term)).toBe('uniprot');
     });
   });
+
+  describe('C elegans', () => {
+    it('should detect Wormbase IDs', () => {
+      const term = 'WBGene00007561';
+      expect(detectField(term, 'Caenorhabditis elegans')).toBe('wormbase');
+    });
+
+    describe('ORFs', () => {
+      it('should detect general format', () => {
+        const term = 'ZC395.2';
+        expect(detectField(term, 'Caenorhabditis elegans')).toBe('orf');
+      });
+
+      it('should detect wp suffix format', () => {
+        const term = 'Y46C8AL.9a:wp261';
+        expect(detectField(term, 'Caenorhabditis elegans')).toBe('orf');
+      });
+    });
+  });
 });

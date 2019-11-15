@@ -63,6 +63,7 @@ const entryParse = (entry) => {
       parsed.tair = refs.tair;
     } if (refs.wormbase) {
       parsed.wormbase = refs.wormbase;
+      parsed.orf = arrSort.alphabetical(arrayUnique([...parsed.orf, ...refs.wormIsoforms]));
     } if (refs.xenbase) {
       parsed.xenbase = refs.xenbase;
     } if (refs.zfin) {

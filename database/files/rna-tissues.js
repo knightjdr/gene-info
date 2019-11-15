@@ -23,25 +23,25 @@ const rnaTissues = {
     tissues: [
     ],
   },
-  'Caenorhabditis elegans': {
-    cells: [
-    ],
-    tissues: [
-    ],
-  },
   'Schizosaccharomyces pombe': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Drosophila melanogaster': {
+  'Caenorhabditis elegans': {
     cells: [
     ],
     tissues: [
     ],
   },
   'Saccharomyces cerevisiae': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Drosophila melanogaster': {
     cells: [
     ],
     tissues: [

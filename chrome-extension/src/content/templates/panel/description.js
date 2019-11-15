@@ -4,10 +4,6 @@ const descriptionElement = (report, settings) => {
     if (report.description) {
       html += `
         <style>
-          .description {
-            text-align: justify;
-            word-spacing: -2px;
-          }
           .description p {
             display: inline;
             margin: 0;

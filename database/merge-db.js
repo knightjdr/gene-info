@@ -2,8 +2,9 @@ const arrSortByTwoKeys = require('./helpers/arr-sort-by-two-keys');
 const defineGeneNames = require('./gene-names/define');
 
 const mergeDb = ([
-  db,
+  { proteinExpression },
   { rnaExpression },
+  db,
   domains,
   geneNames,
   interactions,
@@ -11,14 +12,12 @@ const mergeDb = ([
   regions,
 ]) => (
   db.map((entry) => {
+    const accession = entry.uniprot[0];
     const gene = defineGeneNames(entry, geneNames);
-    const currDomains = entry.uniprot[0] && domains[entry.uniprot[0]]
-      ? domains[entry.uniprot[0]]
-      : [];
-    const currRegions = entry.uniprot[0] && regions[entry.uniprot[0]]
-      ? regions[entry.uniprot[0]]
-      : [];
+    const currDomains = domains[accession] ? domains[accession] : [];
+    const currRegions = regions[accession] ? regions[entry.uniprot[0]] : [];
     const domainsRegions = arrSortByTwoKeys([...currDomains, ...currRegions], 'start', 'end', 'asc', 'numeric', 'numeric');
+
     return ({
       ...entry,
       gene: gene.symbol,
@@ -33,6 +32,7 @@ const mergeDb = ([
         hpa: entry['ensembl-gene'][0] && localization.hpa[entry['ensembl-gene'][0]] ? localization.hpa[entry['ensembl-gene'][0]] : {},
         uniprot: entry.localization.uniprot,
       },
+      'protein-expression': proteinExpression[accession] ? proteinExpression[accession] : {},
       'rna-expression': entry['ensembl-gene'][0] && rnaExpression[entry['ensembl-gene'][0]] ? rnaExpression[entry['ensembl-gene'][0]] : {},
     });
   })

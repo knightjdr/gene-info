@@ -73,7 +73,6 @@ const localizationElement = (report, settings) => {
         }
         .localization p {
           margin: 8px 0;
-          text-align: justify;
         }
         .localization table {
           margin-bottom: 10px;
