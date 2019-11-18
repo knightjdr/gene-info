@@ -17,7 +17,7 @@ describe('Create protein expression table', () => {
     const expected = minifyHTML(`
       <p class="details-description">
         Protein expression values are reported as the log<sub>10</sub>
-        normalized MS1 iBAQ itensity.
+        normalized MS1 iBAQ intensity.
       </p>
       <table class="expression__table expression__table-protein">
         <thead>
