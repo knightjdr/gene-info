@@ -54,6 +54,9 @@ const panelStyle = `
       background-color: var(--primary);
       color: var(--text-contrast);
     }
+    tbody tr {
+      color: var(--text);
+    }
     th {
       padding: 2px 0;
       text-align: center;
