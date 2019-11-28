@@ -1,4 +1,5 @@
 import config from '../config';
+import confirmSettingOrder from '../utils/confirm-setting-order';
 
 export const defaultFalseToggleState = value => Boolean(value);
 export const defaultTrueToggleState = value => Boolean(value || value === undefined);
@@ -53,7 +54,7 @@ class State {
       localization_uniprot: defaultTrueToggleState(storage.links),
       pathology: defaultTrueToggleState(storage.pathology),
       pathway: defaultTrueToggleState(storage.pathway),
-      setting_order: storage.setting_order || config.defaultSettingOrder,
+      setting_order: confirmSettingOrder(storage.setting_order, config.defaultSettingOrder).order,
       report: storage.report || 'detailed',
       protein_expression: defaultTrueToggleState(storage.protein_expression),
       protein_expression_tissues: storage.protein_expression_tissues
