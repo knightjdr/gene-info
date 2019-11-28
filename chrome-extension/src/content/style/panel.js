@@ -48,6 +48,7 @@ const panelStyle = `
     }
     table {
       border-collapse: collapse;
+      font-size: 14px;
       width: 100%;
     }
     thead tr {
