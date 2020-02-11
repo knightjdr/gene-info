@@ -2,7 +2,7 @@ const fs = require('fs');
 const readline = require('readline');
 
 const convertXml = require('../helpers/convert-xml');
-const entryParse = require('./entry-parse');
+const parseEntry = require('./parse-entry');
 
 /* Iterate over an Uniprot XML file line by line and concatenate each entry to
 ** a string. The entry is then converted to a JS object and parsed for desired fields. */
@@ -21,7 +21,7 @@ const iterateXml = file => (
         } else if (line.startsWith('</entry>')) {
           entry += `${line}\n`;
           const js = await convertXml(entry);
-          const parsed = entryParse(js.entry);
+          const parsed = parseEntry(js.entry);
           if (parsed) {
             entries.push(parsed);
           }

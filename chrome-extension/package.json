@@ -17,7 +17,7 @@
     "slim-select": "^1.23.1"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^5.0.4",
+    "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.2.0",
     "html-minifier": "^4.0.0",
     "html-replace-webpack-plugin": "^2.5.6",

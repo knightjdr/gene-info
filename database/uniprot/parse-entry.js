@@ -7,9 +7,8 @@ const getDBRefs = require('./get-dbrefs');
 const getSequence = require('./get-sequence');
 const { getNames } = require('./get-names');
 
-/* Parses a Uniprot XML entry that has been converted to a JS object with
-** xml2js */
-const entryParse = (entry) => {
+// Parses a Uniprot XML entry after conversion with xml2js.
+const parseEntry = (entry) => {
   const genes = findGene(entry.gene);
   if (genes.primary) {
     const comments = getComments(entry.comment);
@@ -47,7 +46,9 @@ const entryParse = (entry) => {
     };
 
     // Add species specific fields to end of entry
-    if (refs.dictybase) {
+    if (refs.biocyc) {
+      parsed.biocyc = refs.biocyc;
+    } if (refs.dictybase) {
       parsed.dictybase = refs.dictybase;
     } if (refs.flybase) {
       parsed.flybase = refs.flybase;
@@ -74,4 +75,4 @@ const entryParse = (entry) => {
   return null;
 };
 
-module.exports = entryParse;
+module.exports = parseEntry;

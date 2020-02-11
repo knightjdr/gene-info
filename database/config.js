@@ -11,17 +11,19 @@ const config = {
   ],
   proteomicsDBSpecies: [9606],
   species: [
-    'Arabidopsis thaliana',
+    /* 'Arabidopsis thaliana',
     'Caenorhabditis elegans',
     'Danio rerio',
     'Dictyostelium discoideum',
-    'Drosophila melanogaster',
-    'Gallus gallus',
+    'Drosophila melanogaster', */
+    'Escherichia coli (K12)',
+    /* 'Gallus gallus',
     'Homo sapiens',
     'Mus musculus',
-    'Saccharomyces cerevisiae',
-    'Schizosaccharomyces pombe',
-    'Xenopus laevis',
+    'Saccharomyces cerevisiae', */
+    'Salmonella Typhimurium (LT2)',
+    /* 'Schizosaccharomyces pombe',
+    'Xenopus laevis', */
   ],
   speciesID: {
     3702: 'Arabidopsis thaliana',
@@ -32,6 +34,8 @@ const config = {
     9031: 'Gallus gallus',
     9606: 'Homo sapiens',
     10090: 'Mus musculus',
+    83333: 'Escherichia coli (K12)',
+    99287: 'Salmonella typhimurium (LT2)',
     559292: 'Saccharomyces cerevisiae',
     284812: 'Schizosaccharomyces pombe',
     8355: 'Xenopus laevis',

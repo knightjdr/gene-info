@@ -57,6 +57,12 @@ const linkElement = (report, settings) => {
         href: `https://flybase.org/reports/${report.flybase}`,
       });
     }
+    if (report.biocyc && settings.species === 'Escherichia coli (K12)') {
+      links.push({
+        database: 'EcoCyc',
+        href: `https://ecocyc.org/gene?orgid=ECOLI&id=${report.biocyc}`,
+      });
+    }
     if (
       report.uniprot
       && report.uniprot.length > 0

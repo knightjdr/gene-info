@@ -108,6 +108,12 @@ describe('Panel links', () => {
           url: 'https://flybase.org/reports/',
         },
         {
+          name: 'Escherichia coli (K12)',
+          key: 'biocyc',
+          db: 'EcoCyc',
+          url: 'https://ecocyc.org/gene?orgid=ECOLI&id=',
+        },
+        {
           name: 'Homo sapiens',
           key: 'nextprot',
           db: 'neXtProt',
@@ -186,6 +192,7 @@ describe('Panel links', () => {
         { name: 'Danio rerio' },
         { name: 'Dictyostelium discoideum' },
         { name: 'Drosophila melanogaster' },
+        { name: 'Escherichia coli (K12)' },
         { name: 'Homo sapiens' },
         { name: 'Mus musculus' },
         { name: 'Schizosaccharomyces pombe' },

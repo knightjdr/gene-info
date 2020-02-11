@@ -75,6 +75,11 @@ describe('Panel links', () => {
         url: `http://dictybase.org/db/cgi-bin/search/search.pl?query=${term}*&submit=Search+All`,
       },
       {
+        name: 'Escherichia coli (K12)',
+        db: 'EcoCyc',
+        url: `https://ecocyc.org/ECOLI/search-query?type=GENE&gname=${term}`,
+      },
+      {
         name: 'Homo sapiens',
         db: 'neXtProt',
         url: `https://www.nextprot.org/proteins/search?query=${term}`,

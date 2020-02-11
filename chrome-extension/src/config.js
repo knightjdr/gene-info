@@ -62,20 +62,14 @@ const config = {
   },
   goNamespaces: ['bp', 'cc', 'mf'],
   species: dbConfig.species,
-  // The yeast species ID is what the compartment database uses which
-  // differs from pfam
+  // The yeast species ID is what the compartment database uses.
   speciesID: {
     'Arabidopsis thaliana': 3702,
     'Caenorhabditis elegans': 6239,
-    'Danio rerio': 7955,
-    'Dictyostelium discoideum': 44689,
     'Drosophila melanogaster': 7227,
-    'Gallus gallus': 9031,
     'Homo sapiens': 9606,
     'Mus musculus': 10090,
     'Saccharomyces cerevisiae': 4932,
-    'Schizosaccharomyces pombe': 284812,
-    'Xenopus laevis': 8355,
   },
   theme: 'light',
   tissues: {

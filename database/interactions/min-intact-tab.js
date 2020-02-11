@@ -31,10 +31,10 @@ const minTab = (file, path, speciesIDs, skip) => (
             const [, organismA] = organismAMatches;
             const [, organismB] = organismBMatches;
             const organisms = [];
-            if (Object.prototype.hasOwnProperty.call(speciesIDs, organismA)) {
+            if (speciesIDs[organismA]) {
               organisms.push(speciesIDs[organismA]);
             }
-            if (Object.prototype.hasOwnProperty.call(speciesIDs, organismB)) {
+            if (speciesIDs[organismB]) {
               organisms.push(speciesIDs[organismB]);
             }
             const uniqueOrganisms = [...new Set(organisms)];
