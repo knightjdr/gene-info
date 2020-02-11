@@ -15,7 +15,7 @@ const fields = [
 ];
 
 const validate = (species, field, term) => {
-  if (!dbConfig.species.includes(species)) {
+  if (!Object.values(dbConfig.speciesID).includes(species)) {
     return {
       err: true,
       message: 'Invalid species',

@@ -3,7 +3,7 @@ const fs = require('fs');
 const writeTissue = (species, file) => (
   new Promise((resolve, reject) => {
     const writeStream = fs.createWriteStream(file, { flags: 'w' });
-    writeStream.write('const rnaTissues = {\n');
+    writeStream.write('const tissues = {\n');
     Object.entries(species).forEach(([specie, tissues]) => {
       writeStream.write(`  '${specie}': {\n`);
       writeStream.write('    cells: [\n');
@@ -23,7 +23,7 @@ const writeTissue = (species, file) => (
       writeStream.write('  },\n');
     });
     writeStream.write('};\n\n');
-    writeStream.write('export default rnaTissues;\n');
+    writeStream.write('export default tissues;\n');
     resolve();
     writeStream.on('error', (err) => {
       reject(err);

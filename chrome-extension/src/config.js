@@ -2,6 +2,9 @@ import dbConfig from '../../database/config';
 import proteinTissues from '../../database/files/protein-tissues';
 import rnaTissues from '../../database/files/rna-tissues';
 
+const species = Object.values(dbConfig.speciesID);
+species.sort();
+
 const config = {
   compartmentSpecies: [
     'Arabidopsis thaliana',
@@ -61,7 +64,7 @@ const config = {
     high: [50],
   },
   goNamespaces: ['bp', 'cc', 'mf'],
-  species: dbConfig.species,
+  species,
   // The yeast species ID is what the compartment database uses.
   speciesID: {
     'Arabidopsis thaliana': 3702,

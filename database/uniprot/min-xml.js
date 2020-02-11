@@ -17,7 +17,7 @@ const writeIDs = (ids, path, resolve, reject) => {
 ** explicitely listed in arguments. Entries will get written to file
 ** based on species type. An ID file will also be written with all
 ** primary accessions and their species for species that are requested. */
-const minXml = (file, path, species, fields, skip) => (
+const minXml = (file, path, speciesID, fields, skip) => (
   new Promise((resolve, reject) => {
     if (skip) {
       resolve();
@@ -32,10 +32,10 @@ const minXml = (file, path, species, fields, skip) => (
       const accessionRegex = new RegExp(/^ {2}<accession>([^<]+)<\/accession>/);
       const fieldLineRegex = new RegExp(/^ {2}<[^/]/);
       const fieldRegex = new RegExp(/^ {2}<(\w+)[\s>]/);
-      const speciesRegex = new RegExp(/^ {4}<name type="scientific">(\S+\s*\S+)[^<]*<\/name>/);
+      const speciesRegex = new RegExp(/^ {4}<dbReference type="NCBI Taxonomy" id="(\d+)"\/>/);
 
       // Create stream for writing XML data.
-      const streams = species.reduce((accum, specie) => {
+      const streams = Object.values(speciesID).reduce((accum, specie) => {
         const writeStream = fs.createWriteStream(`${path}/${specie}.xml`, { flags: 'w' });
         writeStream.write('<uniprot>\n');
         accum[specie] = writeStream;
@@ -67,9 +67,10 @@ const minXml = (file, path, species, fields, skip) => (
           ) {
             [, accession] = line.match(accessionRegex);
           }
-        } else if (line.startsWith('    <name type="scientific">')) {
-          [, organism] = line.match(speciesRegex);
-          keepEntry = species.includes(organism);
+        } else if (line.startsWith('    <dbReference type="NCBI Taxonomy"')) {
+          const [, taxonID] = line.match(speciesRegex);
+          keepEntry = Boolean(speciesID[taxonID]);
+          organism = speciesID[taxonID];
         }
         if (keepField) {
           entry += `${line}\n`;

@@ -3,13 +3,10 @@ import createLink from './create-link';
 import createTable from './create-table';
 import hasData from '../has-data';
 
-const element = (report, settings, availableSpecies) => {
+const element = (report, settings, showData) => {
   let html = '';
 
-  if (
-    settings.protein_expression
-    && availableSpecies.includes(settings.species)
-  ) {
+  if (showData) {
     const accession = report.proteomicsdb;
     const tissuesSelected = settings.protein_expression_tissues.length > 0;
     const dataAvailable = hasData(report['protein-expression']);

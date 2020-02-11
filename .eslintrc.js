@@ -13,6 +13,7 @@ module.exports = {
   },
   "parser": "babel-eslint",
   "rules": {
+    'max-len': ["warn", { "code": 120 }],
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
   }
 };

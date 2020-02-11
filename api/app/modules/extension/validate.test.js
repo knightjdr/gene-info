@@ -2,7 +2,7 @@ const detectField = require('./detect-field');
 const { validate } = require('./validate');
 
 jest.mock('../../../../database/config', () => ({
-  species: ['Homo sapiens'],
+  speciesID: { 9060: 'Homo sapiens' },
 }));
 jest.mock('./detect-field');
 detectField.mockReturnValue('gene');

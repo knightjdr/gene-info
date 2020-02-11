@@ -28,7 +28,7 @@ const uniprot = options => (
         minXml(
           fsConfig.file,
           './files/uniprot',
-          config.species,
+          config.speciesID,
           config.fields,
           options.skipMin,
         )

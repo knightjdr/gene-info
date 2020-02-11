@@ -1,25 +1,11 @@
 import expressionElement from './element';
 
 describe('RNA expression element', () => {
-  it('should return empty string when not selected', () => {
-    const availableSpecies = ['Homo sapiens'];
+  it('should return empty string when data should not be shown', () => {
     const report = {};
-    const settings = {
-      rna_expression: false,
-    };
-    const result = expressionElement(report, settings, availableSpecies);
-
-    expect(result).toBe('');
-  });
-
-  it('should return empty string when selected species does have expression data', () => {
-    const availableSpecies = ['Homo sapiens'];
-    const report = {};
-    const settings = {
-      rna_expression: false,
-      species: 'Mus musculus',
-    };
-    const result = expressionElement(report, settings, availableSpecies);
+    const settings = {};
+    const showData = false;
+    const result = expressionElement(report, settings, showData);
 
     expect(result).toBe('');
   });
@@ -29,17 +15,16 @@ describe('RNA expression element', () => {
       let html;
 
       beforeAll(() => {
-        const availableSpecies = ['Homo sapiens'];
         const report = {
           'ensembl-gene': [1234],
           'rna-expression': {},
         };
         const settings = {
-          rna_expression: true,
           rna_expression_tissues: [],
           species: 'Homo sapiens',
         };
-        html = expressionElement(report, settings, availableSpecies);
+        const showData = true;
+        html = expressionElement(report, settings, showData);
       });
 
       it('should display tissue warning', () => {
@@ -59,7 +44,6 @@ describe('RNA expression element', () => {
       let html;
 
       beforeAll(() => {
-        const availableSpecies = ['Homo sapiens'];
         const report = {
           'ensembl-gene': [1234],
           'rna-expression': {
@@ -70,11 +54,11 @@ describe('RNA expression element', () => {
           },
         };
         const settings = {
-          rna_expression: true,
           rna_expression_tissues: [],
           species: 'Homo sapiens',
         };
-        html = expressionElement(report, settings, availableSpecies);
+        const showData = true;
+        html = expressionElement(report, settings, showData);
       });
 
       it('should display tissue warning', () => {
@@ -95,7 +79,6 @@ describe('RNA expression element', () => {
     let html;
 
     beforeAll(() => {
-      const availableSpecies = ['Homo sapiens'];
       const report = {
         'ensembl-gene': [1234],
         'rna-expression': {
@@ -106,11 +89,11 @@ describe('RNA expression element', () => {
         },
       };
       const settings = {
-        rna_expression: true,
         rna_expression_tissues: ['cellX', 'cellY'],
         species: 'Homo sapiens',
       };
-      html = expressionElement(report, settings, availableSpecies);
+      const showData = true;
+      html = expressionElement(report, settings, showData);
     });
 
     it('should not display tissue warning', () => {
@@ -130,7 +113,6 @@ describe('RNA expression element', () => {
     let html;
 
     beforeAll(() => {
-      const availableSpecies = ['Homo sapiens'];
       const report = {
         'ensembl-gene': [1234],
         'rna-expression': {},
@@ -140,7 +122,8 @@ describe('RNA expression element', () => {
         rna_expression_tissues: ['cellX', 'cellY'],
         species: 'Homo sapiens',
       };
-      html = expressionElement(report, settings, availableSpecies);
+      const showData = true;
+      html = expressionElement(report, settings, showData);
     });
 
     it('should not display tissue warning', () => {
