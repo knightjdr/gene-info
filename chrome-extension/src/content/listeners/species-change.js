@@ -1,10 +1,13 @@
 import retrieveInfo from '../retrieve/retrieve';
 import State from '../state';
+import updateTissues from '../helpers/update-tissues';
 
 export function speciesChange() {
   const newSpecies = this.options[this.selectedIndex].value;
-  State.updateSetting('species', newSpecies);
   chrome.storage.local.set({ species: newSpecies });
+  State.updateSetting('species', newSpecies);
+  updateTissues('protein', newSpecies);
+  updateTissues('rna', newSpecies);
   retrieveInfo({}, State.searchTerm, true);
 }
 
