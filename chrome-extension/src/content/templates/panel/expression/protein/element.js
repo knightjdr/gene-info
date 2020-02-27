@@ -8,7 +8,7 @@ const element = (report, settings, showData) => {
 
   if (showData) {
     const accession = report.proteomicsdb;
-    const tissuesSelected = settings.protein_expression_tissues.length > 0;
+    const tissuesSelected = settings.protein_expression_tissues && settings.protein_expression_tissues.length > 0;
     const dataAvailable = hasData(report['protein-expression']);
 
     html = `

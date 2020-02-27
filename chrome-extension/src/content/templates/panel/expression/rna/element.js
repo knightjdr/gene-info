@@ -8,7 +8,7 @@ const element = (report, settings, showData) => {
 
   if (showData) {
     const accession = report['ensembl-gene'][0];
-    const tissuesSelected = settings.rna_expression_tissues.length > 0;
+    const tissuesSelected = settings.rna_expression_tissues && settings.rna_expression_tissues.length > 0;
     const dataAvailable = hasData(report['rna-expression']);
 
     html = `
