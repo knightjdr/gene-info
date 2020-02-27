@@ -38,7 +38,6 @@ const handleCompartmentLines = file => (
         reject(err);
       });
     } else {
-      console.error(`Missing Compartments localization file: ${file}`);
       resolve({});
     }
   })
@@ -79,7 +78,6 @@ const handleHpaLines = file => (
         reject(err);
       });
     } else {
-      console.error(`Missing HPA localization file: ${file}`);
       resolve({});
     }
   })

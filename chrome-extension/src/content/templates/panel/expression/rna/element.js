@@ -3,13 +3,10 @@ import createLink from './create-link';
 import createTable from './create-table';
 import hasData from '../has-data';
 
-const element = (report, settings, availableSpecies) => {
+const element = (report, settings, showData) => {
   let html = '';
 
-  if (
-    settings.rna_expression
-    && availableSpecies.includes(settings.species)
-  ) {
+  if (showData) {
     const accession = report['ensembl-gene'][0];
     const tissuesSelected = settings.rna_expression_tissues.length > 0;
     const dataAvailable = hasData(report['rna-expression']);

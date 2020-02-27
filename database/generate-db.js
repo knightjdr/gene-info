@@ -48,7 +48,8 @@ const speciesDB = async (specie, obo) => {
 const generateDB = async () => {
   await createFolder('./files/databases');
   const obo = await readObo('./files/go/go-basic.obo');
-  const { species } = config;
+  const { speciesID } = config;
+  const species = Object.values(speciesID);
 
   const tissues = {
     protein: {},

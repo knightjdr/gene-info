@@ -116,7 +116,6 @@ video {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   padding: 60px 40px 20px 40px;
 }
 

@@ -128,6 +128,20 @@ const linkElement = (report, settings) => {
         </div>
       `;
     }
+    if (report.biocyc && settings.species === 'Escherichia coli (K12)') {
+      html += `
+        <div>
+          <h1>EcoCyc</h1>
+          <a
+            href="https://ecocyc.org/gene?orgid=ECOLI&id=${report.biocyc}"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            ${report.biocyc}
+          </a>
+        </div>
+      `;
+    }
     if (
       report.uniprot
       && report.uniprot.length > 0

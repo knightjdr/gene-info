@@ -2,9 +2,12 @@ import config from '../../config';
 
 const toggleExpression = (expressionType, species) => {
   const element = document.querySelector(`.${expressionType}-expression`);
-  const availableSpecies = Object.keys(config.tissues[expressionType]);
+  const availableSpecies = config.tissues[expressionType];
 
-  if (availableSpecies.includes(species)) {
+  if (
+    availableSpecies[species]
+    && (availableSpecies[species].cells.length > 0 || availableSpecies[species].tissues.length > 0)
+  ) {
     element.classList.remove('hide');
   } else {
     element.classList.add('hide');

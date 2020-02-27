@@ -1,4 +1,10 @@
-const rnaTissues = {
+const tissues = {
+  'Salmonella Typhimurium (LT2)': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
   'Xenopus laevis': {
     cells: [
     ],
@@ -24,6 +30,12 @@ const rnaTissues = {
     ],
   },
   'Schizosaccharomyces pombe': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Escherichia coli (K12)': {
     cells: [
     ],
     tissues: [
@@ -168,4 +180,4 @@ const rnaTissues = {
   },
 };
 
-export default rnaTissues;
+export default tissues;

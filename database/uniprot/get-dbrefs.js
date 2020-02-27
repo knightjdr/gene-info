@@ -2,7 +2,12 @@ const arrayUnique = require('../helpers/array-unique');
 
 const getDBRefs = dbRefs => (
   dbRefs.reduce((accum, ref) => {
-    if (ref.$.type === 'BioGrid') {
+    if (ref.$.type === 'BioCyc') {
+      return {
+        ...accum,
+        biocyc: ref.$.id.split(/:(.+)/)[1],
+      };
+    } if (ref.$.type === 'BioGrid') {
       return {
         ...accum,
         biogrid: Number(ref.$.id),

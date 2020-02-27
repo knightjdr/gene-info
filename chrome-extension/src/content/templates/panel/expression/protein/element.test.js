@@ -2,24 +2,10 @@ import expressionElement from './element';
 
 describe('Protein expression element', () => {
   it('should return empty string when not selected', () => {
-    const availableSpecies = ['Homo sapiens'];
     const report = {};
-    const settings = {
-      protein_expression: false,
-    };
-    const result = expressionElement(report, settings, availableSpecies);
-
-    expect(result).toBe('');
-  });
-
-  it('should return empty string when selected species does have expression data', () => {
-    const availableSpecies = ['Homo sapiens'];
-    const report = {};
-    const settings = {
-      protein_expression: false,
-      species: 'Mus musculus',
-    };
-    const result = expressionElement(report, settings, availableSpecies);
+    const settings = {};
+    const showData = false;
+    const result = expressionElement(report, settings, showData);
 
     expect(result).toBe('');
   });
@@ -29,17 +15,16 @@ describe('Protein expression element', () => {
       let html;
 
       beforeAll(() => {
-        const availableSpecies = ['Homo sapiens'];
         const report = {
           'protein-expression': {},
           proteomicsdb: 1234,
         };
         const settings = {
-          protein_expression: true,
           protein_expression_tissues: [],
           species: 'Homo sapiens',
         };
-        html = expressionElement(report, settings, availableSpecies);
+        const showData = true;
+        html = expressionElement(report, settings, showData);
       });
 
       it('should display tissue warning', () => {
@@ -59,7 +44,6 @@ describe('Protein expression element', () => {
       let html;
 
       beforeAll(() => {
-        const availableSpecies = ['Homo sapiens'];
         const report = {
           'protein-expression': {
             cells: {
@@ -70,11 +54,11 @@ describe('Protein expression element', () => {
           proteomicsdb: 1234,
         };
         const settings = {
-          protein_expression: true,
           protein_expression_tissues: [],
           species: 'Homo sapiens',
         };
-        html = expressionElement(report, settings, availableSpecies);
+        const showData = true;
+        html = expressionElement(report, settings, showData);
       });
 
       it('should display tissue warning', () => {
@@ -95,7 +79,6 @@ describe('Protein expression element', () => {
     let html;
 
     beforeAll(() => {
-      const availableSpecies = ['Homo sapiens'];
       const report = {
         'protein-expression': {
           cells: {
@@ -106,11 +89,11 @@ describe('Protein expression element', () => {
         proteomicsdb: 1234,
       };
       const settings = {
-        protein_expression: true,
         protein_expression_tissues: ['cellX', 'cellY'],
         species: 'Homo sapiens',
       };
-      html = expressionElement(report, settings, availableSpecies);
+      const showData = true;
+      html = expressionElement(report, settings, showData);
     });
 
     it('should not display tissue warning', () => {
@@ -130,17 +113,16 @@ describe('Protein expression element', () => {
     let html;
 
     beforeAll(() => {
-      const availableSpecies = ['Homo sapiens'];
       const report = {
         'protein-expression': {},
         proteomicsdb: 1234,
       };
       const settings = {
-        protein_expression: true,
         protein_expression_tissues: ['cellX', 'cellY'],
         species: 'Homo sapiens',
       };
-      html = expressionElement(report, settings, availableSpecies);
+      const showData = true;
+      html = expressionElement(report, settings, showData);
     });
 
     it('should not display tissue warning', () => {

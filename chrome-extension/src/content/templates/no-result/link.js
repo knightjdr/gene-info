@@ -96,6 +96,19 @@ const linkElement = (term, settings) => {
       </li>
     `;
   }
+  if (settings.species === 'Escherichia coli (K12)') {
+    html += `
+      <li>
+        <a
+          href="https://ecocyc.org/ECOLI/search-query?type=GENE&gname=${term}"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          EcoCyc
+        </a>
+      </li>
+    `;
+  }
   if (settings.species === 'Homo sapiens') {
     html += `
       <li>

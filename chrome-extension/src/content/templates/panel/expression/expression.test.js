@@ -3,10 +3,12 @@ import expression from './expression';
 jest.mock('../../../../config', () => ({
   tissues: {
     protein: {
-      'Homo sapiens': { cells: {}, tissues: {} },
+      'Danio rerio': { cells: [], tissues: [] },
+      'Homo sapiens': { cells: ['HEK293'], tissues: ['brain'] },
     },
     rna: {
-      'Homo sapiens': { cells: {}, tissues: {} },
+      'Danio rerio': { cells: [], tissues: [] },
+      'Homo sapiens': { cells: ['HEK293'], tissues: ['brain'] },
     },
   },
 }));
@@ -49,7 +51,7 @@ describe('Expression element', () => {
     const setting = {
       protein_expression: true,
       rna_expression: true,
-      species: 'Mus musculus',
+      species: 'Danio rerio',
     };
     expect(expression(report, setting)).toBe('');
   });

@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 const convertXML = require('../helpers/convert-xml');
 
-const entryParse = require('./entry-parse');
+const parseEntry = require('./parse-entry');
 const xmlEntry = require('../files/example/xml-entry');
 
 let exampleEntry;
@@ -14,7 +14,7 @@ describe('Parse xml entry', () => {
     let parsed;
 
     beforeAll(() => {
-      parsed = entryParse(exampleEntry);
+      parsed = parseEntry(exampleEntry);
     });
 
     it('should return alternative names', () => {
@@ -23,6 +23,11 @@ describe('Parse xml entry', () => {
         'TF-1 cell apoptosis-related protein 15',
       ];
       expect(parsed.alternativeNames).toEqual(expected);
+    });
+
+    it('should return BioCyc ID', () => {
+      const expected = 'CTPSYN-MONOMER';
+      expect(parsed.biocyc).toEqual(expected);
     });
 
     it('should return BioGRID ID', () => {
@@ -285,7 +290,7 @@ describe('Parse xml entry', () => {
 
   describe('no primary gene name', () => {
     it('should return null', () => {
-      expect(entryParse({})).toBeNull();
+      expect(parseEntry({})).toBeNull();
     });
   });
 });

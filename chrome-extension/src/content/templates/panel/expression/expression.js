@@ -2,15 +2,22 @@ import config from '../../../../config';
 import proteinExpression from './protein/element';
 import rnaExpression from './rna/element';
 
+const shouldShowData = (showExpression, species, data) => (
+  showExpression
+  && data[species]
+  && (
+    data[species].cells.length > 0
+    || data[species].tissues.length > 0
+  )
+);
+
 const expressionElement = (report, settings) => {
   let html = '';
 
-  const availableProteinSpecies = Object.keys(config.tissues.protein);
-  const availableRNASpecies = Object.keys(config.tissues.rna);
-  if (
-    (settings.protein_expression && availableProteinSpecies.includes(settings.species))
-    || (settings.rna_expression && availableRNASpecies.includes(settings.species))
-  ) {
+  const showProteinData = shouldShowData(settings.protein_expression, settings.species, config.tissues.protein);
+  const showRNAData = shouldShowData(settings.rna_expression, settings.species, config.tissues.rna);
+
+  if (showProteinData || showRNAData) {
     html += `
       <style>
         .expression h1::after {
@@ -61,8 +68,8 @@ const expressionElement = (report, settings) => {
           Expression values are binned into qualitative
           levels: no expression (none), low, medium or high.
         </p>
-        ${proteinExpression(report, settings, availableProteinSpecies)}
-        ${rnaExpression(report, settings, availableRNASpecies)}
+        ${proteinExpression(report, settings, showProteinData)}
+        ${rnaExpression(report, settings, showRNAData)}
       </section>
     `;
   }

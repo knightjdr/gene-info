@@ -5,58 +5,6 @@ const downloadHttp = require('../helpers/download-http');
 const unzipFile = require('../helpers/unzip-file');
 
 const fsConfig = {
-  annotations: [
-    {
-      file: './files/go/Arabidopsis thaliana.tsv',
-      url: 'http://current.geneontology.org/annotations/tair.gaf.gz',
-      zipFile: './files/go/Arabidopsis thaliana.gz',
-    },
-    {
-      file: './files/go/Caenorhabditis elegans.tsv',
-      url: 'http://current.geneontology.org/annotations/wb.gaf.gz',
-      zipFile: './files/go/Caenorhabditis elegans.gz',
-    },
-    {
-      file: './files/go/Danio rerio.tsv',
-      url: 'http://current.geneontology.org/annotations/zfin.gaf.gz',
-      zipFile: './files/go/Danio rerio.gz',
-    },
-    {
-      file: './files/go/Dictyostelium discoideum.tsv',
-      url: 'http://current.geneontology.org/annotations/dictybase.gaf.gz',
-      zipFile: './files/go/Dictyostelium discoideum.gz',
-    },
-    {
-      file: './files/go/Drosophila melanogaster.tsv',
-      url: 'http://current.geneontology.org/annotations/fb.gaf.gz',
-      zipFile: './files/go/Drosophila melanogaster.gz',
-    },
-    {
-      file: './files/go/Gallus gallus.tsv',
-      url: 'http://current.geneontology.org/annotations/goa_chicken.gaf.gz',
-      zipFile: './files/go/Gallus gallus.gz',
-    },
-    {
-      file: './files/go/Homo sapiens.tsv',
-      url: 'http://current.geneontology.org/annotations/goa_human.gaf.gz',
-      zipFile: './files/go/Homo sapiens.gz',
-    },
-    {
-      file: './files/go/Mus musculus.tsv',
-      url: 'http://current.geneontology.org/annotations/mgi.gaf.gz',
-      zipFile: './files/go/Mus musculus.gz',
-    },
-    {
-      file: './files/go/Saccharomyces cerevisiae.tsv',
-      url: 'http://current.geneontology.org/annotations/sgd.gaf.gz',
-      zipFile: './files/go/Saccharomyces cerevisiae.gz',
-    },
-    {
-      file: './files/go/Schizosaccharomyces pombe.tsv',
-      url: 'http://current.geneontology.org/annotations/pombase.gaf.gz',
-      zipFile: './files/go/Schizosaccharomyces pombe.gz',
-    },
-  ],
   goFolder: './files/go',
   obo: {
     url: 'http://snapshot.geneontology.org/ontology/go-basic.obo',
@@ -70,26 +18,6 @@ const go = options => (
     createFolder(fsConfig.goFolder)
       .then(() => Promise.all([
         downloadHttp(fsConfig.obo.url, fsConfig.obo.zipFile, options.skipDownload),
-        downloadHttp(fsConfig.annotations[0].url, fsConfig.annotations[0].zipFile, options.skipDownload),
-        downloadHttp(fsConfig.annotations[1].url, fsConfig.annotations[1].zipFile, options.skipDownload),
-        downloadHttp(fsConfig.annotations[2].url, fsConfig.annotations[2].zipFile, options.skipDownload),
-        downloadHttp(fsConfig.annotations[3].url, fsConfig.annotations[3].zipFile, options.skipDownload),
-        downloadHttp(fsConfig.annotations[4].url, fsConfig.annotations[4].zipFile, options.skipDownload),
-        downloadHttp(fsConfig.annotations[5].url, fsConfig.annotations[5].zipFile, options.skipDownload),
-        downloadHttp(fsConfig.annotations[6].url, fsConfig.annotations[6].zipFile, options.skipDownload),
-        downloadHttp(fsConfig.annotations[7].url, fsConfig.annotations[7].zipFile, options.skipDownload),
-        downloadHttp(fsConfig.annotations[8].url, fsConfig.annotations[8].zipFile, options.skipDownload),
-      ]))
-      .then(() => Promise.all([
-        unzipFile('gunzip', fsConfig.annotations[0].zipFile, fsConfig.annotations[0].file, options.skipUnzip),
-        unzipFile('gunzip', fsConfig.annotations[1].zipFile, fsConfig.annotations[1].file, options.skipUnzip),
-        unzipFile('gunzip', fsConfig.annotations[2].zipFile, fsConfig.annotations[2].file, options.skipUnzip),
-        unzipFile('gunzip', fsConfig.annotations[3].zipFile, fsConfig.annotations[3].file, options.skipUnzip),
-        unzipFile('gunzip', fsConfig.annotations[4].zipFile, fsConfig.annotations[4].file, options.skipUnzip),
-        unzipFile('gunzip', fsConfig.annotations[5].zipFile, fsConfig.annotations[5].file, options.skipUnzip),
-        unzipFile('gunzip', fsConfig.annotations[6].zipFile, fsConfig.annotations[6].file, options.skipUnzip),
-        unzipFile('gunzip', fsConfig.annotations[7].zipFile, fsConfig.annotations[7].file, options.skipUnzip),
-        unzipFile('gunzip', fsConfig.annotations[8].zipFile, fsConfig.annotations[8].file, options.skipUnzip),
       ]))
       .then(() => { resolve(); })
       .catch((err) => {
