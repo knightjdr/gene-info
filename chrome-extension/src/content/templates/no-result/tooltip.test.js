@@ -1,5 +1,5 @@
-import links from './link';
-import tooltip from './tooltip';
+import createLinkList from './link';
+import createNoResultTooltipNodes from './tooltip';
 
 jest.mock('./link');
 jest.mock('../../state', () => ({
@@ -13,18 +13,21 @@ jest.mock('../../state', () => ({
 
 describe('No result tooltip', () => {
   describe('No error', () => {
+    let nodes;
+
     beforeAll(() => {
-      links.mockClear();
-      document.body.innerHTML = tooltip(false);
+      createLinkList.mockReturnValue([]);
+      createLinkList.mockClear();
+      nodes = createNoResultTooltipNodes(false);
     });
 
     it('should set theme', () => {
-      const div = document.querySelector('aside');
-      expect(div.classList.contains('theme_dark')).toBeTruthy();
+      const node = nodes[1];
+      expect(node.class.includes('theme_dark')).toBeTruthy();
     });
 
     it('should set tooltip text', () => {
-      const header = document.querySelector('header');
+      const header = nodes[1].children[0];
       expect(header.textContent.trim()).toBe('No search result');
     });
 
@@ -33,23 +36,26 @@ describe('No result tooltip', () => {
         species: 'Homo sapiens',
         theme: 'dark',
       };
-      expect(links).toHaveBeenCalledWith('test', settings);
+      expect(createLinkList).toHaveBeenCalledWith('test', settings);
     });
   });
 
   describe('error', () => {
+    let nodes;
+
     beforeAll(() => {
-      links.mockClear();
-      document.body.innerHTML = tooltip(true);
+      createLinkList.mockReturnValue([]);
+      createLinkList.mockClear();
+      nodes = createNoResultTooltipNodes(true);
     });
 
-    it('should set panel text', () => {
-      const header = document.querySelector('header');
+    it('should set tooltip text', () => {
+      const header = nodes[1].children[0];
       expect(header.textContent.trim()).toBe('An error occured');
     });
 
     it('should not call link function', () => {
-      expect(links).not.toHaveBeenCalled();
+      expect(createLinkList).not.toHaveBeenCalled();
     });
   });
 });

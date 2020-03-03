@@ -1,10 +1,10 @@
+import createSortDownIcon from '../templates/assets/sort-down';
+import createSortIcon from '../templates/assets/sort';
+import createSortUpIcon from '../templates/assets/sort-up';
 import State from '../state';
 import sortArray from '../helpers/sort-array';
-import sortIcon from '../templates/assets/sort';
-import sortDownIcon from '../templates/assets/sort-down';
-import sortUpIcon from '../templates/assets/sort-up';
 import { addInteractorListener, removeInteractorListener } from './interactor';
-import { fillRows } from '../templates/panel/interactor';
+import { updateRows } from '../templates/panel/interactor';
 
 const switchSortDirection = prevDirection => (
   prevDirection === 'asc' ? 'des' : 'asc'
@@ -18,17 +18,22 @@ const sortInteractions = (field, defaultDirection, sortMethod) => {
   const sortDir = State.settings.interactorSortKey === field
     ? switchSortDirection(State.settings.interactorSortDirection) : defaultDirection;
   const sorted = sortMethod(State.latestReport().interactors, field, sortDir);
-  State.shadowRoot.querySelector('#interactor_tbody').innerHTML = fillRows(sorted);
+  updateRows(State.shadowRoot.querySelector('#interactor_tbody'), sorted);
 
   // Add back table row listeners.
   addInteractorListener();
 
   // Change sort icons.
   ['biogrid', 'gene', 'intact'].forEach((buttonField) => {
+    const button = State.shadowRoot.querySelector(`#interactor_${buttonField}`);
     if (buttonField === field) {
-      State.shadowRoot.querySelector(`#interactor_${buttonField}`).innerHTML = sortDir === 'asc' ? sortUpIcon : sortDownIcon;
+      if (sortDir === 'asc') {
+        createSortUpIcon(button);
+      } else {
+        createSortDownIcon(button);
+      }
     } else {
-      State.shadowRoot.querySelector(`#interactor_${buttonField}`).innerHTML = sortIcon;
+      createSortIcon(button);
     }
   });
   // Update sort state.

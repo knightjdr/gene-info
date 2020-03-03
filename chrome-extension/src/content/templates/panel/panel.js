@@ -1,11 +1,12 @@
+import addNodes from '../../helpers/add-nodes';
 import backButton from '../back-button';
 import closeButton from '../close-button';
+import createNodes from './create-nodes';
 import dragButton from '../drag-button';
 import noResult from '../no-result/panel';
-import panelDetails from './panel-details';
 import panelStyle from '../../style/panel';
+import removeAllChildren from '../../helpers/remove-all-children';
 import resizeButton from './resize-button';
-import selectStyle from '../../style/select';
 import State from '../../state';
 import styleSelect from '../select';
 import { addBackListener, removeBackListener } from '../../listeners/back';
@@ -33,14 +34,15 @@ const createPanel = (reportIndex = 0, error) => {
     removeInteractorSortListener();
     removeResizeListener();
     removeSelectListener();
+    removeAllChildren(State.shadowRoot);
     fadeClass = 'panel_animate-show';
   }
 
   // Get class, html and style to apply
-  const html = error || result.length < 1
+  const nodes = error || result.length < 1
     ? noResult(error, State.style, fadeClass)
-    : `${panelDetails(result, reportIndex, State.style, fadeClass)}`;
-  State.shadowRoot.innerHTML = `${selectStyle}${panelStyle}${html}`;
+    : [createNodes(result, reportIndex, State.style, fadeClass)];
+  addNodes(State.shadowRoot, [...panelStyle, ...nodes]);
 
   const panel = State.shadowRoot.getElementById('panel');
   // Reset state, add element, close button, listeners and fade in.

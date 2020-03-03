@@ -1,22 +1,20 @@
-/* eslint indent: 0 */
 import config from '../../../config';
 
-const species = selected => `
-  <select id="species_select" class="slim-select-style">
-    ${
-      config.species.map((specie) => {
-        const props = [`value="${specie}"`];
-        if (specie === selected) {
-          props.push('selected');
-        }
-        return `
-          <option ${props.join(' ')}>
-            ${specie}
-          </option>
-        `;
-      })
-    }.join('\n');
-  </select>
-`;
+const createSelectNode = selected => ({
+  children: config.species.map((specie) => {
+    const option = {
+      tag: 'option',
+      textContent: specie,
+      value: specie,
+    };
+    if (specie === selected) {
+      option.selected = true;
+    }
+    return option;
+  }),
+  class: 'slim-select-style',
+  id: 'species_select',
+  tag: 'select',
+});
 
-export default species;
+export default createSelectNode;

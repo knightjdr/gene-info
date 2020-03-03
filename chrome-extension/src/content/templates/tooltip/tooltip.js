@@ -1,14 +1,16 @@
+import addNodes from '../../helpers/add-nodes';
 import closeButton from '../close-button';
+import createNodes from './create-nodes';
 import noResult from '../no-result/tooltip';
-import tooltipPosition from '../../helpers/tooltip-position';
-import selectStyle from '../../style/select';
+import removeAllChildren from '../../helpers/remove-all-children';
 import State from '../../state';
 import styleSelect from '../select';
-import tooltipDetails from './tooltip-details';
+import tooltipPosition from '../../helpers/tooltip-position';
 import tooltipStyle from '../../style/tooltip';
 import { addCloseListener, removeCloseListener } from '../../listeners/close';
 import { addSelectListener, removeSelectListener } from '../../listeners/select';
 import { addTooltipScrollListener, removeTooltipScrollListener } from '../../listeners/tooltip-scroll';
+
 
 const createTooltip = (event, error, reportIndex = 0) => {
   const result = State.results[State.results.length - 1];
@@ -29,14 +31,15 @@ const createTooltip = (event, error, reportIndex = 0) => {
     removeCloseListener();
     removeSelectListener();
     removeTooltipScrollListener();
+    removeAllChildren(State.shadowRoot);
     fadeClass = 'panel_animate-show';
   }
 
   // Create content.
-  const html = error || result.length < 1
+  const nodes = error || result.length < 1
     ? noResult(error, fadeClass)
-    : `${selectStyle}${tooltipDetails(result, reportIndex, fadeClass)}`;
-  State.shadowRoot.innerHTML = `${tooltipStyle}${html}`;
+    : [createNodes(result, reportIndex, fadeClass)];
+  addNodes(State.shadowRoot, [...tooltipStyle, ...nodes]);
 
   // Attach listeners
   tooltip = State.shadowRoot.getElementById('tooltip');

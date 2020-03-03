@@ -1,4 +1,4 @@
-import links from './link';
+import createLinkList from './link';
 import panel from './panel';
 import position from '../position';
 import State from '../../state';
@@ -19,19 +19,23 @@ jest.mock('../../state', () => ({
 describe('No result panel', () => {
   describe('no error', () => {
     describe('ctrl requirement not set', () => {
+      let nodes;
+
       beforeAll(() => {
-        links.mockClear();
-        document.body.innerHTML = panel(false, {});
+        createLinkList.mockClear();
+        nodes = panel(false, {});
       });
 
       it('should set theme', () => {
-        const aside = document.querySelector('aside');
-        expect(aside.classList.contains('theme_dark')).toBeTruthy();
+        const aside = nodes[1];
+        expect(aside.class.includes('theme_dark')).toBeTruthy();
       });
 
       it('should set inline style', () => {
-        const aside = document.querySelector('aside');
-        expect(aside.style.top).toBe('10px');
+        const aside = nodes[1];
+
+        const expected = 'top: 10px;';
+        expect(aside.style).toBe(expected);
       });
 
       it('should call links function', () => {
@@ -40,41 +44,43 @@ describe('No result panel', () => {
           species: 'Homo sapiens',
           theme: 'dark',
         };
-        expect(links).toHaveBeenCalledWith('test', settings);
+        expect(createLinkList).toHaveBeenCalledWith('test', settings);
       });
 
       it('should add ctrl-notification div', () => {
-        const div = document.querySelector('.ctrl-notification');
-        expect(div).not.toBeNull();
+        expect(nodes[1].children[5].class).toBe('ctrl-notification');
       });
     });
 
     describe('ctrl requirement set', () => {
+      let nodes;
+
       beforeAll(() => {
         State.settings.ctrl = true;
-        document.body.innerHTML = panel(false, {});
+        nodes = panel(false, {});
       });
 
       it('should not add ctrl-notification div', () => {
-        const div = document.querySelector('.ctrl-notification');
-        expect(div).toBeNull();
+        expect(nodes[1].children[5]).toBeNull();
       });
     });
   });
 
   describe('error', () => {
+    let nodes;
+
     beforeAll(() => {
-      links.mockClear();
-      document.body.innerHTML = panel(true, {});
+      createLinkList.mockClear();
+      nodes = panel(true, {});
     });
 
     it('should set panel text', () => {
-      const par = document.querySelector('p');
-      expect(par.textContent.trim().startsWith('An error occured')).toBeTruthy();
+      const element = nodes[1].children[0].children[0];
+      expect(element.textContent.trim().startsWith('An error occured')).toBeTruthy();
     });
 
     it('should not call link function', () => {
-      expect(links).not.toHaveBeenCalled();
+      expect(createLinkList).not.toHaveBeenCalled();
     });
   });
 });

@@ -1,122 +1,165 @@
-/* eslint indent: 0 */
-
+import removeAllChildren from '../../helpers/remove-all-children';
 import sortIcon from '../assets/sort';
 import sortUpIcon from '../assets/sort-up';
+import addNodes from '../../helpers/add-nodes';
 
-export const fillRows = interactors => (
-  interactors.map(interactor => (`
-    <tr>
-      <td>${interactor.gene}</td>
-      <td
-        class="interactor-list-toggle"
-        data-gene="${interactor.gene}"
-      >
-        <div>${interactor.biogrid.length}</div>
-        <ul class="interactor__method-list interactor-list-${interactor.gene}">
-          ${
-            interactor.biogrid.map(method => (
-              `<li>∙${method}</li>`
-            )).join('')
-          }
-        </ul>
-      </td>
-      <td
-        class="interactor-list-toggle"
-        data-gene="${interactor.gene}"
-      >
-        <div>${interactor.intact.length}</div>
-        <ul class="interactor__method-list interactor-list-${interactor.gene}">
-          ${
-            interactor.intact.map(method => (
-              `<li>∙${method}</li>`
-            )).join('')
-          }
-        </ul>
-      </td>
-    </tr>
-  `)).join('')
-);
+const createRowNode = (interactors) => {
+  const nodes = [];
 
-const interactorElement = (report, settings) => {
-  let html = '';
+  interactors.forEach((interactor) => {
+    const tr = {
+      tag: 'tr',
+      children: [
+        { tag: 'td', textContent: interactor.gene },
+        {
+          class: 'interactor-list-toggle',
+          'data-gene': interactor.gene,
+          tag: 'td',
+          children: [
+            { tag: 'div', textContent: interactor.biogrid.length },
+            {
+              class: `interactor__method-list interactor-list-${interactor.gene}`,
+              tag: 'ul',
+              children: interactor.biogrid.map(method => ({
+                tag: 'li',
+                textContent: method,
+              })),
+            },
+          ],
+        },
+        {
+          class: 'interactor-list-toggle',
+          'data-gene': interactor.gene,
+          tag: 'td',
+          children: [
+            { tag: 'div', textContent: interactor.intact.length },
+            {
+              class: `interactor__method-list interactor-list-${interactor.gene}`,
+              tag: 'ul',
+              children: interactor.intact.map(method => ({
+                tag: 'li',
+                textContent: method,
+              })),
+            },
+          ],
+        },
+      ],
+    };
+
+    nodes.push(tr);
+  });
+
+  return nodes;
+};
+
+export const updateRows = (tbody, interactors) => {
+  removeAllChildren(tbody);
+  addNodes(tbody, createRowNode(interactors));
+};
+
+const style = `
+.interactor .links {
+  display: inline-flex;
+}
+.interactor .links a:not(:first-child) {
+  margin-left: 4px;
+}
+.interactor-table {
+  table-layout: fixed;
+}
+.interactor-table th:first-child {
+  width: 100px;
+}
+.interactor-table th:not(:first-child) {
+  width: calc((100% - 100px) / 2);
+}
+.interactor-table th button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  height: auto;
+  padding: 2px;
+}
+.interactor-table th button:focus {
+  outline: none;
+}
+.interactor-table th svg path {
+  fill: var(--text-contrast);
+}
+.interactor-table td:not(:first-child) {
+  cursor: pointer;
+  text-align: center;
+  vertical-align: top;
+}
+.interactor__method-list {
+  border-top: 1px dotted #d0d0d0;
+  display: none;
+  font-size: 0.8em;
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  text-align: left;
+  width: auto;
+  word-break: break-word;
+}
+.interactor__method-list li {
+  margin: 0;
+}`;
+
+const createInteractorElement = (report, settings) => {
+  const nodes = [];
   if (settings.interactors) {
+    nodes.push({
+      tag: 'style',
+      textContent: style,
+      type: 'text/css',
+    });
+
     const accession = report.uniprot[0];
+
     const links = [];
     if (report.biogrid) {
-      links.push(`
-        <a
-          href="https://thebiogrid.org/${report.biogrid}"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          BioGRID
-        </a>
-      `);
+      links.push({
+        href: `https://thebiogrid.org/${report.biogrid}`,
+        rel: 'noopener noreferrer',
+        tag: 'a',
+        target: '_blank',
+        textContent: 'BioGRID',
+      });
     }
-    links.push(`
-      <a
-        href="https://www.ebi.ac.uk/intact/query/${accession}"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        IntAct
-      </a>
-    `);
+    links.push({
+      href: `https://www.ebi.ac.uk/intact/query/${accession}`,
+      rel: 'noopener noreferrer',
+      tag: 'a',
+      target: '_blank',
+      textContent: 'IntAct',
+    });
+
+    const section = {
+      class: 'details interactor',
+      tag: 'section',
+      children: [
+        {
+          class: 'details-header',
+          tag: 'div',
+          children: [
+            { tag: 'h1', textContent: 'INTERACTORS' },
+            { tag: 'span', children: links },
+          ],
+        },
+      ],
+    };
+
+    console.log(section);
+
+    nodes.push(section);
+  }
+
+  return nodes;
+
+  /* if (settings.interactors) {
     html = `
-      <style>
-        .interactor .links {
-          display: inline-flex;
-        }
-        .interactor .links a:not(:first-child) {
-          margin-left: 4px;
-        }
-        .interactor-table {
-          table-layout: fixed;
-        }
-        .interactor-table th:first-child {
-          width: 100px;
-        }
-        .interactor-table th:not(:first-child) {
-          width: calc((100% - 100px) / 2);
-        }
-        .interactor-table th button {
-          background-color: transparent;
-          border: none;
-          cursor: pointer;
-          height: auto;
-          padding: 2px;
-        }
-        .interactor-table th button:focus {
-          outline: none;
-        }
-        .interactor-table th svg path {
-          fill: var(--text-contrast);
-        }
-        .interactor-table td:not(:first-child) {
-          cursor: pointer;
-          text-align: center;
-          vertical-align: top;
-        }
-        .interactor__method-list {
-          border-top: 1px dotted #d0d0d0;
-          display: none;
-          font-size: 0.8em;
-          list-style: none;
-          margin: 0;
-          padding-left: 0;
-          text-align: left;
-          width: auto;
-          word-break: break-word;
-        }
-        .interactor__method-list li {
-          margin: 0;
-        }
-      </style>
       <section class="details interactor">
-        <div class="details-header">
-          <h1>INTERACTORS</h1>
-          <span class="links">${links.join(',')}</span>
-        </div>
         ${
           report.interactors && report.interactors.length > 0
           ? `
@@ -159,7 +202,7 @@ const interactorElement = (report, settings) => {
                 </tr>
               </thead>
               <tbody id="interactor_tbody">
-                ${fillRows(report.interactors)}
+                ${createRowNode(report.interactors)}
               </tbody>
             </table>
           `
@@ -168,7 +211,7 @@ const interactorElement = (report, settings) => {
       </section>
     `;
   }
-  return html;
+  return html; */
 };
 
-export default interactorElement;
+export default createInteractorElement;

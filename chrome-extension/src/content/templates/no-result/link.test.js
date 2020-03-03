@@ -1,58 +1,66 @@
-import link, { allSpeciesLinks } from './link';
-import minifyHTML from '../../../test-utils/minify-html';
+import createLinkList, { getGeneralLinks } from './link';
 
-const genericLinks = term => `
-<li>
-  <a
-    href="https://ensembl.org/Multi/Search/Results?q=${term}"
-    rel="noopener noreferrer"
-    target="_blank"
-  >
-    Ensembl
-  </a>
-</li>
-<li>
-  <a
-    href="http://www.google.com/search?q=${term}"
-    rel="noopener noreferrer"
-    target="_blank"
-  >
-    Google
-  </a>
-</li>
-<li>
-  <a
-    href="https://www.ncbi.nlm.nih.gov/search/all/?term=${term}"
-    rel="noopener noreferrer"
-    target="_blank"
-  >
-    NCBI
-  </a>
-</li>
-<li>
-  <a
-    href="https://www.uniprot.org/uniprot/?query=${term}&sort=score"
-    rel="noopener noreferrer"
-    target="_blank"
-  >
-    UniProt
-  </a>
-</li>
-`;
-
-describe('Links for all species', () => {
+describe('General links', () => {
   it('should return expected links', () => {
     const term = 'test';
-    const expected = minifyHTML(genericLinks(term));
-    const templateString = minifyHTML(allSpeciesLinks(term));
-    expect(templateString).toEqual(expected);
+
+    const expected = [
+      {
+        children: [
+          {
+            href: `https://ensembl.org/Multi/Search/Results?q=${term}`,
+            rel: 'noopener noreferrer',
+            tag: 'a',
+            target: '_blank',
+            textContent: 'Ensembl',
+          },
+        ],
+        tag: 'li',
+      },
+      {
+        children: [
+          {
+            href: `http://www.google.com/search?q=${term}`,
+            rel: 'noopener noreferrer',
+            tag: 'a',
+            target: '_blank',
+            textContent: 'Google',
+          },
+        ],
+        tag: 'li',
+      },
+      {
+        children: [
+          {
+            href: `https://www.ncbi.nlm.nih.gov/search/all/?term=${term}`,
+            rel: 'noopener noreferrer',
+            tag: 'a',
+            target: '_blank',
+            textContent: 'NCBI',
+          },
+        ],
+        tag: 'li',
+      },
+      {
+        children: [
+          {
+            href: `https://www.uniprot.org/uniprot/?query=${term}&sort=score`,
+            rel: 'noopener noreferrer',
+            tag: 'a',
+            target: '_blank',
+            textContent: 'UniProt',
+          },
+        ],
+        tag: 'li',
+      },
+    ];
+    expect(getGeneralLinks(term)).toEqual(expected);
   });
 });
 
-describe('Panel links', () => {
-  it('should add species specific links when IDs present', () => {
+describe('All available links', () => {
+  it('should add species specific links when ID present', () => {
     const term = 'test';
-    const generic = genericLinks(term);
     const species = [
       {
         name: 'Arabidopsis thaliana',
@@ -105,22 +113,22 @@ describe('Panel links', () => {
         links: true,
         species: specie.name,
       };
-      const expected = minifyHTML(`
-        <ul>
-          ${generic}
-          <li>
-            <a
-              href="${specie.url}"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              ${specie.db}
-            </a>
-          </li>
-        </ul>
-      `);
-      const templateString = minifyHTML(link(term, settings));
-      expect(templateString).toEqual(expected);
+      const list = createLinkList(term, settings);
+
+      const expected = {
+        children: [
+          {
+            href: specie.url,
+            rel: 'noopener noreferrer',
+            tag: 'a',
+            target: '_blank',
+            textContent: specie.db,
+          },
+        ],
+        tag: 'li',
+      };
+      expect(list.tag).toBe('ul');
+      expect(list.children[4]).toEqual(expected);
     });
   });
 });

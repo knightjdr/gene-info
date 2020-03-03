@@ -5,7 +5,7 @@ const species = () => {
   config.species.forEach((specie) => {
     const option = document.createElement('option');
     option.value = specie;
-    option.innerHTML = specie;
+    option.textContent = specie;
     select.appendChild(option);
   });
 };
