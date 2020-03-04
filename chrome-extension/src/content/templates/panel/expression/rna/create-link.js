@@ -1,15 +1,13 @@
 const createLink = accession => (
   accession
-    ? `
-      <a
-        href="https://www.proteinatlas.org/${accession}/tissue"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        Protein Atlas
-      </a>
-    `
-    : ''
+    ? {
+      href: `https://www.proteinatlas.org/${accession}/tissue`,
+      rel: 'noopener noreferrer',
+      tag: 'a',
+      target: '_blank',
+      textContent: 'Protein Atlas',
+    }
+    : {}
 );
 
 export default createLink;

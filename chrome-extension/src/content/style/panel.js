@@ -85,11 +85,7 @@ li {
 }
 .details-header a {
   display: inline-block;
-  margin: 0 3px;
-}
-.details-header a:not(:last-of-type)::after {
-  content: ',';
-  display: inline-block;
+  margin: 0 2px;
 }
 .details-description {
   margin-top: 0px;
@@ -109,6 +105,11 @@ li {
 
 .gene-info__details {
   padding-bottom: 5px;
+}
+
+.links_comma > a:not(:last-of-type)::after  {
+  content: ', ';
+  display: inline;
 }
 
 .none {

@@ -1,5 +1,4 @@
 import createTable from './create-table';
-import minifyHTML from '../../../../../test-utils/minify-html';
 
 describe('Create protein expression table', () => {
   it('should create table', () => {
@@ -12,27 +11,46 @@ describe('Create protein expression table', () => {
       },
     };
     const tissues = ['cellX', 'cellY'];
-    const result = minifyHTML(createTable(results, tissues));
+    const result = createTable(results, tissues);
 
-    const expected = minifyHTML(`
-      <p class="details-description">
-        Protein expression values are reported as the log<sub>10</sub>
-        normalized MS1 iBAQ intensity.
-      </p>
-      <table class="expression__table expression__table-protein">
-        <thead>
-          <tr>
-            <th>Tissue</th>
-            <th>Intensity</th>
-            <th>Level</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>cellX</td><td>1</td><td>low</td></tr>
-          <tr><td>cellY</td><td>2</td><td>medium</td></tr>
-        </tbody>
-      </table>
-    `);
-    expect(result).toBe(expected);
+    const expected = {
+      class: 'expression__table expression__table-protein',
+      tag: 'table',
+      children: [
+        {
+          tag: 'thead',
+          children: [{
+            tag: 'tr',
+            children: [
+              { tag: 'th', textContent: 'Tissue' },
+              { tag: 'th', textContent: 'Intensity' },
+              { tag: 'th', textContent: 'Level' },
+            ],
+          }],
+        },
+        {
+          tag: 'tbody',
+          children: [
+            {
+              tag: 'tr',
+              children: [
+                { tag: 'td', textContent: 'cellX' },
+                { tag: 'td', textContent: 1 },
+                { tag: 'td', textContent: 'low' },
+              ],
+            },
+            {
+              tag: 'tr',
+              children: [
+                { tag: 'td', textContent: 'cellY' },
+                { tag: 'td', textContent: 2 },
+                { tag: 'td', textContent: 'medium' },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+    expect(result[1]).toEqual(expected);
   });
 });

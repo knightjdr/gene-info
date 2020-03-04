@@ -12,35 +12,46 @@ describe('Create RNA expression table', () => {
       },
     };
     const tissues = ['cellX', 'cellY'];
-    const result = minifyHTML(createTable(results, tissues));
+    const result = createTable(results, tissues);
 
-    const expected = minifyHTML(`
-      <p class="details-description">
-        RNA expression values are reported as transcripts
-        per million (TPM). See
-        <a
-          href="https://www.proteinatlas.org/about/assays+annotation"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          HPA RNA-seq data
-        </a>
-        for more.
-      </p>
-      <table class="expression__table">
-        <thead>
-          <tr>
-            <th>Tissue</th>
-            <th>TPM</th>
-            <th>Level</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>cellX</td><td>5</td><td>low</td></tr>
-          <tr><td>cellY</td><td>25</td><td>medium</td></tr>
-        </tbody>
-      </table>
-    `);
-    expect(result).toBe(expected);
+    const expected = {
+      class: 'expression__table',
+      tag: 'table',
+      children: [
+        {
+          tag: 'thead',
+          children: [{
+            tag: 'tr',
+            children: [
+              { tag: 'th', textContent: 'Tissue' },
+              { tag: 'th', textContent: 'TPM' },
+              { tag: 'th', textContent: 'Level' },
+            ],
+          }],
+        },
+        {
+          tag: 'tbody',
+          children: [
+            {
+              tag: 'tr',
+              children: [
+                { tag: 'td', textContent: 'cellX' },
+                { tag: 'td', textContent: 5 },
+                { tag: 'td', textContent: 'low' },
+              ],
+            },
+            {
+              tag: 'tr',
+              children: [
+                { tag: 'td', textContent: 'cellY' },
+                { tag: 'td', textContent: 25 },
+                { tag: 'td', textContent: 'medium' },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+    expect(result[1]).toEqual(expected);
   });
 });

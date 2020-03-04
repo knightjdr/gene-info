@@ -6,14 +6,13 @@ describe('Create RNA expression link', () => {
     const result = createLink(accession);
 
     const expected = 'https://www.proteinatlas.org/1234/tissue';
-    const re = new RegExp(expected);
-    expect(re.test(result)).toBeTruthy();
+    expect(result.href).toBe(expected);
   });
 
   it('should return empty string when accession is not defined', () => {
     const accession = '';
     const result = createLink(accession);
 
-    expect(result).toEqual('');
+    expect(result).toEqual({});
   });
 });

@@ -1,29 +1,28 @@
+import createBasicElement from './basic';
+import createDescriptionElement from './description';
+import createDomainElement from './domain';
+import createExpressionElement from './expression/expression';
 import createGeneElement from '../gene';
+import createGoElement from './go';
 import createInteractorElement from './interactor';
+import createLinkElement from './link';
+import createLocalizationElement from './localization';
+import createPathwayElement from './pathway';
+import createPathologyElement from './pathology';
 import position from '../position';
 import State from '../../state';
 
-// import basicElement from './basic';
-// import descriptionElement from './description';
-// import domainElement from './domain';
-// import expressionElement from './expression/expression';
-// import goElement from './go';
-// import linkElement from './link';
-// import localizationElement from './localization';
-// import pathologyElement from './pathology';
-// import pathwayElement from './pathway';
-
 const sections = {
-  basic: () => [],
-  description: () => [],
-  domain: () => [],
-  expression: () => [],
-  go: () => [],
+  basic: createBasicElement,
+  description: createDescriptionElement,
+  domain: createDomainElement,
+  expression: createExpressionElement,
+  go: createGoElement,
   interactors: createInteractorElement,
-  links: () => [],
-  localization: () => [],
-  pathology: () => [],
-  pathway: () => [],
+  links: createLinkElement,
+  localization: createLocalizationElement,
+  pathology: createPathologyElement,
+  pathway: createPathwayElement,
 };
 
 const reportDetails = (result, reportIndex, stateStyle, fadeClass) => {
@@ -47,7 +46,11 @@ const reportDetails = (result, reportIndex, stateStyle, fadeClass) => {
               createGeneElement(result, reportIndex),
             ],
           },
-          ...(State.settings.setting_order.map(section => sections[section](result[reportIndex], State.settings))).flat(),
+          ...(
+            State.settings.setting_order.map(section => (
+              sections[section](result[reportIndex], State.settings)
+            ))
+          ).flat(),
         ],
       },
     ],

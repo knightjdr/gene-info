@@ -1,4 +1,5 @@
 const createSortDownIcon = (button) => {
+  button.firstChild.remove();
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('height', '12');
   svg.setAttribute('viewBox', '0 0 503 700');

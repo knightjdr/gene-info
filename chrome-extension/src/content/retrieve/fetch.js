@@ -10,8 +10,7 @@ const fetch = (species, field, searchTerm, event) => {
       State.addReport(data);
       showReport(event, State.settings.report);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       showReport(event, State.settings.report, true);
     });
 };

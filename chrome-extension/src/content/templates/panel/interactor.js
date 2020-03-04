@@ -1,7 +1,7 @@
-import removeAllChildren from '../../helpers/remove-all-children';
-import sortIcon from '../assets/sort';
-import sortUpIcon from '../assets/sort-up';
 import addNodes from '../../helpers/add-nodes';
+import removeAllChildren from '../../helpers/remove-all-children';
+import { sortIcon } from '../assets/sort';
+import { sortUpIcon } from '../assets/sort-up';
 
 const createRowNode = (interactors) => {
   const nodes = [];
@@ -22,7 +22,7 @@ const createRowNode = (interactors) => {
               tag: 'ul',
               children: interactor.biogrid.map(method => ({
                 tag: 'li',
-                textContent: method,
+                textContent: `∙ ${method}`,
               })),
             },
           ],
@@ -38,7 +38,7 @@ const createRowNode = (interactors) => {
               tag: 'ul',
               children: interactor.intact.map(method => ({
                 tag: 'li',
-                textContent: method,
+                textContent: `∙ ${method}`,
               })),
             },
           ],
@@ -144,74 +144,99 @@ const createInteractorElement = (report, settings) => {
           tag: 'div',
           children: [
             { tag: 'h1', textContent: 'INTERACTORS' },
-            { tag: 'span', children: links },
+            { tag: 'span', class: 'links_comma', children: links },
           ],
         },
       ],
     };
 
-    console.log(section);
+    if (report.interactors && report.interactors.length > 0) {
+      section.children.push({
+        class: 'details-description',
+        tag: 'p',
+        textContent: `The values in the table indicate the number of different methods
+        that have been used to detect the interaction partner (target) as
+        reported by each database. Click on a table cell to view the list
+        of methods.`,
+      });
+      section.children.push({
+        class: 'interactor-table',
+        tag: 'table',
+        children: [
+          {
+            tag: 'thead',
+            children: [
+              {
+                tag: 'tr',
+                children: [
+                  {
+                    tag: 'th',
+                    children: [
+                      {
+                        tag: 'span',
+                        textContent: 'Target',
+                      },
+                      {
+                        children: [sortUpIcon],
+                        id: 'interactor_gene',
+                        tag: 'button',
+                        type: 'button',
+                      },
+                    ],
+                  },
+                  {
+                    tag: 'th',
+                    children: [
+                      {
+                        tag: 'span',
+                        textContent: 'BioGRID',
+                      },
+                      {
+                        children: [sortIcon],
+                        id: 'interactor_biogrid',
+                        tag: 'button',
+                        type: 'button',
+                      },
+                    ],
+                  },
+                  {
+                    tag: 'th',
+                    children: [
+                      {
+                        tag: 'span',
+                        textContent: 'IntAct',
+                      },
+                      {
+                        children: [sortIcon],
+                        id: 'interactor_intact',
+                        tag: 'button',
+                        type: 'button',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            children: createRowNode(report.interactors),
+            id: 'interactor_tbody',
+            tag: 'tbody',
+          },
+        ],
+      });
+    } else {
+      section.children.push({
+        class: 'none',
+        tag: 'div',
+        textContent: 'no known interactors',
+      });
+    }
 
     nodes.push(section);
   }
 
   return nodes;
-
-  /* if (settings.interactors) {
-    html = `
-      <section class="details interactor">
-        ${
-          report.interactors && report.interactors.length > 0
-          ? `
-            <p class="details-description">
-              The values in the table indicate the number of different methods
-              that have been used to detect the interaction partner (target) as
-              reported by each database. Click on a table cell to view the list
-              of methods.
-            </p>
-            <table class="interactor-table">
-              <thead>
-                <tr>
-                  <th>
-                    Target
-                    <button
-                      id="interactor_gene"
-                      type="button"
-                    >
-                      ${sortUpIcon}
-                    </button>
-                  </th>
-                  <th>
-                    BioGRID
-                    <button
-                      id="interactor_biogrid"
-                      type="button"
-                    >
-                      ${sortIcon}
-                    </button>
-                  </th>
-                  <th>
-                    IntAct
-                    <button
-                      id="interactor_intact"
-                      type="button"
-                    >
-                      ${sortIcon}
-                    </button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="interactor_tbody">
-                ${createRowNode(report.interactors)}
-              </tbody>
-            </table>
-          `
-          : '<div class="none">no known interactors</div>'
-        }
-      </section>
-    `;
-  }
-  return html; */
 };
 
 export default createInteractorElement;

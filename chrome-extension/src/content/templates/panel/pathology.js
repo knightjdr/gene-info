@@ -1,108 +1,139 @@
 /* eslint indent: 0 */
 
-export const diseaseSection = (path) => {
+export const createDiseaseElement = (path) => {
   const links = [];
   if (path.mim) {
-    links.push(`
-      <a
-        href="http://www.omim.org/entry/${path.mim}"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        OMIM: ${path.mim}
-      </a>
-    `);
+    links.push({
+      href: `http://www.omim.org/entry/${path.mim}`,
+      rel: 'noopener noreferrer',
+      tag: 'a',
+      target: '_blank',
+      textContent: `OMIM: ${path.mim}`,
+    });
   }
   if (path.uniprotID) {
-    links.push(`
-      <a
-        href="https://www.uniprot.org/diseases/${path.uniprotID}"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        UniProt: ${path.uniprotID}
-      </a>
-    `);
+    links.push({
+      href: `https://www.uniprot.org/diseases/${path.uniprotID}`,
+      rel: 'noopener noreferrer',
+      tag: 'a',
+      target: '_blank',
+      textContent: `UniProt: ${path.uniprotID}`,
+    });
   }
-  return `
-    <div class="pathology-condition">
-      ${path.name ? `<h2>${path.name}</h2>` : ''}
-      ${
-        links.length > 0
-        ? `<span class="links">${links.join(',')}</span>`
-        : ''
-      }
-      <p>${path.description}</p>
-    </div>
-  `;
+
+  const element = {
+    class: 'pathology-condition',
+    tag: 'div',
+    children: [],
+  };
+
+  if (path.name) {
+    element.children.push({
+      tag: 'h2',
+      textContent: path.name,
+    });
+  }
+  if (links.length > 0) {
+    element.children.push({
+      children: links,
+      class: 'links links_comma',
+      tag: 'span',
+    });
+  }
+  element.children.push({
+    tag: 'p',
+    textContent: path.description,
+  });
+
+  return element;
 };
 
-const pathologyElement = (report, settings) => {
-  const html = [];
+const style = `
+.pathology h2 {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: normal;
+  margin: 0;
+  margin-bottom: 1px;
+}
+.pathology p {
+  margin: 5px 0 0 0;
+}
+.pathology .links {
+  display: inline-flex;
+}
+.pathology .links a:not(:first-child) {
+  margin-left: 4px;
+}
+.pathology-condition:not(:last-child) {
+  border-bottom: 1px solid #e6e6e6;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+}`;
+
+const createPathologyElement = (report, settings) => {
+  const nodes = [];
+
   if (settings.pathology) {
+    nodes.push({
+      tag: 'style',
+      textContent: style,
+      type: 'text/css',
+    });
+
     const accession = report.uniprot[0];
+
     const links = [];
     if (report.mim) {
-      links.push(`
-        <a
-          href="https://www.omim.org/entry/${report.mim}"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          OMIM
-        </a>
-      `);
+      links.push({
+        href: `https://www.omim.org/entry/${report.mim}`,
+        rel: 'noopener noreferrer',
+        tag: 'a',
+        target: '_blank',
+        textContent: 'OMIM',
+      });
     }
-    links.push(`
-      <a
-        href="https://www.uniprot.org/uniprot/${accession}#pathology_and_biotech"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        UniProt - pathology
-      </a>
-    `);
-    html.push(`
-      <style>
-        .pathology h2 {
-          font-size: 14px;
-          font-style: italic;
-          font-weight: normal;
-          margin: 0;
-          margin-bottom: 1px;
-        }
-        .pathology p {
-          margin: 5px 0 0 0;
-        }
-        .pathology .links {
-          display: inline-flex;
-        }
-        .pathology .links a:not(:first-child) {
-          margin-left: 4px;
-        }
-        .pathology-condition:not(:last-child) {
-          border-bottom: 1px solid #e6e6e6;
-          margin-bottom: 8px;
-          padding-bottom: 8px;
-        }
-      </style>
-      <section class="details pathology">
-        <div class="details-header">
-          <h1>PATHOLOGY</h1>
-          <span class="links">
-            ${links.join(',')}
-          </links>
-        </div>
-        ${
-          report.pathology
-          && report.pathology.length > 0
-          ? report.pathology.map(diseaseSection).join('')
-          : '<div class="none">no pathology data</div>'
-        }
-      </section>
-    `);
+    links.push({
+      href: `https://www.uniprot.org/uniprot/${accession}#pathology_and_biotech`,
+      rel: 'noopener noreferrer',
+      tag: 'a',
+      target: '_blank',
+      textContent: 'UniProt - pathology',
+    });
+
+    const section = {
+      class: 'details pathology',
+      tag: 'section',
+      children: [
+        {
+          class: 'details-header',
+          tag: 'div',
+          children: [
+            { tag: 'h1', textContent: 'PATHOLOGY' },
+            {
+              children: links,
+              class: 'links links_comma',
+              tag: 'span',
+            },
+          ],
+        },
+      ],
+    };
+
+    if (report.pathology && report.pathology.length > 0) {
+      section.children.push(...report.pathology.map(createDiseaseElement));
+    } else {
+      section.children.push({
+        class: 'none',
+        tag: 'div',
+        textContent: 'no pathology data',
+      });
+    }
+
+    nodes.push(section);
   }
-  return html.join('');
+
+  return nodes;
 };
 
-export default pathologyElement;
+export default createPathologyElement;

@@ -1,24 +1,32 @@
-const descriptionElement = (report, settings) => {
-  let html = '';
-  if (settings.description) {
-    if (report.description) {
-      html += `
-        <style>
-          .description p {
-            display: inline;
-            margin: 0;
-          }
-        </style>
-        <section class="description">
-          <h1>Description</h1>
-          <p>
-            ${report.description}
-          </p>
-        </section>
-      `;
-    }
+const style = `
+.description p {
+  display: inline;
+  margin: 0;
+}`;
+
+const createDescriptionElement = (report, settings) => {
+  const nodes = [];
+
+  if (settings.description && report.description) {
+    nodes.push({
+      tag: 'style',
+      textContent: style,
+      type: 'text/css',
+    });
+
+    const section = {
+      class: 'description',
+      tag: 'section',
+      children: [
+        { tag: 'h1', textContent: 'Description' },
+        { tag: 'p', textContent: report.description },
+      ],
+    };
+
+    nodes.push(section);
   }
-  return html;
+
+  return nodes;
 };
 
-export default descriptionElement;
+export default createDescriptionElement;
