@@ -14,6 +14,7 @@ class State {
     ) {
       this.results.pop();
     }
+    this.activeReport = 0;
     this.results.push(report);
   }
 
@@ -33,6 +34,7 @@ class State {
 
   init(storage) {
     const species = storage.species || 'Homo sapiens';
+    this.activeReport = 0;
     this.searchTerm = '';
     this.settings = {
       activate: storage.activate || 'click',
@@ -75,7 +77,7 @@ class State {
   }
 
   latestReport() {
-    return this.results[this.results.length - 1][0];
+    return this.results[this.results.length - 1][this.activeReport];
   }
 
   removeReport() {
@@ -85,6 +87,10 @@ class State {
   reset() {
     this.updateSetting('interactorSortDirection', 'asc');
     this.updateSetting('interactorSortKey', 'gene');
+  }
+
+  setActiveReport(value) {
+    this.activeReport = value;
   }
 
   setSearchTerm(value) {

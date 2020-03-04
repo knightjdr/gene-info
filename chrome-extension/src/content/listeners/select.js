@@ -4,6 +4,7 @@ import tooltip from '../templates/tooltip/tooltip';
 
 export function selectChange() {
   const index = this.options[this.selectedIndex].value;
+  State.setActiveReport(index);
   if (State.settings.report === 'detailed') {
     panel(Number(index));
   } else {
