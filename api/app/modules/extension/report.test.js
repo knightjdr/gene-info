@@ -60,8 +60,8 @@ describe('Report', () => {
     describe('find gene', () => {
       beforeAll(async (done) => {
         const results = [
-          { gene: 'test', name: 'test gene' },
           { gene: 'test2', name: 'test gene2' },
+          { gene: 'test', name: 'test gene' },
         ];
         find.mockResolvedValue(results);
         validate.validate.mockReturnValue({

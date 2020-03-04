@@ -96,6 +96,6 @@ describe('Validate query params', () => {
       species: 'Homo sapiens',
       term: 'test',
     };
-    expect(validate('Homo sapiens', 'uniprot', 'test')).toEqual(expected);
+    expect(validate('Homo sapiens', 'uniprot', ' test ')).toEqual(expected);
   });
 });
