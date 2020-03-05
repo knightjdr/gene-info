@@ -21,7 +21,7 @@ const messages = () => {
       State.updateStyle('left', '5px');
       retrieveInfo(null, setting, true);
     }
-    return null;
+    return true;
   });
 };
 
