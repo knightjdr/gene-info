@@ -1,15 +1,13 @@
 const createLink = accession => (
   accession
-    ? `
-      <a
-        href="https://www.proteomicsdb.org/proteomicsdb/#protein/proteinDetails/${accession}/expression"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        Proteomics DB
-      </a>
-    `
-    : ''
+    ? {
+      href: `https://www.proteomicsdb.org/proteomicsdb/#protein/proteinDetails/${accession}/expression`,
+      rel: 'noopener noreferrer',
+      tag: 'a',
+      target: '_blank',
+      textContent: 'Proteomics DB',
+    }
+    : {}
 );
 
 export default createLink;

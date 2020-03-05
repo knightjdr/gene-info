@@ -7,12 +7,12 @@ describe('RNA expression element', () => {
     const showData = false;
     const result = expressionElement(report, settings, showData);
 
-    expect(result).toBe('');
+    expect(result).toEqual({});
   });
 
   describe('no tissues selected', () => {
     describe('data not available', () => {
-      let html;
+      let nodes;
 
       beforeAll(() => {
         const report = {
@@ -24,24 +24,24 @@ describe('RNA expression element', () => {
           species: 'Homo sapiens',
         };
         const showData = true;
-        html = expressionElement(report, settings, showData);
+        nodes = expressionElement(report, settings, showData);
       });
 
       it('should display tissue warning', () => {
-        expect(html.includes('no tissues selected')).toBeTruthy();
+        expect(nodes.children.some(child => child.textContent === 'no tissues selected')).toBeTruthy();
       });
 
       it('should not display table', () => {
-        expect(html.includes('<table class="expression__table">')).toBeFalsy();
+        expect(nodes.children.some(child => child.tag === 'table')).toBeFalsy();
       });
 
       it('should not display data warning', () => {
-        expect(html.includes('no RNA expression data')).toBeFalsy();
+        expect(nodes.children.some(child => child.textContent === 'no RNA expression data')).toBeFalsy();
       });
     });
 
     describe('data available', () => {
-      let html;
+      let nodes;
 
       beforeAll(() => {
         const report = {
@@ -58,84 +58,86 @@ describe('RNA expression element', () => {
           species: 'Homo sapiens',
         };
         const showData = true;
-        html = expressionElement(report, settings, showData);
+        nodes = expressionElement(report, settings, showData);
       });
 
       it('should display tissue warning', () => {
-        expect(html.includes('no tissues selected')).toBeTruthy();
+        expect(nodes.children.some(child => child.textContent === 'no tissues selected')).toBeTruthy();
       });
 
       it('should not display table', () => {
-        expect(html.includes('<table class="expression__table">')).toBeFalsy();
+        expect(nodes.children.some(child => child.tag === 'table')).toBeFalsy();
       });
 
       it('should not display data warning', () => {
-        expect(html.includes('no RNA expression data')).toBeFalsy();
+        expect(nodes.children.some(child => child.textContent === 'no RNA expression data')).toBeFalsy();
       });
     });
   });
 
-  describe('data available', () => {
-    let html;
+  describe('tissues selected', () => {
+    describe('data available', () => {
+      let nodes;
 
-    beforeAll(() => {
-      const report = {
-        'ensembl-gene': [1234],
-        'rna-expression': {
-          cells: {
-            cellX: 1,
-            cellY: 2,
+      beforeAll(() => {
+        const report = {
+          'ensembl-gene': [1234],
+          'rna-expression': {
+            cells: {
+              cellX: 1,
+              cellY: 2,
+            },
           },
-        },
-      };
-      const settings = {
-        rna_expression_tissues: ['cellX', 'cellY'],
-        species: 'Homo sapiens',
-      };
-      const showData = true;
-      html = expressionElement(report, settings, showData);
+        };
+        const settings = {
+          rna_expression_tissues: ['cellX', 'cellY'],
+          species: 'Homo sapiens',
+        };
+        const showData = true;
+        nodes = expressionElement(report, settings, showData);
+      });
+
+      it('should not display tissue warning', () => {
+        expect(nodes.children.some(child => child.textContent === 'no tissues selected')).toBeFalsy();
+      });
+
+      it('should display table', () => {
+        expect(nodes.children.some(child => child.tag === 'table')).toBeTruthy();
+      });
+
+      it('should not display data warning', () => {
+        expect(nodes.children.some(child => child.textContent === 'no RNA expression data')).toBeFalsy();
+      });
     });
 
-    it('should not display tissue warning', () => {
-      expect(html.includes('no tissues selected')).toBeFalsy();
-    });
+    describe('data not available', () => {
+      let nodes;
 
-    it('should display table', () => {
-      expect(html.includes('<table class="expression__table">')).toBeTruthy();
-    });
+      beforeAll(() => {
+        const report = {
+          'ensembl-gene': [1234],
+          'rna-expression': {},
+        };
+        const settings = {
+          rna_expression: true,
+          rna_expression_tissues: ['cellX', 'cellY'],
+          species: 'Homo sapiens',
+        };
+        const showData = true;
+        nodes = expressionElement(report, settings, showData);
+      });
 
-    it('should not display data warning', () => {
-      expect(html.includes('no RNA expression data')).toBeFalsy();
-    });
-  });
+      it('should not display tissue warning', () => {
+        expect(nodes.children.some(child => child.textContent === 'no tissues selected')).toBeFalsy();
+      });
 
-  describe('data not available', () => {
-    let html;
+      it('should not display table', () => {
+        expect(nodes.children.some(child => child.tag === 'table')).toBeFalsy();
+      });
 
-    beforeAll(() => {
-      const report = {
-        'ensembl-gene': [1234],
-        'rna-expression': {},
-      };
-      const settings = {
-        rna_expression: true,
-        rna_expression_tissues: ['cellX', 'cellY'],
-        species: 'Homo sapiens',
-      };
-      const showData = true;
-      html = expressionElement(report, settings, showData);
-    });
-
-    it('should not display tissue warning', () => {
-      expect(html.includes('no tissues selected')).toBeFalsy();
-    });
-
-    it('should not display table', () => {
-      expect(html.includes('<table class="expression__table">')).toBeFalsy();
-    });
-
-    it('should display data warning', () => {
-      expect(html.includes('no RNA expression data')).toBeTruthy();
+      it('should display data warning', () => {
+        expect(nodes.children.some(child => child.textContent === 'no RNA expression data')).toBeTruthy();
+      });
     });
   });
 });

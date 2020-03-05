@@ -1,5 +1,4 @@
 import fillTableRow, { defineLevel } from './fill-table-row';
-import minifyHTML from '../../../../../test-utils/minify-html';
 
 jest.mock('../../../../../config', () => ({
   expressionThresholds: {
@@ -71,14 +70,17 @@ describe('Fill RNA expression table row', () => {
       },
     };
     const tissue = 'cellX';
-    const result = minifyHTML(fillTableRow(tissue, data));
+    const result = fillTableRow(tissue, data);
 
-    const expected = minifyHTML(`<tr>
-      <td>cellX</td>
-      <td>5</td>
-      <td>low</td>
-    </tr>`);
-    expect(result).toBe(expected);
+    const expected = {
+      tag: 'tr',
+      children: [
+        { tag: 'td', textContent: 'cellX' },
+        { tag: 'td', textContent: 5 },
+        { tag: 'td', textContent: 'low' },
+      ],
+    };
+    expect(result).toEqual(expected);
   });
 
   describe('cell data not available', () => {
@@ -90,14 +92,17 @@ describe('Fill RNA expression table row', () => {
         },
       };
       const tissue = 'cellX';
-      const result = minifyHTML(fillTableRow(tissue, data));
+      const result = fillTableRow(tissue, data);
 
-      const expected = minifyHTML(`<tr>
-        <td>cellX</td>
-        <td>5</td>
-        <td>low</td>
-      </tr>`);
-      expect(result).toBe(expected);
+      const expected = {
+        tag: 'tr',
+        children: [
+          { tag: 'td', textContent: 'cellX' },
+          { tag: 'td', textContent: 5 },
+          { tag: 'td', textContent: 'low' },
+        ],
+      };
+      expect(result).toEqual(expected);
     });
 
     it('should populate table row from tissue data when specific cell data missing', () => {
@@ -107,14 +112,17 @@ describe('Fill RNA expression table row', () => {
         },
       };
       const tissue = 'cellX';
-      const result = minifyHTML(fillTableRow(tissue, data));
+      const result = fillTableRow(tissue, data);
 
-      const expected = minifyHTML(`<tr>
-        <td>cellX</td>
-        <td>5</td>
-        <td>low</td>
-      </tr>`);
-      expect(result).toBe(expected);
+      const expected = {
+        tag: 'tr',
+        children: [
+          { tag: 'td', textContent: 'cellX' },
+          { tag: 'td', textContent: 5 },
+          { tag: 'td', textContent: 'low' },
+        ],
+      };
+      expect(result).toEqual(expected);
     });
   });
 
@@ -123,14 +131,17 @@ describe('Fill RNA expression table row', () => {
       const data = {
       };
       const tissue = 'cellX';
-      const result = minifyHTML(fillTableRow(tissue, data));
+      const result = fillTableRow(tissue, data);
 
-      const expected = minifyHTML(`<tr>
-        <td>cellX</td>
-        <td>-</td>
-        <td>none</td>
-      </tr>`);
-      expect(result).toBe(expected);
+      const expected = {
+        tag: 'tr',
+        children: [
+          { tag: 'td', textContent: 'cellX' },
+          { tag: 'td', textContent: '-' },
+          { tag: 'td', textContent: 'none' },
+        ],
+      };
+      expect(result).toEqual(expected);
     });
 
     it('should populate row with placeholders when cell line is not available', () => {
@@ -139,14 +150,17 @@ describe('Fill RNA expression table row', () => {
         tissues: {},
       };
       const tissue = 'cellX';
-      const result = minifyHTML(fillTableRow(tissue, data));
+      const result = fillTableRow(tissue, data);
 
-      const expected = minifyHTML(`<tr>
-        <td>cellX</td>
-        <td>-</td>
-        <td>none</td>
-      </tr>`);
-      expect(result).toBe(expected);
+      const expected = {
+        tag: 'tr',
+        children: [
+          { tag: 'td', textContent: 'cellX' },
+          { tag: 'td', textContent: '-' },
+          { tag: 'td', textContent: 'none' },
+        ],
+      };
+      expect(result).toEqual(expected);
     });
   });
 });

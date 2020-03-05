@@ -6,14 +6,13 @@ describe('Create protein expression link', () => {
     const result = createLink(accession);
 
     const expected = 'https://www.proteomicsdb.org/proteomicsdb/#protein/proteinDetails/1234/expression';
-    const re = new RegExp(expected);
-    expect(re.test(result)).toBeTruthy();
+    expect(result.href).toBe(expected);
   });
 
   it('should return empty string when accession is not defined', () => {
     const accession = '';
     const result = createLink(accession);
 
-    expect(result).toEqual('');
+    expect(result).toEqual({});
   });
 });

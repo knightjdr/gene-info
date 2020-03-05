@@ -1,60 +1,86 @@
 /* eslint indent: 0 */
 import link from '../../helpers/link-svg';
 
-const pathwayElement = (report, settings) => {
-  let html = '';
+const style = `
+.pathway {
+  margin: 5px 0 8px 0;
+  padding-left: 30px;
+}
+.pathway a svg {
+  fill: var(--primary);
+}
+.pathway a:focus svg,
+.pathway a:hover svg {
+  fill: var(--text);
+}
+.pathway a {
+  margin-left: 5px;
+}
+`;
+
+const createPathwayElement = (report, settings) => {
+  const nodes = [];
+
   if (settings.pathway) {
+    nodes.push({
+      tag: 'style',
+      textContent: style,
+      type: 'text/css',
+    });
+
     const accession = report.uniprot[0];
-    html = `
-      <style>
-        .pathway {
-          margin: 5px 0 8px 0;
-          padding-left: 30px;
-        }
-        .pathway a svg {
-          fill: var(--primary);
-        }
-        .pathway a:focus svg,
-        .pathway a:hover svg {
-          fill: var(--text);
-        }
-      </style>
-      <section class="details">
-        <div class="details-header">
-          <h1>PATHWAYS</h1>
-          <a
-            href="https://www.uniprot.org/uniprot/${accession}#section_x-ref_pathway"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            UniProt - pathway
-          </a>
-        </div>
-        ${
-          report.pathway
-          && report.pathway.length > 0
-          ? `<ul class="pathway">
-              ${
-                report.pathway.map(term => (`
-                  <li>
-                    ${term.term}
-                    <a
-                      href="https://reactome.org/PathwayBrowser/#${term.id}&FLG=${accession}"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      ${link}
-                    </a>
-                  </li>
-                `)).join('')
-              }
-            </ul>`
-          : '<div class="none">no Reactome data</div>'
-        }
-      </section>
-    `;
+
+    const section = {
+      class: 'details',
+      tag: 'section',
+      children: [
+        {
+          class: 'details-header',
+          tag: 'div',
+          children: [
+            { tag: 'h1', textContent: 'PATHWAYS' },
+            {
+              href: `https://www.uniprot.org/uniprot/${accession}#section_x-ref_pathway`,
+              rel: 'noopener noreferrer',
+              tag: 'a',
+              target: '_blank',
+              textContent: 'UniProt - pathway',
+            },
+          ],
+        },
+      ],
+    };
+
+    if (report.pathway && report.pathway.length > 0) {
+      section.children.push({
+        class: 'pathway',
+        tag: 'ul',
+        children: report.pathway.map(term => ({
+          tag: 'li',
+          children: [
+            { tag: 'span', textContent: term.term },
+            {
+              children: [link],
+              href: `https://reactome.org/PathwayBrowser/#${term.id}&FLG=${accession}`,
+              rel: 'noopener noreferrer',
+              tag: 'a',
+              target: '_blank',
+            },
+          ],
+        })),
+      });
+    } else {
+      section.children.push({
+        class: 'none',
+        tag: 'div',
+        textContent: 'no Reactome data',
+      });
+    }
+
+    nodes.push(section);
   }
-  return html;
+
+  return nodes;
 };
 
-export default pathwayElement;
+export default createPathwayElement;

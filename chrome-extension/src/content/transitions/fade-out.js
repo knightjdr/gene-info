@@ -1,7 +1,9 @@
-const fadeOut = (el) => {
+import removeAllChildren from '../helpers/remove-all-children';
+
+const fadeOut = (el, shadowRoot) => {
   el.classList.add('panel_animate-fadeout');
-  window.setInterval(() => {
-    el.remove();
+  window.setTimeout(() => {
+    removeAllChildren(shadowRoot);
   }, 400);
 };
 

@@ -420,11 +420,11 @@ const xmlEntry = `
 </dbReference>
 <dbReference type="HPA" id="HPA027095"/>
 <dbReference type="MalaCards" id="PDCD10"/>
-<dbReference type="MIM" id="603285">
-  <property type="type" value="phenotype"/>
-</dbReference>
 <dbReference type="MIM" id="609118">
   <property type="type" value="gene"/>
+</dbReference>
+<dbReference type="MIM" id="603285">
+  <property type="type" value="phenotype"/>
 </dbReference>
 <dbReference type="neXtProt" id="NX_Q9BUL8"/>
 <dbReference type="OpenTargets" id="ENSG00000114209"/>

@@ -1,53 +1,91 @@
-/* eslint indent: 0 */
 import config from '../../../config';
 
-const hpaList = list => (`
-  <ul>
-    ${
-      list.map(item => `<li>${item}</li>`).join('')
-    }
-  </ul>
-`);
+const createHpaList = list => ({
+  tag: 'ul',
+  children: list.map(item => ({ tag: 'li', textContent: item })),
+});
 
-const hpaRows = (data) => {
-  let rows = '';
+const createHpaRows = (data) => {
+  const rows = [];
   if (data.enhanced) {
-    rows += `
-      <tr>
-        <td>Enhanced</td>
-        <td>${hpaList(data.enhanced)}</td>
-      </tr>
-    `;
+    rows.push({
+      tag: 'tr',
+      children: [
+        { tag: 'td', textContent: 'Enhanced' },
+        { tag: 'td', children: [createHpaList(data.enhanced)] },
+      ],
+    });
   }
   if (data.supported) {
-    rows += `
-      <tr>
-        <td>Supported</td>
-        <td>${hpaList(data.supported)}</td>
-      </tr>
-    `;
+    rows.push({
+      tag: 'tr',
+      children: [
+        { tag: 'td', textContent: 'Supported' },
+        { tag: 'td', children: [createHpaList(data.supported)] },
+      ],
+    });
   }
   if (data.approved) {
-    rows += `
-      <tr>
-        <td>Approved</td>
-        <td>${hpaList(data.approved)}</td>
-      </tr>
-    `;
+    rows.push({
+      tag: 'tr',
+      children: [
+        { tag: 'td', textContent: 'Approved' },
+        { tag: 'td', children: [createHpaList(data.approved)] },
+      ],
+    });
   }
   if (data.uncertain) {
-    rows += `
-      <tr>
-        <td>Uncertain</td>
-        <td>${hpaList(data.uncertain)}</td>
-      </tr>
-    `;
+    rows.push({
+      tag: 'tr',
+      children: [
+        { tag: 'td', textContent: 'Uncertain' },
+        { tag: 'td', children: [createHpaList(data.uncertain)] },
+      ],
+    });
   }
   return rows;
 };
 
-const localizationElement = (report, settings) => {
-  let html = '';
+const style = `
+.localization h1::after {
+  content: '';
+}
+.localization h2 {
+  display: inline;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
+}
+.localization h2::after {
+  content: ':';
+  margin-right: 3px;
+}
+.localization p {
+  margin: 8px 0;
+}
+.localization table {
+  margin-bottom: 10px;
+}
+.localization table ul {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+.localization ul {
+  margin-bottom: 8px;
+  margin-top: 5px;
+}
+.localization__section {
+  margin-top: 5px;
+}
+.localization__section:not(:nth-of-type(+2)) {
+  border-top: 1px solid #d0d0d0;
+  margin-top: 6px;
+  padding-top: 6px;
+}`;
+
+const createLocalizationElement = (report, settings) => {
+  const nodes = [];
+
   if (
     settings.localization
     && (
@@ -56,172 +94,184 @@ const localizationElement = (report, settings) => {
       || settings.localization_uniprot
     )
   ) {
-    html = `
-      <style>
-        .localization h1::after {
-          content: '';
-        }
-        .localization h2 {
-          display: inline;
-          font-size: 14px;
-          font-weight: bold;
-          margin: 0;
-        }
-        .localization h2::after {
-          content: ':';
-          margin-right: 3px;
-        }
-        .localization p {
-          margin: 8px 0;
-        }
-        .localization table {
-          margin-bottom: 10px;
-        }
-        .localization table ul {
-          margin: 4px 0;
-          padding-left: 20px;
-        }
-        .localization ul {
-          margin-bottom: 8px;
-          margin-top: 5px;
-        }
-        .localization__section {
-          margin-top: 5px;
-        }
-        .localization__section:not(:nth-of-type(+2)) {
-          border-top: 1px solid #d0d0d0;
-          margin-top: 6px;
-          padding-top: 6px;
-        }
-      </style>
-      <section class="details localization">
-        <div class="details-header">
-          <h1>LOCALIZATION</h1>
-        </div>
-    `;
+    nodes.push({
+      tag: 'style',
+      textContent: style,
+      type: 'text/css',
+    });
+
+    const section = {
+      class: 'details localization',
+      tag: 'section',
+      children: [
+        {
+          class: 'details-header',
+          tag: 'div',
+          children: [
+            { tag: 'h1', textContent: 'LOCALIZATION' },
+          ],
+        },
+      ],
+    };
+
     if (
       settings.localization_hpa
       && settings.species === 'Homo sapiens'
     ) {
       const ensembl = report['ensembl-gene'][0];
       const fieldNumber = Object.keys(report.localization.hpa).length;
-      html += `
-        <div class="localization__section">
-          <h2>Protein Atlas</h2>
-      `;
-      html += `
-        ${
-          report.localization.hpa
-          && fieldNumber > 0
-          ? `
-            <a
-              href="https://www.proteinatlas.org/${ensembl}/cell"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              ${ensembl}
-            </a>
-            <p>
-              The Human Protein Atlas annotates localizations based on
+
+      const element = {
+        class: 'localization__section',
+        tag: 'div',
+        children: [
+          { tag: 'h2', textContent: 'Protein Atlas' },
+        ],
+      };
+
+      if (report.localization.hpa && fieldNumber > 0) {
+        element.children.push({
+          href: `https://www.proteinatlas.org/${ensembl}/cell`,
+          rel: 'noopener noreferrer',
+          tag: 'a',
+          target: '_blank',
+          textContent: ensembl,
+        });
+        element.children.push({
+          tag: 'p',
+          children: [
+            {
+              tag: 'span',
+              textContent: `The Human Protein Atlas annotates localizations based on
               the supporting evidence. From best to worst the reliability
               scores are: "Enhanced", "Supported", "Approved" and "Uncertain". 
-              See
-              <a
-                href="https://www.proteinatlas.org/about/assays+annotation"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                IF - Reliability score
-              </a>
-              for more.
-            </p>
-            <table>
-              <thead>
-                <tr>
-                  <th>Score</th>
-                  <th>Localization</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${hpaRows(report.localization.hpa)}
-              </tbody>
-            </table>
-          `
-          : '<span class="none">no data</span>'
-        }
-      `;
-      html += '</div>';
+              See `,
+            },
+            {
+              href: 'https://www.proteinatlas.org/about/assays+annotation',
+              rel: 'noopener noreferrer',
+              tag: 'a',
+              target: '_blank',
+              textContent: 'IF - Reliability score',
+            },
+            { tag: 'span', textContent: ' for more.' },
+          ],
+        });
+        element.children.push({
+          tag: 'table',
+          children: [
+            {
+              tag: 'thead',
+              children: [
+                {
+                  tag: 'tr',
+                  children: [
+                    { tag: 'th', textContent: 'Score' },
+                    { tag: 'th', textContent: 'Localization' },
+                  ],
+                },
+              ],
+            },
+            {
+              children: createHpaRows(report.localization.hpa),
+              tag: 'tbody',
+            },
+          ],
+        });
+      } else {
+        element.children.push({
+          class: 'none',
+          tag: 'span',
+          textContent: 'no data',
+        });
+      }
+
+      section.children.push(element);
     }
+
     if (settings.localization_uniprot) {
       const accession = report.uniprot[0];
-      html += `
-        <div class="localization__section">
-          <h2>UniProt</h2>
-      `;
-      html += `
-        ${
-          report.localization.uniprot
-          && report.localization.uniprot.length > 0
-          ? `
-            <a
-              href="https://www.uniprot.org/uniprot/${accession}#subcellular_location"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              ${accession}
-            </a>
-            <ul>
-              ${
-                report.localization.uniprot.map(localization => (
-                  `<li>${localization}</li>`
-                )).join('')
-              }
-            </ul>
-          `
-          : '<span class="none">no data</span>'
-        }
-      `;
-      html += '</div>';
+
+      const element = {
+        class: 'localization__section',
+        tag: 'div',
+        children: [
+          { tag: 'h2', textContent: 'UniProt' },
+        ],
+      };
+
+      if (report.localization.uniprot && report.localization.uniprot.length > 0) {
+        element.children.push({
+          href: `https://www.uniprot.org/uniprot/${accession}#subcellular_location`,
+          rel: 'noopener noreferrer',
+          tag: 'a',
+          target: '_blank',
+          textContent: accession,
+        });
+        element.children.push({
+          tag: 'ul',
+          children: report.localization.uniprot.map(localization => ({
+            tag: 'li',
+            textContent: localization,
+          })),
+        });
+      } else {
+        element.children.push({
+          class: 'none',
+          tag: 'span',
+          textContent: 'no data',
+        });
+      }
+
+      section.children.push(element);
     }
-    if (
-      settings.localization_compartments
-      && config.compartmentSpecies.includes(settings.species)
-    ) {
+
+    if (settings.localization_compartments && config.compartmentSpecies.includes(settings.species)) {
       const { accession } = report.localization.compartments;
       const speciesID = config.speciesID[settings.species];
-      html += `
-        <div class="localization__section">
-          <h2>Compartments</h2>
-      `;
-      html += `
-        ${
-          report.localization.compartments
-          && report.localization.compartments.terms
-          && report.localization.compartments.terms.length > 0
-          ? `
-            <a
-              href="https://compartments.jensenlab.org/Entity?figures=subcell_cell_%&knowledge=10&textmining=10&experiments=10&predictions=10&type1=${speciesID}&type2=-22&id1=${accession}"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              ${accession}
-            </a>
-            <ul>
-              ${
-                report.localization.compartments.terms.map(localization => (
-                  `<li>${localization}</li>`
-                )).join('')
-              }
-            </ul>
-          `
-          : '<span class="none">no data</span>'
-        }
-      `;
-      html += '</div>';
+
+      const element = {
+        class: 'localization__section',
+        tag: 'div',
+        children: [
+          { tag: 'h2', textContent: 'Compartments' },
+        ],
+      };
+
+      if (
+        report.localization.compartments
+        && report.localization.compartments.terms
+        && report.localization.compartments.terms.length > 0
+      ) {
+        element.children.push({
+          href: `https://compartments.jensenlab.org/Entity?figures=subcell_cell_%&knowledge=10&textmining=10&experiments=10&predictions=10&type1=${speciesID}&type2=-22&id1=${accession}`,
+          rel: 'noopener noreferrer',
+          tag: 'a',
+          target: '_blank',
+          textContent: accession,
+        });
+        element.children.push({
+          tag: 'ul',
+          children: report.localization.compartments.terms.map(localization => ({
+            tag: 'li',
+            textContent: localization,
+          })),
+        });
+      } else {
+        element.children.push({
+          class: 'none',
+          tag: 'span',
+          textContent: 'no data',
+        });
+      }
+
+      section.children.push(element);
     }
-    html += '</section>';
+
+    nodes.push(section);
   }
-  return html;
+
+  return nodes;
 };
 
-export default localizationElement;
+export default createLocalizationElement;

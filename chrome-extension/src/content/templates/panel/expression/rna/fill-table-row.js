@@ -25,13 +25,14 @@ export const defineLevel = (value) => {
 const fillTableRow = (tissue, data) => {
   let tpm = (data.cells && data.cells[tissue]) || (data.tissues && data.tissues[tissue]);
   tpm = tpm || '-';
-  return `
-    <tr>
-      <td>${tissue}</td>
-      <td>${tpm}</td>
-      <td>${defineLevel(tpm)}</td>
-    </tr>
-  `;
+  return {
+    tag: 'tr',
+    children: [
+      { tag: 'td', textContent: tissue },
+      { tag: 'td', textContent: tpm },
+      { tag: 'td', textContent: defineLevel(tpm) },
+    ],
+  };
 };
 
 export default fillTableRow;

@@ -11,7 +11,7 @@ const removeTooltip = () => {
     removeCloseListener();
     removeSelectListener();
     removeTooltipScrollListener();
-    fadeOut(tooltip);
+    fadeOut(tooltip, State.shadowRoot);
   }
 };
 

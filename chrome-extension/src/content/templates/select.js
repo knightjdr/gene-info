@@ -1,5 +1,3 @@
-/* eslint no-new: 0 */
-
 import SlimSelect from 'slim-select';
 
 const select = (shadowRoot) => {

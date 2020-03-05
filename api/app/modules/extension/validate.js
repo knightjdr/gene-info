@@ -41,7 +41,7 @@ const validate = (species, field, term) => {
   if (field === 'auto') {
     validatedField = detectField(term, species);
   }
-  let validatedTerm = term;
+  let validatedTerm = term.trim();
   if (validatedField === 'geneid') {
     validatedTerm = Number(term);
   } else if (validatedField === 'nextprot') {

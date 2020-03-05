@@ -1,6 +1,7 @@
 const createQuery = require('./create-query');
 const find = require('../db-methods/find');
 const findOne = require('../db-methods/find-one');
+const sortResults = require('./sort-results');
 const tracking = require('../tracking/tracking');
 const { validate } = require('./validate');
 
@@ -21,16 +22,7 @@ const report = (req, res) => {
           res.send([]);
           tracking(validated.species, validated.field, false);
         } else {
-          const official = [];
-          const nonOfficial = [];
-          matches.forEach((match) => {
-            if (match.gene === validated.term) {
-              official[0] = match;
-            } else {
-              nonOfficial.push(match);
-            }
-          });
-          res.send([...official, ...nonOfficial]);
+          res.send(sortResults(validated.term, matches));
           tracking(validated.species, validated.field, true);
         }
       })

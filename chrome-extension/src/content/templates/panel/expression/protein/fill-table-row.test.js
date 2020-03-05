@@ -1,5 +1,4 @@
 import fillTableRow from './fill-table-row';
-import minifyHTML from '../../../../../test-utils/minify-html';
 
 describe('Fill protein expression table row', () => {
   it('should populate table row preferentially from cell data', () => {
@@ -12,14 +11,17 @@ describe('Fill protein expression table row', () => {
       },
     };
     const tissue = 'cellX';
-    const result = minifyHTML(fillTableRow(tissue, data));
+    const result = fillTableRow(tissue, data);
 
-    const expected = minifyHTML(`<tr>
-      <td>cellX</td>
-      <td>2</td>
-      <td>low</td>
-    </tr>`);
-    expect(result).toBe(expected);
+    const expected = {
+      tag: 'tr',
+      children: [
+        { tag: 'td', textContent: 'cellX' },
+        { tag: 'td', textContent: 2 },
+        { tag: 'td', textContent: 'low' },
+      ],
+    };
+    expect(result).toEqual(expected);
   });
 
   describe('cell data not available', () => {
@@ -31,14 +33,17 @@ describe('Fill protein expression table row', () => {
         },
       };
       const tissue = 'cellX';
-      const result = minifyHTML(fillTableRow(tissue, data));
+      const result = fillTableRow(tissue, data);
 
-      const expected = minifyHTML(`<tr>
-        <td>cellX</td>
-        <td>2</td>
-        <td>low</td>
-      </tr>`);
-      expect(result).toBe(expected);
+      const expected = {
+        tag: 'tr',
+        children: [
+          { tag: 'td', textContent: 'cellX' },
+          { tag: 'td', textContent: 2 },
+          { tag: 'td', textContent: 'low' },
+        ],
+      };
+      expect(result).toEqual(expected);
     });
 
     it('should populate table row from tissue data when specific cell data missing', () => {
@@ -48,14 +53,17 @@ describe('Fill protein expression table row', () => {
         },
       };
       const tissue = 'cellX';
-      const result = minifyHTML(fillTableRow(tissue, data));
+      const result = fillTableRow(tissue, data);
 
-      const expected = minifyHTML(`<tr>
-        <td>cellX</td>
-        <td>2</td>
-        <td>low</td>
-      </tr>`);
-      expect(result).toBe(expected);
+      const expected = {
+        tag: 'tr',
+        children: [
+          { tag: 'td', textContent: 'cellX' },
+          { tag: 'td', textContent: 2 },
+          { tag: 'td', textContent: 'low' },
+        ],
+      };
+      expect(result).toEqual(expected);
     });
   });
 
@@ -64,14 +72,17 @@ describe('Fill protein expression table row', () => {
       const data = {
       };
       const tissue = 'cellX';
-      const result = minifyHTML(fillTableRow(tissue, data));
+      const result = fillTableRow(tissue, data);
 
-      const expected = minifyHTML(`<tr>
-        <td>cellX</td>
-        <td>-</td>
-        <td>none</td>
-      </tr>`);
-      expect(result).toBe(expected);
+      const expected = {
+        tag: 'tr',
+        children: [
+          { tag: 'td', textContent: 'cellX' },
+          { tag: 'td', textContent: '-' },
+          { tag: 'td', textContent: 'none' },
+        ],
+      };
+      expect(result).toEqual(expected);
     });
 
     it('should populate row with placeholders when cell line is not available', () => {
@@ -80,14 +91,17 @@ describe('Fill protein expression table row', () => {
         tissues: {},
       };
       const tissue = 'cellX';
-      const result = minifyHTML(fillTableRow(tissue, data));
+      const result = fillTableRow(tissue, data);
 
-      const expected = minifyHTML(`<tr>
-        <td>cellX</td>
-        <td>-</td>
-        <td>none</td>
-      </tr>`);
-      expect(result).toBe(expected);
+      const expected = {
+        tag: 'tr',
+        children: [
+          { tag: 'td', textContent: 'cellX' },
+          { tag: 'td', textContent: '-' },
+          { tag: 'td', textContent: 'none' },
+        ],
+      };
+      expect(result).toEqual(expected);
     });
   });
 });

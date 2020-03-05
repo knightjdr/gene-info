@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/knightjdr/gene-info#readme",
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/plugin-transform-modules-commonjs": "^7.6.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.9.0",

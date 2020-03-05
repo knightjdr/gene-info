@@ -82,7 +82,7 @@ const getDBRefs = dbRefs => (
         ...accum,
         mgi: ref.$.id,
       };
-    } if (ref.$.type === 'MIM') {
+    } if (ref.$.type === 'MIM' && ref?.property[0]?.$?.value === 'gene') {
       return {
         ...accum,
         mim: Number(ref.$.id),

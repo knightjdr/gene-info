@@ -4,24 +4,44 @@ import createTable from './create-table';
 import hasData from '../has-data';
 
 const element = (report, settings, showData) => {
-  let html = '';
+  let node = {};
 
   if (showData) {
     const accession = report['ensembl-gene'][0];
     const tissuesSelected = settings.rna_expression_tissues && settings.rna_expression_tissues.length > 0;
     const dataAvailable = hasData(report['rna-expression']);
 
-    html = `
-      <div class="expression__section">
-        <h2>RNA</h2>
-        ${createLink(accession)}
-        ${!tissuesSelected ? '<div class="none">no tissues selected</div>' : ''}
-        ${tissuesSelected && dataAvailable ? createTable(report, settings.rna_expression_tissues) : ''}
-        ${tissuesSelected && !dataAvailable ? '<div class="none">no RNA expression data</div>' : ''} 
-      </div>
-    `;
+    node = {
+      class: 'expression__section',
+      tag: 'div',
+      children: [
+        { tag: 'h2', textContent: 'RNA' },
+        createLink(accession),
+      ],
+    };
+
+    if (!tissuesSelected) {
+      node.children.push({
+        class: 'none',
+        tag: 'div',
+        textContent: 'no tissues selected',
+      });
+    }
+
+    if (tissuesSelected && dataAvailable) {
+      node.children.push(...createTable(report, settings.rna_expression_tissues));
+    }
+
+    if (tissuesSelected && !dataAvailable) {
+      node.children.push({
+        class: 'none',
+        tag: 'div',
+        textContent: 'no RNA expression data',
+      });
+    }
   }
-  return html;
+
+  return node;
 };
 
 export default element;

@@ -25,7 +25,7 @@ const removePanel = () => {
     removeResizeListener();
     removeSelectListener();
     removeSpeciesListener();
-    fadeOut(panel);
+    fadeOut(panel, State.shadowRoot);
   }
 };
 

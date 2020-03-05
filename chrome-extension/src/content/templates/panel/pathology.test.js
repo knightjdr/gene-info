@@ -1,7 +1,9 @@
-import pathologyElement, { diseaseSection } from './pathology';
+import pathologyElement, { createDiseaseElement } from './pathology';
 
 describe('Disease section', () => {
   describe('with links and name', () => {
+    let nodes;
+
     beforeAll(() => {
       const pathology = {
         description: 'disease description',
@@ -9,14 +11,14 @@ describe('Disease section', () => {
         name: 'disease name',
         uniprotID: 'abc',
       };
-      document.body.innerHTML = diseaseSection(pathology);
+      nodes = createDiseaseElement(pathology);
     });
 
     describe('header', () => {
       let h2;
 
       beforeAll(() => {
-        h2 = document.querySelector('h2');
+        [h2] = nodes.children;
       });
 
       it('should display header', () => {
@@ -29,53 +31,45 @@ describe('Disease section', () => {
     });
 
     describe('links', () => {
-      let a;
+      let links;
 
       beforeAll(() => {
-        a = document.querySelectorAll('a');
+        [, links] = nodes.children;
       });
 
       it('should show two links', () => {
-        expect(a.length).toBe(2);
+        expect(links.children.length).toBe(2);
       });
 
       it('should have OMIM href for first link', () => {
         const expected = 'http://www.omim.org/entry/123';
-        expect(a[0].href).toBe(expected);
+        expect(links.children[0].href).toBe(expected);
       });
 
       it('should have Uniprot href for second link', () => {
         const expected = 'https://www.uniprot.org/diseases/abc';
-        expect(a[1].href).toBe(expected);
+        expect(links.children[1].href).toBe(expected);
       });
     });
 
     it('should show paragraph', () => {
-      const p = document.querySelector('p');
+      const p = nodes.children[2];
       expect(p.textContent).toBe('disease description');
     });
   });
 
   describe('with no links or name', () => {
+    let nodes;
+
     beforeAll(() => {
       const pathology = {
         description: 'disease description',
       };
-      document.body.innerHTML = diseaseSection(pathology);
-    });
-
-    it('should not show header', () => {
-      const h2 = document.querySelector('h2');
-      expect(h2).toBeNull();
-    });
-
-    it('should not show links', () => {
-      const a = document.querySelectorAll('a');
-      expect(a.length).toBe(0);
+      nodes = createDiseaseElement(pathology);
     });
 
     it('should show paragraph', () => {
-      const p = document.querySelector('p');
+      const p = nodes.children[0];
       expect(p.textContent).toBe('disease description');
     });
   });
@@ -84,6 +78,8 @@ describe('Disease section', () => {
 describe('Pathology element', () => {
   describe('pathology setting on', () => {
     describe('pathology data present', () => {
+      let nodes;
+
       beforeAll(() => {
         const report = {
           pathology: [
@@ -100,34 +96,36 @@ describe('Pathology element', () => {
         const settings = {
           pathology: true,
         };
-        document.body.innerHTML = pathologyElement(report, settings);
+        nodes = pathologyElement(report, settings);
       });
 
       describe('header links', () => {
-        let a;
+        let links;
 
         beforeAll(() => {
-          a = document.querySelectorAll('.details-header a');
+          [, links] = nodes[1].children[0].children;
         });
 
         it('should return a header link with MIM ID', () => {
           const expected = 'https://www.omim.org/entry/123';
-          expect(a[0].href).toBe(expected);
+          expect(links.children[0].href).toBe(expected);
         });
 
         it('should return a header link with UniProt accession', () => {
           const expected = 'https://www.uniprot.org/uniprot/abc#pathology_and_biotech';
-          expect(a[1].href).toBe(expected);
+          expect(links.children[1].href).toBe(expected);
         });
       });
 
       it('should return pathology section', () => {
-        const div = document.querySelector('.pathology-condition');
-        expect(div).not.toBeNull();
+        const div = nodes[1].children[1];
+        expect(div.class).toBe('pathology-condition');
       });
     });
 
     describe('pathway data empty', () => {
+      let nodes;
+
       beforeAll(() => {
         const report = {
           pathology: [],
@@ -137,16 +135,19 @@ describe('Pathology element', () => {
         const settings = {
           pathology: true,
         };
-        document.body.innerHTML = pathologyElement(report, settings);
+        nodes = pathologyElement(report, settings);
       });
 
       it('should return pathology section', () => {
-        const div = document.querySelector('.pathology-condition');
-        expect(div).toBeNull();
+        const div = nodes[1].children[1];
+        const expected = 'no pathology data';
+        expect(div.textContent).toBe(expected);
       });
     });
 
     describe('pathway data missing', () => {
+      let nodes;
+
       beforeAll(() => {
         const report = {
           mim: 123,
@@ -155,29 +156,30 @@ describe('Pathology element', () => {
         const settings = {
           pathology: true,
         };
-        document.body.innerHTML = pathologyElement(report, settings);
+        nodes = pathologyElement(report, settings);
       });
 
       it('should return pathology section', () => {
-        const div = document.querySelector('.pathology-condition');
-        expect(div).toBeNull();
+        const div = nodes[1].children[1];
+        const expected = 'no pathology data';
+        expect(div.textContent).toBe(expected);
       });
     });
   });
 
   describe('pathology setting off', () => {
-    let html;
+    let nodes;
 
     beforeAll(() => {
       const report = {};
       const settings = {
         pathology: false,
       };
-      html = pathologyElement(report, settings);
+      nodes = pathologyElement(report, settings);
     });
 
     it('should return an empty string', () => {
-      expect(html).toBe('');
+      expect(nodes).toEqual([]);
     });
   });
 });

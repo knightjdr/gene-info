@@ -14,7 +14,7 @@
   "author": "James Knight",
   "license": "MIT",
   "dependencies": {
-    "slim-select": "^1.23.1"
+    "slim-select": "git+https://github.com/knightjdr/slim-select.git"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.1.1",
