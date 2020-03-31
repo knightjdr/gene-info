@@ -1,9 +1,18 @@
-const sortResults = (term, matches) => {
+const getIDMatcher = (field, term) => (
+  field === 'gene'
+    ? match => match.gene.toLowerCase() === term.toLowerCase()
+    : match => match[field] === term
+);
+
+const sortResults = (query, matches) => {
+  const { field, term } = query;
+
   const official = [];
   const nonOfficial = [];
-  const termToMatch = term.toLowerCase();
+
+  const matchID = getIDMatcher(field, term);
   matches.forEach((match) => {
-    if (match.gene.toLowerCase() === termToMatch) {
+    if (matchID(match)) {
       official[0] = match;
     } else {
       nonOfficial.push(match);

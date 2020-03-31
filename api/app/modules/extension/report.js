@@ -22,7 +22,7 @@ const report = (req, res) => {
           res.send([]);
           tracking(validated.species, validated.field, false);
         } else {
-          res.send(sortResults(validated.term, matches));
+          res.send(sortResults(validated, matches));
           tracking(validated.species, validated.field, true);
         }
       })
