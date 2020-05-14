@@ -10,7 +10,7 @@ const fsConfig = {
   },
   tissue: {
     file: './files/rna-expression/tissues/Homo sapiens.tsv',
-    url: 'https://www.proteinatlas.org/download/rna_tissue.tsv.zip',
+    url: 'https://www.proteinatlas.org/download/rna_tissue_hpa.tsv.zip',
     zipFile: './files/rna-expression/tissues/Homo sapiens.zip',
   },
 };

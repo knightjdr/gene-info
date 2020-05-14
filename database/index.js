@@ -41,8 +41,6 @@ const main = async () => {
     const { protein, rna } = await generateDB();
     await writeTissues(rna, './files/rna-tissues.js');
     await writeTissues(protein, './files/protein-tissues.js');
-
-    console.log('complete');
   } catch (err) {
     console.error(err);
   }

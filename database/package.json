@@ -4,7 +4,8 @@
   "description": "GIX database generator",
   "main": "index.js",
   "scripts": {
-    "db-generate": "caffeinate node --max-old-space-size=8192 index.js",
+    "db-generate-linux": "node --harmony --max-old-space-size=16384 index.js",
+    "db-generate-mac": "caffeinate node --harmony --max-old-space-size=16384 index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "James Knight",
