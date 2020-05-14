@@ -4,7 +4,8 @@
   "description": "Chrome extension for retrieving gene information",
   "main": "package.json",
   "scripts": {
-    "db-generate": "npm run db-generate --prefix database",
+    "db-generate-linux": "npm run db-generate-linux --prefix database",
+    "db-generate-mac": "npm run db-generate-mac --prefix database",
     "dev-api": "npm run dev-api --prefix api",
     "prod-api": "npm run prod-api --prefix api",
     "prod-api-forever": "npm run prod-api-forever --prefix api",
