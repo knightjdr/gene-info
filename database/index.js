@@ -6,6 +6,7 @@ const geneNames = require('./gene-names/gene-names');
 const generateDB = require('./generate-db');
 const getProteinExpressionData = require('./expression/protein/get-data');
 const getRNAExpressionData = require('./expression/rna/get-data');
+const getGoHierarchy = require('./go/go');
 const interactions = require('./interactions/interactions');
 const localization = require('./localization/localization');
 const regions = require('./regions/regions');
@@ -26,6 +27,7 @@ const main = async () => {
   try {
     await Promise.all([
       geneNames(options),
+      getGoHierarchy(options),
       getProteinExpressionData(options),
       getRNAExpressionData(options),
       interactions(options),

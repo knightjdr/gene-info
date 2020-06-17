@@ -4,8 +4,8 @@ const fs = require('fs');
 // expected messages
 const messages = {
   output: {
-    combined: /\d+\/\d+\/\d+, \d+:\d+:\d+ [apmAPM.]+ - error: test\n\d+\/\d+\/\d+, \d+:\d+:\d+ [apmAPM.]+ - info: test/,
-    error: /\d+\/\d+\/\d+, \d+:\d+:\d+ [apmAPM.]+ - error: test/,
+    combined: /\d+-\d+-\d+, \d+:\d+:\d+ [apmAPM.]+ - error: test\n\d+-\d+-\d+, \d+:\d+:\d+ [apmAPM.]+ - info: test/,
+    error: /\d+-\d+-\d+, \d+:\d+:\d+ [apmAPM.]+ - error: test/,
   },
 };
 
