@@ -362,7 +362,7 @@ const xmlEntry = `
 <dbReference type="PDBsum" id="4TVQ"/>
 <dbReference type="ProteinModelPortal" id="Q9BUL8"/>
 <dbReference type="SMR" id="Q9BUL8"/>
-<dbReference type="BioGrid" id="116400">
+<dbReference type="BioGRID" id="116400">
   <property type="interactions" value="60"/>
 </dbReference>
 <dbReference type="DIP" id="DIP-40607N"/>

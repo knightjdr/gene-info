@@ -7,7 +7,7 @@ const getDBRefs = dbRefs => (
         ...accum,
         biocyc: ref.$.id.split(/:(.+)/)[1],
       };
-    } if (ref.$.type === 'BioGrid') {
+    } if (ref.$.type === 'BioGRID') {
       return {
         ...accum,
         biogrid: Number(ref.$.id),
