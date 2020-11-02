@@ -16,6 +16,7 @@
     "prod-ext:test": "npm run prod-ext:test --prefix chrome-extension",
     "start:chrome": "npm run start:chrome --prefix chrome-extension",
     "start:firefox": "npm run start:firefox --prefix chrome-extension",
+    "doc-deploy": "npm run doc-deploy --prefix docs",
     "doc-build": "npm run doc-build --prefix docs",
     "doc-server": "npm run start --prefix docs",
     "test": "jest --watch"

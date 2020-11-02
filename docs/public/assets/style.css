@@ -3,6 +3,7 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 body {
+  --alert: #ffe14d;
   --background: #fdfdfd;
   --background-nav: #8da597;
   --background-th: #8da597;
@@ -109,6 +110,14 @@ video {
 }
 .buttons li:last-child img {
   margin-right: 7px;
+}
+
+.outage-notice {
+  background-color: var(--alert);
+  border-radius: 3px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 1rem;
 }
 
 .changelog {
@@ -305,6 +314,7 @@ video {
 .new-features h2 {
   text-decoration: none;
 }
+
 .side-nav {
   background-color: var(--background-nav);
   color: var(--text-nav);
