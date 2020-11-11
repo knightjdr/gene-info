@@ -11,13 +11,13 @@
   "author": "James Knight",
   "license": "MIT",
   "devDependencies": {
-    "mongo-mock": "^3.7.1"
+    "mongo-mock": "^3.9.1"
   },
   "dependencies": {
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongodb": "^3.3.2",
-    "winston": "^2.4.3"
+    "mongodb": "^3.6.2",
+    "winston": "^2.4.5"
   }
 }
