@@ -12,6 +12,7 @@
     "dev-ext:chrome": "npm run dev-ext:chrome --prefix chrome-extension",
     "dev-ext:firefox": "npm run dev-ext:firefox --prefix chrome-extension",
     "prod-ext:chrome": "npm run prod-ext:chrome --prefix chrome-extension",
+    "prod-ext:edge": "npm run prod-ext:edge --prefix chrome-extension",
     "prod-ext:firefox": "npm run prod-ext:firefox --prefix chrome-extension",
     "prod-ext:test": "npm run prod-ext:test --prefix chrome-extension",
     "start:chrome": "npm run start:chrome --prefix chrome-extension",
