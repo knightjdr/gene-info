@@ -14,6 +14,7 @@
     "prod-ext:chrome": "npm run prod-ext:chrome --prefix chrome-extension",
     "prod-ext:edge": "npm run prod-ext:edge --prefix chrome-extension",
     "prod-ext:firefox": "npm run prod-ext:firefox --prefix chrome-extension",
+    "prod-ext:safari": "npm run prod-ext:safari --prefix chrome-extension && ./safari-build.sh",
     "prod-ext:test": "npm run prod-ext:test --prefix chrome-extension",
     "start:chrome": "npm run start:chrome --prefix chrome-extension",
     "start:firefox": "npm run start:firefox --prefix chrome-extension",

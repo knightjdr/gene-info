@@ -47,3 +47,5 @@ chrome-extension/dist.pem
 .htaccess
 *.zip
 *.mp4
+
+chrome-extension/safari

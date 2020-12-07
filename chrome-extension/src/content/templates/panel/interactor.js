@@ -67,11 +67,8 @@ const style = `
 .interactor-table {
   table-layout: fixed;
 }
-.interactor-table th:first-child {
+.interactor-table__col_fixed {
   width: 100px;
-}
-.interactor-table th:not(:first-child) {
-  width: calc((100% - 100px) / 2);
 }
 .interactor-table th button {
   background-color: transparent;
@@ -163,6 +160,23 @@ const createInteractorElement = (report, settings) => {
         class: 'interactor-table',
         tag: 'table',
         children: [
+          {
+            tag: 'colgroup',
+            children: [
+              {
+                class: 'interactor-table__col_fixed',
+                tag: 'col',
+              },
+              {
+                class: 'interactor-table__col_dynamic',
+                tag: 'col',
+              },
+              {
+                class: 'interactor-table__col_dynamic',
+                tag: 'col',
+              },
+            ],
+          },
           {
             tag: 'thead',
             children: [
