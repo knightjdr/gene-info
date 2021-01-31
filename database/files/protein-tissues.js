@@ -35,25 +35,25 @@ const tissues = {
     tissues: [
     ],
   },
-  'Escherichia coli (K12)': {
-    cells: [
-    ],
-    tissues: [
-    ],
-  },
   'Caenorhabditis elegans': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Saccharomyces cerevisiae': {
+  'Escherichia coli (K12)': {
     cells: [
     ],
     tissues: [
     ],
   },
   'Drosophila melanogaster': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Saccharomyces cerevisiae': {
     cells: [
     ],
     tissues: [
