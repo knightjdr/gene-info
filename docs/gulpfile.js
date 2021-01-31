@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const autoprefixer = require('autoprefixer');
 const csso = require('gulp-csso');
 const del = require('del');
@@ -32,6 +33,7 @@ const css = buildID => (
 const html = async buildID => (
   src('public/**/*.html')
     .pipe(replace(/href="\/assets\/([a-z0-9]+).css"/g, `href="/assets/$1.${buildID}.css"`))
+    .pipe(replace(/<!--analytics-->/g, '<script async defer data-domain="gene-info.org" src="https://analytics.jamesknight.dev/js/plausible.js"></script>'))
     .pipe(htmlmin({ collapseWhitespace: true }))
     .pipe(dest('build'))
 );

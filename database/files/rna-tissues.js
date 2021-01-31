@@ -35,25 +35,25 @@ const tissues = {
     tissues: [
     ],
   },
-  'Escherichia coli (K12)': {
-    cells: [
-    ],
-    tissues: [
-    ],
-  },
   'Caenorhabditis elegans': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Saccharomyces cerevisiae': {
+  'Escherichia coli (K12)': {
     cells: [
     ],
     tissues: [
     ],
   },
   'Drosophila melanogaster': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Saccharomyces cerevisiae': {
     cells: [
     ],
     tissues: [
@@ -89,6 +89,7 @@ const tissues = {
       'Daudi',
       'EFO-21',
       'fHDF/TERT166',
+      'GAMG',
       'HaCaT',
       'HAP1',
       'HBEC3-KT',
@@ -105,7 +106,9 @@ const tissues = {
       'hTCEpi',
       'hTEC/SVTERT24-B',
       'hTERT-HME1',
+      'hTERT-RPE1',
       'HUVEC TERT2',
+      'JURKAT',
       'K-562',
       'Karpas-707',
       'LHCN-M2',
@@ -113,6 +116,7 @@ const tissues = {
       'MOLT-4',
       'NB-4',
       'NTERA-2',
+      'OE19',
       'PC-3',
       'REH',
       'RH-30',
@@ -124,6 +128,7 @@ const tissues = {
       'SiHa',
       'SK-BR-3',
       'SK-MEL-30',
+      'SuSa',
       'T-47d',
       'THP-1',
       'TIME',
