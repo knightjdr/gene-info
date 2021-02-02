@@ -11,7 +11,7 @@
   "author": "James Knight",
   "license": "MIT",
   "devDependencies": {
-    "autoprefixer": "^9.8.0",
+    "autoprefixer": "^9.8.6",
     "del": "^5.1.0",
     "gh-pages": "^3.1.0",
     "gulp": "^4.0.2",
