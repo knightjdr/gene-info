@@ -9,6 +9,9 @@ const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 const { dest, src } = require('gulp');
 
+require('dotenv').config({
+  path: '.env',
+});
 
 const cleanBuild = () => del(['build/**/*']);
 
@@ -33,7 +36,7 @@ const css = buildID => (
 const html = async buildID => (
   src('public/**/*.html')
     .pipe(replace(/href="\/assets\/([a-z0-9]+).css"/g, `href="/assets/$1.${buildID}.css"`))
-    .pipe(replace(/<!--analytics-->/g, '<script async defer data-domain="gene-info.org" src="https://analytics.jamesknight.dev/js/plausible.js"></script>'))
+    .pipe(replace(/<!--analytics-->/g, `<script async defer data-domain="gene-info.org" src="${process.env.PLAUSIBLE_DOMAIN}"></script>`))
     .pipe(htmlmin({ collapseWhitespace: true }))
     .pipe(dest('build'))
 );
