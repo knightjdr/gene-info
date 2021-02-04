@@ -13,6 +13,7 @@
   "devDependencies": {
     "autoprefixer": "^9.8.6",
     "del": "^5.1.0",
+    "dotenv": "^8.2.0",
     "gh-pages": "^3.1.0",
     "gulp": "^4.0.2",
     "gulp-csso": "^3.0.1",

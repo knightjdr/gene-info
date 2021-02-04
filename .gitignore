@@ -39,6 +39,7 @@ chrome-extension/dev-build/*.css*
 
 # Docs
 docs/build
+docs/.env*
 
 ## pem key
 chrome-extension/dist.crx
