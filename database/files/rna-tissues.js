@@ -5,13 +5,13 @@ const tissues = {
     tissues: [
     ],
   },
-  'Xenopus laevis': {
+  'Gallus gallus': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Gallus gallus': {
+  'Xenopus laevis': {
     cells: [
     ],
     tissues: [
@@ -35,25 +35,25 @@ const tissues = {
     tissues: [
     ],
   },
-  'Caenorhabditis elegans': {
-    cells: [
-    ],
-    tissues: [
-    ],
-  },
   'Escherichia coli (K12)': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Drosophila melanogaster': {
+  'Caenorhabditis elegans': {
     cells: [
     ],
     tissues: [
     ],
   },
   'Saccharomyces cerevisiae': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Drosophila melanogaster': {
     cells: [
     ],
     tissues: [

@@ -1,9 +1,10 @@
 /* eslint no-param-reassign: 0 */
 
 const fs = require('fs');
-const LineByLineReader = require('line-by-line');
+const readline = require('readline');
 
 const readJson = require('../helpers/read-json');
+const { convertObjToMap } = require('../helpers/convert-object-to-map');
 
 const handleLines = (file, path, speciesIDs, uniprot) => (
   new Promise((resolve, reject) => {
@@ -13,49 +14,44 @@ const handleLines = (file, path, speciesIDs, uniprot) => (
       return accum;
     }, {});
 
-    let isHeader = true;
-    const lineReader = new LineByLineReader(file);
-    lineReader.on('line', (line) => {
-      if (!isHeader) {
-        const fields = line.split('\t');
-        const uniprotAccession = fields[0];
-        const pfamAccession = fields[4];
-        const seqStart = fields[5];
-        const seqEnd = fields[6];
-        if (uniprot[uniprotAccession]) {
-          const organism = uniprot[uniprotAccession];
-          streams[organism].write(`${uniprotAccession}\t${pfamAccession}\t${seqStart}\t${seqEnd}\n`);
-        }
-      }
-      isHeader = false;
+    const fileStream = fs.createReadStream(file);
+
+    const rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity,
     });
-    lineReader.on('end', () => {
+
+    // Create lookup map. This is to prevent a memory leak in the 'line' event handler
+    // when directly using the object 'uniprot' itself for looking up accessions.
+    const uniprotAccessionMap = convertObjToMap(uniprot);
+
+    rl.on('line', (line) => {
+      const [uniprotAccession, , , , pfamAccession, seqStart, seqEnd] = line.split('\t');
+
+      if (uniprotAccessionMap.has(uniprotAccession)) {
+        const organism = uniprotAccessionMap.get(uniprotAccession);
+        streams[organism].write(`${uniprotAccession}\t${pfamAccession}\t${seqStart}\t${seqEnd}\n`);
+      }
+    });
+
+    rl.on('close', () => {
       Object.values(streams).forEach((stream) => {
         stream.end();
       });
       resolve();
     });
-    lineReader.on('error', (err) => {
+
+    rl.on('error', (err) => {
       reject(err);
     });
   })
 );
 
-const minPfam = (file, path, speciesIDs, uniprotIDs, skip) => (
-  new Promise((resolve, reject) => {
-    if (skip) {
-      resolve();
-    } else {
-      readJson(uniprotIDs)
-        .then(uniprot => handleLines(file, path, speciesIDs, uniprot))
-        .then(() => {
-          resolve();
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    }
-  })
-);
+const minPfam = async (file, path, speciesIDs, uniprotIDs, skip) => {
+  if (!skip) {
+    const uniprot = await readJson(uniprotIDs);
+    await handleLines(file, path, speciesIDs, uniprot);
+  }
+};
 
 module.exports = minPfam;

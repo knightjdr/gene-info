@@ -1,29 +1,38 @@
 const fs = require('fs');
-const LineByLineReader = require('line-by-line');
+const readline = require('readline');
+
+const { convertMapToObj } = require('../helpers/convert-object-to-map');
 
 const readAnnotations = file => (
   new Promise((resolve, reject) => {
-    const terms = {};
+    const terms = new Map();
+
     if (fs.existsSync(file)) {
       const addTerm = (gene, term) => {
-        if (terms[gene]) {
-          terms[gene].push(term);
+        if (terms.has(gene)) {
+          terms.set(gene, [...terms.get(gene), term]);
         } else {
-          terms[gene] = [term];
+          terms.set(gene, [term]);
         }
       };
 
-      const lineReader = new LineByLineReader(file);
-      lineReader.on('line', (line) => {
+      const fileStream = fs.createReadStream(file);
+
+      const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity,
+      });
+
+      rl.on('line', (line) => {
         if (!line.startsWith('!')) {
           const [, , gene, , term] = line.split('\t');
           addTerm(gene, term);
         }
       });
-      lineReader.on('end', () => {
-        resolve(terms);
+      rl.on('close', () => {
+        resolve(convertMapToObj(terms));
       });
-      lineReader.on('error', (err) => {
+      rl.on('error', (err) => {
         reject(err);
       });
     } else {

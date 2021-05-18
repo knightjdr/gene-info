@@ -1,4 +1,5 @@
-const LineByLineReader = require('line-by-line');
+const fs = require('fs');
+const readline = require('readline');
 
 const arrayUnique = require('../helpers/array-unique');
 const uppercaseFirst = require('../helpers/uppercase-first');
@@ -28,8 +29,14 @@ const findImmediateParents = file => (
       }
     };
 
-    const lineReader = new LineByLineReader(file);
-    lineReader.on('line', (line) => {
+    const fileStream = fs.createReadStream(file);
+
+    const rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity,
+    });
+
+    rl.on('line', (line) => {
       if (line.startsWith('[Term]')) {
         addTerm(term);
         term = {
@@ -50,14 +57,14 @@ const findImmediateParents = file => (
         term.parents.push(parent);
       }
     });
-    lineReader.on('end', () => {
+    rl.on('close', () => {
       addTerm(term);
       resolve({
         map,
         parents,
       });
     });
-    lineReader.on('error', (err) => {
+    rl.on('error', (err) => {
       reject(err);
     });
   })

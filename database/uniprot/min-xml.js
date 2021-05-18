@@ -44,6 +44,7 @@ const minXml = (file, path, speciesID, fields, skip) => (
 
       const lineReader = readline.createInterface({
         input: fs.createReadStream(file),
+        crlfDelay: Infinity,
       });
       lineReader.on('line', (line) => {
         if (line.startsWith('<entry')) {
