@@ -4,15 +4,14 @@
   "description": "GIX database generator",
   "main": "index.js",
   "scripts": {
-    "db-generate-linux": "node --harmony --max-old-space-size=16384 index.js",
-    "db-generate-mac": "caffeinate node --harmony --max-old-space-size=16384 index.js",
+    "db-generate-linux": "node --harmony --max-old-space-size=8192 index.js",
+    "db-generate-mac": "caffeinate node --harmony --max-old-space-size=8192 index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "James Knight",
   "license": "MIT",
   "dependencies": {
     "ftp": "^0.3.10",
-    "line-by-line": "^0.1.6",
     "md5": "^2.3.0",
     "memory-streams": "^0.1.3",
     "mkdirp": "^0.5.5",

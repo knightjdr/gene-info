@@ -25,21 +25,28 @@ const options = args();
 
 const main = async () => {
   try {
-    await Promise.all([
-      geneNames(options),
-      getGoHierarchy(options),
-      getProteinExpressionData(options),
-      getRNAExpressionData(options),
-      interactions(options),
-      localization(options),
-      uniprot(options),
-    ]);
+    // Fetching gene data (1/9)
+    await geneNames(options);
+    // Fetching GO files (2/9)
+    await getGoHierarchy(options);
+    // Fetching protein expression data (3/9)
+    await getProteinExpressionData(options);
+    // Fetching RNA expression data (4/9)
+    await getRNAExpressionData(options);
+    // Fetching interactions (5/9)
+    await interactions(options);
+    // Fetching localizations (6/9)
+    await localization(options);
+    // Fetching UniProt database (7/9)
+    await uniprot(options);
 
+    // Fetching Pfam data (8/9)
     await Promise.all([
       domains(options),
       regions(options),
     ]);
 
+    // Generating database (9/9)
     const { protein, rna } = await generateDB();
     await writeTissues(rna, './files/rna-tissues.js');
     await writeTissues(protein, './files/protein-tissues.js');
