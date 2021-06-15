@@ -25,28 +25,26 @@ const options = args();
 
 const main = async () => {
   try {
-    console.log('Fetching gene data (1/9)');
+    console.log('Fetching gene data (1/10)');
     await geneNames(options);
-    console.log('Fetching GO files (2/9)');
+    console.log('Fetching GO files (2/10)');
     await getGoHierarchy(options);
-    console.log('Fetching protein expression data (3/9)');
+    console.log('Fetching protein expression data (3/10)');
     await getProteinExpressionData(options);
-    console.log('Fetching RNA expression data (4/9)');
+    console.log('Fetching RNA expression data (4/10)');
     await getRNAExpressionData(options);
-    console.log('Fetching interactions (5/9)');
+    console.log('Fetching interactions (5/10)');
     await interactions(options);
-    console.log('Fetching localizations (6/9)');
+    console.log('Fetching localizations (6/10)');
     await localization(options);
-    console.log('Fetching UniProt database (7/9)');
+    console.log('Fetching UniProt database (7/10)');
     await uniprot(options);
+    console.log('Fetching Pfam domains (8/10)');
+    await domains(options);
+    console.log('Fetching Pfam regions (9/10)');
+    await regions(options);
 
-    console.log('Fetching Pfam data (8/9)');
-    await Promise.all([
-      domains(options),
-      regions(options),
-    ]);
-
-    console.log('Generating database (9/9)');
+    console.log('Generating database (10/10)');
     const { protein, rna } = await generateDB();
     await writeTissues(rna, './files/rna-tissues.js');
     await writeTissues(protein, './files/protein-tissues.js');
