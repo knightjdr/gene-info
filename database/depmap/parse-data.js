@@ -4,6 +4,23 @@ const readline = require('readline');
 const arrSort = require('../helpers/arr-sort');
 const parseCSVLine = require('../helpers/parse-csv-line');
 const round = require('../helpers/round');
+const { mean, median, std } = require('../helpers/stats');
+
+const addStats = (effectByGeneIDAndCell) => {
+  const effectByGeneIDAndCellWithStats = {};
+  Object.entries(effectByGeneIDAndCell).forEach(([gene, cellData]) => {
+    const effects = Object.values(cellData);
+    effectByGeneIDAndCellWithStats[gene] = {
+      cells: cellData,
+      stats: {
+        mean: round(mean(effects), 4),
+        median: round(median(effects), 4),
+        std: round(std(effects), 4),
+      },
+    };
+  });
+  return effectByGeneIDAndCellWithStats;
+};
 
 const parseCellInfo = file => (
   new Promise((resolve, reject) => {
@@ -107,11 +124,12 @@ const parseData = async (depmapData, cellInfo) => {
     depmapTissues: {
       cells: cellsAvailable,
     },
-    effects: effectByGeneIDAndCell,
+    effects: addStats(effectByGeneIDAndCell),
   };
 };
 
 module.exports = {
+  addStats,
   parseCellInfo,
   parseData,
   parseDepmapData,

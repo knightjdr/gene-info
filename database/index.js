@@ -26,7 +26,7 @@ const options = args();
 
 const main = async () => {
   try {
-    /* console.log('Fetching gene data (1/11)');
+    console.log('Fetching gene data (1/11)');
     await geneNames(options);
     console.log('Fetching GO files (2/11)');
     await getGoHierarchy(options);
@@ -45,7 +45,7 @@ const main = async () => {
     console.log('Fetching Pfam domains (9/11)');
     await domains(options);
     console.log('Fetching Pfam regions (10/11)');
-    await regions(options); */
+    await regions(options);
 
     console.log('Generating database (11/11)');
     const { depmap, protein, rna } = await generateDB();

@@ -1,6 +1,11 @@
 const mockFS = require('mock-fs');
 
-const { parseCellInfo, parseData, parseDepmapData } = require('./parse-data');
+const {
+  addStats,
+  parseCellInfo,
+  parseData,
+  parseDepmapData,
+} = require('./parse-data');
 
 const cellInfoData = `depMap_ID,cell_line_name,stripped_cell_line_name,CCLE_Name
 ACH-000001,NIH:OVCAR-3,NIHOVCAR3,NIHOVCAR3_OVARY
@@ -26,6 +31,84 @@ afterAll(() => {
 });
 
 describe('Parse depmap', () => {
+  describe('calculate stats', () => {
+    it('should calculate stats', () => {
+      const effects = {
+        1: {
+          CACO2: 0.2,
+          HEL: -0.4,
+          NIHOVCAR3: 0,
+        },
+        2: {
+          CACO2: -0.75,
+          HEL: -1,
+          NIHOVCAR3: -1,
+        },
+        29974: {
+          CACO2: -0.1,
+          HEL: 0.2,
+          NIHOVCAR3: -0.5,
+        },
+        144568: {
+          CACO2: 0.15,
+          HEL: -1.5,
+          NIHOVCAR3: 0.1,
+        },
+      };
+      const expected = {
+        1: {
+          cells: {
+            CACO2: 0.2,
+            HEL: -0.4,
+            NIHOVCAR3: 0,
+          },
+          stats: {
+            mean: -0.0667,
+            median: 0,
+            std: 0.2494,
+          },
+        },
+        2: {
+          cells: {
+            CACO2: -0.75,
+            HEL: -1,
+            NIHOVCAR3: -1,
+          },
+          stats: {
+            mean: -0.9167,
+            median: -1,
+            std: 0.1179,
+          },
+        },
+        29974: {
+          cells: {
+            CACO2: -0.1,
+            HEL: 0.2,
+            NIHOVCAR3: -0.5,
+          },
+          stats: {
+            mean: -0.1333,
+            median: -0.1,
+            std: 0.2867,
+          },
+        },
+        144568: {
+          cells: {
+            CACO2: 0.15,
+            HEL: -1.5,
+            NIHOVCAR3: 0.1,
+          },
+          stats: {
+            mean: -0.4167,
+            median: 0.1,
+            std: 0.7663,
+          },
+        },
+      };
+      expect(addStats(effects)).toEqual(expected);
+    });
+  });
+
   describe('cell info', () => {
     it('should create a map of ID to cell name', async () => {
       const expected = {
@@ -74,24 +157,52 @@ describe('Parse depmap', () => {
         },
         effects: {
           1: {
-            CACO2: 0.2,
-            HEL: -0.4,
-            NIHOVCAR3: 0,
+            cells: {
+              CACO2: 0.2,
+              HEL: -0.4,
+              NIHOVCAR3: 0,
+            },
+            stats: {
+              mean: -0.0667,
+              median: 0,
+              std: 0.2494,
+            },
           },
           2: {
-            CACO2: -0.75,
-            HEL: -1,
-            NIHOVCAR3: -1,
+            cells: {
+              CACO2: -0.75,
+              HEL: -1,
+              NIHOVCAR3: -1,
+            },
+            stats: {
+              mean: -0.9167,
+              median: -1,
+              std: 0.1179,
+            },
           },
           29974: {
-            CACO2: -0.1,
-            HEL: 0.2,
-            NIHOVCAR3: -0.5,
+            cells: {
+              CACO2: -0.1,
+              HEL: 0.2,
+              NIHOVCAR3: -0.5,
+            },
+            stats: {
+              mean: -0.1333,
+              median: -0.1,
+              std: 0.2867,
+            },
           },
           144568: {
-            CACO2: 0.15,
-            HEL: -1.5,
-            NIHOVCAR3: 0.1,
+            cells: {
+              CACO2: 0.15,
+              HEL: -1.5,
+              NIHOVCAR3: 0.1,
+            },
+            stats: {
+              mean: -0.4167,
+              median: 0.1,
+              std: 0.7663,
+            },
           },
         },
       };

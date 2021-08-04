@@ -13,6 +13,7 @@ chrome-extension/dev-build/popup.html
 !/database/files/example
 !/database/files/rna-tissues.js
 !/database/files/protein-tissues.js
+!/database/files/depmap-tissues.js
 
 # Mac folder
 .DS_Store
