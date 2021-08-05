@@ -41,6 +41,8 @@ class State {
       auto: defaultTrueToggleState(storage.auto),
       basic: defaultTrueToggleState(storage.basic),
       ctrl: defaultFalseToggleState(storage.ctrl),
+      depmap: defaultTrueToggleState(storage.depmap),
+      depmap_tissues: storage.depmap_tissues || config.defaultTissues.depmap[species],
       description: defaultTrueToggleState(storage.description),
       domain: defaultTrueToggleState(storage.domain),
       field: storage.field || 'gene',

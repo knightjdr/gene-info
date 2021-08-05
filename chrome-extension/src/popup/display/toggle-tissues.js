@@ -1,8 +1,8 @@
 import config from '../../config';
 
-const toggleExpression = (expressionType, species) => {
-  const element = document.querySelector(`.${expressionType}-expression`);
-  const availableSpecies = config.tissues[expressionType];
+const toggleTissues = ({ className, species, tissueID }) => {
+  const element = document.querySelector(`.${className}`);
+  const availableSpecies = config.tissues[tissueID];
 
   if (
     availableSpecies[species]
@@ -14,4 +14,4 @@ const toggleExpression = (expressionType, species) => {
   }
 };
 
-export default toggleExpression;
+export default toggleTissues;

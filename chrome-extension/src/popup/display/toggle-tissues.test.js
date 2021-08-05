@@ -1,4 +1,4 @@
-import toggleExpression from './toggle-expression';
+import toggleTissues from './toggle-tissues';
 
 jest.mock('../../config', () => ({
   tissues: {
@@ -22,24 +22,36 @@ describe('Toggle expression setting', () => {
   });
 
   it('should not hide expression element for species with data', () => {
-    const species = 'Homo sapiens';
-    toggleExpression('protein', species);
+    const options = {
+      className: 'protein-expression',
+      species: 'Homo sapiens',
+      tissueID: 'protein',
+    };
+    toggleTissues(options);
 
     const element = document.querySelector('.protein-expression');
     expect(element.classList.contains('hide')).toBeFalsy();
   });
 
   it('should hide expression element for species with no tissue entry', () => {
-    const species = 'Mus musculus';
-    toggleExpression('protein', species);
+    const options = {
+      className: 'protein-expression',
+      species: 'Mus musculus',
+      tissueID: 'protein',
+    };
+    toggleTissues(options);
 
     const element = document.querySelector('.protein-expression');
     expect(element.classList.contains('hide')).toBeTruthy();
   });
 
   it('should hide expression element for species with tissue entry but no data', () => {
-    const species = 'Danio rerio';
-    toggleExpression('protein', species);
+    const options = {
+      className: 'protein-expression',
+      species: 'Danio rerio',
+      tissueID: 'protein',
+    };
+    toggleTissues(options);
 
     const element = document.querySelector('.protein-expression');
     expect(element.classList.contains('hide')).toBeTruthy();

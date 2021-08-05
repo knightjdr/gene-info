@@ -7,8 +7,24 @@ const speciesOnChange = function change() {
   chrome.storage.local.set({ species: value });
   updateTab('updateSetting', 'species', value);
   updateDisplay(value);
-  updateTissues('protein', value, true);
-  updateTissues('rna', value, true);
+  updateTissues({
+    expressionType: 'depmap',
+    restoreDefaults: true,
+    selectID: 'depmap_tissues',
+    species: value,
+  });
+  updateTissues({
+    expressionType: 'protein',
+    restoreDefaults: true,
+    selectID: 'protein_expression_tissues',
+    species: value,
+  });
+  updateTissues({
+    expressionType: 'rna',
+    restoreDefaults: true,
+    selectID: 'rna_expression_tissues',
+    species: value,
+  });
 };
 
 export default speciesOnChange;

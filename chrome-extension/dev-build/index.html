@@ -148,6 +148,32 @@
           </div>
           <div
             draggable="true"
+            id="drag_depmap"
+          >
+            <div class="depmap">
+              <div class="toggle-container">
+                <input class="toggle toggle-flat" data-type="depmap" id="depmap" type="checkbox" checked />
+                <label for="depmap"></label>
+                <span>DepMap</span>
+                <button
+                  class="advanced-settings"
+                  data-type="toggle_options_depmap"
+                  type="button"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" height="15" viewBox="0 0 512 512">
+                    <path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" />
+                  </svg>
+                </button>
+              </div>
+              <div class="toggle-options" id="toggle_options_depmap">
+                <em>DepMap cell lines</em>
+                <select class="slim-select" data-type="depmap_tissues" id="depmap_tissues" multiple>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            draggable="true"
             id="drag_expression"
           >
             <div class="protein-expression">

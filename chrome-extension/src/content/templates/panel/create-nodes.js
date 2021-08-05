@@ -1,4 +1,5 @@
 import createBasicElement from './basic';
+import createDepmapElement from './depmap/depmap';
 import createDescriptionElement from './description';
 import createDomainElement from './domain';
 import createExpressionElement from './expression/expression';
@@ -14,6 +15,7 @@ import State from '../../state';
 
 const sections = {
   basic: createBasicElement,
+  depmap: createDepmapElement,
   description: createDescriptionElement,
   domain: createDomainElement,
   expression: createExpressionElement,

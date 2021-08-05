@@ -13,13 +13,13 @@ const changeTissues = selectID => (options) => {
   updateTab('updateSetting', selectID, selected);
 };
 
-const defineDefaultTissues = (expressionType, species, tissueData) => {
+const defineDefaultTissues = (tissueID, species, tissueData) => {
   const defaultTissues = [];
   if (
-    config.defaultTissues[expressionType][species]
-    && config.defaultTissues[expressionType][species].length > 0
+    config.defaultTissues[tissueID][species]
+    && config.defaultTissues[tissueID][species].length > 0
   ) {
-    defaultTissues.push(...config.defaultTissues[expressionType][species]);
+    defaultTissues.push(...config.defaultTissues[tissueID][species]);
   } else if (tissueData) {
     if (tissueData.cells && tissueData.cells.length > 0) {
       defaultTissues.push(tissueData.cells[0]);
@@ -46,10 +46,27 @@ const storedTissues = (defaultTissues, selectID, restore) => (
   })
 );
 
-const tissueSelect = async (expressionType, species, restoreDefaults = false) => {
-  const selectID = `${expressionType}_expression_tissues`;
-  const tissueData = config.tissues[expressionType][species];
-  const defaultTissues = defineDefaultTissues(expressionType, species, tissueData);
+const defineOptions = (inputOptions) => {
+  const defaultOptions = {
+    restoreDefaults: false,
+  };
+
+  return {
+    ...defaultOptions,
+    ...inputOptions,
+  };
+};
+
+const tissueSelect = async (inputOptions = {}) => {
+  const {
+    tissueID,
+    restoreDefaults,
+    selectID,
+    species,
+  } = defineOptions(inputOptions);
+
+  const tissueData = config.tissues[tissueID][species];
+  const defaultTissues = defineDefaultTissues(tissueID, species, tissueData);
 
   if (tissueData) {
     const selectedTissues = await storedTissues(defaultTissues, selectID, restoreDefaults);
