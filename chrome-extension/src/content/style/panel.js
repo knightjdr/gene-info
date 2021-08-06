@@ -38,6 +38,11 @@ section h1::after {
   content: ':';
   margin-right: 3px;
 }
+section h2 {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
+}
 select:focus {
   box-shadow: 0px 0px 1px var(--primary);
   outline: none;

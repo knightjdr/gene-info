@@ -65,7 +65,7 @@ describe('Parse depmap', () => {
           stats: {
             mean: -0.0667,
             median: 0,
-            std: 0.2494,
+            sd: 0.2494,
           },
         },
         2: {
@@ -77,7 +77,7 @@ describe('Parse depmap', () => {
           stats: {
             mean: -0.9167,
             median: -1,
-            std: 0.1179,
+            sd: 0.1179,
           },
         },
         29974: {
@@ -89,7 +89,7 @@ describe('Parse depmap', () => {
           stats: {
             mean: -0.1333,
             median: -0.1,
-            std: 0.2867,
+            sd: 0.2867,
           },
         },
         144568: {
@@ -101,7 +101,7 @@ describe('Parse depmap', () => {
           stats: {
             mean: -0.4167,
             median: 0.1,
-            std: 0.7663,
+            sd: 0.7663,
           },
         },
       };
@@ -165,7 +165,7 @@ describe('Parse depmap', () => {
             stats: {
               mean: -0.0667,
               median: 0,
-              std: 0.2494,
+              sd: 0.2494,
             },
           },
           2: {
@@ -177,7 +177,7 @@ describe('Parse depmap', () => {
             stats: {
               mean: -0.9167,
               median: -1,
-              std: 0.1179,
+              sd: 0.1179,
             },
           },
           29974: {
@@ -189,7 +189,7 @@ describe('Parse depmap', () => {
             stats: {
               mean: -0.1333,
               median: -0.1,
-              std: 0.2867,
+              sd: 0.2867,
             },
           },
           144568: {
@@ -201,7 +201,7 @@ describe('Parse depmap', () => {
             stats: {
               mean: -0.4167,
               median: 0.1,
-              std: 0.7663,
+              sd: 0.7663,
             },
           },
         },

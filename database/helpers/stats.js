@@ -26,7 +26,7 @@ const median = (arr) => {
   return (arr[half - 1] + arr[half]) / 2.0;
 };
 
-const std = (arr) => {
+const stddev = (arr) => {
   const n = arr.length;
 
   if (n === 0) {
@@ -40,5 +40,5 @@ const std = (arr) => {
 module.exports = {
   mean,
   median,
-  std,
+  stddev,
 };

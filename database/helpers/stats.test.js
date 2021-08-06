@@ -1,5 +1,5 @@
 const round = require('./round');
-const { mean, median, std } = require('./stats');
+const { mean, median, stddev } = require('./stats');
 
 const arr = [
   40.73,
@@ -51,15 +51,15 @@ describe('Stats', () => {
     });
   });
 
-  describe('std', () => {
+  describe('stddev', () => {
     it('should return 0 for an empty array', () => {
       const expected = 0;
-      expect(std([])).toEqual(expected);
+      expect(stddev([])).toEqual(expected);
     });
 
     it('should return std for an array', () => {
       const expected = 27.834;
-      const actual = round(std(arr), 4);
+      const actual = round(stddev(arr), 4);
       expect(actual).toEqual(expected);
     });
   });

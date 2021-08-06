@@ -4,7 +4,7 @@ const readline = require('readline');
 const arrSort = require('../helpers/arr-sort');
 const parseCSVLine = require('../helpers/parse-csv-line');
 const round = require('../helpers/round');
-const { mean, median, std } = require('../helpers/stats');
+const { mean, median, stddev } = require('../helpers/stats');
 
 const addStats = (effectByGeneIDAndCell) => {
   const effectByGeneIDAndCellWithStats = {};
@@ -15,7 +15,7 @@ const addStats = (effectByGeneIDAndCell) => {
       stats: {
         mean: round(mean(effects), 4),
         median: round(median(effects), 4),
-        std: round(std(effects), 4),
+        sd: round(stddev(effects), 4),
       },
     };
   });
