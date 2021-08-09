@@ -10,7 +10,7 @@ const regionParse = require('./regions/region-parse');
 const uniParse = require('./uniprot/iterate-xml');
 const { geneNameParse } = require('./gene-names/gene-name-parse');
 const { localizationParse } = require('./localization/localization-parse');
-const { parseData: depmapParse } = require('./depmap/parse-data');
+const { parseData: essentialityParse } = require('./essentiality/parse-data');
 const { readObo } = require('./go/read-obo');
 
 const speciesDB = async (specie, obo) => {
@@ -23,7 +23,7 @@ const speciesDB = async (specie, obo) => {
       `./files/rna-expression/cells/${specie}.tsv`,
       `./files/rna-expression/tissues/${specie}.tsv`,
     ),
-    depmapParse(`./files/depmap/${specie}.csv`, `./files/depmap/${specie}-cell-info.csv`),
+    essentialityParse(`./files/essentiality/${specie}.csv`, `./files/essentiality/${specie}-cell-info.csv`),
     uniParse(`./files/uniprot/${specie}.xml`),
     domainParse(`./files/domains/${specie}.tsv`, './files/domains/domain-names.tsv'),
     geneNameParse(`./files/gene-names/${specie}.json`, specie),
@@ -40,9 +40,9 @@ const speciesDB = async (specie, obo) => {
   const merged = mergeDB(parsedData);
   await jsonStringify(`./files/databases/${specie}.json`, merged);
 
-  const [{ proteinTissues }, { rnaTissues }, { depmapTissues }] = parsedData;
+  const [{ proteinTissues }, { rnaTissues }, { essentialityTissues }] = parsedData;
   return {
-    depmap: depmapTissues,
+    essentiality: essentialityTissues,
     protein: proteinTissues,
     rna: rnaTissues,
   };
@@ -55,15 +55,15 @@ const generateDB = async () => {
   const species = Object.values(speciesID);
 
   const tissues = {
-    depmap: {},
+    essentiality: {},
     protein: {},
     rna: {},
   };
 
   const iterator = async () => {
     await Promise.all(species.map(async (specie) => {
-      const { depmap, protein, rna } = await speciesDB(specie, obo);
-      tissues.depmap[specie] = depmap;
+      const { essentiality, protein, rna } = await speciesDB(specie, obo);
+      tissues.essentiality[specie] = essentiality;
       tissues.protein[specie] = protein;
       tissues.rna[specie] = rna;
     }));
@@ -72,7 +72,7 @@ const generateDB = async () => {
   await iterator();
 
   return {
-    depmap: tissues.depmap,
+    essentiality: tissues.essentiality,
     protein: tissues.protein,
     rna: tissues.rna,
   };

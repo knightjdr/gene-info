@@ -128,7 +128,7 @@ const createGoElement = (report, settings) => {
           });
         } else {
           element.children.push({
-            class: 'none',
+            class: 'warning',
             tag: 'div',
             textContent: 'no terms',
           });

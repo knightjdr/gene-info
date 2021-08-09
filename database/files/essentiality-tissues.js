@@ -1,4 +1,76 @@
 const tissues = {
+  'Salmonella Typhimurium (LT2)': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Gallus gallus': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Xenopus laevis': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Danio rerio': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Dictyostelium discoideum': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Schizosaccharomyces pombe': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Escherichia coli (K12)': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Caenorhabditis elegans': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Saccharomyces cerevisiae': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Drosophila melanogaster': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Arabidopsis thaliana': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Mus musculus': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
   'Homo sapiens': {
     cells: [
       '143B',

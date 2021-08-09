@@ -1,21 +1,27 @@
-import link from '../../../helpers/link-svg';
+import config from '../../../../config';
 
 const style = `
-.depmap-link svg {
+.essentiality-link svg {
   fill: var(--primary);
 }
-.depmap-link:focus svg,
-.depmap-link:hover svg {
+.essentiality-link:focus svg,
+.essentiality-link:hover svg {
   fill: var(--text);
 }
-.depmap-stats {
-  margin: 0 0 10px 0;
-  list-style-type: none;
+.essentiality-stats {
+  display: grid;
+  gap: 4px;
+  grid-template-columns: auto 1fr auto 1fr;
+  margin: 5px 0;
 }
-.depmap-table {
+.essentiality-stats > :nth-child(odd) {
+  font-weight: bold;
+  justify-self: end;
+}
+.essentiality-table {
   margin-top: 5px;
 }
-.depmap-table td {
+.essentiality-table td {
   text-align: center;
 }`;
 
@@ -26,18 +32,24 @@ const getRequestedCellData = (data, cells) => (
   }))
 );
 
-const createDepmapElement = (report, settings) => {
+const shouldShowData = (showEssentiality, species, data) => (
+  showEssentiality
+  && data[species]
+  && data[species].cells.length > 0
+);
+
+const createEssentialityElement = (report, settings) => {
   const nodes = [];
 
-  if (settings.depmap) {
+  if (shouldShowData(settings.essentiality, settings.species, config.tissues.essentiality)) {
     nodes.push({
       tag: 'style',
       textContent: style,
       type: 'text/css',
     });
 
-    const { depmap, gene } = report;
-    const heading = 'DEPMAP';
+    const { essentiality, gene } = report;
+    const heading = 'ESSENTIALITY';
     const warning = 'no data reported';
 
     const section = {
@@ -50,12 +62,12 @@ const createDepmapElement = (report, settings) => {
           children: [
             { tag: 'h1', textContent: heading },
             {
-              children: [link],
-              class: 'depmap-link',
+              class: 'essentiality-link',
               href: `https://depmap.org/portal/gene/${gene}?tab=overview`,
               rel: 'noopener noreferrer',
               tag: 'a',
               target: '_blank',
+              textContent: 'DepMap',
             },
           ],
         },
@@ -72,7 +84,7 @@ const createDepmapElement = (report, settings) => {
             },
             {
               tag: 'span',
-              textContent: ` is a cancer cell dependency map that includes genome-scale
+              textContent: ` is a cell dependency map that includes genome-scale
               CRISPR–Cas9 essentiality screens across cancer cell lines. The CERES score
               is an estimate of gene dependency with scores of 0 and -1 representing the median for
               nonessential genes and common core essential genes, respectively.`,
@@ -82,40 +94,51 @@ const createDepmapElement = (report, settings) => {
       ],
     };
 
-    if (depmap && Object.keys(depmap.cells).length > 0) {
-      const noCells = Object.keys(depmap.cells).length;
-      const requestedData = getRequestedCellData(depmap.cells, settings.depmap_tissues);
+    if (essentiality && essentiality.cells && Object.keys(essentiality.cells).length > 0) {
+      const noCells = Object.keys(essentiality.cells).length;
+      const requestedData = getRequestedCellData(essentiality.cells, settings.essentiality_tissues);
 
       section.children.push({
-        tag: 'h2',
-        textContent: 'Stats (CERES score)',
-      });
-
-      section.children.push({
-        class: 'depmap-stats',
-        tag: 'ul',
+        class: 'essentiality-stats',
+        tag: 'div',
         children: [
           {
-            tag: 'li',
-            textContent: `Mean: ${depmap.stats.mean}`,
+            tag: 'span',
+            textContent: 'No. cell lines:',
           },
           {
-            tag: 'li',
-            textContent: `Median: ${depmap.stats.median}`,
+            tag: 'span',
+            textContent: noCells,
           },
           {
-            tag: 'li',
-            textContent: `SD: ${depmap.stats.sd}`,
+            tag: 'span',
+            textContent: 'Median:',
           },
           {
-            tag: 'li',
-            textContent: `No. cell lines: ${noCells}`,
+            tag: 'span',
+            textContent: essentiality.stats.median,
+          },
+          {
+            tag: 'span',
+            textContent: 'Mean:',
+          },
+          {
+            tag: 'span',
+            textContent: essentiality.stats.mean,
+          },
+          {
+            tag: 'span',
+            textContent: 'SD:',
+          },
+          {
+            tag: 'span',
+            textContent: essentiality.stats.sd,
           },
         ],
       });
 
       section.children.push({
-        class: 'depmap-table',
+        class: 'essentiality-table',
         tag: 'table',
         children: [
           {
@@ -150,7 +173,7 @@ const createDepmapElement = (report, settings) => {
       });
     } else {
       section.children.push({
-        class: 'none',
+        class: 'warning',
         tag: 'div',
         textContent: warning,
       });
@@ -162,4 +185,4 @@ const createDepmapElement = (report, settings) => {
   return nodes;
 };
 
-export default createDepmapElement;
+export default createEssentialityElement;

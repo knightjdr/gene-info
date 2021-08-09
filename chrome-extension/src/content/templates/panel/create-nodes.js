@@ -1,7 +1,7 @@
 import createBasicElement from './basic';
-import createDepmapElement from './depmap/depmap';
 import createDescriptionElement from './description';
 import createDomainElement from './domain';
+import createEssentialityElement from './essentiality/essentiality';
 import createExpressionElement from './expression/expression';
 import createGeneElement from '../gene';
 import createGoElement from './go';
@@ -15,9 +15,9 @@ import State from '../../state';
 
 const sections = {
   basic: createBasicElement,
-  depmap: createDepmapElement,
   description: createDescriptionElement,
   domain: createDomainElement,
+  essentiality: createEssentialityElement,
   expression: createExpressionElement,
   go: createGoElement,
   interactors: createInteractorElement,

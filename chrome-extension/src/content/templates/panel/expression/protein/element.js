@@ -22,7 +22,7 @@ const element = (report, settings, showData) => {
 
     if (!tissuesSelected) {
       node.children.push({
-        class: 'none',
+        class: 'warning',
         tag: 'div',
         textContent: 'no tissues selected',
       });
@@ -34,7 +34,7 @@ const element = (report, settings, showData) => {
 
     if (tissuesSelected && !dataAvailable) {
       node.children.push({
-        class: 'none',
+        class: 'warning',
         tag: 'div',
         textContent: 'no protein expression data',
       });

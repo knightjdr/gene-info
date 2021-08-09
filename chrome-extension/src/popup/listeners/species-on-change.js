@@ -8,9 +8,9 @@ const speciesOnChange = function change() {
   updateTab('updateSetting', 'species', value);
   updateDisplay(value);
   updateTissues({
-    expressionType: 'depmap',
+    expressionType: 'essentiality',
     restoreDefaults: true,
-    selectID: 'depmap_tissues',
+    selectID: 'essentiality_tissues',
     species: value,
   });
   updateTissues({

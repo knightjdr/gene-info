@@ -4,17 +4,17 @@ const {
   addStats,
   parseCellInfo,
   parseData,
-  parseDepmapData,
+  parseEssentialityData,
 } = require('./parse-data');
 
-const cellInfoData = `depMap_ID,cell_line_name,stripped_cell_line_name,CCLE_Name
+const cellInfoData = `essentiality_ID,cell_line_name,stripped_cell_line_name,CCLE_Name
 ACH-000001,NIH:OVCAR-3,NIHOVCAR3,NIHOVCAR3_OVARY
 ACH-000002,HL-60,HL60,HL60_HAEMATOPOIETIC_AND_LYMPHOID_TISSUE
 ACH-000003,CACO2,CACO2,CACO2_LARGE_INTESTINE
 ACH-000004,"HEL, clone X",HEL,HEL_HAEMATOPOIETIC_AND_LYMPHOID_TISSUE
 `;
 
-const effectData = `DepMap_ID,A1BG (1),A1CF (29974),A2M (2),A2ML1 (144568)
+const effectData = `Essentiality_ID,A1BG (1),A1CF (29974),A2M (2),A2ML1 (144568)
 ACH-000001,0,-0.5,-1,0.1
 ACH-000003,0.2,-0.1,-0.75,0.15
 ACH-000004,-0.4,0.2,-1,-1.5
@@ -30,7 +30,7 @@ afterAll(() => {
   mockFS.restore();
 });
 
-describe('Parse depmap', () => {
+describe('Parse essentiality', () => {
   describe('calculate stats', () => {
     it('should calculate stats', () => {
       const effects = {
@@ -144,7 +144,7 @@ describe('Parse depmap', () => {
           144568: -1.5,
         },
       };
-      const actual = await parseDepmapData('./Homo sapiens.csv');
+      const actual = await parseEssentialityData('./Homo sapiens.csv');
       expect(actual).toEqual(expected);
     });
   });
@@ -152,7 +152,7 @@ describe('Parse depmap', () => {
   describe('parse data', () => {
     it('should parse data by gene id', async () => {
       const expected = {
-        depmapTissues: {
+        essentialityTissues: {
           cells: ['CACO2', 'HEL', 'NIHOVCAR3'],
         },
         effects: {

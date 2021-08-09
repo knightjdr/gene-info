@@ -1,10 +1,10 @@
-const depmapElement = (report, settings) => {
+const essentialityElement = (report, settings) => {
   const links = [];
   if (
     settings.species === 'Homo sapiens'
-    && settings.depmap
-    && report?.depmap?.cells
-    && Object.keys(report.depmap.cells).length
+    && settings.essentiality
+    && report.essentiality.cells
+    && Object.keys(report.essentiality.cells).length
   ) {
     links.push({
       database: 'DepMap',
@@ -14,4 +14,4 @@ const depmapElement = (report, settings) => {
   return links;
 };
 
-export default depmapElement;
+export default essentialityElement;

@@ -111,7 +111,7 @@ const createDomainElement = (report, settings) => {
       });
     } else {
       section.children.push({
-        class: 'none',
+        class: 'warning',
         tag: 'div',
         textContent: warning,
       });

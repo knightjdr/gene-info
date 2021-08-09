@@ -7,9 +7,9 @@ const populate = () => {
   chrome.storage.local.get('select_species', (storage) => {
     const organism = storage.select_species || config.defaultSpecies;
     populateTissues({
-      selectID: 'depmap_tissues',
+      selectID: 'essentiality_tissues',
       species: organism,
-      tissueID: 'depmap',
+      tissueID: 'essentiality',
     });
     populateTissues({
       selectID: 'protein_expression_tissues',

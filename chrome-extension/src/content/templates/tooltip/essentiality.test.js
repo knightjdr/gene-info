@@ -1,10 +1,10 @@
-import depmapElement from './depmap';
+import essentialityElement from './essentiality';
 
-describe('Depmap link', () => {
+describe('Essentiality link', () => {
   it('should show link', () => {
     const report = {
       gene: 'GENEA',
-      depmap: {
+      essentiality: {
         cells: {
           HEPG2: 0.1935,
           JURKAT: 0.0642,
@@ -13,20 +13,20 @@ describe('Depmap link', () => {
       },
     };
     const settings = {
-      depmap: true,
+      essentiality: true,
       species: 'Homo sapiens',
     };
     const expected = [{
-      database: 'DepMap',
-      href: 'https://depmap.org/portal/gene/GENEA?tab=overview',
+      database: 'Essentiality',
+      href: 'https://essentiality.org/portal/gene/GENEA?tab=overview',
     }];
-    expect(depmapElement(report, settings)).toEqual(expected);
+    expect(essentialityElement(report, settings)).toEqual(expected);
   });
 
   it('should not show link when setting is off', () => {
     const report = {
       gene: 'GENEA',
-      depmap: {
+      essentiality: {
         cells: {
           HEPG2: 0.1935,
           JURKAT: 0.0642,
@@ -35,17 +35,17 @@ describe('Depmap link', () => {
       },
     };
     const settings = {
-      depmap: false,
+      essentiality: false,
       species: 'Homo sapiens',
     };
     const expected = [];
-    expect(depmapElement(report, settings)).toEqual(expected);
+    expect(essentialityElement(report, settings)).toEqual(expected);
   });
 
   it('should not show link for non human species', () => {
     const report = {
       gene: 'GeneA',
-      depmap: {
+      essentiality: {
         cells: {
           HEPG2: 0.1935,
           JURKAT: 0.0642,
@@ -54,25 +54,25 @@ describe('Depmap link', () => {
       },
     };
     const settings = {
-      depmap: true,
+      essentiality: true,
       species: 'Mus musculus',
     };
     const expected = [];
-    expect(depmapElement(report, settings)).toEqual(expected);
+    expect(essentialityElement(report, settings)).toEqual(expected);
   });
 
   it('should not show link when there is no data', () => {
     const report = {
       gene: 'GENEA',
-      depmap: {
+      essentiality: {
         cells: {},
       },
     };
     const settings = {
-      depmap: true,
+      essentiality: true,
       species: 'Homo sapiens',
     };
     const expected = [];
-    expect(depmapElement(report, settings)).toEqual(expected);
+    expect(essentialityElement(report, settings)).toEqual(expected);
   });
 });

@@ -124,7 +124,7 @@ const createPathologyElement = (report, settings) => {
       section.children.push(...report.pathology.map(createDiseaseElement));
     } else {
       section.children.push({
-        class: 'none',
+        class: 'warning',
         tag: 'div',
         textContent: 'no pathology data',
       });

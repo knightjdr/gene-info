@@ -7,9 +7,9 @@ export function speciesChange() {
   chrome.storage.local.set({ species: newSpecies });
   State.updateSetting('species', newSpecies);
   updateTissues({
-    key: 'depmap_tissues',
+    key: 'essentiality_tissues',
     species: newSpecies,
-    tissueID: 'depmap',
+    tissueID: 'essentiality',
   });
   updateTissues({
     key: 'protein_expression_tissues',

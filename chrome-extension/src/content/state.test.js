@@ -4,7 +4,7 @@ jest.mock('../config', () => ({
   defaultGoNamespace: 'BP',
   defaultSettingOrder: ['basic', 'links'],
   defaultTissues: {
-    depmap: {
+    essentiality: {
       'Homo sapiens': ['JURKAT'],
     },
     protein: {

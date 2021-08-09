@@ -50,7 +50,7 @@ const parseCellInfo = file => (
   })
 );
 
-const parseDepmapData = file => (
+const parseEssentialityData = file => (
   new Promise((resolve, reject) => {
     if (fs.existsSync(file)) {
       const dataByCellLineAndGeneID = {};
@@ -112,16 +112,16 @@ const summarizeByGeneID = (dataByCellLineAndGeneID, cellMappingData) => {
   return [{}, []];
 };
 
-const parseData = async (depmapData, cellInfo) => {
+const parseData = async (essentialityData, cellInfo) => {
   const [data, cells] = await Promise.all([
-    parseDepmapData(depmapData),
+    parseEssentialityData(essentialityData),
     parseCellInfo(cellInfo),
   ]);
 
   const [effectByGeneIDAndCell, cellsAvailable] = summarizeByGeneID(data, cells);
 
   return {
-    depmapTissues: {
+    essentialityTissues: {
       cells: cellsAvailable,
     },
     effects: addStats(effectByGeneIDAndCell),
@@ -132,5 +132,5 @@ module.exports = {
   addStats,
   parseCellInfo,
   parseData,
-  parseDepmapData,
+  parseEssentialityData,
 };

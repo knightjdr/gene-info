@@ -6,9 +6,9 @@ import toggleHPA from './toggle-hpa';
 export const updateDisplay = (species) => {
   toggleCompartments(species);
   toggleTissues({
-    className: 'depmap',
+    className: 'essentiality',
     species,
-    tissueID: 'depmap',
+    tissueID: 'essentiality',
   });
   toggleTissues({
     className: 'protein-expression',

@@ -1,5 +1,6 @@
 const theme = `
   aside.theme_dark {
+    --alert: #4f5663;
     --background: #323639;
     --heading: #E68173;
     --primary: #7FA782;
@@ -11,6 +12,7 @@ const theme = `
     --warning: #F4887E;
   }
   aside.theme_light {
+    --alert: #e3e5e8;
     --background: #fafafa;
     --heading: #BD4A42;
     --primary: #658170;

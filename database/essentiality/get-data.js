@@ -3,11 +3,11 @@ const downloadHttps = require('../helpers/download-https');
 
 const fsConfig = {
   celldata: {
-    file: './files/depmap/Homo sapiens-cell-info.csv',
+    file: './files/essentiality/Homo sapiens-cell-info.csv',
     url: 'https://ndownloader.figshare.com/files/27902376',
   },
   effectsData: {
-    file: './files/depmap/Homo sapiens.csv',
+    file: './files/essentiality/Homo sapiens.csv',
     url: 'https://ndownloader.figshare.com/files/27902226',
   },
 };
@@ -19,11 +19,11 @@ const setupDownloads = async () => {
   ]);
 };
 
-const depMap = async (options) => {
+const essentiality = async (options) => {
   if (!options.skipDownload) {
-    await createFolder('./files/depmap');
+    await createFolder('./files/essentiality');
     await setupDownloads();
   }
 };
 
-module.exports = depMap;
+module.exports = essentiality;

@@ -4,7 +4,7 @@ const args = require('./args');
 const domains = require('./domains/domains');
 const geneNames = require('./gene-names/gene-names');
 const generateDB = require('./generate-db');
-const getDepmap = require('./depmap/get-data');
+const getEssentiality = require('./essentiality/get-data');
 const getGoHierarchy = require('./go/go');
 const getProteinExpressionData = require('./expression/protein/get-data');
 const getRNAExpressionData = require('./expression/rna/get-data');
@@ -40,16 +40,16 @@ const main = async () => {
     await localization(options);
     console.log('Fetching UniProt database (7/11)');
     await uniprot(options);
-    console.log('Fetching Depmap database (8/11)');
-    await getDepmap(options);
+    console.log('Fetching Essentiality database (8/11)');
+    await getEssentiality(options);
     console.log('Fetching Pfam domains (9/11)');
     await domains(options);
     console.log('Fetching Pfam regions (10/11)');
     await regions(options);
 
     console.log('Generating database (11/11)');
-    const { depmap, protein, rna } = await generateDB();
-    await writeTissues(depmap, './files/depmap-tissues.js');
+    const { essentiality, protein, rna } = await generateDB();
+    await writeTissues(essentiality, './files/essentiality-tissues.js');
     await writeTissues(rna, './files/rna-tissues.js');
     await writeTissues(protein, './files/protein-tissues.js');
   } catch (err) {

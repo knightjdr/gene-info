@@ -1,5 +1,5 @@
 import dbConfig from '../../database/config';
-import depmapTissues from '../../database/files/depmap-tissues';
+import essentialityTissues from '../../database/files/essentiality-tissues';
 import proteinTissues from '../../database/files/protein-tissues';
 import rnaTissues from '../../database/files/rna-tissues';
 
@@ -19,8 +19,8 @@ const config = {
     'auto',
     'basic',
     'description',
-    'depmap',
     'domain',
+    'essentiality',
     'go',
     'interactors',
     'links',
@@ -38,7 +38,7 @@ const config = {
   defaultSettingOrder: [
     'basic',
     'links',
-    'depmap',
+    'essentiality',
     'description',
     'domain',
     'expression',
@@ -50,7 +50,7 @@ const config = {
   ],
   defaultSpecies: 'Homo sapiens',
   defaultTissues: {
-    depmap: {
+    essentiality: {
       'Homo sapiens': ['HEPG2', 'JURKAT', 'U2OS'],
     },
     protein: {
@@ -82,7 +82,7 @@ const config = {
   },
   theme: 'light',
   tissues: {
-    depmap: depmapTissues,
+    essentiality: essentialityTissues,
     protein: proteinTissues,
     rna: rnaTissues,
   },

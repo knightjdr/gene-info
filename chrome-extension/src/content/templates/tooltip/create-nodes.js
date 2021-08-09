@@ -1,5 +1,6 @@
 import createGeneElement from '../gene';
 import domainElement from './domain';
+import essentialityElement from './essentiality';
 import interactorElement from './interactor';
 import linkElement from './link';
 import localizationElement from './localization';
@@ -14,6 +15,7 @@ const tooltipDetails = (result, reportIndex, fadeClass = '') => {
   const links = [
     ...linkElement(result[reportIndex], State.settings),
     ...domainElement(result[reportIndex], State.settings),
+    ...essentialityElement(result[reportIndex], State.settings),
     ...goElement(result[reportIndex], State.settings),
     ...localizationElement(result[reportIndex], State.settings),
     ...hpaElement(result[reportIndex], State.settings),

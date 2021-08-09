@@ -149,6 +149,15 @@ li {
   background: var(--track);
 }
 
+.warning {
+  background-color: var(--alert);
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 0 0;
+  padding: 5px;
+}
+
 @media (max-width: 309) {
   .panel {
     min-width: calc(1vw - 10px);

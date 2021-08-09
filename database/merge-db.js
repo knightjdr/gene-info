@@ -4,7 +4,7 @@ const defineGeneNames = require('./gene-names/define');
 const mergeDb = ([
   { proteinExpression },
   { rnaExpression },
-  { effects: depmap },
+  { effects: essentiality },
   db,
   domains,
   geneNames,
@@ -41,8 +41,8 @@ const mergeDb = ([
       'rna-expression': entry['ensembl-gene'][0] && rnaExpression[entry['ensembl-gene'][0]]
         ? rnaExpression[entry['ensembl-gene'][0]]
         : {},
-      depmap: entry.geneid && depmap[entry.geneid]
-        ? depmap[entry.geneid]
+      essentiality: entry.geneid && essentiality[entry.geneid]
+        ? essentiality[entry.geneid]
         : {},
     });
   })
