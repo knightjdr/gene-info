@@ -28,16 +28,8 @@ const parsedRegions = [
 ];
 
 let json;
-beforeAll(async (done) => {
-  readJson(`${__dirname}/../files/example/pfam-graphic.json`)
-    .then((content) => {
-      json = content;
-      done();
-    })
-    .catch((err) => {
-      console.log(err);
-      done();
-    });
+beforeAll(async () => {
+  json = await readJson(`${__dirname}/../files/example/pfam-graphic.json`)
 });
 
 describe('Parse regions', () => {
@@ -51,10 +43,9 @@ describe('Fetch graphic', () => {
   describe('successful fetch', () => {
     let regions;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       fetchUrl.mockResolvedValueOnce(json);
       regions = await fetchGraphic('P00533');
-      done();
     });
 
     it('should call fetchUrl', () => {
@@ -69,10 +60,9 @@ describe('Fetch graphic', () => {
   describe('unsuccessful fetch', () => {
     let regions;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       fetchUrl.mockRejectedValueOnce(new Error());
       regions = await fetchGraphic('P00533');
-      done();
     });
 
     it('should return empty array', () => {

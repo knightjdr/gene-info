@@ -10,12 +10,11 @@ State.init({});
 
 describe('fetch report', () => {
   describe('succesfully', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       showReport.mockClear();
       const reports = [{ gene: 'a' }];
       http.mockResolvedValue(reports);
       await fetch('Homo sapiens', 'gene', 'a', {});
-      done();
     });
 
     it('should search term in state', () => {
@@ -33,11 +32,10 @@ describe('fetch report', () => {
   });
 
   describe('failed', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       showReport.mockClear();
       http.mockRejectedValue();
       await fetch('Homo sapiens', 'gene', 'a', {});
-      done();
     });
 
     it('should call show report with error', () => {

@@ -1,6 +1,10 @@
 import config from '../../../../config';
 
 const style = `
+.essentiality-codependencies {
+  margin-top: 10px;
+}
+
 .essentiality-link svg {
   fill: var(--primary);
 }
@@ -63,7 +67,7 @@ const createEssentialityElement = (report, settings) => {
             { tag: 'h1', textContent: heading },
             {
               class: 'essentiality-link',
-              href: `https://depmap.org/portal/gene/${gene}?tab=overview`,
+              href: `https://depmap.org/portal/gene/${essentiality.sourceSymbol || gene}?tab=overview`,
               rel: 'noopener noreferrer',
               tag: 'a',
               target: '_blank',
@@ -171,6 +175,53 @@ const createEssentialityElement = (report, settings) => {
           },
         ],
       });
+
+      if (settings.essentiality_codependencies > 0) {
+        section.children.push({
+          class: 'essentiality-codependencies',
+          tag: 'div',
+          children: [
+            {
+              tag: 'h2',
+              textContent: 'Co-dependencies',
+            },
+            {
+              class: 'essentiality-table',
+              tag: 'table',
+              children: [
+                {
+                  tag: 'thead',
+                  children: [
+                    {
+                      tag: 'tr',
+                      children: [
+                        { tag: 'td', textContent: 'Gene' },
+                        { tag: 'td', textContent: 'Pearson' },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  tag: 'tbody',
+                  children: essentiality.coDependencies.slice(0, settings.essentiality_codependencies).map(([cell, value]) => ({
+                    tag: 'tr',
+                    children: [
+                      {
+                        tag: 'td',
+                        textContent: cell,
+                      },
+                      {
+                        tag: 'td',
+                        textContent: value,
+                      },
+                    ],
+                  })),
+                },
+              ],
+            },
+          ],
+        });
+      }
     } else {
       section.children.push({
         class: 'warning',

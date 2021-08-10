@@ -9,7 +9,7 @@ const sleep = ms => (
 
 describe('Warning', () => {
   describe('tab has injected content script', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       // Setup elements
       const div = document.createElement('div');
       div.className = 'warning';
@@ -24,8 +24,7 @@ describe('Warning', () => {
 
       activeTab.mockResolvedValue(true);
       warning();
-      sleep(200);
-      done();
+      await sleep(200);
     });
 
     it('should not display div', () => {
@@ -45,7 +44,7 @@ describe('Warning', () => {
   });
 
   describe('tab does not have injected content script', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       // Setup elements
       const div = document.createElement('div');
       div.className = 'warning';
@@ -60,8 +59,7 @@ describe('Warning', () => {
 
       activeTab.mockResolvedValue(undefined);
       warning();
-      sleep(200);
-      done();
+      await sleep(200);
     });
 
     it('should display div', () => {

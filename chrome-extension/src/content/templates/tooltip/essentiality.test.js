@@ -10,6 +10,7 @@ describe('Essentiality link', () => {
           JURKAT: 0.0642,
           2313287: -0.0141,
         },
+        sourceSymbol: 'GENEa',
       },
     };
     const settings = {
@@ -17,8 +18,30 @@ describe('Essentiality link', () => {
       species: 'Homo sapiens',
     };
     const expected = [{
-      database: 'Essentiality',
-      href: 'https://essentiality.org/portal/gene/GENEA?tab=overview',
+      database: 'DepMap',
+      href: 'https://depmap.org/portal/gene/GENEa?tab=overview',
+    }];
+    expect(essentialityElement(report, settings)).toEqual(expected);
+  });
+
+  it('should use report symbol in link when source symbol is missing', () => {
+    const report = {
+      gene: 'GENEA',
+      essentiality: {
+        cells: {
+          HEPG2: 0.1935,
+          JURKAT: 0.0642,
+          2313287: -0.0141,
+        },
+      },
+    };
+    const settings = {
+      essentiality: true,
+      species: 'Homo sapiens',
+    };
+    const expected = [{
+      database: 'DepMap',
+      href: 'https://depmap.org/portal/gene/GENEA?tab=overview',
     }];
     expect(essentialityElement(report, settings)).toEqual(expected);
   });
@@ -32,6 +55,7 @@ describe('Essentiality link', () => {
           JURKAT: 0.0642,
           2313287: -0.0141,
         },
+        sourceSymbol: 'GENEa',
       },
     };
     const settings = {
@@ -66,6 +90,7 @@ describe('Essentiality link', () => {
       gene: 'GENEA',
       essentiality: {
         cells: {},
+        sourceSymbol: 'GENEa',
       },
     };
     const settings = {

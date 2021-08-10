@@ -23,13 +23,12 @@ describe('Set transition duration on label', () => {
     div.appendChild(label);
   });
 
-  it('should set transition duration on the input label', async (done) => {
+  it('should set transition duration on the input label', async () => {
     const input = document.querySelector('input');
     toggles.setTransitionDuration(input);
     await timeout(100);
     const label = document.querySelector('label');
     expect(label.style.transitionDuration).toBe('0.2s');
-    done();
   });
 });
 
@@ -89,7 +88,7 @@ describe('Toggle checked attribute', () => {
   });
 });
 
-describe('Interate over toggles', () => {
+describe('Iterate over toggles', () => {
   beforeAll(() => {
     storageGet.mockClear();
     toggles.toggles();

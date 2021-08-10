@@ -23,7 +23,11 @@ const speciesDB = async (specie, obo) => {
       `./files/rna-expression/cells/${specie}.tsv`,
       `./files/rna-expression/tissues/${specie}.tsv`,
     ),
-    essentialityParse(`./files/essentiality/${specie}.csv`, `./files/essentiality/${specie}-cell-info.csv`),
+    essentialityParse(
+      `./files/essentiality/${specie}.csv`,
+      `./files/essentiality/${specie}-cell-info.csv`,
+      `./files/essentiality/${specie}-co-dependency.csv`,
+    ),
     uniParse(`./files/uniprot/${specie}.xml`),
     domainParse(`./files/domains/${specie}.tsv`, './files/domains/domain-names.tsv'),
     geneNameParse(`./files/gene-names/${specie}.json`, specie),

@@ -6,6 +6,8 @@ const parseCSVLine = require('../helpers/parse-csv-line');
 const round = require('../helpers/round');
 const { mean, median, stddev } = require('../helpers/stats');
 
+const CO_DEPENDENCY_LIMIT = 25;
+
 const addStats = (effectByGeneIDAndCell) => {
   const effectByGeneIDAndCellWithStats = {};
   Object.entries(effectByGeneIDAndCell).forEach(([gene, cellData]) => {
@@ -20,6 +22,53 @@ const addStats = (effectByGeneIDAndCell) => {
     };
   });
   return effectByGeneIDAndCellWithStats;
+};
+
+const createIDtoSymbolMap = file => (
+  new Promise((resolve, reject) => {
+    if (fs.existsSync(file)) {
+      const idToSymbol = {};
+      const geneRe = new RegExp(/^(\S+) \(([^)]+)\)/);
+
+      let header = true;
+      const lineReader = readline.createInterface({
+        input: fs.createReadStream(file),
+      });
+      lineReader.on('line', (line) => {
+        if (header) {
+          const genesHeadings = line.split(',').slice(1);
+          genesHeadings.forEach((geneHeading) => {
+            const matches = geneHeading.match(geneRe);
+            const symbol = matches[1];
+            const id = Number(matches[2]);
+            idToSymbol[id] = symbol;
+          });
+          header = false;
+          lineReader.close();
+        }
+      });
+      lineReader.on('close', () => {
+        resolve(idToSymbol);
+      });
+      lineReader.on('error', (err) => {
+        reject(err);
+      });
+    } else {
+      resolve({});
+    }
+  })
+);
+
+const mergeData = (effects, coDependencies, idToSymbol) => {
+  const merged = {};
+  Object.entries(effects).forEach(([gene, data]) => {
+    merged[gene] = {
+      ...data,
+      coDependencies: coDependencies[gene] || [],
+      sourceSymbol: idToSymbol[gene] || '',
+    };
+  });
+  return merged;
 };
 
 const parseCellInfo = file => (
@@ -40,6 +89,47 @@ const parseCellInfo = file => (
       });
       lineReader.on('close', () => {
         resolve(cells);
+      });
+      lineReader.on('error', (err) => {
+        reject(err);
+      });
+    } else {
+      resolve({});
+    }
+  })
+);
+
+const parseCoDependencies = file => (
+  new Promise((resolve, reject) => {
+    if (fs.existsSync(file)) {
+      const coDependencies = {};
+      const geneIdRe = new RegExp(/\(([^)]+)\)/);
+      const geneSymbolRe = new RegExp(/^(\S+)/);
+      let header = true;
+
+      const lineReader = readline.createInterface({
+        input: fs.createReadStream(file),
+      });
+      lineReader.on('line', (line) => {
+        if (!header) {
+          const [source, target, correlation] = line.split(',');
+          if (source !== target) {
+            const sourceID = Number(source.match(geneIdRe)[1]);
+            const targetGene = target.match(geneSymbolRe)[1];
+            if (!coDependencies[sourceID]) {
+              coDependencies[sourceID] = [];
+            }
+            coDependencies[sourceID].push([targetGene, round(Number(correlation), 4)]);
+          }
+        }
+        header = false;
+      });
+      lineReader.on('close', () => {
+        Object.entries(coDependencies).forEach(([id, tuples]) => {
+          tuples.sort((a, b) => b[1] - a[1]);
+          coDependencies[id] = tuples.slice(0, CO_DEPENDENCY_LIMIT);
+        });
+        resolve(coDependencies);
       });
       lineReader.on('error', (err) => {
         reject(err);
@@ -112,25 +202,32 @@ const summarizeByGeneID = (dataByCellLineAndGeneID, cellMappingData) => {
   return [{}, []];
 };
 
-const parseData = async (essentialityData, cellInfo) => {
-  const [data, cells] = await Promise.all([
-    parseEssentialityData(essentialityData),
-    parseCellInfo(cellInfo),
+const parseData = async (essentialityFile, cellInfoFile, coDependencyFile) => {
+  const [data, cells, coDependency, idToSymbolMap] = await Promise.all([
+    parseEssentialityData(essentialityFile),
+    parseCellInfo(cellInfoFile),
+    parseCoDependencies(coDependencyFile),
+    createIDtoSymbolMap(essentialityFile),
   ]);
 
   const [effectByGeneIDAndCell, cellsAvailable] = summarizeByGeneID(data, cells);
+
+  let effects = addStats(effectByGeneIDAndCell);
+  effects = mergeData(effects, coDependency, idToSymbolMap);
 
   return {
     essentialityTissues: {
       cells: cellsAvailable,
     },
-    effects: addStats(effectByGeneIDAndCell),
+    effects,
   };
 };
 
 module.exports = {
   addStats,
+  createIDtoSymbolMap,
   parseCellInfo,
+  parseCoDependencies,
   parseData,
   parseEssentialityData,
 };

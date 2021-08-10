@@ -21,6 +21,9 @@ const bindListeners = () => {
   document.querySelectorAll('.click-namespace').forEach((element) => {
     element.addEventListener('click', namespaceCheck);
   });
+  document.querySelectorAll('.input').forEach((element) => {
+    element.addEventListener('change', onChange);
+  });
   document.querySelectorAll('.select').forEach((element) => {
     element.addEventListener('change', onChange);
   });

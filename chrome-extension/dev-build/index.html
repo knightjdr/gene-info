@@ -169,6 +169,10 @@
                 <em>Essentiality cell lines</em>
                 <select class="slim-select" data-type="essentiality_tissues" id="essentiality_tissues" multiple>
                 </select>
+                <div class="essentiality_input">
+                  <label for="essentiality_codependencies">Co-dependencies:</label>
+                  <input class="input" data-type="essentiality_codependencies"  id="essentiality_codependencies" placeholder="Max. 25" type="number" max="25" min="1" step="1" />
+                </div>
               </div>
             </div>
           </div>
@@ -239,7 +243,7 @@
             </div>
             <div class="toggle-options toggle-options_padding" id="toggle_options_go">
               <em>Default GO namespace</em>
-              <div>
+              <div >
                 <input class="checkbox click-namespace" data-type="bp" id="go_namespace_bp" type="checkbox" checked />
                 <label for="go_namespace_bp">BP</label>
               </div>

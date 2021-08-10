@@ -2,7 +2,9 @@ const mockFS = require('mock-fs');
 
 const {
   addStats,
+  createIDtoSymbolMap,
   parseCellInfo,
+  parseCoDependencies,
   parseData,
   parseEssentialityData,
 } = require('./parse-data');
@@ -14,6 +16,18 @@ ACH-000003,CACO2,CACO2,CACO2_LARGE_INTESTINE
 ACH-000004,"HEL, clone X",HEL,HEL_HAEMATOPOIETIC_AND_LYMPHOID_TISSUE
 `;
 
+const coDependencyData = `dim_0,dim_1,cor
+A1BG (1),A1BG (1),1.0
+A1CF (29974),A1CF (29974),1.0
+A2M (2),A2M (2),1.0
+A1BG (1),A1CF (29974),0.77777
+A1BG (1),A2M (2),0.1
+A1CF (29974),A1BG (1),0.77777
+A1CF (29974),A2M (2),0.23543
+A2M (2),A1BG (1),0.1
+A2M (2),A1CF (29974),0.23543
+`;
+
 const effectData = `Essentiality_ID,A1BG (1),A1CF (29974),A2M (2),A2ML1 (144568)
 ACH-000001,0,-0.5,-1,0.1
 ACH-000003,0.2,-0.1,-0.75,0.15
@@ -22,6 +36,7 @@ ACH-000004,-0.4,0.2,-1,-1.5
 
 const mockedFileSystem = {
   'Homo sapiens-cell-info.csv': cellInfoData,
+  'Homo sapiens-co-dependency.csv': coDependencyData,
   'Homo sapiens.csv': effectData,
 };
 mockFS(mockedFileSystem);
@@ -31,6 +46,19 @@ afterAll(() => {
 });
 
 describe('Parse essentiality', () => {
+  describe('id mapping', () => {
+    it('should create a map of gene IDs to sumbol', async () => {
+      const expected = {
+        1: 'A1BG',
+        29974: 'A1CF',
+        2: 'A2M',
+        144568: 'A2ML1',
+      };
+      const actual = await createIDtoSymbolMap('./Homo sapiens.csv');
+      expect(actual).toEqual(expected);
+    });
+  });
+
   describe('calculate stats', () => {
     it('should calculate stats', () => {
       const effects = {
@@ -122,6 +150,27 @@ describe('Parse essentiality', () => {
     });
   });
 
+  describe('co dependency info', () => {
+    it('should create a map of ID to co dependent genes as tuples', async () => {
+      const expected = {
+        1: [
+          ['A1CF', 0.7778],
+          ['A2M', 0.1],
+        ],
+        2: [
+          ['A1CF', 0.2354],
+          ['A1BG', 0.1],
+        ],
+        29974: [
+          ['A1BG', 0.7778],
+          ['A2M', 0.2354],
+        ],
+      };
+      const actual = await parseCoDependencies('./Homo sapiens-co-dependency.csv');
+      expect(actual).toEqual(expected);
+    });
+  });
+
   describe('effect data', () => {
     it('should create a map of cells to gene IDs with effect values', async () => {
       const expected = {
@@ -162,6 +211,11 @@ describe('Parse essentiality', () => {
               HEL: -0.4,
               NIHOVCAR3: 0,
             },
+            coDependencies: [
+              ['A1CF', 0.7778],
+              ['A2M', 0.1],
+            ],
+            sourceSymbol: 'A1BG',
             stats: {
               mean: -0.0667,
               median: 0,
@@ -174,6 +228,11 @@ describe('Parse essentiality', () => {
               HEL: -1,
               NIHOVCAR3: -1,
             },
+            coDependencies: [
+              ['A1CF', 0.2354],
+              ['A1BG', 0.1],
+            ],
+            sourceSymbol: 'A2M',
             stats: {
               mean: -0.9167,
               median: -1,
@@ -186,6 +245,11 @@ describe('Parse essentiality', () => {
               HEL: 0.2,
               NIHOVCAR3: -0.5,
             },
+            coDependencies: [
+              ['A1BG', 0.7778],
+              ['A2M', 0.2354],
+            ],
+            sourceSymbol: 'A1CF',
             stats: {
               mean: -0.1333,
               median: -0.1,
@@ -198,6 +262,8 @@ describe('Parse essentiality', () => {
               HEL: -1.5,
               NIHOVCAR3: 0.1,
             },
+            coDependencies: [],
+            sourceSymbol: 'A2ML1',
             stats: {
               mean: -0.4167,
               median: 0.1,
@@ -206,7 +272,11 @@ describe('Parse essentiality', () => {
           },
         },
       };
-      const actual = await parseData('./Homo sapiens.csv', './Homo sapiens-cell-info.csv');
+      const actual = await parseData(
+        './Homo sapiens.csv',
+        './Homo sapiens-cell-info.csv',
+        './Homo sapiens-co-dependency.csv',
+      );
       expect(actual).toEqual(expected);
     });
   });

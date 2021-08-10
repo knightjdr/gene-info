@@ -2,6 +2,9 @@ import State, { defaultFalseToggleState, defaultTrueToggleState } from './state'
 
 jest.mock('../config', () => ({
   defaultGoNamespace: 'BP',
+  defaultInputs: {
+    essentiality_codependencies: 5,
+  },
   defaultSettingOrder: ['basic', 'links'],
   defaultTissues: {
     essentiality: {

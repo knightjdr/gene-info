@@ -42,6 +42,8 @@ class State {
       basic: defaultTrueToggleState(storage.basic),
       ctrl: defaultFalseToggleState(storage.ctrl),
       essentiality: defaultTrueToggleState(storage.essentiality),
+      essentiality_codependencies: storage.essentiality_codependencies
+        || config.defaultInputs.essentiality_codependencies,
       essentiality_tissues: storage.essentiality_tissues || config.defaultTissues.essentiality[species],
       description: defaultTrueToggleState(storage.description),
       domain: defaultTrueToggleState(storage.domain),

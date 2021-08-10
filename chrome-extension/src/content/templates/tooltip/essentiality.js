@@ -8,7 +8,7 @@ const essentialityElement = (report, settings) => {
   ) {
     links.push({
       database: 'DepMap',
-      href: `https://depmap.org/portal/gene/${report.gene}?tab=overview`,
+      href: `https://depmap.org/portal/gene/${report.essentiality.sourceSymbol || report.gene}?tab=overview`,
     });
   }
   return links;

@@ -5,6 +5,7 @@ import reportCheckbox from './report-checkbox';
 import settingOrder from './setting-order';
 import theme from './theme';
 import warning from './warning';
+import { inputs } from './inputs';
 import { toggles } from './toggles';
 
 const loadPreferences = () => {
@@ -15,6 +16,7 @@ const loadPreferences = () => {
   settingOrder();
   theme();
   toggles();
+  inputs();
   warning();
 };
 

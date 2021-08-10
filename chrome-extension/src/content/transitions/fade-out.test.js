@@ -17,12 +17,11 @@ describe('Fade out element', () => {
     shadowDom.appendChild(child);
   });
 
-  it('should add animation class and remove element after 400ms', async (done) => {
+  it('should add animation class and remove element after 400ms', async () => {
     fadeOut(child, shadowDom);
     expect(child.classList.contains('panel_animate-fadeout')).toBeTruthy();
     expect(document.querySelector('#test-div')).not.toBeNull();
     await sleep(500);
     expect(document.querySelector('#test-div')).toBeNull();
-    done();
   });
 });

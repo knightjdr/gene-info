@@ -62,6 +62,16 @@ describe('Bind listeners', () => {
     drag2.setAttribute('draggable', true);
     document.body.appendChild(drag2);
 
+    // Create generic numeric input elements.
+    const input1 = document.createElement('input');
+    input1.className = 'input';
+    input1.id = 'input_one';
+    document.body.appendChild(input1);
+    const input2 = document.createElement('input');
+    input2.className = 'input';
+    input2.id = 'input_two';
+    document.body.appendChild(input2);
+
     // Create species select.
     const speciesSelect = document.createElement('select');
     speciesSelect.id = 'species';
@@ -163,6 +173,22 @@ describe('Bind listeners', () => {
         div.dispatchEvent(new Event('dragstart', {}));
         expect(dragStart).toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('input', () => {
+    it('should bind change handler on first input', () => {
+      onChange.mockClear();
+      const input = document.getElementById('input_one');
+      input.dispatchEvent(new Event('change'));
+      expect(onChange).toHaveBeenCalled();
+    });
+
+    it('should bind change handler on second input', () => {
+      onChange.mockClear();
+      const input = document.getElementById('input_two');
+      input.dispatchEvent(new Event('change'));
+      expect(onChange).toHaveBeenCalled();
     });
   });
 
