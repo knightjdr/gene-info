@@ -3,11 +3,11 @@ const autoprefixer = require('autoprefixer');
 const csso = require('gulp-csso');
 const del = require('del');
 const htmlmin = require('gulp-htmlmin');
-const nanoid = require('nanoid');
 const postcss = require('gulp-postcss');
 const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 const { dest, src } = require('gulp');
+const { nanoid } = require('nanoid');
 
 require('dotenv').config({
   path: '.env',

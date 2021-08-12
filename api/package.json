@@ -17,7 +17,7 @@
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongodb": "^3.6.2",
+    "mongodb": "^4.1.0",
     "winston": "^2.4.5"
   }
 }

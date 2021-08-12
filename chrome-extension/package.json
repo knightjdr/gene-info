@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "GIX extension",
   "scripts": {
-    "dev-ext:chrome": "NODE_ENV=development webpack --watch --config webpack.dev.js --env.browser=chrome",
-    "dev-ext:firefox": "NODE_ENV=development webpack --watch --config webpack.dev.js --env.browser=firefox",
-    "prod-ext:chrome": "NODE_ENV=production webpack --config webpack.prod.js --env.browser=chrome",
-    "prod-ext:edge": "NODE_ENV=production webpack --config webpack.prod.js --env.browser=edge",
-    "prod-ext:firefox": "NODE_ENV=production webpack --config webpack.prod.js --env.browser=firefox",
-    "prod-ext:safari": "NODE_ENV=production webpack --config webpack.prod.js --env.browser=safari",
-    "prod-ext:test": "NODE_ENV=production webpack --config webpack.prod-test.js --env.browser=chrome",
+    "dev-ext:chrome": "NODE_ENV=development webpack --watch --config webpack.dev.js --env browser=chrome",
+    "dev-ext:firefox": "NODE_ENV=development webpack --watch --config webpack.dev.js --env browser=firefox",
+    "prod-ext:chrome": "NODE_ENV=production webpack --config webpack.prod.js --env browser=chrome",
+    "prod-ext:edge": "NODE_ENV=production webpack --config webpack.prod.js --env browser=edge",
+    "prod-ext:firefox": "NODE_ENV=production webpack --config webpack.prod.js --env browser=firefox",
+    "prod-ext:safari": "NODE_ENV=production webpack --config webpack.prod.js --env browser=safari",
+    "prod-ext:test": "NODE_ENV=production webpack --config webpack.prod-test.js --env browser=chrome",
     "start:chrome": "web-ext run --target chromium --source-dir ./dev-build/",
     "start:firefox": "web-ext run --source-dir ./dev-build/"
   },
@@ -19,14 +19,14 @@
     "slim-select": "git+https://github.com/knightjdr/slim-select.git"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^5.1.2",
-    "css-loader": "^3.6.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^6.2.0",
     "html-minifier": "^4.0.0",
     "html-replace-webpack-plugin": "^2.6.0",
-    "html-webpack-plugin": "^3.2.0",
-    "mini-css-extract-plugin": "^0.8.2",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-merge": "^4.2.2"
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.2.0",
+    "webpack": "^5.50.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-merge": "^5.8.0"
   }
 }
