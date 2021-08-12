@@ -56,11 +56,5 @@
       "api/*"
     ],
     "verbose": true
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "testPathIgnorePatterns": [
-      "/node_modules"
-    ]
   }
 }

@@ -9,7 +9,7 @@ module.exports = env => merge(common(env), {
   mode: 'development',
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dev-build'),
+    path: path.resolve(__dirname, `dev-build-v${env.manifest}`),
   },
   plugins: [
     new MiniCssExtractPlugin(),

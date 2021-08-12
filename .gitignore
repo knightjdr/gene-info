@@ -35,8 +35,8 @@ npm-debug.log
 # Extension
 chrome-extension/dist
 chrome-extension/dist-test
-chrome-extension/dev-build/*.js*
-chrome-extension/dev-build/*.css*
+chrome-extension/dev-build-v*/*.js*
+chrome-extension/dev-build-v*/*.css*
 
 # Docs
 docs/build

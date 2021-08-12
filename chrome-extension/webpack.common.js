@@ -24,7 +24,7 @@ module.exports = env => ({
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'popup.html',
-      template: './dev-build/index.html',
+      template: `./dev-build-v${env.manifest}/index.html`,
       inject: false,
       minify: false,
     }),

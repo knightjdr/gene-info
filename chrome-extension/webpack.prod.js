@@ -14,8 +14,8 @@ module.exports = env => merge(common(env), {
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'dev-build/manifest.json', to: 'manifest.json' },
-        { from: 'dev-build/icon', to: 'icon/' },
+        { from: `dev-build-v${env.manifest}/manifest.json`, to: 'manifest.json' },
+        { from: `dev-build-v${env.manifest}/icon`, to: 'icon/' },
       ],
     }),
     new MiniCssExtractPlugin(),
