@@ -16,7 +16,7 @@ const config = {
       displayName: 'extension',
       testEnvironment: 'jsdom',
       testMatch: [
-        '<rootDir>/chrome-extension/src/**/*.test.js',
+        '<rootDir>/extension/src/**/*.test.js',
       ],
     },
   ],

@@ -1,14 +1,14 @@
 buildNumber='1'
-versionNumber=$(cat chrome-extension/dist/manifest.json | jq '.version')
-infoPlist='chrome-extension/safari/gix/gix/Info.plist'
-infoPlistExtension='chrome-extension/safari/gix/gix Extension/Info.plist'
+versionNumber=$(cat extension/safari/manifest.json | jq '.version')
+infoPlist='extension/safari-xcode/gix/gix/Info.plist'
+infoPlistExtension='extension/safari-xcode/gix/gix Extension/Info.plist'
 
 # convert extension
-xcrun safari-web-extension-converter ./chrome-extension/dist --project-location ./chrome-extension/safari --app-name gix --bundle-identifier dev.jamesknight.gix --copy-resources --force --swift --no-open
+xcrun safari-web-extension-converter ./extension/safari --project-location ./extension/safari-xcode --app-name gix --bundle-identifier dev.jamesknight.gix --copy-resources --force --swift --no-open
 
 # copy app icons
-rm -rf chrome-extension/safari/gix/gix/Assets.xcassets/AppIcon.appiconset
-cp -r design/AppIcon.appiconset chrome-extension/safari/gix/gix/Assets.xcassets
+rm -rf extension/safari-xcode/gix/gix/Assets.xcassets/AppIcon.appiconset
+cp -r design/AppIcon.appiconset extension/safari-xcode/gix/gix/Assets.xcassets
 
 # update version and build numbers
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "$infoPlist"

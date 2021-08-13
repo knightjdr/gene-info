@@ -1,0 +1,33 @@
+{
+  "name": "extension",
+  "version": "1.0.0",
+  "description": "GIX extension",
+  "scripts": {
+    "dev-ext:chrome": "NODE_ENV=development webpack --watch --config webpack.dev.js --env browser=chrome --env manifest=3 --env test=true",
+    "dev-ext:firefox": "NODE_ENV=development webpack --watch --config webpack.dev.js --env browser=firefox --env manifest=2 --env test=true",
+    "prod-ext:chrome": "NODE_ENV=production webpack --config webpack.prod.js --env browser=chrome --env manifest=3 --env test=false",
+    "prod-ext:edge": "NODE_ENV=production webpack --config webpack.prod.js --env browser=edge --env manifest=3 --env test=false",
+    "prod-ext:firefox": "NODE_ENV=production webpack --config webpack.prod.js --env browser=firefox --env manifest=2 --env test=false",
+    "prod-ext:safari": "NODE_ENV=production webpack --config webpack.prod.js --env browser=safari --env manifest=2 --env test=false",
+    "prod-ext:test": "NODE_ENV=production webpack --config webpack.prod.js --env browser=chrome --env manifest=3 --env test=true",
+    "start:chrome": "web-ext run --target chromium --source-dir ./dev-build/",
+    "start:firefox": "web-ext run --source-dir ./dev-build/"
+  },
+  "author": "James Knight",
+  "license": "MIT",
+  "dependencies": {
+    "slim-select": "git+https://github.com/knightjdr/slim-select.git"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^6.2.0",
+    "html-minifier": "^4.0.0",
+    "html-replace-webpack-plugin": "^2.6.0",
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.2.0",
+    "replace-in-file-webpack-plugin": "^1.0.6",
+    "webpack": "^5.50.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-merge": "^5.8.0"
+  }
+}
