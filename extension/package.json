@@ -21,6 +21,7 @@
   "devDependencies": {
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.2.0",
+    "dotenv-webpack": "^7.0.3",
     "html-minifier": "^4.0.0",
     "html-replace-webpack-plugin": "^2.6.0",
     "html-webpack-plugin": "^5.3.2",

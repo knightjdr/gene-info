@@ -30,6 +30,7 @@ npm-debug.log
 .vscode
 
 # Extension
+extension/.env*
 extension/dev-build
 extension/chrome
 extension/chrome-test

@@ -1,11 +1,7 @@
-const url = process.env.NODE_ENV === 'production'
-  ? 'https://api.gene-info.org/api'
-  : 'http://localhost:8002';
-
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const { action, route } = message;
   if (action === 'xhttp') {
-    fetch(`${url}/extension${route}`)
+    fetch(`${process.env.API}/extension${route}`)
       .then((response) => {
         if (!response.ok) {
           sendResponse({ error: true });

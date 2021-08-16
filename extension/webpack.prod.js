@@ -1,4 +1,5 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin');
@@ -66,6 +67,9 @@ module.exports = (env) => {
             { from: manifestSource, to: 'manifest.json' },
             { from: iconSource, to: 'icon/' },
           ],
+        }),
+        new Dotenv({
+          path: './.env.production',
         }),
         new MiniCssExtractPlugin(),
         new ReplaceInFileWebpackPlugin([
