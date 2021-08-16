@@ -5,11 +5,18 @@ const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin');
 const { merge } = require('webpack-merge');
 
 const buildVariables = require('./build-variables');
-const common = require('./webpack.common.js');
+const common = require('./webpack.common');
 
 const defineDest = env => (env.test === 'true' ? `${env.browser}-test` : env.browser);
 
-const defineIconSource = env => (env.test === 'true' ? 'icons/icon-test' : 'icons/icon-prod');
+const defineIconSource = (env) => {
+  if (env.browser === 'safari') {
+    return 'icons/icon-safari';
+  } if (env.test === 'true') {
+    return 'icons/icon-test';
+  }
+  return 'icons/icon-prod';
+};
 
 const defineManifestChanges = (env) => {
   const rules = [
