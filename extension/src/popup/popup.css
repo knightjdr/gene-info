@@ -184,6 +184,7 @@ section > h1 {
 }
 .essentiality_input input {
   flex: 1;
+  min-width: 0;
 }
 
 /* search */
