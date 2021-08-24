@@ -1,4 +1,3 @@
-buildNumber='1'
 versionNumber=$(cat extension/safari/manifest.json | jq '.version')
 infoPlist='extension/safari-xcode/gix/gix/Info.plist'
 infoPlistExtension='extension/safari-xcode/gix/gix Extension/Info.plist'
@@ -18,8 +17,8 @@ cp extension/safari/icon/icon512.png extension/safari-xcode/gix/gix/Assets.xcass
 cp extension/safari/icon/icon1024.png extension/safari-xcode/gix/gix/Assets.xcassets/AppIcon.appiconset/
 
 # update version and build numbers
-/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "$infoPlist"
-/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "$infoPlistExtension"
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $versionNumber" "$infoPlist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $versionNumber" "$infoPlistExtension"
 /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $versionNumber" "$infoPlist"
 /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $versionNumber" "$infoPlistExtension"
 
