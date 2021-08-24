@@ -6,6 +6,17 @@ infoPlistExtension='extension/safari-xcode/gix/gix Extension/Info.plist'
 # convert extension
 xcrun safari-web-extension-converter ./extension/safari --project-location ./extension/safari-xcode --app-name gix --bundle-identifier dev.jamesknight.gix --copy-resources --force --swift --no-open
 
+# copy app icons
+rm -rf extension/safari-xcode/gix/gix/Assets.xcassets/AppIcon.appiconset/*
+cp extension/safari/icon/Contents.json extension/safari-xcode/gix/gix/Assets.xcassets/AppIcon.appiconset/
+cp extension/safari/icon/icon16.png extension/safari-xcode/gix/gix/Assets.xcassets/AppIcon.appiconset/
+cp extension/safari/icon/icon32.png extension/safari-xcode/gix/gix/Assets.xcassets/AppIcon.appiconset/
+cp extension/safari/icon/icon64.png extension/safari-xcode/gix/gix/Assets.xcassets/AppIcon.appiconset/
+cp extension/safari/icon/icon128.png extension/safari-xcode/gix/gix/Assets.xcassets/AppIcon.appiconset/
+cp extension/safari/icon/icon256.png extension/safari-xcode/gix/gix/Assets.xcassets/AppIcon.appiconset/
+cp extension/safari/icon/icon512.png extension/safari-xcode/gix/gix/Assets.xcassets/AppIcon.appiconset/
+cp extension/safari/icon/icon1024.png extension/safari-xcode/gix/gix/Assets.xcassets/AppIcon.appiconset/
+
 # update version and build numbers
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "$infoPlist"
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "$infoPlistExtension"
