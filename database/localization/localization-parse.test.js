@@ -35,15 +35,14 @@ const compartmentTerms = {
 
 describe('Localization parsing', () => {
   describe('reading compartments file', () => {
-    it('should create object with gene, accession and terms', async (done) => {
+    it('should create object with gene, accession and terms', async () => {
       const results = await handleCompartmentLines(testFile);
       expect(results).toEqual(compartmentTerms);
-      done();
     });
   });
 
   describe('Filter compartment terms to remove parents', () => {
-    it('should filter compartment terms to top 5 based on IC, and sort alphabetically', async (done) => {
+    it('should filter compartment terms to top 5 based on IC, and sort alphabetically', async () => {
       const obo = {
         map: {
           'GO:0000139': 'a',
@@ -102,7 +101,6 @@ describe('Localization parsing', () => {
       };
       const results = await filterCompartments(compartmentTerms, obo);
       expect(results).toEqual(expected);
-      done();
     });
   });
 

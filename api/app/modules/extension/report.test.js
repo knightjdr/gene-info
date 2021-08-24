@@ -31,7 +31,7 @@ const sleep = ms => (
 
 describe('Report', () => {
   describe('validation error', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       validate.validate.mockReturnValue({
         err: true,
         message: 'Validation error',
@@ -40,7 +40,6 @@ describe('Report', () => {
       res.status.mockClear();
       report(req, res);
       await sleep(200);
-      done();
     });
 
     it('should set status message', () => {
@@ -58,7 +57,7 @@ describe('Report', () => {
 
   describe('successful find', () => {
     describe('find gene', () => {
-      beforeAll(async (done) => {
+      beforeAll(async () => {
         const results = [
           { gene: 'test2', name: 'test gene2' },
           { gene: 'test', name: 'test gene' },
@@ -74,7 +73,6 @@ describe('Report', () => {
         res.send.mockClear();
         report(req, res);
         await sleep(200);
-        done();
       });
 
       it('should create query', () => {
@@ -99,7 +97,7 @@ describe('Report', () => {
     });
 
     describe('find something other than gene', () => {
-      beforeAll(async (done) => {
+      beforeAll(async () => {
         const results = [
           { gene: 'test', name: 'test gene' },
         ];
@@ -114,7 +112,6 @@ describe('Report', () => {
         res.send.mockClear();
         report(req, res);
         await sleep(200);
-        done();
       });
 
       it('should create query', () => {
@@ -139,7 +136,7 @@ describe('Report', () => {
 
     describe('find nothing', () => {
       describe('missing return value', () => {
-        beforeAll(async (done) => {
+        beforeAll(async () => {
           find.mockResolvedValue();
           validate.validate.mockReturnValue({
             field: 'gene',
@@ -151,7 +148,6 @@ describe('Report', () => {
           res.send.mockClear();
           report(req, res);
           await sleep(200);
-          done();
         });
 
         it('should send response', () => {
@@ -165,7 +161,7 @@ describe('Report', () => {
       });
 
       describe('empty array', () => {
-        beforeAll(async (done) => {
+        beforeAll(async () => {
           find.mockResolvedValue([]);
           validate.validate.mockReturnValue({
             field: 'gene',
@@ -177,7 +173,6 @@ describe('Report', () => {
           res.send.mockClear();
           report(req, res);
           await sleep(200);
-          done();
         });
 
         it('should send response', () => {
@@ -193,7 +188,7 @@ describe('Report', () => {
   });
 
   describe('find error', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       find.mockRejectedValue();
       validate.validate.mockReturnValue({
         field: 'gene',
@@ -204,7 +199,6 @@ describe('Report', () => {
       res.status.mockClear();
       report(req, res);
       await sleep(200);
-      done();
     });
 
     it('should set status', () => {

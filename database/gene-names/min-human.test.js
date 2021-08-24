@@ -103,9 +103,8 @@ afterAll(() => {
 
 describe('Parse human gene names from HGNC', () => {
   describe('successful parse', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       await minHuman('hgnc.json', './files/gene-names', false);
-      done();
     });
 
     it('should parse results to a file', () => {
@@ -140,12 +139,11 @@ describe('Parse human gene names from HGNC', () => {
   });
 
   describe('skip parsing', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       await minHuman('hgnc.json', './files/gene-names', true);
-      done();
     });
 
-    it('should not parse results', async (done) => {
+    it('should not parse results', (done) => {
       fs.access('./files/gene-names/Homo sapiens.json', (err) => {
         expect(err).not.toBeUndefined();
         done();

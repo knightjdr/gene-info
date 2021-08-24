@@ -9,15 +9,15 @@
     "dev-api": "npm run dev-api --prefix api",
     "prod-api": "npm run prod-api --prefix api",
     "prod-api-forever": "npm run prod-api-forever --prefix api",
-    "dev-ext:chrome": "npm run dev-ext:chrome --prefix chrome-extension",
-    "dev-ext:firefox": "npm run dev-ext:firefox --prefix chrome-extension",
-    "prod-ext:chrome": "npm run prod-ext:chrome --prefix chrome-extension",
-    "prod-ext:edge": "npm run prod-ext:edge --prefix chrome-extension",
-    "prod-ext:firefox": "npm run prod-ext:firefox --prefix chrome-extension",
-    "prod-ext:safari": "npm run prod-ext:safari --prefix chrome-extension && ./safari-build.sh",
-    "prod-ext:test": "npm run prod-ext:test --prefix chrome-extension",
-    "start:chrome": "npm run start:chrome --prefix chrome-extension",
-    "start:firefox": "npm run start:firefox --prefix chrome-extension",
+    "dev-ext:chrome": "npm run dev-ext:chrome --prefix extension",
+    "dev-ext:firefox": "npm run dev-ext:firefox --prefix extension",
+    "prod-ext:chrome": "npm run prod-ext:chrome --prefix extension",
+    "prod-ext:edge": "npm run prod-ext:edge --prefix extension",
+    "prod-ext:firefox": "npm run prod-ext:firefox --prefix extension",
+    "prod-ext:safari": "npm run prod-ext:safari --prefix extension && ./safari-build.sh",
+    "prod-ext:test": "npm run prod-ext:test --prefix extension",
+    "start:chrome": "npm run start:chrome --prefix extension",
+    "start:firefox": "npm run start:firefox --prefix extension",
     "doc-deploy": "npm run doc-deploy --prefix docs",
     "doc-build": "npm run doc-build --prefix docs",
     "doc-server": "npm run start --prefix docs",
@@ -34,20 +34,19 @@
   },
   "homepage": "https://github.com/knightjdr/gene-info#readme",
   "devDependencies": {
-    "@babel/plugin-proposal-optional-chaining": "^7.12.7",
-    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.15.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import": "^2.24.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-react": "^7.22.0",
-    "jest": "^26.6.3",
-    "jshint": "^2.12.0",
+    "eslint-plugin-react": "^7.24.0",
+    "jest": "^27.0.6",
+    "jshint": "^2.13.1",
     "jshint-stylish": "^2.2.1"
   },
-  "dependencies": {},
   "nodemonConfig": {
     "ext": ".js",
     "ignore": [
@@ -57,10 +56,5 @@
       "api/*"
     ],
     "verbose": true
-  },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules"
-    ]
   }
 }

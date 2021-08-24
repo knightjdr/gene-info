@@ -1,5 +1,5 @@
 const fs = require('fs');
-const https = require('https');
+const { https } = require('follow-redirects');
 
 const downloadHttp = (url, dest, skip) => (
   new Promise((resolve, reject) => {

@@ -1,7 +1,7 @@
 const convertXML = require('./convert-xml');
 
 describe('Convert xml', () => {
-  it('should convert an XML string to js', async (done) => {
+  it('should convert an XML string to js', async () => {
     const xml = `<entry>
     <accession>Q9BUL8</accession>
     <accession>A8K515</accession>
@@ -56,6 +56,5 @@ describe('Convert xml', () => {
     };
     const converted = await convertXML(xml);
     expect(converted).toEqual(expected);
-    done();
   });
 });

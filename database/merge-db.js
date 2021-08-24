@@ -4,6 +4,7 @@ const defineGeneNames = require('./gene-names/define');
 const mergeDb = ([
   { proteinExpression },
   { rnaExpression },
+  { effects: essentiality },
   db,
   domains,
   geneNames,
@@ -29,11 +30,20 @@ const mergeDb = ([
         compartments: entry.gene && localization.compartments[entry.gene]
           ? localization.compartments[entry.gene]
           : { accession: '', terms: [] },
-        hpa: entry['ensembl-gene'][0] && localization.hpa[entry['ensembl-gene'][0]] ? localization.hpa[entry['ensembl-gene'][0]] : {},
+        hpa: entry['ensembl-gene'][0] && localization.hpa[entry['ensembl-gene'][0]]
+          ? localization.hpa[entry['ensembl-gene'][0]]
+          : {},
         uniprot: entry.localization.uniprot,
       },
-      'protein-expression': proteinExpression[accession] ? proteinExpression[accession] : {},
-      'rna-expression': entry['ensembl-gene'][0] && rnaExpression[entry['ensembl-gene'][0]] ? rnaExpression[entry['ensembl-gene'][0]] : {},
+      'protein-expression': proteinExpression[accession]
+        ? proteinExpression[accession]
+        : {},
+      'rna-expression': entry['ensembl-gene'][0] && rnaExpression[entry['ensembl-gene'][0]]
+        ? rnaExpression[entry['ensembl-gene'][0]]
+        : {},
+      essentiality: entry.geneid && essentiality[entry.geneid]
+        ? essentiality[entry.geneid]
+        : {},
     });
   })
 );

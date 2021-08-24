@@ -7,13 +7,9 @@ describe('Tracking', () => {
   describe('successful insert', () => {
     let result;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       insert.mockResolvedValue();
-      tracking('Homo sapiens', 'gene', true)
-        .then((val) => {
-          result = val;
-          done();
-        });
+      result = await tracking('Homo sapiens', 'gene', true);
     });
 
     it('should resolve with undefined', () => {
@@ -33,13 +29,9 @@ describe('Tracking', () => {
   describe('unsuccessful insert', () => {
     let result;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       insert.mockRejectedValue(new Error('test error'));
-      tracking('Homo sapiens', 'gene', true)
-        .then((val) => {
-          result = val;
-          done();
-        });
+      result = await tracking('Homo sapiens', 'gene', true);
     });
 
     it('should resolve with an error', () => {

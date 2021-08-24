@@ -34,7 +34,7 @@ describe('Define field for matching gene names to uniprot', () => {
 
 describe('Read parsed gene names', () => {
   describe('file exists', () => {
-    it('should parse gene results', async (done) => {
+    it('should parse gene results', async () => {
       const geneNames = await geneNameParse('Homo sapiens.json', 'Homo sapiens');
       const expected = {
         field: 'hgnc',
@@ -50,19 +50,17 @@ describe('Read parsed gene names', () => {
         },
       };
       expect(geneNames).toEqual(expected);
-      done();
     });
   });
 
   describe('file does not exist', () => {
-    it('should return emtpy object for gene results', async (done) => {
+    it('should return emtpy object for gene results', async () => {
       const geneNames = await geneNameParse('missing.json', 'other');
       const expected = {
         field: undefined,
         geneNames: {},
       };
       expect(geneNames).toEqual(expected);
-      done();
     });
   });
 });

@@ -13,7 +13,7 @@ jest.mock('../../../config', () => (
 ));
 jest.mock('../../../logger');
 
-beforeAll(async (done) => {
+beforeAll((done) => {
   mongodb.max_delay = 0;
   const { MongoClient } = mongodb;
   const url = 'mongodb://localhost:27017/test';

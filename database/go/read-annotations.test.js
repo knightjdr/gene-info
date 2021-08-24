@@ -6,7 +6,7 @@ const testFile = path.resolve(__dirname, '../files/example/annotations.txt');
 
 describe('Read annotations', () => {
   describe('read return an array of GO terms for each gene', () => {
-    it('should return object with map from ID to name and parents', async (done) => {
+    it('should return object with map from ID to name and parents', async () => {
       const expected = {
         HNRNPUL1: ['GO:0005654', 'GO:0005654', 'GO:0005654', 'GO:0006396', 'GO:0009615', 'GO:0019899'],
         CHCHD7: ['GO:0003674', 'GO:0005575', 'GO:0005758', 'GO:0008150'],
@@ -16,7 +16,6 @@ describe('Read annotations', () => {
       };
       const results = await readAnnotations(testFile);
       expect(results).toEqual(expected);
-      done();
     });
   });
 });

@@ -1,5 +1,5 @@
 const fs = require('fs');
-const http = require('http');
+const { http } = require('follow-redirects');
 
 const downloadHttp = (url, dest, skip) => (
   new Promise((resolve, reject) => {

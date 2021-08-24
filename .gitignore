@@ -1,6 +1,3 @@
-# extension
-chrome-extension/dev-build/popup.html
-
 # api
 /api/config.js
 /api/logs
@@ -11,6 +8,7 @@ chrome-extension/dev-build/popup.html
 # database files
 /database/files/*
 !/database/files/example
+!/database/files/essentiality-tissues.js
 !/database/files/rna-tissues.js
 !/database/files/protein-tissues.js
 
@@ -32,21 +30,23 @@ npm-debug.log
 .vscode
 
 # Extension
-chrome-extension/dist
-chrome-extension/dist-test
-chrome-extension/dev-build/*.js*
-chrome-extension/dev-build/*.css*
+extension/.env*
+extension/dev-build
+extension/chrome
+extension/chrome-test
+extension/edge
+extension/firefox
+extension/safari
+extension/safari-xcode
 
 # Docs
 docs/build
 docs/.env*
 
 ## pem key
-chrome-extension/dist.crx
-chrome-extension/dist.pem
+extension/dist.crx
+extension/dist.pem
 
 .htaccess
 *.zip
 *.mp4
-
-chrome-extension/safari

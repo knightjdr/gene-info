@@ -11,7 +11,7 @@ afterAll(() => {
 });
 
 describe('Write json', () => {
-  it('should read a json file to javascript object', async (done) => {
+  it('should read a json file to javascript object', async () => {
     const obj = {
       'key-a': 'value-a',
       'key-b': 'value-b',
@@ -21,7 +21,6 @@ describe('Write json', () => {
     const file = fs.readFileSync('file.json', 'UTF8');
     const expected = '{"key-a":"value-a","key-b":"value-b","key-c":[1,2,3]}';
     expect(file).toEqual(expected);
-    done();
   });
 
   it('should throw error when write folder is missing', () => {

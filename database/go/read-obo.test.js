@@ -32,9 +32,8 @@ describe('Obo file', () => {
   describe('find immediate parents for GO terms', () => {
     let results;
 
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       results = await findImmediateParents(testFile);
-      done();
     });
 
     it('should map ids to names', () => {
@@ -65,7 +64,7 @@ describe('Obo file', () => {
   });
 
   describe('read obo file', () => {
-    it('should return object with map from ID to name and parents', async (done) => {
+    it('should return object with map from ID to name and parents', async () => {
       const expected = {
         map: {
           'GO:0016607': 'Nuclear speck',
@@ -88,7 +87,6 @@ describe('Obo file', () => {
       };
       const results = await readObo(testFile);
       expect(results).toEqual(expected);
-      done();
     });
   });
 });

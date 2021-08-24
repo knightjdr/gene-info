@@ -5,16 +5,8 @@ const { getNames, parseName } = require('./get-names');
 const xmlEntry = require('../files/example/xml-entry');
 
 let exampleEntry;
-beforeAll(async (done) => {
-  convertXML(xmlEntry)
-    .then((converted) => {
-      exampleEntry = converted.entry;
-      done();
-    })
-    .catch((err) => {
-      console.log(err);
-      done();
-    });
+beforeAll(async () => {
+  ({ entry: exampleEntry } = await convertXML(xmlEntry));
 });
 
 describe('Parse protein name', () => {
