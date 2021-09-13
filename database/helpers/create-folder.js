@@ -1,15 +1,7 @@
 const mkdirp = require('mkdirp');
 
-const createFolder = name => (
-  new Promise((resolve, reject) => {
-    mkdirp(name, (err) => {
-      if (!err) {
-        resolve();
-      } else {
-        reject(err);
-      }
-    });
-  })
-);
+const createFolder = async (name) => {
+  await mkdirp(name);
+};
 
 module.exports = createFolder;
