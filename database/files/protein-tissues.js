@@ -5,13 +5,13 @@ const tissues = {
     tissues: [
     ],
   },
-  'Gallus gallus': {
+  'Xenopus laevis': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Xenopus laevis': {
+  'Gallus gallus': {
     cells: [
     ],
     tissues: [
@@ -47,13 +47,13 @@ const tissues = {
     tissues: [
     ],
   },
-  'Saccharomyces cerevisiae': {
+  'Drosophila melanogaster': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Drosophila melanogaster': {
+  'Saccharomyces cerevisiae': {
     cells: [
     ],
     tissues: [
@@ -79,11 +79,10 @@ const tissues = {
       'A-549',
       'ACHN',
       'BT-549',
+      'BT549',
       'C10',
       'C106',
-      'C125-PM',
       'C32',
-      'C70',
       'C75',
       'C80',
       'C84',
@@ -103,6 +102,7 @@ const tissues = {
       'EKVX',
       'GaMG',
       'GP2d',
+      'HBL100',
       'HCA-46',
       'HCC-1143',
       'HCC-1599',
@@ -110,16 +110,21 @@ const tissues = {
       'HCC-202',
       'HCC-2218',
       'HCC-2998',
+      'HCC1143',
+      'HCC1187',
+      'HCC1569',
+      'HCC1599',
+      'HCC1806',
+      'HCC1954',
+      'HCC70',
       'HCT-15',
       'HDC-111',
-      'HDC-114',
       'HDC-135',
       'HDC-142',
       'HDC-143',
       'HDC-54',
       'HDC-57',
       'HDC-73',
-      'HDC-8',
       'HDC-82',
       'HDC-9',
       'HEK-293',
@@ -153,6 +158,8 @@ const tissues = {
       'MCF-10A',
       'MCF-7',
       'MCF-7/adr',
+      'MCF12A',
+      'MDA-MB-157',
       'MDA-MB-231',
       'MDA-MB-435',
       'MDA-MB-453',
@@ -175,6 +182,7 @@ const tissues = {
       'OVCAR-8/ADR',
       'OXCO-1',
       'OXCO-3',
+      'pancreatic metastatic',
       'PC-3',
       'PC/JW',
       'RCC 786-O',
@@ -196,12 +204,17 @@ const tissues = {
       'SNB-75',
       'SNU-C2B',
       'SR',
+      'SUM1315',
+      'SUM149',
+      'SUM190',
+      'SUM225',
       'SW-480',
       'SW-620',
       'SW837',
       'T-47D',
       'TK-10',
       'U-251 MG',
+      'U-266/84',
       'U031',
       'U2-OS',
       'UACC-257',
@@ -213,6 +226,7 @@ const tissues = {
       'adipocyte',
       'adrenal gland',
       'amniocyte',
+      'aqueous humour',
       'arachnoid cyst',
       'B-lymphocyte',
       'blood platelet',
@@ -220,6 +234,7 @@ const tissues = {
       'bone marrow stromal',
       'brain',
       'breast',
+      'breast cancer',
       'cardia',
       'cerebral cortex',
       'cervical mucosa',
