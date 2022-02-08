@@ -5,5 +5,5 @@ module.exports = {
     firefox: 'https://addons.mozilla.org/firefox/addon/gene-info/',
     safari: 'https://apps.apple.com/us/app/gix-for-safari/id1543199063',
   },
-  version: '1.7.1',
+  version: '1.7.2',
 };
