@@ -73,7 +73,7 @@ const config = {
     high: [50],
   },
   goNamespaces: ['bp', 'cc', 'mf'],
-  outages: 'https://raw.githubusercontent.com/knightjdr/gene-info/master/outages.json',
+  outages: 'https://raw.githubusercontent.com/knightjdr/gix-outages/master/outages.json',
   species,
   // The yeast species ID is what the compartment database uses.
   speciesID: {
