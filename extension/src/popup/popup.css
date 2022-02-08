@@ -56,6 +56,7 @@ body.theme_light {
 .warning {
   align-items: center;
   border-top: 1px solid #A5D6A7;
+  box-sizing: border-box;
   display: none;
   font-weight: bold;
   grid-column: 1 / 3;
