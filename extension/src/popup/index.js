@@ -1,5 +1,6 @@
 import bindListeners from './listeners/bind-listeners';
 import display from './display/display';
+import displayOutages from './display/outages';
 import loadPreferences from './settings/load-preferences';
 import populate from './populate/populate';
 
@@ -14,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Update displayed elements.
   display();
+
+  // Check for outage notifications.
+  displayOutages();
 
   // Bind event handlers.
   bindListeners();
