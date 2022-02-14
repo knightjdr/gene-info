@@ -45,7 +45,7 @@ export const formatDate = (date) => {
 const displayOutages = async () => {
   const p = document.querySelector('.outage-notice');
   try {
-    const response = await fetch(config.outages);
+    const response = await fetch(config.outages, { cache: 'no-store' });
     const outages = await response.json();
     if (outages?.start) {
       const start = new Date(outages.start);
