@@ -14,11 +14,6 @@ afterAll(() => {
 describe('Outage notice', () => {
   describe('there is no outage information', () => {
     beforeAll(() => {
-      const p = document.createElement('p');
-      p.className = 'outage-notice';
-      p.style.display = 'none';
-      document.body.appendChild(p);
-
       global.fetch.mockReturnValueOnce(
         Promise.resolve({
           json: () => Promise.resolve({}),
@@ -26,21 +21,16 @@ describe('Outage notice', () => {
       );
     });
 
-    it('should set display property to none', async () => {
+    it('should not create outage notice', async () => {
       await displayOutages();
       const element = document.querySelector('.outage-notice');
-      expect(element.style.display).toBe('none');
+      expect(element).toBeNull();
     });
   });
 
   describe('there is outage information', () => {
     describe('outage is in the future', () => {
       beforeAll(() => {
-        const p = document.createElement('p');
-        p.className = 'outage-notice';
-        p.style.display = 'none';
-        document.body.appendChild(p);
-
         const now = new Date();
         global.fetch.mockReturnValueOnce(
           Promise.resolve({
@@ -52,35 +42,56 @@ describe('Outage notice', () => {
         );
       });
 
-      it('should set display property to none', async () => {
+      it('should not create outage notice', async () => {
         await displayOutages();
         const element = document.querySelector('.outage-notice');
-        expect(element.style.display).toBe('none');
+        expect(element).toBeNull();
       });
     });
 
     describe('outage is in the past', () => {
-      beforeAll(() => {
-        const p = document.createElement('p');
-        p.className = 'outage-notice';
-        p.style.display = 'none';
-        document.body.appendChild(p);
-
-        const now = new Date();
-        global.fetch.mockReturnValueOnce(
-          Promise.resolve({
-            json: () => Promise.resolve({
-              start: new Date(now.getTime() - (2 * dayInMs)),
-              end: new Date(now.getTime() - dayInMs),
+      describe('outage notice does not exist already', () => {
+        beforeAll(() => {
+          const now = new Date();
+          global.fetch.mockReturnValueOnce(
+            Promise.resolve({
+              json: () => Promise.resolve({
+                start: new Date(now.getTime() - (2 * dayInMs)),
+                end: new Date(now.getTime() - dayInMs),
+              }),
             }),
-          }),
-        );
+          );
+        });
+
+        it('should not create outage notice', async () => {
+          await displayOutages();
+          const element = document.querySelector('.outage-notice');
+          expect(element).toBeNull();
+        });
       });
 
-      it('should set display property to none', async () => {
-        await displayOutages();
-        const element = document.querySelector('.outage-notice');
-        expect(element.style.display).toBe('none');
+      describe('outage notice already exists', () => {
+        beforeAll(() => {
+          const p = document.createElement('p');
+          p.className = 'outage-notice';
+          document.body.appendChild(p);
+
+          const now = new Date();
+          global.fetch.mockReturnValueOnce(
+            Promise.resolve({
+              json: () => Promise.resolve({
+                start: new Date(now.getTime() - (2 * dayInMs)),
+                end: new Date(now.getTime() - dayInMs),
+              }),
+            }),
+          );
+        });
+
+        it('should remove outage notice', async () => {
+          await displayOutages();
+          const element = document.querySelector('.outage-notice');
+          expect(element).toBeNull();
+        });
       });
     });
 
@@ -89,11 +100,10 @@ describe('Outage notice', () => {
       const start = new Date(now.getTime() - dayInMs);
       const end = new Date(now.getTime() + dayInMs);
 
-      beforeAll(() => {
-        const p = document.createElement('p');
-        p.className = 'outage-notice';
-        p.style.display = 'none';
-        document.body.appendChild(p);
+      beforeAll(async () => {
+        const div = document.createElement('div');
+        div.id = 'dummy';
+        document.body.appendChild(div);
 
         global.fetch.mockReturnValueOnce(
           Promise.resolve({
@@ -104,22 +114,25 @@ describe('Outage notice', () => {
             }),
           }),
         );
-      });
-
-
-      it('should set display property to block', async () => {
         await displayOutages();
-        const element = document.querySelector('.outage-notice');
-        expect(element.style.display).toBe('block');
       });
 
-      it('should set inner text', async () => {
+      it('should create outage notice as first element', () => {
+        const element = document.body.firstChild;
+        expect(element.className).toEqual('outage-notice');
+      });
+
+      it('should push dummy element to second/last position', () => {
+        const element = document.body.lastChild;
+        expect(element.id).toBe('dummy');
+      });
+
+      it('should set inner text', () => {
         const startFormatted = formatDate(start);
         const endFormatted = formatDate(end);
         const expected = `OUTAGE: GIX will be unavailable for use from ${startFormatted} to `
         + `${endFormatted} due to outage reason.`;
 
-        await displayOutages();
         const element = document.querySelector('.outage-notice');
         expect(element.innerHTML).toBe(expected);
       });
@@ -127,19 +140,32 @@ describe('Outage notice', () => {
   });
 
   describe('fetch failure', () => {
-    beforeAll(() => {
-      const p = document.createElement('p');
-      p.className = 'outage-notice';
-      p.style.display = 'none';
-      document.body.appendChild(p);
+    describe('outage notice does not exist already', () => {
+      beforeAll(() => {
+        global.fetch.mockImplementationOnce(() => Promise.reject(new Error('error')));
+      });
 
-      global.fetch.mockImplementationOnce(() => Promise.reject(new Error('error')));
+      it('should not create outage notice', async () => {
+        await displayOutages();
+        const element = document.querySelector('.outage-notice');
+        expect(element).toBeNull();
+      });
     });
 
-    it('should set display property to none', async () => {
-      await displayOutages();
-      const element = document.querySelector('.outage-notice');
-      expect(element.style.display).toBe('none');
+    describe('outage notice already exists', () => {
+      beforeAll(() => {
+        const p = document.createElement('p');
+        p.className = 'outage-notice';
+        document.body.appendChild(p);
+
+        global.fetch.mockImplementationOnce(() => Promise.reject(new Error('error')));
+      });
+
+      it('should remove outage notice', async () => {
+        await displayOutages();
+        const element = document.querySelector('.outage-notice');
+        expect(element).toBeNull();
+      });
     });
   });
 });

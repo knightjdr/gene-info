@@ -42,8 +42,14 @@ export const formatDate = (date) => {
   return `${formatTwelveHour(date)} ${tz} ${day}, ${month} ${date.getDate()}`;
 };
 
-const displayOutages = async () => {
+const removeNotice = () => {
   const p = document.querySelector('.outage-notice');
+  if (p) {
+    p.remove();
+  }
+};
+
+const displayOutages = async () => {
   try {
     const response = await fetch(config.outages, { cache: 'no-store' });
     const outages = await response.json();
@@ -52,15 +58,18 @@ const displayOutages = async () => {
       const end = new Date(outages.end);
       const now = new Date();
       if (now > start && now < end) {
-        p.innerHTML = `OUTAGE: GIX will be unavailable for use from ${formatDate(start)} to `
+        const text = `OUTAGE: GIX will be unavailable for use from ${formatDate(start)} to `
           + `${formatDate(end)} due to ${outages.message}.`;
-        p.style.display = 'block';
+        const p = document.createElement('p');
+        p.appendChild(document.createTextNode(text));
+        p.classList.add('outage-notice');
+        document.body.prepend(p);
       } else {
-        p.style.display = 'none';
+        removeNotice();
       }
     }
   } catch (err) {
-    p.style.display = 'none';
+    removeNotice();
   }
 };
 

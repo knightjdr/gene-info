@@ -40,7 +40,6 @@ body.theme_light {
   border-radius: 3px;
   box-sizing: border-box;
   color: #333333;
-  display: none;
   font-weight: bold;
   grid-column: 1 / 3;
   grid-row: 1;
