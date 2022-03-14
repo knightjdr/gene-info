@@ -52,6 +52,7 @@ const main = async () => {
     await writeTissues(essentiality, './files/essentiality-tissues.js');
     await writeTissues(rna, './files/rna-tissues.js');
     await writeTissues(protein, './files/protein-tissues.js');
+    console.log('Database successfully generated');
   } catch (err) {
     console.error(err);
   }
