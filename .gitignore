@@ -50,3 +50,16 @@ extension/dist.pem
 .htaccess
 *.zip
 *.mp4
+
+# TypeScript incremental build states
+*.tsbuildinfo
+
+# CDK Context & Staging files
+cdk.context.json
+.cdk.staging/
+cdk.out/
+*.tabl.json
+
+# Cloud9
+.c9
+.nzm-*
