@@ -2,6 +2,7 @@ package extension
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
@@ -28,13 +29,14 @@ func getGene(fields Fields, dbClient *dynamodb.DynamoDB) (Items, error) {
 	// Query official gene symbol
 	params := &dynamodb.GetItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
-			"gene": {S: aws.String(fields.term)},
+			"geneKey": {S: aws.String(fields.term)},
 		},
 		TableName: aws.String(fields.species),
 	}
 
 	resp, err := dbClient.GetItem(params)
 	if err != nil {
+		fmt.Println(err)
 		return items, errors.New("error getting gene")
 	}
 
@@ -47,27 +49,27 @@ func getGene(fields Fields, dbClient *dynamodb.DynamoDB) (Items, error) {
 	}
 
 	// Scan synonyms and alternate symbols
-	paramsScan := &dynamodb.ScanInput{
-		FilterExpression: aws.String("contains(synonyms, :gene) or contains(geneAlternateSymbols, :gene)"),
-		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
-			":gene": {S: aws.String(fields.term)},
-		},
-		TableName: aws.String(fields.species),
-	}
-
-	respScan, err := dbClient.Scan(paramsScan)
-	if err != nil {
-		return items, errors.New("error getting gene")
-	}
-
-	if len(respScan.Items) > 0 {
-		scanItems := Items{}
-		err = dynamodbattribute.UnmarshalListOfMaps(respScan.Items, &scanItems)
-		if err == nil {
-			items = append(items, scanItems...)
-		}
-	}
-
+	//	paramsScan := &dynamodb.ScanInput{
+	//		FilterExpression: aws.String("contains(synonyms, :gene) or contains(geneAlternateSymbols, :gene)"),
+	//		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
+	//			":gene": {S: aws.String(fields.term)},
+	//		},
+	//		TableName: aws.String(fields.species),
+	//	}
+	//
+	//	respScan, err := dbClient.Scan(paramsScan)
+	//	if err != nil {
+	//		return items, errors.New("error getting gene")
+	//	}
+	//
+	//	if len(respScan.Items) > 0 {
+	//		scanItems := Items{}
+	//		err = dynamodbattribute.UnmarshalListOfMaps(respScan.Items, &scanItems)
+	//		if err == nil {
+	//			items = append(items, scanItems...)
+	//		}
+	//	}
+	//
 	return items, nil
 }
 

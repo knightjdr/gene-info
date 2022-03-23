@@ -12,11 +12,11 @@ func TestParseStringID(t *testing.T) {
 		term       string
 		expected   interface{}
 	}{
-		"gene returned as string":            {identifier: "gene", term: "PDCD10", expected: "PDCD10"},
-		"whitespace trimmed":                 {identifier: "gene", term: " PDCD10 ", expected: "PDCD10"},
+		"gene returned as string":            {identifier: "gene", term: "PDCD10", expected: "pdcd10"},
+		"whitespace trimmed":                 {identifier: "gene", term: " PDCD10 ", expected: "pdcd10"},
 		"geneid returned as string":          {identifier: "geneid", term: "1234", expected: "1234"},
-		"nextprot converted to uniprot":      {identifier: "nextprot", term: "NX_Q9BUL8", expected: "Q9BUL8"},
-		"refseq should have version removed": {identifier: "refseq", term: "NM_001234.2", expected: "NM_001234"},
+		"nextprot converted to uniprot":      {identifier: "nextprot", term: "NX_Q9BUL8", expected: "q9bul8"},
+		"refseq should have version removed": {identifier: "refseq", term: "NM_001234.2", expected: "nm_001234"},
 	}
 
 	for name, test := range tests {

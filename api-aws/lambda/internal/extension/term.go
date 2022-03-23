@@ -5,14 +5,15 @@ import (
 )
 
 func parseTerm(term string, identifier string) string {
-	trimmed := strings.TrimSpace(term)
+	parsed := strings.TrimSpace(term)
+	parsed = strings.ToLower(parsed)
 
 	if identifier == "nextprot" {
-		return strings.TrimPrefix(trimmed, "NX_")
+		return strings.TrimPrefix(parsed, "nx_")
 	}
 	if identifier == "refseq" {
-		return strings.Split(trimmed, ".")[0]
+		return strings.Split(parsed, ".")[0]
 	}
 
-	return trimmed
+	return parsed
 }

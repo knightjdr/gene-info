@@ -11,6 +11,7 @@ type Item struct {
 	Fullname         string   `json:"fullname"`
 	Gene             string   `json:"gene"`
 	Geneid           int      `json:"geneid"`
+	GeneKey          string   `json:"geneKey,omit"`
 	Go               struct {
 		C []struct {
 			ID   string `json:"id"`
