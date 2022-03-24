@@ -15,19 +15,31 @@ type Fields struct {
 
 func getFields(e events.APIGatewayV2HTTPRequest) Fields {
 	fields := Fields{
-		identifier: e.QueryStringParameters["identifier"],
+		identifier: parseIdentifier(e.QueryStringParameters["identifier"]),
 		species:    parseSpecies(e.QueryStringParameters["species"]),
-		term:       e.QueryStringParameters["term"],
+		term:       parseTerm(e.QueryStringParameters["term"]),
 	}
 	return fields
 }
 
-var re = regexp.MustCompile("[\\s()]")
+var reParse = regexp.MustCompile("[\\s()-]")
+
+func parseIdentifier(identifier string) string {
+	parsed := strings.TrimSpace(identifier)
+	parsed = strings.ToUpper(parsed)
+	parsed = reParse.ReplaceAllString(parsed, "")
+	return parsed
+}
 
 func parseSpecies(species string) string {
-	parsed := strings.ReplaceAll(species, "-", " ")
-	parsed = strings.Title(parsed)
+	parsed := strings.TrimSpace(species)
+	parsed = strings.ToLower(parsed)
+	parsed = reParse.ReplaceAllString(parsed, "")
+	return parsed
+}
 
-	parsed = re.ReplaceAllString(parsed, "")
+func parseTerm(term string) string {
+	parsed := strings.TrimSpace(term)
+	parsed = strings.ToLower(parsed)
 	return parsed
 }

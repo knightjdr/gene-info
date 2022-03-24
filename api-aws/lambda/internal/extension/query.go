@@ -3,6 +3,7 @@ package extension
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
@@ -10,100 +11,86 @@ import (
 )
 
 func query(fields Fields, dbClient *dynamodb.DynamoDB) (Items, error) {
-	queryFields := Fields{
-		identifier: getIdentifier(fields),
-		species:    fields.species,
-		term:       parseTerm(fields.term, fields.identifier),
-	}
-
-	if queryFields.identifier == "gene" {
-		return getGene(queryFields, dbClient)
-	} else {
-		return getItem(queryFields, dbClient)
-	}
-}
-
-func getGene(fields Fields, dbClient *dynamodb.DynamoDB) (Items, error) {
-	items := Items{}
-
-	// Query official gene symbol
-	params := &dynamodb.GetItemInput{
-		Key: map[string]*dynamodb.AttributeValue{
-			"geneKey": {S: aws.String(fields.term)},
-		},
-		TableName: aws.String(fields.species),
-	}
-
-	resp, err := dbClient.GetItem(params)
+	ids, err := mapIdentifier(fields, dbClient)
 	if err != nil {
-		fmt.Println(err)
-		return items, errors.New("error getting gene")
+		return Items{}, err
 	}
 
-	if resp.Item != nil {
-		item := Item{}
-		err = dynamodbattribute.UnmarshalMap(resp.Item, &item)
-		if err == nil {
-			items = append(items, item)
-		}
+	items, err := getItems(ids, dbClient)
+	if err != nil {
+		return items, err
 	}
 
-	// Scan synonyms and alternate symbols
-	//	paramsScan := &dynamodb.ScanInput{
-	//		FilterExpression: aws.String("contains(synonyms, :gene) or contains(geneAlternateSymbols, :gene)"),
-	//		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
-	//			":gene": {S: aws.String(fields.term)},
-	//		},
-	//		TableName: aws.String(fields.species),
-	//	}
-	//
-	//	respScan, err := dbClient.Scan(paramsScan)
-	//	if err != nil {
-	//		return items, errors.New("error getting gene")
-	//	}
-	//
-	//	if len(respScan.Items) > 0 {
-	//		scanItems := Items{}
-	//		err = dynamodbattribute.UnmarshalListOfMaps(respScan.Items, &scanItems)
-	//		if err == nil {
-	//			items = append(items, scanItems...)
-	//		}
-	//	}
-	//
 	return items, nil
 }
 
-func getItem(fields Fields, dbClient *dynamodb.DynamoDB) (Items, error) {
-	key := map[string]*dynamodb.AttributeValue{}
+func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]string, error) {
+	ids := []string{}
 
-	if fields.identifier == "geneid" {
-		key["geneid"] = &dynamodb.AttributeValue{
-			N: aws.String(fields.term),
-		}
-	} else {
-		key[fields.identifier] = &dynamodb.AttributeValue{
-			S: aws.String(fields.term),
-		}
-	}
-
+	partitionKey := fmt.Sprintf("%s#%s", fields.identifier, fields.term)
 	params := &dynamodb.GetItemInput{
-		Key:       key,
-		TableName: aws.String(fields.species),
+		Key: map[string]*dynamodb.AttributeValue{
+			"pk": {
+				S: aws.String(partitionKey),
+			},
+			"sk": {
+				S: aws.String(fields.species),
+			},
+		},
+		ProjectionExpression: aws.String("geneids"),
+		TableName:            aws.String(os.Getenv("DYNAMODB_IDENTIFIER_TABLE")),
 	}
 
 	resp, err := dbClient.GetItem(params)
 	if err != nil {
-		return Items{}, errors.New("error getting item")
+		return ids, errors.New(fmt.Sprintf("could not map identifier: %s-%s", fields.identifier, fields.term))
 	}
 
 	if resp.Item == nil {
-		return Items{}, errors.New("item not found")
+		return ids, nil
 	}
 
-	item := Item{}
-	err = dynamodbattribute.UnmarshalMap(resp.Item, &item)
+	identifiers := Identifiers{}
+	err = dynamodbattribute.UnmarshalMap(resp.Item, &identifiers)
 	if err != nil {
-		return Items{}, errors.New("error parsing item")
+		return ids, errors.New(fmt.Sprintf("could not unmarshall mapped identifiers: %s-%s", fields.identifier, fields.term))
 	}
-	return Items{item}, nil
+
+	return identifiers.GeneIDs, nil
+}
+
+func getItems(ids []string, dbClient *dynamodb.DynamoDB) (Items, error) {
+	table := os.Getenv("DYNAMODB_DATA_TABLE")
+
+	keys := make([]map[string]*dynamodb.AttributeValue, len(ids))
+	for i, id := range ids {
+		keys[i] = map[string]*dynamodb.AttributeValue{
+			"geneid": {N: aws.String(id)},
+		}
+	}
+
+	params := &dynamodb.BatchGetItemInput{
+		RequestItems: map[string]*dynamodb.KeysAndAttributes{
+			table: {
+				Keys: keys,
+			},
+		},
+	}
+
+	resp, err := dbClient.BatchGetItem(params)
+	if err != nil {
+		return Items{}, errors.New("could not retrieve gene information")
+	}
+
+	if resp.Responses[table] == nil {
+		return Items{}, nil
+	}
+
+	items := Items{}
+	err = dynamodbattribute.UnmarshalListOfMaps(resp.Responses[table], &items)
+	if err != nil {
+		return Items{}, errors.New("could not unmarshall gene information")
+	}
+
+	return items, nil
 }

@@ -1,6 +1,7 @@
 package extension
 
 import (
+	"os"
 	"testing"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -9,29 +10,143 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetGene(t *testing.T) {
-	fields := Fields{
-		identifier: "gene",
-		species:    "gixTest",
-		term:       "pdcd10",
+func TestMapIdentifier(t *testing.T) {
+	type expected struct {
+		ids []string
+		err error
+	}
+	tests := map[string]struct {
+		fields   Fields
+		table    string
+		expected expected
+	}{
+		"should get single item by GENE": {
+			fields: Fields{
+				identifier: "GENE",
+				species:    "homosapiens",
+				term:       "pdcd10",
+			},
+			table: "gix-identifiers",
+			expected: expected{
+				ids: []string{"11235"},
+				err: nil,
+			},
+		},
+		"should get single item by UNIPROT": {
+			fields: Fields{
+				identifier: "UNIPROT",
+				species:    "homosapiens",
+				term:       "q9bul8",
+			},
+			table: "gix-identifiers",
+			expected: expected{
+				ids: []string{"11235"},
+				err: nil,
+			},
+		},
+		"should get multiple items by GENE": {
+			fields: Fields{
+				identifier: "GENE",
+				species:    "homosapiens",
+				term:       "mst1",
+			},
+			table: "gix-identifiers",
+			expected: expected{
+				ids: []string{"4485", "6789"},
+				err: nil,
+			},
+		},
+		"should return empty list if no item found": {
+			fields: Fields{
+				identifier: "GENE",
+				species:    "homosapiens",
+				term:       "xxxx",
+			},
+			table: "gix-identifiers",
+			expected: expected{
+				ids: []string{},
+				err: nil,
+			},
+		},
 	}
 
 	sessConfig := &aws.Config{
-		Endpoint: aws.String("http://localhost:8000"),
-		Region:   aws.String("ca-central-1"),
+		Endpoint: aws.String(os.Getenv("DYNAMODB_ENDPOINT")),
+		Region:   aws.String(os.Getenv("AWS_REGION")),
 	}
 	sess := session.Must(session.NewSession(sessConfig))
 	dbClient := dynamodb.New(sess)
 
-	expected := Items{
-		Item{
-			GeneKey: "pdcd10",
-			Gene:    "PDCD10",
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			ids, err := mapIdentifier(test.fields, dbClient)
+			assert.Equal(t, test.expected.ids, ids)
+			assert.Equal(t, test.expected.err, err)
+		})
+	}
+}
+
+func TestGetItems(t *testing.T) {
+	type expected struct {
+		items Items
+		err   error
+	}
+	tests := map[string]struct {
+		ids      []string
+		expected expected
+	}{
+		"should get single item": {
+			ids: []string{"11235"},
+			expected: expected{
+				items: Items{
+					Item{
+						Fullname: "Programmed cell death protein 10",
+						Geneid:   11235,
+						Gene:     "PDCD10",
+					},
+				},
+				err: nil,
+			},
+		},
+		"should get multiple items": {
+			ids: []string{"4485", "6789"},
+			expected: expected{
+				items: Items{
+					Item{
+						Fullname: "Hepatocyte growth factor-like protein",
+						Geneid:   4485,
+						Gene:     "MST1",
+					},
+					Item{
+						Fullname: "Serine/threonine-protein kinase 4",
+						Geneid:   6789,
+						Gene:     "STK4",
+					},
+				},
+				err: nil,
+			},
+		},
+		"should return empty list for missing item": {
+			ids: []string{"0001"},
+			expected: expected{
+				items: Items{},
+				err:   nil,
+			},
 		},
 	}
 
-	items, err := getGene(fields, dbClient)
-	assert.NoError(t, err)
-	assert.Len(t, items, len(expected))
-	assert.Equal(t, expected[0].Gene, items[0].Gene)
+	sessConfig := &aws.Config{
+		Endpoint: aws.String(os.Getenv("DYNAMODB_ENDPOINT")),
+		Region:   aws.String(os.Getenv("AWS_REGION")),
+	}
+	sess := session.Must(session.NewSession(sessConfig))
+	dbClient := dynamodb.New(sess)
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			items, err := getItems(test.ids, dbClient)
+			assert.Equal(t, test.expected.items, items)
+			assert.Equal(t, test.expected.err, err)
+		})
+	}
 }

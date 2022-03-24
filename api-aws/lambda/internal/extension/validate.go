@@ -2,36 +2,38 @@ package extension
 
 import (
 	"errors"
+	"fmt"
 	"knightjdr/gene-info/api-aws/lambda/internal/utils"
 )
 
 var availableSpecies = []string{
-	"Arabidopsis thaliana",
-	"Caenorhabditis elegans",
-	"Danio rerio",
-	"Dictyostelium discoideum",
-	"Drosophila melanogaster",
-	"Gallus gallus",
-	"Homo sapiens",
-	"Mus musculus",
-	"Escherichia coli (K12)",
-	"Salmonella Typhimurium (LT2)",
-	"Saccharomyces cerevisiae",
-	"Schizosaccharomyces pombe",
-	"Xenopus laevis",
+	"arabidopsisthaliana",
+	"caenorhabditiselegans",
+	"daniorerio",
+	"dictyosteliumdiscoideum",
+	"drosophilamelanogaster",
+	"gallusgallus",
+	"homosapiens",
+	"musmusculus",
+	"escherichiacolik12",
+	"salmonellatyphimuriumlT2",
+	"saccharomycescerevisiae",
+	"schizosaccharomycespombe",
+	"xenopuslaevis",
 }
 
 var availableIdentifiers = []string{
-	"auto",
-	"ensembl-gene",
-	"ensembl-protein",
-	"gene",
-	"geneid",
-	"locus",
-	"nextprot",
-	"orf",
-	"refseq",
-	"uniprot",
+	"AUTO",
+	"ENSEMBLGENE",
+	"ENSEMBLPROTEIN",
+	"GENE",
+	"GENEID",
+	"LOCUS",
+	"NEXTPROT",
+	"ORF",
+	"REFSEQ",
+	"UNIPROT",
+	"WORMBASE",
 }
 
 func validateFields(fields Fields) (Fields, error) {
@@ -59,10 +61,10 @@ func validateFields(fields Fields) (Fields, error) {
 
 func validateIdentifier(identifier string) (string, error) {
 	if identifier == "" {
-		return "", errors.New("missing identifier")
+		return "", errors.New("missing identifier type")
 	}
 	if !utils.Contains(availableIdentifiers, identifier) {
-		return "", errors.New("unrecognized identifier")
+		return "", errors.New(fmt.Sprintf("unrecognized identifier: %s", identifier))
 	}
 
 	return identifier, nil
@@ -73,7 +75,7 @@ func validateSpecies(species string) (string, error) {
 		return "", errors.New("missing species")
 	}
 	if !utils.Contains(availableSpecies, species) {
-		return "", errors.New("unrecognized species")
+		return "", errors.New(fmt.Sprintf("unrecognized species: %s", species))
 	}
 	return species, nil
 }

@@ -63,3 +63,6 @@ cdk.out/
 # Cloud9
 .c9
 .nzm-*
+
+/api-aws/.env.test
+/api-aws/.env.prod

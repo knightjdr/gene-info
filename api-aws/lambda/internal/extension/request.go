@@ -16,6 +16,8 @@ func Request(e events.APIGatewayV2HTTPRequest, dbClient *dynamodb.DynamoDB) (str
 		return "", err
 	}
 
+	fields = processFields(fields)
+
 	items, err := query(fields, dbClient)
 	if err != nil {
 		return "", err

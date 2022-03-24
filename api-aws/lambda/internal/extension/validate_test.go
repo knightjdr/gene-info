@@ -16,31 +16,31 @@ func TestValidateFields(t *testing.T) {
 		fields   Fields
 		expected expected
 	}{
-		"missing identifier": {
-			fields: Fields{identifier: "", species: "Homo sapiens", term: "ABC123"},
+		"should return error for missing identifier": {
+			fields: Fields{identifier: "", species: "homosapiens", term: "abc"},
 			expected: expected{
-				fields: Fields{identifier: "", species: "Homo sapiens", term: "ABC123"},
-				err:    errors.New("missing identifier"),
+				fields: Fields{identifier: "", species: "homosapiens", term: "abc"},
+				err:    errors.New("missing identifier type"),
 			},
 		},
-		"missing species": {
-			fields: Fields{identifier: "gene", species: "", term: "ABC123"},
+		"should return error for missing species": {
+			fields: Fields{identifier: "GENE", species: "", term: "abc"},
 			expected: expected{
-				fields: Fields{identifier: "gene", species: "", term: "ABC123"},
+				fields: Fields{identifier: "GENE", species: "", term: "abc"},
 				err:    errors.New("missing species"),
 			},
 		},
-		"missing term": {
-			fields: Fields{identifier: "gene", species: "Homo sapiens", term: ""},
+		"should return error for missing term": {
+			fields: Fields{identifier: "GENE", species: "homosapiens", term: ""},
 			expected: expected{
-				fields: Fields{identifier: "gene", species: "Homo sapiens", term: ""},
+				fields: Fields{identifier: "GENE", species: "homosapiens", term: ""},
 				err:    errors.New("missing query term"),
 			},
 		},
-		"valid fields": {
-			fields: Fields{identifier: "gene", species: "Homo sapiens", term: "ABC123"},
+		"should validate fields": {
+			fields: Fields{identifier: "GENE", species: "homosapiens", term: "abc"},
 			expected: expected{
-				fields: Fields{identifier: "gene", species: "Homo sapiens", term: "ABC123"},
+				fields: Fields{identifier: "GENE", species: "homosapiens", term: "abc"},
 				err:    nil,
 			},
 		},
@@ -64,9 +64,9 @@ func TestValidateIdentifier(t *testing.T) {
 		identifier string
 		expected   expected
 	}{
-		"missing identifier": {identifier: "", expected: expected{value: "", err: errors.New("missing identifier")}},
-		"invalid identifier": {identifier: "unknown", expected: expected{value: "", err: errors.New("unrecognized identifier")}},
-		"valid identifier":   {identifier: "gene", expected: expected{value: "gene", err: nil}},
+		"should return error for missing identifier": {identifier: "", expected: expected{value: "", err: errors.New("missing identifier type")}},
+		"should return error for invalid identifier": {identifier: "UNKNOWN", expected: expected{value: "", err: errors.New("unrecognized identifier: UNKNOWN")}},
+		"should validate identifier":                 {identifier: "GENE", expected: expected{value: "GENE", err: nil}},
 	}
 
 	for name, test := range tests {
@@ -87,9 +87,9 @@ func TestValidateSpecies(t *testing.T) {
 		species  string
 		expected expected
 	}{
-		"missing species": {species: "", expected: expected{value: "", err: errors.New("missing species")}},
-		"invalid species": {species: "unknown", expected: expected{value: "", err: errors.New("unrecognized species")}},
-		"valid species":   {species: "Homo sapiens", expected: expected{value: "Homo sapiens", err: nil}},
+		"should return error for missing species": {species: "", expected: expected{value: "", err: errors.New("missing species")}},
+		"should return error for invalid species": {species: "unknown", expected: expected{value: "", err: errors.New("unrecognized species: unknown")}},
+		"should validate species":                 {species: "homosapiens", expected: expected{value: "homosapiens", err: nil}},
 	}
 
 	for name, test := range tests {
@@ -110,8 +110,8 @@ func TestValidateTerm(t *testing.T) {
 		term     string
 		expected expected
 	}{
-		"missing term": {term: "", expected: expected{value: "", err: errors.New("missing query term")}},
-		"valid term":   {term: "ABC123", expected: expected{value: "ABC123", err: nil}},
+		"should return error for missing term": {term: "", expected: expected{value: "", err: errors.New("missing query term")}},
+		"should validate term":                 {term: "abc", expected: expected{value: "abc", err: nil}},
 	}
 
 	for name, test := range tests {
