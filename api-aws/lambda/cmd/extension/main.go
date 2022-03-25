@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 
+	custom_errors "knightjdr/gene-info/api-aws/lambda/internal/errors"
 	"knightjdr/gene-info/api-aws/lambda/internal/extension"
 	"knightjdr/gene-info/api-aws/lambda/internal/response"
 
@@ -12,17 +13,18 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
 
-type ExtensionFn func(e events.APIGatewayV2HTTPRequest, dbClient *dynamodb.DynamoDB) (string, error)
+type ExtensionFn func(e events.APIGatewayV2HTTPRequest, dbClient *dynamodb.DynamoDB) (string, custom_errors.Error)
 type HandlerFn func(context.Context, events.APIGatewayV2HTTPRequest) (events.APIGatewayV2HTTPResponse, error)
 
 func ExtensionHandler(dbClient *dynamodb.DynamoDB, extensionHandler ExtensionFn) HandlerFn {
 	return func(ctx context.Context, e events.APIGatewayV2HTTPRequest) (events.APIGatewayV2HTTPResponse, error) {
 		body, err := extensionHandler(e, dbClient)
 
+		code, err_message := response.StatusCode(err)
 		return events.APIGatewayV2HTTPResponse{
 			Body:       body,
-			StatusCode: response.StatusCode(err),
-		}, err
+			StatusCode: code,
+		}, err_message
 	}
 }
 

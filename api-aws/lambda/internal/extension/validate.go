@@ -1,8 +1,8 @@
 package extension
 
 import (
-	"errors"
 	"fmt"
+	"knightjdr/gene-info/api-aws/lambda/internal/errors"
 	"knightjdr/gene-info/api-aws/lambda/internal/utils"
 )
 
@@ -36,7 +36,7 @@ var availableIdentifiers = []string{
 	"WORMBASE",
 }
 
-func validateFields(fields Fields) (Fields, error) {
+func validateFields(fields Fields) (Fields, errors.Error) {
 	identifier, err := validateIdentifier(fields.identifier)
 	if err != nil {
 		return fields, err
@@ -59,30 +59,30 @@ func validateFields(fields Fields) (Fields, error) {
 	}, nil
 }
 
-func validateIdentifier(identifier string) (string, error) {
+func validateIdentifier(identifier string) (string, errors.Error) {
 	if identifier == "" {
-		return "", errors.New("missing identifier type")
+		return "", errors.New(400, "missing identifier type")
 	}
 	if !utils.Contains(availableIdentifiers, identifier) {
-		return "", errors.New(fmt.Sprintf("unrecognized identifier: %s", identifier))
+		return "", errors.New(400, fmt.Sprintf("unrecognized identifier: %s", identifier))
 	}
 
 	return identifier, nil
 }
 
-func validateSpecies(species string) (string, error) {
+func validateSpecies(species string) (string, errors.Error) {
 	if species == "" {
-		return "", errors.New("missing species")
+		return "", errors.New(400, "missing species")
 	}
 	if !utils.Contains(availableSpecies, species) {
-		return "", errors.New(fmt.Sprintf("unrecognized species: %s", species))
+		return "", errors.New(400, fmt.Sprintf("unrecognized species: %s", species))
 	}
 	return species, nil
 }
 
-func validateTerm(term string) (string, error) {
+func validateTerm(term string) (string, errors.Error) {
 	if term == "" {
-		return "", errors.New("missing query term")
+		return "", errors.New(400, fmt.Sprintf("missing query term"))
 	}
 	return term, nil
 }

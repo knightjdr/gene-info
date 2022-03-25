@@ -1,16 +1,17 @@
 package extension
 
 import (
-	"errors"
 	"fmt"
 	"os"
+
+	"knightjdr/gene-info/api-aws/lambda/internal/errors"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 )
 
-func query(fields Fields, dbClient *dynamodb.DynamoDB) (Items, error) {
+func query(fields Fields, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
 	ids, err := mapIdentifier(fields, dbClient)
 	if err != nil {
 		return Items{}, err
@@ -24,7 +25,7 @@ func query(fields Fields, dbClient *dynamodb.DynamoDB) (Items, error) {
 	return items, nil
 }
 
-func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]string, error) {
+func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]string, errors.Error) {
 	ids := []string{}
 
 	partitionKey := fmt.Sprintf("%s#%s", fields.identifier, fields.term)
@@ -44,7 +45,7 @@ func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]string, error)
 	resp, err := dbClient.GetItem(params)
 	if err != nil {
 		fmt.Println(err)
-		return ids, errors.New(fmt.Sprintf("could not map identifier: %s-%s", fields.identifier, fields.term))
+		return ids, errors.New(500, fmt.Sprintf("could not map identifier: %s-%s", fields.identifier, fields.term))
 	}
 
 	if resp.Item == nil {
@@ -54,13 +55,13 @@ func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]string, error)
 	identifiers := Identifiers{}
 	err = dynamodbattribute.UnmarshalMap(resp.Item, &identifiers)
 	if err != nil {
-		return ids, errors.New(fmt.Sprintf("could not unmarshall mapped identifiers: %s-%s", fields.identifier, fields.term))
+		return ids, errors.New(500, fmt.Sprintf("could not unmarshall mapped identifiers: %s-%s", fields.identifier, fields.term))
 	}
 
 	return identifiers.GeneIDs, nil
 }
 
-func getItems(ids []string, dbClient *dynamodb.DynamoDB) (Items, error) {
+func getItems(ids []string, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
 	table := os.Getenv("DYNAMODB_DATA_TABLE")
 
 	keys := make([]map[string]*dynamodb.AttributeValue, len(ids))
@@ -80,7 +81,7 @@ func getItems(ids []string, dbClient *dynamodb.DynamoDB) (Items, error) {
 
 	resp, err := dbClient.BatchGetItem(params)
 	if err != nil {
-		return Items{}, errors.New("could not retrieve gene information")
+		return Items{}, errors.New(500, "could not retrieve gene information")
 	}
 
 	if resp.Responses[table] == nil {
@@ -90,7 +91,7 @@ func getItems(ids []string, dbClient *dynamodb.DynamoDB) (Items, error) {
 	items := Items{}
 	err = dynamodbattribute.UnmarshalListOfMaps(resp.Responses[table], &items)
 	if err != nil {
-		return Items{}, errors.New("could not unmarshall gene information")
+		return Items{}, errors.New(500, "could not unmarshall gene information")
 	}
 
 	return items, nil

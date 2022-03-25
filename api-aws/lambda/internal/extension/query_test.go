@@ -4,6 +4,8 @@ import (
 	"os"
 	"testing"
 
+	"knightjdr/gene-info/api-aws/lambda/internal/errors"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
@@ -13,7 +15,7 @@ import (
 func TestMapIdentifier(t *testing.T) {
 	type expected struct {
 		ids []string
-		err error
+		err errors.Error
 	}
 	tests := map[string]struct {
 		fields   Fields
@@ -89,7 +91,7 @@ func TestMapIdentifier(t *testing.T) {
 func TestGetItems(t *testing.T) {
 	type expected struct {
 		items Items
-		err   error
+		err   errors.Error
 	}
 	tests := map[string]struct {
 		ids      []string
