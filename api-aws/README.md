@@ -1,14 +1,25 @@
-# Welcome to your CDK TypeScript project
+# GIX API depolyed to AWS
 
-This is a blank project for TypeScript development with CDK.
+This API using AWS HTTP API Gateway, with Lambda and DynamoDB as backend. Lambda functions are in GO.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Testing
 
-## Useful commands
+Requirements:
+  * [AWS CLI](https://aws.amazon.com/cli/)
+  * [Docker](https://www.docker.com/)
+  * `.env.test` file
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+The `.env.test` file should specify the below parameters. The endpoint refers to the endpoint of the Docker container that uses the specified port and container name. There are two tables created in the DynamoDB container: one for gene identifiers and one for the gene data. These tables will be created in the Docker container and referenced by the testing scripts. The region can be set to any valid AWS region.
+```
+AWS_REGION=ca-central-1
+DYNAMODB_DATA_TABLE=gix-test
+DYNAMODB_ENDPOINT=http://localhost:8000
+DYNAMODB_IDENTIFIER_TABLE=gix-test-identifiers
+TEST_CONTAINER_NAME=dynamodb-gix-test
+TEST_PORT=8000
+```
+
+Run the tests from this directory.
+```
+npm run gotest
+```

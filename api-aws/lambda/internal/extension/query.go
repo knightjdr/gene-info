@@ -43,6 +43,7 @@ func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]string, error)
 
 	resp, err := dbClient.GetItem(params)
 	if err != nil {
+		fmt.Println(err)
 		return ids, errors.New(fmt.Sprintf("could not map identifier: %s-%s", fields.identifier, fields.term))
 	}
 
