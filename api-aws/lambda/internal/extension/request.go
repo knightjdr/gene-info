@@ -14,20 +14,22 @@ func Request(e events.APIGatewayV2HTTPRequest, dbClient *dynamodb.DynamoDB) (str
 	fields := getFields(e)
 	fields, err := validateFields(fields)
 	if err != nil {
-		return "", err
+		return "[]", err
 	}
 
 	fields = processFields(fields)
 
 	items, err := query(fields, dbClient)
 	if err != nil {
-		return "", err
+		return "[]", err
 	}
 
-	b, marshall_err := json.Marshal(items)
+	orderItems(fields.term, &items)
+
+	bytesBody, marshall_err := json.Marshal(items)
 	if marshall_err != nil {
 		return "", errors.New(500, "could not create response body")
 	}
 
-	return string(b), nil
+	return string(bytesBody), nil
 }

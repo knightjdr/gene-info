@@ -17,6 +17,10 @@ func query(fields Fields, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
 		return Items{}, err
 	}
 
+	if len(ids) == 0 {
+		return Items{}, nil
+	}
+
 	items, err := getItems(ids, dbClient)
 	if err != nil {
 		return items, err

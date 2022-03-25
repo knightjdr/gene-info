@@ -12,6 +12,64 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestQuery(t *testing.T) {
+	sessConfig := &aws.Config{
+		Endpoint: aws.String(os.Getenv("DYNAMODB_ENDPOINT")),
+		Region:   aws.String(os.Getenv("AWS_REGION")),
+	}
+	sess := session.Must(session.NewSession(sessConfig))
+	dbClient := dynamodb.New(sess)
+
+	type expected struct {
+		items Items
+		err   errors.Error
+	}
+	tests := map[string]struct {
+		fields   Fields
+		dbClient *dynamodb.DynamoDB
+		expected expected
+	}{
+		"should get an item found in the database": {
+			fields: Fields{
+				identifier: "GENE",
+				species:    "homosapiens",
+				term:       "pdcd10",
+			},
+			dbClient: dbClient,
+			expected: expected{
+				items: Items{
+					Item{
+						Fullname: "Programmed cell death protein 10",
+						Gene:     "PDCD10",
+						Geneid:   11235,
+					},
+				},
+				err: nil,
+			},
+		},
+		"should return an empty list if no item found": {
+			fields: Fields{
+				identifier: "GENE",
+				species:    "homosapiens",
+				term:       "abc",
+			},
+			dbClient: dbClient,
+			expected: expected{
+				items: Items{},
+				err:   nil,
+			},
+		},
+	}
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			items, err := query(test.fields, test.dbClient)
+			assert.Equal(t, test.expected.items, items)
+			assert.Equal(t, test.expected.err, err)
+		})
+	}
+}
+
 func TestMapIdentifier(t *testing.T) {
 	type expected struct {
 		ids []string
