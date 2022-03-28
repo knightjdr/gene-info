@@ -1,7 +1,7 @@
 package extension
 
 type Identifiers struct {
-	GeneIDs []string `json:"geneids"`
+	GeneIDs []int `json:"geneids"`
 }
 
 type Items []Item

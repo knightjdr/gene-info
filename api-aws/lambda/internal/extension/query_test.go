@@ -72,7 +72,7 @@ func TestQuery(t *testing.T) {
 
 func TestMapIdentifier(t *testing.T) {
 	type expected struct {
-		ids []string
+		ids []int
 		err errors.Error
 	}
 	tests := map[string]struct {
@@ -88,7 +88,7 @@ func TestMapIdentifier(t *testing.T) {
 			},
 			table: "gix-identifiers",
 			expected: expected{
-				ids: []string{"11235"},
+				ids: []int{11235},
 				err: nil,
 			},
 		},
@@ -100,7 +100,7 @@ func TestMapIdentifier(t *testing.T) {
 			},
 			table: "gix-identifiers",
 			expected: expected{
-				ids: []string{"11235"},
+				ids: []int{11235},
 				err: nil,
 			},
 		},
@@ -112,7 +112,7 @@ func TestMapIdentifier(t *testing.T) {
 			},
 			table: "gix-identifiers",
 			expected: expected{
-				ids: []string{"4485", "6789"},
+				ids: []int{4485, 6789},
 				err: nil,
 			},
 		},
@@ -124,7 +124,7 @@ func TestMapIdentifier(t *testing.T) {
 			},
 			table: "gix-identifiers",
 			expected: expected{
-				ids: []string{},
+				ids: []int{},
 				err: nil,
 			},
 		},
@@ -152,11 +152,11 @@ func TestGetItems(t *testing.T) {
 		err   errors.Error
 	}
 	tests := map[string]struct {
-		ids      []string
+		ids      []int
 		expected expected
 	}{
 		"should get single item": {
-			ids: []string{"11235"},
+			ids: []int{11235},
 			expected: expected{
 				items: Items{
 					Item{
@@ -169,7 +169,7 @@ func TestGetItems(t *testing.T) {
 			},
 		},
 		"should get multiple items": {
-			ids: []string{"4485", "6789"},
+			ids: []int{4485, 6789},
 			expected: expected{
 				items: Items{
 					Item{
@@ -187,7 +187,7 @@ func TestGetItems(t *testing.T) {
 			},
 		},
 		"should return empty list for missing item": {
-			ids: []string{"0001"},
+			ids: []int{0001},
 			expected: expected{
 				items: Items{},
 				err:   nil,

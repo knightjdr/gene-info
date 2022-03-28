@@ -29,21 +29,17 @@ func query(fields Fields, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
 	return items, nil
 }
 
-func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]string, errors.Error) {
-	ids := []string{}
+func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]int, errors.Error) {
+	ids := []int{}
 
 	partitionKey := fmt.Sprintf("%s#%s", fields.identifier, fields.term)
 	params := &dynamodb.GetItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
-			"pk": {
-				S: aws.String(partitionKey),
-			},
-			"sk": {
-				S: aws.String(fields.species),
-			},
+			"pk": {S: aws.String(partitionKey)},
+			"sk": {S: aws.String(fields.species)},
 		},
 		ProjectionExpression: aws.String("geneids"),
-		TableName:            aws.String(os.Getenv("DYNAMODB_IDENTIFIER_TABLE")),
+		TableName:            aws.String(os.Getenv("DYNAMODB_TABLE")),
 	}
 
 	resp, err := dbClient.GetItem(params)
@@ -65,13 +61,16 @@ func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]string, errors
 	return identifiers.GeneIDs, nil
 }
 
-func getItems(ids []string, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
-	table := os.Getenv("DYNAMODB_DATA_TABLE")
+func getItems(ids []int, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
+	table := os.Getenv("DYNAMODB_TABLE")
 
 	keys := make([]map[string]*dynamodb.AttributeValue, len(ids))
 	for i, id := range ids {
+		pk := fmt.Sprintf("GENEID#%d", id)
+		sk := fmt.Sprintf("METADATA#%d", id)
 		keys[i] = map[string]*dynamodb.AttributeValue{
-			"geneid": {N: aws.String(id)},
+			"pk": {S: aws.String(pk)},
+			"sk": {S: aws.String(sk)},
 		}
 	}
 
