@@ -14,7 +14,7 @@ import (
 func query(fields Fields, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
 	ids, err := mapIdentifier(fields, dbClient)
 	if err != nil {
-		return Items{}, err
+		return nil, err
 	}
 
 	if len(ids) == 0 {
@@ -23,15 +23,13 @@ func query(fields Fields, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
 
 	items, err := getItems(ids, dbClient)
 	if err != nil {
-		return items, err
+		return nil, err
 	}
 
 	return items, nil
 }
 
 func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]int, errors.Error) {
-	ids := []int{}
-
 	partitionKey := fmt.Sprintf("%s#%s", fields.identifier, fields.term)
 	params := &dynamodb.GetItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
@@ -45,17 +43,17 @@ func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]int, errors.Er
 	resp, err := dbClient.GetItem(params)
 	if err != nil {
 		fmt.Println(err)
-		return ids, errors.New(500, fmt.Sprintf("could not map identifier: %s-%s", fields.identifier, fields.term))
+		return nil, errors.New(500, fmt.Sprintf("could not map identifier: %s-%s", fields.identifier, fields.term))
 	}
 
 	if resp.Item == nil {
-		return ids, nil
+		return []int{}, nil
 	}
 
 	identifiers := Identifiers{}
 	err = dynamodbattribute.UnmarshalMap(resp.Item, &identifiers)
 	if err != nil {
-		return ids, errors.New(500, fmt.Sprintf("could not unmarshall mapped identifiers: %s-%s", fields.identifier, fields.term))
+		return nil, errors.New(500, fmt.Sprintf("could not unmarshall mapped identifiers: %s-%s", fields.identifier, fields.term))
 	}
 
 	return identifiers.GeneIDs, nil
@@ -84,7 +82,7 @@ func getItems(ids []int, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
 
 	resp, err := dbClient.BatchGetItem(params)
 	if err != nil {
-		return Items{}, errors.New(500, "could not retrieve gene information")
+		return nil, errors.New(500, "could not retrieve gene information")
 	}
 
 	if resp.Responses[table] == nil {
@@ -94,7 +92,7 @@ func getItems(ids []int, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
 	items := Items{}
 	err = dynamodbattribute.UnmarshalListOfMaps(resp.Responses[table], &items)
 	if err != nil {
-		return Items{}, errors.New(500, "could not unmarshall gene information")
+		return nil, errors.New(500, "could not unmarshall gene information")
 	}
 
 	return items, nil
