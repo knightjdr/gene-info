@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -o allexport
-source .env.test
+source .env
 set +o allexport
 
 echo "Starting docker container for dynamodb called $TEST_CONTAINER_NAME on port $TEST_PORT"

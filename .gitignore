@@ -53,6 +53,9 @@ extension/dist.pem
 
 # TypeScript incremental build states
 *.tsbuildinfo
+api-aws/bin/**/*.js
+api-aws/lib/**/*.js
+api-aws/test/**/*.js
 
 # CDK Context & Staging files
 cdk.context.json
@@ -64,5 +67,4 @@ cdk.out/
 .c9
 .nzm-*
 
-/api-aws/.env.test
-/api-aws/.env.prod
+/api-aws/.env
