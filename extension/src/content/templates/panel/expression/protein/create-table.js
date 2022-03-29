@@ -1,12 +1,33 @@
-import filLTableRow from './fill-table-row';
+import fillTableRow from './fill-table-row';
 
-const createBody = (report, tissues) => (
-  tissues.map(tissue => (
-    filLTableRow(tissue, report['protein-expression'])
-  ))
-);
+const filterTissues = (data, tissues) => {
+  const availableCells = data.cells || [];
+  const availableTissues = data.tissues || [];
+  const mergedTissues = [...availableCells, ...availableTissues];
+  const filtered = [];
+  tissues.forEach((tissue) => {
+    const tissueData = mergedTissues.find(item => item.name === tissue);
+    if (tissueData) {
+      filtered.push(tissueData);
+    } else {
+      filtered.push({
+        name: tissue,
+        intensity: '-',
+        level: 'none',
+      });
+    }
+  });
+  return filtered;
+};
 
-const createTable = (report, tissues) => ([
+const createBody = (data, selectedTissues) => {
+  const tissues = filterTissues(data, selectedTissues);
+  return tissues.map(tissue => (
+    fillTableRow(tissue)
+  ));
+};
+
+const createTable = (data, selectedTissues) => ([
   {
     class: 'details-description',
     tag: 'p',
@@ -35,7 +56,7 @@ const createTable = (report, tissues) => ([
       },
       {
         tag: 'tbody',
-        children: createBody(report, tissues),
+        children: createBody(data, selectedTissues),
       },
     ],
   },

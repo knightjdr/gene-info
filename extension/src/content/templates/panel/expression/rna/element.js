@@ -29,7 +29,7 @@ const element = (report, settings, showData) => {
     }
 
     if (tissuesSelected && dataAvailable) {
-      node.children.push(...createTable(report, settings.rna_expression_tissues));
+      node.children.push(...createTable(report['rna-expression'], settings.rna_expression_tissues));
     }
 
     if (tissuesSelected && !dataAvailable) {

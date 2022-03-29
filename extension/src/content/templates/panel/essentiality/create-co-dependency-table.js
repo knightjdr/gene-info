@@ -4,8 +4,7 @@ const isCoDependencyDataAvailable = essentiality => (
   && essentiality.coDependencies.length > 0
 );
 
-const createCoDependencyTable = (report, settings) => {
-  const { essentiality } = report;
+const createCoDependencyTable = (essentiality, settings) => {
   const { essentiality_codependencies: noRequestedCoDependencies } = settings;
 
   if (noRequestedCoDependencies <= 0) {

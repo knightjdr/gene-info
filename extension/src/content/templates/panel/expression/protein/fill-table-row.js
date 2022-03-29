@@ -1,14 +1,10 @@
-const fillTableRow = (tissue, data) => {
-  const datum = (data.cells && data.cells[tissue]) || (data.tissues && data.tissues[tissue]);
-  const { intensity, level } = datum || { intensity: '-', level: 'none' };
-  return {
-    tag: 'tr',
-    children: [
-      { tag: 'td', textContent: tissue },
-      { tag: 'td', textContent: intensity },
-      { tag: 'td', textContent: level },
-    ],
-  };
-};
+const fillTableRow = tissue => ({
+  tag: 'tr',
+  children: [
+    { tag: 'td', textContent: tissue.name },
+    { tag: 'td', textContent: tissue.intensity },
+    { tag: 'td', textContent: tissue.level },
+  ],
+});
 
 export default fillTableRow;

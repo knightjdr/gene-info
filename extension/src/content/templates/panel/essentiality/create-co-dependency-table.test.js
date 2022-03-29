@@ -3,15 +3,13 @@ import createCoDependencyTable from './create-co-dependency-table';
 describe('Create essentiality co-dependency table', () => {
   it('should return nothing when no co-dependencies requested', () => {
     const report = {
-      essentiality: {
-        coDependencies: [
-          ['geneA', 0.45],
-          ['geneB', 0.4],
-          ['geneD', 0.35],
-          ['geneC', 0.3],
-          ['geneE', 0.25],
-        ],
-      },
+      coDependencies: [
+        ['geneA', 0.45],
+        ['geneB', 0.4],
+        ['geneD', 0.35],
+        ['geneC', 0.3],
+        ['geneE', 0.25],
+      ],
     };
     const settings = {
       essentiality_codependencies: 0,
@@ -41,9 +39,7 @@ describe('Create essentiality co-dependency table', () => {
   });
 
   it('should return warning when there is no co-dependency data', () => {
-    const report = {
-      essentiality: {},
-    };
+    const report = {};
     const settings = {
       essentiality_codependencies: 3,
     };
@@ -64,9 +60,7 @@ describe('Create essentiality co-dependency table', () => {
 
   it('should return warning when there is an empty co-dependency array', () => {
     const report = {
-      essentiality: {
-        coDependencies: [],
-      },
+      coDependencies: [],
     };
     const settings = {
       essentiality_codependencies: 3,
@@ -88,15 +82,13 @@ describe('Create essentiality co-dependency table', () => {
 
   it('should return a table of dependencies', () => {
     const report = {
-      essentiality: {
-        coDependencies: [
-          ['geneA', 0.45],
-          ['geneB', 0.4],
-          ['geneD', 0.35],
-          ['geneC', 0.3],
-          ['geneE', 0.25],
-        ],
-      },
+      coDependencies: [
+        ['geneA', 0.45],
+        ['geneB', 0.4],
+        ['geneD', 0.35],
+        ['geneC', 0.3],
+        ['geneE', 0.25],
+      ],
     };
     const settings = {
       essentiality_codependencies: 3,

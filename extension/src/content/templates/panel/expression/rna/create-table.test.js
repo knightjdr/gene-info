@@ -1,17 +1,18 @@
 import createTable from './create-table';
-import minifyHTML from '../../../../../test-utils/minify-html';
 
 describe('Create RNA expression table', () => {
   it('should create table', () => {
     const results = {
-      'rna-expression': {
-        cells: {
-          cellX: 5,
-          cellY: 25,
-        },
-      },
+      cells: [
+        { name: 'cellX', value: 5 },
+        { name: 'cellY', value: 25 },
+      ],
+      tissues: [
+        { name: 'tissueX', value: 5 },
+        { name: 'tissueY', value: 25 },
+      ],
     };
-    const tissues = ['cellX', 'cellY'];
+    const tissues = ['cellX', 'cellY', 'tissueA', 'tissueY'];
     const result = createTable(results, tissues);
 
     const expected = {
@@ -44,6 +45,22 @@ describe('Create RNA expression table', () => {
               tag: 'tr',
               children: [
                 { tag: 'td', textContent: 'cellY' },
+                { tag: 'td', textContent: 25 },
+                { tag: 'td', textContent: 'medium' },
+              ],
+            },
+            {
+              tag: 'tr',
+              children: [
+                { tag: 'td', textContent: 'tissueA' },
+                { tag: 'td', textContent: '-' },
+                { tag: 'td', textContent: 'none' },
+              ],
+            },
+            {
+              tag: 'tr',
+              children: [
+                { tag: 'td', textContent: 'tissueY' },
                 { tag: 'td', textContent: 25 },
                 { tag: 'td', textContent: 'medium' },
               ],

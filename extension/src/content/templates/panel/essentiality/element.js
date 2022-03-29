@@ -36,8 +36,7 @@ const shouldShowData = (settings, essentialityTissues) => {
   const { essentiality: essentialityRequested, species } = settings;
   return (
     essentialityRequested
-    && essentialityTissues[species]
-    && essentialityTissues[species].cells.length > 0
+    && essentialityTissues?.[species]?.cells.length > 0
   );
 };
 
@@ -57,8 +56,8 @@ const element = (report, settings) => {
       children: createHeading(report),
     };
 
-    section.children.push(...createCellTable(report, settings));
-    section.children.push(...createCoDependencyTable(report, settings));
+    section.children.push(...createCellTable(report.essentiality, settings));
+    section.children.push(...createCoDependencyTable(report.essentiality, settings));
 
     nodes.push(section);
   }

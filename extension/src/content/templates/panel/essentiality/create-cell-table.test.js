@@ -17,9 +17,7 @@ describe('Create essentiality cell table', () => {
   });
 
   it('should return warning when there is essentiality data but no cell data', () => {
-    const report = {
-      essentiality: {},
-    };
+    const report = {};
     const settings = {
       essentiality_tissues: ['cellA', 'cellB', 'cellD'],
     };
@@ -35,9 +33,7 @@ describe('Create essentiality cell table', () => {
 
   it('should return warning when there is a cell object but no keys', () => {
     const report = {
-      essentiality: {
-        cells: {},
-      },
+      cells: [],
     };
     const settings = {
       essentiality_tissues: ['cellA', 'cellB', 'cellD'],
@@ -54,19 +50,17 @@ describe('Create essentiality cell table', () => {
 
   it('should display stats but also a warning when no cell lines selected', () => {
     const report = {
-      essentiality: {
-        cells: {
-          cellA: 0.1,
-          cellB: 0.05,
-          cellC: 0.2,
-          cellD: -0.1,
-          cellE: 0.3,
-        },
-        stats: {
-          mean: 0.11,
-          median: 0.1,
-          sd: 0.1356,
-        },
+      cells: [
+        { name: 'cellA', value: 0.1 },
+        { name: 'cellB', value: 0.05 },
+        { name: 'cellC', value: 0.2 },
+        { name: 'cellD', value: -0.1 },
+        { name: 'cellE', value: 0.3 },
+      ],
+      stats: {
+        mean: 0.11,
+        median: 0.1,
+        sd: 0.1356,
       },
     };
     const settings = {
@@ -122,19 +116,17 @@ describe('Create essentiality cell table', () => {
 
   it('should return a table for requested cell lines', () => {
     const report = {
-      essentiality: {
-        cells: {
-          cellA: 0.1,
-          cellB: 0.05,
-          cellC: 0.2,
-          cellD: -0.1,
-          cellE: 0.3,
-        },
-        stats: {
-          mean: 0.11,
-          median: 0.1,
-          sd: 0.1356,
-        },
+      cells: [
+        { name: 'cellA', value: 0.1 },
+        { name: 'cellB', value: 0.05 },
+        { name: 'cellC', value: 0.2 },
+        { name: 'cellD', value: -0.1 },
+        { name: 'cellE', value: 0.3 },
+      ],
+      stats: {
+        mean: 0.11,
+        median: 0.1,
+        sd: 0.1356,
       },
     };
     const settings = {

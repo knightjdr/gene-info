@@ -46,10 +46,10 @@ describe('Protein expression element', () => {
       beforeAll(() => {
         const report = {
           'protein-expression': {
-            cells: {
-              cellX: { intensity: 1, level: 'low' },
-              cellY: { intensity: 2, level: 'medium' },
-            },
+            cells: [
+              { name: 'cellX', intensity: 1, level: 'low' },
+              { name: 'cellY', intensity: 2, level: 'medium' },
+            ],
           },
           proteomicsdb: 1234,
         };
@@ -82,10 +82,10 @@ describe('Protein expression element', () => {
       beforeAll(() => {
         const report = {
           'protein-expression': {
-            cells: {
-              cellX: { intensity: 1, level: 'low' },
-              cellY: { intensity: 2, level: 'medium' },
-            },
+            cells: [
+              { name: 'cellX', intensity: 1, level: 'low' },
+              { name: 'cellY', intensity: 2, level: 'medium' },
+            ],
           },
           proteomicsdb: 1234,
         };

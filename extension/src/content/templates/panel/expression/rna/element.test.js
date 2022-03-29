@@ -47,10 +47,10 @@ describe('RNA expression element', () => {
         const report = {
           'ensembl-gene': [1234],
           'rna-expression': {
-            cells: {
-              cellX: 1,
-              cellY: 2,
-            },
+            cells: [
+              { name: 'cellX', value: 1 },
+              { name: 'cellY', value: 2 },
+            ],
           },
         };
         const settings = {
@@ -83,10 +83,10 @@ describe('RNA expression element', () => {
         const report = {
           'ensembl-gene': [1234],
           'rna-expression': {
-            cells: {
-              cellX: 1,
-              cellY: 2,
-            },
+            cells: [
+              { name: 'cellX', value: 1 },
+              { name: 'cellY', value: 2 },
+            ],
           },
         };
         const settings = {

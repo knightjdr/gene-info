@@ -1,18 +1,21 @@
-const getRequestedCellLines = (availableCellLines, requestedCells) => (
-  requestedCells.map(cell => ({
-    cell,
-    value: availableCellLines[cell] || '-',
-  }))
-);
+const getRequestedCellLines = (availableCellLines, requestedCells) => {
+  const requestedCellLines = [];
+  requestedCells.forEach((cell) => {
+    const cellData = availableCellLines.find(availableCellLine => availableCellLine.name === cell);
+    if (cellData) {
+      requestedCellLines.push(cellData);
+    } else {
+      requestedCellLines.push({ name: cell, value: '-' });
+    }
+  });
+  return requestedCellLines;
+};
 
 const isCellDataAvailable = essentiality => (
-  essentiality
-  && essentiality.cells
-  && Object.keys(essentiality.cells).length > 0
+  essentiality?.cells?.length > 0
 );
 
-const createCellTable = (report, settings) => {
-  const { essentiality } = report;
+const createCellTable = (essentiality, settings) => {
   const { essentiality_tissues: requestedCellLines } = settings;
 
   if (!isCellDataAvailable(essentiality)) {
@@ -25,7 +28,7 @@ const createCellTable = (report, settings) => {
     ];
   }
 
-  const noCells = Object.keys(essentiality.cells).length;
+  const noCells = essentiality.cells.length;
   const requestedCellData = getRequestedCellLines(essentiality.cells, requestedCellLines);
 
   const nodes = [];
@@ -101,7 +104,7 @@ const createCellTable = (report, settings) => {
             children: [
               {
                 tag: 'td',
-                textContent: datum.cell,
+                textContent: datum.name,
               },
               {
                 tag: 'td',

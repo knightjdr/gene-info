@@ -22,17 +22,13 @@ export const defineLevel = (value) => {
   return 'high';
 };
 
-const fillTableRow = (tissue, data) => {
-  let tpm = (data.cells && data.cells[tissue]) || (data.tissues && data.tissues[tissue]);
-  tpm = tpm || '-';
-  return {
-    tag: 'tr',
-    children: [
-      { tag: 'td', textContent: tissue },
-      { tag: 'td', textContent: tpm },
-      { tag: 'td', textContent: defineLevel(tpm) },
-    ],
-  };
-};
+const fillTableRow = tissue => ({
+  tag: 'tr',
+  children: [
+    { tag: 'td', textContent: tissue.name },
+    { tag: 'td', textContent: tissue.value },
+    { tag: 'td', textContent: defineLevel(tissue.value) },
+  ],
+});
 
 export default fillTableRow;

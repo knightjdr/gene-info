@@ -3,14 +3,18 @@ import createTable from './create-table';
 describe('Create protein expression table', () => {
   it('should create table', () => {
     const results = {
-      'protein-expression': {
-        cells: {
-          cellX: { intensity: 1, level: 'low' },
-          cellY: { intensity: 2, level: 'medium' },
-        },
-      },
+      cells: [
+        { name: 'cellX', intensity: 1, level: 'low' },
+        { name: 'cellY', intensity: 2, level: 'medium' },
+        { name: 'cellZ', intensity: 1, level: 'medium' },
+      ],
+      tissues: [
+        { name: 'tissueX', intensity: 1, level: 'low' },
+        { name: 'tissueY', intensity: 2, level: 'medium' },
+        { name: 'tissueZ', intensity: 4, level: 'high' },
+      ],
     };
-    const tissues = ['cellX', 'cellY'];
+    const tissues = ['cellX', 'cellY', 'tissueA', 'tissueZ'];
     const result = createTable(results, tissues);
 
     const expected = {
@@ -45,6 +49,22 @@ describe('Create protein expression table', () => {
                 { tag: 'td', textContent: 'cellY' },
                 { tag: 'td', textContent: 2 },
                 { tag: 'td', textContent: 'medium' },
+              ],
+            },
+            {
+              tag: 'tr',
+              children: [
+                { tag: 'td', textContent: 'tissueA' },
+                { tag: 'td', textContent: '-' },
+                { tag: 'td', textContent: 'none' },
+              ],
+            },
+            {
+              tag: 'tr',
+              children: [
+                { tag: 'td', textContent: 'tissueZ' },
+                { tag: 'td', textContent: 4 },
+                { tag: 'td', textContent: 'high' },
               ],
             },
           ],

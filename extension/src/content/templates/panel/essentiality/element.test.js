@@ -42,7 +42,7 @@ describe('Essentiality element', () => {
     it('should return empty array when there are no cells available for the species', () => {
       config.tissues = {
         essentiality: {
-          'Homo sapiens': { cells: [], tissues: [] },
+          'Homo sapiens': { cells: [] },
         },
       };
       const report = {};
@@ -62,7 +62,7 @@ describe('Essentiality element', () => {
     beforeAll(() => {
       config.tissues = {
         essentiality: {
-          'Homo sapiens': { cells: ['cellA', 'cellB', 'cellC', 'cellD', 'cellE'], tissues: [] },
+          'Homo sapiens': { cells: ['cellA', 'cellB', 'cellC', 'cellD', 'cellE'] },
         },
       };
       const report = {
@@ -95,18 +95,18 @@ describe('Essentiality element', () => {
     beforeAll(() => {
       config.tissues = {
         essentiality: {
-          'Homo sapiens': { cells: ['cellA', 'cellB', 'cellC', 'cellD', 'cellE'], tissues: [] },
+          'Homo sapiens': { cells: ['cellA', 'cellB', 'cellC', 'cellD', 'cellE'] },
         },
       };
       const report = {
         essentiality: {
-          cells: {
-            cellA: 0.1,
-            cellB: 0.05,
-            cellC: 0.2,
-            cellD: -0.1,
-            cellE: 0.3,
-          },
+          cells: [
+            { name: 'cellA', value: 0.1 },
+            { name: 'cellB', value: 0.05 },
+            { name: 'cellC', value: 0.2 },
+            { name: 'cellD', value: -0.1 },
+            { name: 'cellE', value: 0.3 },
+          ],
           coDependencies: [
             ['geneB', 0.4],
             ['geneD', 0.35],
@@ -146,18 +146,18 @@ describe('Essentiality element', () => {
     beforeAll(() => {
       config.tissues = {
         essentiality: {
-          'Homo sapiens': { cells: ['cellA', 'cellB', 'cellC', 'cellD', 'cellE'], tissues: [] },
+          'Homo sapiens': { cells: ['cellA', 'cellB', 'cellC', 'cellD', 'cellE'] },
         },
       };
       const report = {
         essentiality: {
-          cells: {
-            cellA: 0.1,
-            cellB: 0.05,
-            cellC: 0.2,
-            cellD: -0.1,
-            cellE: 0.3,
-          },
+          cells: [
+            { name: 'cellA', value: 0.1 },
+            { name: 'cellB', value: 0.05 },
+            { name: 'cellC', value: 0.2 },
+            { name: 'cellD', value: -0.1 },
+            { name: 'cellE', value: 0.3 },
+          ],
           coDependencies: [
             ['geneB', 0.4],
             ['geneD', 0.35],
