@@ -17,13 +17,13 @@ const parseTissue = file => (
       lineReader.on('line', (line) => {
         if (!header) {
           const [accession, , cell, value] = line.split('\t');
-          if (expression[accession]) {
-            expression[accession][cell] = Number(value);
-          } else {
-            expression[accession] = {
-              [cell]: Number(value),
-            };
-          }
+          if (!expression[accession]) {
+            expression[accession] = [];
+          } 
+          expression[accession].push({
+            name: cell,
+            value: Number(value),
+          });
           if (!types[cell]) {
             types[cell] = true;
           }

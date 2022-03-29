@@ -21,6 +21,6 @@
     "yauzl": "^2.10.0"
   },
   "devDependencies": {
-    "mock-fs": "^5.0.0"
+    "mock-fs": "^5.1.2"
   }
 }

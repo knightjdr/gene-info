@@ -62,34 +62,34 @@ describe('Parse essentiality', () => {
   describe('calculate stats', () => {
     it('should calculate stats', () => {
       const effects = {
-        1: {
-          CACO2: 0.2,
-          HEL: -0.4,
-          NIHOVCAR3: 0,
-        },
-        2: {
-          CACO2: -0.75,
-          HEL: -1,
-          NIHOVCAR3: -1,
-        },
-        29974: {
-          CACO2: -0.1,
-          HEL: 0.2,
-          NIHOVCAR3: -0.5,
-        },
-        144568: {
-          CACO2: 0.15,
-          HEL: -1.5,
-          NIHOVCAR3: 0.1,
-        },
+        1: [
+          { name: 'NIHOVCAR3', value: 0 },
+          { name: 'CACO2', value: 0.2 },
+          { name: 'HEL', value: -0.4 },
+        ],
+        2: [
+          { name: 'NIHOVCAR3', value: -1 },
+          { name: 'CACO2', value: -0.75 },
+          { name: 'HEL', value: -1 },
+        ],
+        29974: [
+          { name: 'NIHOVCAR3', value: -0.5 },
+          { name: 'CACO2', value: -0.1 },
+          { name: 'HEL', value: 0.2 },
+        ],
+        144568: [
+          { name: 'NIHOVCAR3', value: 0.1 },
+          { name: 'CACO2', value: 0.15 },
+          { name: 'HEL', value: -1.5 },
+        ],
       };
       const expected = {
         1: {
-          cells: {
-            CACO2: 0.2,
-            HEL: -0.4,
-            NIHOVCAR3: 0,
-          },
+          cells: [
+            { name: 'NIHOVCAR3', value: 0 },
+            { name: 'CACO2', value: 0.2 },
+            { name: 'HEL', value: -0.4 },
+          ],
           stats: {
             mean: -0.0667,
             median: 0,
@@ -97,11 +97,11 @@ describe('Parse essentiality', () => {
           },
         },
         2: {
-          cells: {
-            CACO2: -0.75,
-            HEL: -1,
-            NIHOVCAR3: -1,
-          },
+          cells: [
+            { name: 'NIHOVCAR3', value: -1 },
+            { name: 'CACO2', value: -0.75 },
+            { name: 'HEL', value: -1 },
+          ],
           stats: {
             mean: -0.9167,
             median: -1,
@@ -109,11 +109,11 @@ describe('Parse essentiality', () => {
           },
         },
         29974: {
-          cells: {
-            CACO2: -0.1,
-            HEL: 0.2,
-            NIHOVCAR3: -0.5,
-          },
+          cells: [
+            { name: 'NIHOVCAR3', value: -0.5 },
+            { name: 'CACO2', value: -0.1 },
+            { name: 'HEL', value: 0.2 },
+          ],
           stats: {
             mean: -0.1333,
             median: -0.1,
@@ -121,11 +121,11 @@ describe('Parse essentiality', () => {
           },
         },
         144568: {
-          cells: {
-            CACO2: 0.15,
-            HEL: -1.5,
-            NIHOVCAR3: 0.1,
-          },
+          cells: [
+            { name: 'NIHOVCAR3', value: 0.1 },
+            { name: 'CACO2', value: 0.15 },
+            { name: 'HEL', value: -1.5 },
+          ],
           stats: {
             mean: -0.4167,
             median: 0.1,
@@ -206,11 +206,11 @@ describe('Parse essentiality', () => {
         },
         effects: {
           1: {
-            cells: {
-              CACO2: 0.2,
-              HEL: -0.4,
-              NIHOVCAR3: 0,
-            },
+            cells: [
+              { name: 'NIHOVCAR3', value: 0 },
+              { name: 'CACO2', value: 0.2 },
+              { name: 'HEL', value: -0.4 },
+            ],
             coDependencies: [
               ['A1CF', 0.7778],
               ['A2M', 0.1],
@@ -223,11 +223,11 @@ describe('Parse essentiality', () => {
             },
           },
           2: {
-            cells: {
-              CACO2: -0.75,
-              HEL: -1,
-              NIHOVCAR3: -1,
-            },
+            cells: [
+              { name: 'NIHOVCAR3', value: -1 },
+              { name: 'CACO2', value: -0.75 },
+              { name: 'HEL', value: -1 },
+            ],
             coDependencies: [
               ['A1CF', 0.2354],
               ['A1BG', 0.1],
@@ -240,11 +240,11 @@ describe('Parse essentiality', () => {
             },
           },
           29974: {
-            cells: {
-              CACO2: -0.1,
-              HEL: 0.2,
-              NIHOVCAR3: -0.5,
-            },
+            cells: [
+              { name: 'NIHOVCAR3', value: -0.5 },
+              { name: 'CACO2', value: -0.1 },
+              { name: 'HEL', value: 0.2 },
+            ],
             coDependencies: [
               ['A1BG', 0.7778],
               ['A2M', 0.2354],
@@ -257,11 +257,11 @@ describe('Parse essentiality', () => {
             },
           },
           144568: {
-            cells: {
-              CACO2: 0.15,
-              HEL: -1.5,
-              NIHOVCAR3: 0.1,
-            },
+            cells: [
+              { name: 'NIHOVCAR3', value: 0.1 },
+              { name: 'CACO2', value: 0.15 },
+              { name: 'HEL', value: -1.5 },
+            ],
             coDependencies: [],
             sourceSymbol: 'A2ML1',
             stats: {

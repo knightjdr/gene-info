@@ -28,13 +28,13 @@ describe('Parse RNA expression file', () => {
 
     it('should parse expression data', () => {
       const expected = {
-        ENSG00000000001: {
-          cellX: 31.5,
-          cellY: 26.4,
-        },
-        ENSG00000000002: {
-          cellX: 9.2,
-        },
+        ENSG00000000001: [
+          { name: 'cellX', value: 31.5 },
+          { name: 'cellY', value: 26.4 },
+        ],
+        ENSG00000000002: [
+          { name: 'cellX', value: 9.2 },
+        ],
       };
       expect(result.expression).toEqual(expected);
     });

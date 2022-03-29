@@ -11,7 +11,7 @@ const CO_DEPENDENCY_LIMIT = 25;
 const addStats = (effectByGeneIDAndCell) => {
   const effectByGeneIDAndCellWithStats = {};
   Object.entries(effectByGeneIDAndCell).forEach(([gene, cellData]) => {
-    const effects = Object.values(cellData);
+    const effects = cellData.map(datum => datum.value);
     effectByGeneIDAndCellWithStats[gene] = {
       cells: cellData,
       stats: {
@@ -185,21 +185,24 @@ const summarizeByGeneID = (dataByCellLineAndGeneID, cellMappingData) => {
     const cellLines = Object.keys(dataByCellLineAndGeneID);
     const effectByGeneIDAndCell = Object.keys(dataByCellLineAndGeneID[cellLines[0]]).reduce((accum, geneID) => ({
       ...accum,
-      [geneID]: {},
+      [geneID]: [],
     }), {});
 
     const cellsAvailable = [];
     Object.entries(dataByCellLineAndGeneID).forEach(([cellID, genesWithCellEffect]) => {
       const cellName = cellMappingData[cellID] ?? cellID;
       Object.entries(genesWithCellEffect).forEach(([geneID, cellEffect]) => {
-        effectByGeneIDAndCell[geneID][cellName] = cellEffect;
+        effectByGeneIDAndCell[geneID].push({
+          name: cellName,
+          value: cellEffect,
+        });
       });
       cellsAvailable.push(cellName);
     });
 
     return [effectByGeneIDAndCell, arrSort.alphabetical(cellsAvailable)];
   }
-  return [{}, []];
+  return [[], []];
 };
 
 const parseData = async (essentialityFile, cellInfoFile, coDependencyFile) => {

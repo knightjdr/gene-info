@@ -39,12 +39,13 @@ const parseTissue = async (file) => {
       }
 
       if (!expression[accession]) {
-        expression[accession] = {};
+        expression[accession] = [];
       }
-      expression[accession][cell] = {
+      expression[accession].push({
+        name: cell,
         intensity: value,
         level: expressionLevel,
-      };
+      });
     });
   }
 

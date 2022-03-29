@@ -47,13 +47,13 @@ describe('Parse protein expression file', () => {
 
     it('should parse expression data', () => {
       const expected = {
-        P123456: {
-          cellX: { intensity: 2.333, level: 'low' },
-          cell_Y: { intensity: 5.667, level: 'medium' },
-        },
-        P789101: {
-          cellX: { intensity: 8.333, level: 'high' },
-        },
+        P123456: [
+          { name: 'cellX', intensity: 2.333, level: 'low' },
+          { name: 'cell_Y', intensity: 5.667, level: 'medium' },
+        ],
+        P789101: [
+          { name: 'cellX', intensity: 8.333, level: 'high' },
+        ],
       };
       expect(result.expression).toEqual(expected);
     });
