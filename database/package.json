@@ -6,17 +6,22 @@
   "scripts": {
     "db-generate-linux": "node --harmony --max-old-space-size=8192 index.js",
     "db-generate-mac": "caffeinate node --harmony --max-old-space-size=8192 index.js",
+    "db-upload-local": "node database/upload/index.js http://localhost:8000 ca-central-1 gix files/databases",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "James Knight",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.1102.0",
+    "cli-progress": "^3.10.0",
     "follow-redirects": "^1.14.1",
     "ftp": "^0.3.10",
     "md5": "^2.3.0",
     "memory-streams": "^0.1.3",
     "mkdirp": "^1.0.4",
     "node-fetch": "^2.6.1",
+    "stream-chain": "^2.2.5",
+    "stream-json": "^1.7.4",
     "xml2js": "^0.4.23",
     "yauzl": "^2.10.0"
   },
