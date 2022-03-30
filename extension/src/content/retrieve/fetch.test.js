@@ -9,7 +9,7 @@ jest.mock('./show-report');
 State.init({});
 
 describe('fetch report', () => {
-  describe('succesfully', () => {
+  describe('successfully', () => {
     beforeAll(async () => {
       showReport.mockClear();
       const reports = [{ gene: 'a' }];
@@ -19,6 +19,11 @@ describe('fetch report', () => {
 
     it('should search term in state', () => {
       expect(State.searchTerm).toBe('a');
+    });
+
+    it('should call http with correct route', () => {
+      const expected = '?identifier=gene&species=Homo-sapiens&term=a';
+      expect(http).toHaveBeenCalledWith(expected);
     });
 
     it('should add report to state', () => {

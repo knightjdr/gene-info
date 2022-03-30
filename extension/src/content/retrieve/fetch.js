@@ -3,7 +3,7 @@ import showReport from './show-report';
 import State from '../state';
 
 const fetch = (species, field, searchTerm, event) => {
-  const route = `/${species.replace(' ', '-')}/${field}/${searchTerm}`;
+  const route = `?identifier=${field}&species=${species.replace(' ', '-')}&term=${searchTerm}`;
   State.setSearchTerm(searchTerm);
   http(route)
     .then((data) => {
