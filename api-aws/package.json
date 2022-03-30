@@ -8,7 +8,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "gotest": "./test/test-setup.bash",
+    "testlambda": "./test/test-lambda.bash",
     "cdk": "cdk"
   },
   "devDependencies": {

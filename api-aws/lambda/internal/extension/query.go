@@ -29,14 +29,14 @@ func query(fields Fields, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
 	return items, nil
 }
 
-func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]int, errors.Error) {
+func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]string, errors.Error) {
 	partitionKey := fmt.Sprintf("%s#%s", fields.identifier, fields.term)
 	params := &dynamodb.GetItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
 			"pk": {S: aws.String(partitionKey)},
 			"sk": {S: aws.String(fields.species)},
 		},
-		ProjectionExpression: aws.String("geneids"),
+		ProjectionExpression: aws.String("ids"),
 		TableName:            aws.String(os.Getenv("DYNAMODB_TABLE")),
 	}
 
@@ -47,7 +47,7 @@ func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]int, errors.Er
 	}
 
 	if resp.Item == nil {
-		return []int{}, nil
+		return []string{}, nil
 	}
 
 	identifiers := Identifiers{}
@@ -56,16 +56,16 @@ func mapIdentifier(fields Fields, dbClient *dynamodb.DynamoDB) ([]int, errors.Er
 		return nil, errors.New(500, fmt.Sprintf("could not unmarshall mapped identifiers: %s-%s", fields.identifier, fields.term))
 	}
 
-	return identifiers.GeneIDs, nil
+	return identifiers.Ids, nil
 }
 
-func getItems(ids []int, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
+func getItems(ids []string, dbClient *dynamodb.DynamoDB) (Items, errors.Error) {
 	table := os.Getenv("DYNAMODB_TABLE")
 
 	keys := make([]map[string]*dynamodb.AttributeValue, len(ids))
 	for i, id := range ids {
-		pk := fmt.Sprintf("GENEID#%d", id)
-		sk := fmt.Sprintf("METADATA#%d", id)
+		pk := fmt.Sprintf("UNIPROT#%s", id)
+		sk := fmt.Sprintf("METADATA#%s", id)
 		keys[i] = map[string]*dynamodb.AttributeValue{
 			"pk": {S: aws.String(pk)},
 			"sk": {S: aws.String(sk)},

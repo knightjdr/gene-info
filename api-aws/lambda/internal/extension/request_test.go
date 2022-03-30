@@ -18,7 +18,7 @@ import (
 
 func TestRequest(t *testing.T) {
 	sessConfig := &aws.Config{
-		Endpoint: aws.String(os.Getenv("DYNAMODB_ENDPOINT")),
+		Endpoint: aws.String(os.Getenv("TEST_ENDPOINT")),
 		Region:   aws.String(os.Getenv("AWS_REGION")),
 	}
 	sess := session.Must(session.NewSession(sessConfig))

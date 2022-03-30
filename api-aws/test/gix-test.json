@@ -5,7 +5,7 @@
         "Item": {
           "pk": { "S": "GENE#pdcd10" },
           "sk": { "S": "homosapiens" },
-          "geneids": { "L": [ { "N": "11235" } ] }
+          "ids": { "SS": [ "q9bul8" ] }
         }
       }
     },
@@ -14,7 +14,7 @@
         "Item": {
           "pk": { "S": "UNIPROT#q9bul8" },
           "sk": { "S": "homosapiens" },
-          "geneids": { "L": [ { "N": "11235" } ] }
+          "ids": { "SS": [ "q9bul8" ] }
         }
       }
     },
@@ -23,7 +23,7 @@
         "Item": {
           "pk": { "S": "UNIPROT#a8k515" },
           "sk": { "S": "homosapiens" },
-          "geneids": { "L": [ { "N": "11235" } ] }
+          "ids": { "SS": [ "q9bul8" ] }
         }
       }
     },
@@ -32,7 +32,7 @@
         "Item": {
           "pk": { "S": "ENSEMBLGENE#ensg00000114209" },
           "sk": { "S": "homosapiens" },
-          "geneids": { "L": [ { "N": "11235" } ] }
+          "ids": { "SS": [ "q9bul8" ] }
         }
       }
     },
@@ -41,15 +41,15 @@
         "Item": {
           "pk": { "S": "GENE#mst1" },
           "sk": { "S": "homosapiens" },
-          "geneids": { "L": [ { "N": "4485" }, { "N": "6789" } ] }
+          "ids": { "SS": [ "p26927", "q13043" ] }
         }
       }
     },
     {
       "PutRequest": {
         "Item": {
-          "pk": { "S": "GENEID#11235" },
-          "sk": { "S": "METADATA#11235" },
+          "pk": { "S": "UNIPROT#q9bul8" },
+          "sk": { "S": "METADATA#q9bul8" },
           "fullname": { "S": "Programmed cell death protein 10" },
           "gene": { "S": "PDCD10" },
           "geneid": { "N": "11235" }
@@ -59,8 +59,8 @@
     {
       "PutRequest": {
         "Item": {
-          "pk": { "S": "GENEID#4485" },
-          "sk": { "S": "METADATA#4485" },
+          "pk": { "S": "UNIPROT#p26927" },
+          "sk": { "S": "METADATA#p26927" },
           "fullname": { "S": "Hepatocyte growth factor-like protein" },
           "gene": { "S": "MST1" },
           "geneid": { "N": "4485" }
@@ -70,8 +70,8 @@
     {
       "PutRequest": {
         "Item": {
-          "pk": { "S": "GENEID#6789" },
-          "sk": { "S": "METADATA#6789" },
+          "pk": { "S": "UNIPROT#q13043" },
+          "sk": { "S": "METADATA#q13043" },
           "fullname": { "S": "Serine/threonine-protein kinase 4" },
           "gene": { "S": "STK4" },
           "geneid": { "N": "6789" }

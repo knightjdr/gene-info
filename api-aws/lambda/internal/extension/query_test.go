@@ -14,7 +14,7 @@ import (
 
 func TestQuery(t *testing.T) {
 	sessConfig := &aws.Config{
-		Endpoint: aws.String(os.Getenv("DYNAMODB_ENDPOINT")),
+		Endpoint: aws.String(os.Getenv("TEST_ENDPOINT")),
 		Region:   aws.String(os.Getenv("AWS_REGION")),
 	}
 	sess := session.Must(session.NewSession(sessConfig))
@@ -72,7 +72,7 @@ func TestQuery(t *testing.T) {
 
 func TestMapIdentifier(t *testing.T) {
 	type expected struct {
-		ids []int
+		ids []string
 		err errors.Error
 	}
 	tests := map[string]struct {
@@ -88,7 +88,7 @@ func TestMapIdentifier(t *testing.T) {
 			},
 			table: "gix-identifiers",
 			expected: expected{
-				ids: []int{11235},
+				ids: []string{"q9bul8"},
 				err: nil,
 			},
 		},
@@ -100,7 +100,7 @@ func TestMapIdentifier(t *testing.T) {
 			},
 			table: "gix-identifiers",
 			expected: expected{
-				ids: []int{11235},
+				ids: []string{"q9bul8"},
 				err: nil,
 			},
 		},
@@ -112,7 +112,7 @@ func TestMapIdentifier(t *testing.T) {
 			},
 			table: "gix-identifiers",
 			expected: expected{
-				ids: []int{4485, 6789},
+				ids: []string{"p26927", "q13043"},
 				err: nil,
 			},
 		},
@@ -124,14 +124,14 @@ func TestMapIdentifier(t *testing.T) {
 			},
 			table: "gix-identifiers",
 			expected: expected{
-				ids: []int{},
+				ids: []string{},
 				err: nil,
 			},
 		},
 	}
 
 	sessConfig := &aws.Config{
-		Endpoint: aws.String(os.Getenv("DYNAMODB_ENDPOINT")),
+		Endpoint: aws.String(os.Getenv("TEST_ENDPOINT")),
 		Region:   aws.String(os.Getenv("AWS_REGION")),
 	}
 	sess := session.Must(session.NewSession(sessConfig))
@@ -152,11 +152,11 @@ func TestGetItems(t *testing.T) {
 		err   errors.Error
 	}
 	tests := map[string]struct {
-		ids      []int
+		ids      []string
 		expected expected
 	}{
 		"should get single item": {
-			ids: []int{11235},
+			ids: []string{"q9bul8"},
 			expected: expected{
 				items: Items{
 					Item{
@@ -169,25 +169,25 @@ func TestGetItems(t *testing.T) {
 			},
 		},
 		"should get multiple items": {
-			ids: []int{4485, 6789},
+			ids: []string{"p26927", "q13043"},
 			expected: expected{
 				items: Items{
-					Item{
-						Fullname: "Hepatocyte growth factor-like protein",
-						Geneid:   4485,
-						Gene:     "MST1",
-					},
 					Item{
 						Fullname: "Serine/threonine-protein kinase 4",
 						Geneid:   6789,
 						Gene:     "STK4",
+					},
+					Item{
+						Fullname: "Hepatocyte growth factor-like protein",
+						Geneid:   4485,
+						Gene:     "MST1",
 					},
 				},
 				err: nil,
 			},
 		},
 		"should return empty list for missing item": {
-			ids: []int{0001},
+			ids: []string{"q00001"},
 			expected: expected{
 				items: Items{},
 				err:   nil,
@@ -196,7 +196,7 @@ func TestGetItems(t *testing.T) {
 	}
 
 	sessConfig := &aws.Config{
-		Endpoint: aws.String(os.Getenv("DYNAMODB_ENDPOINT")),
+		Endpoint: aws.String(os.Getenv("TEST_ENDPOINT")),
 		Region:   aws.String(os.Getenv("AWS_REGION")),
 	}
 	sess := session.Must(session.NewSession(sessConfig))
