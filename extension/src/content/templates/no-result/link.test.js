@@ -20,18 +20,6 @@ describe('General links', () => {
       {
         children: [
           {
-            href: `http://www.google.com/search?q=${term}`,
-            rel: 'noopener noreferrer',
-            tag: 'a',
-            target: '_blank',
-            textContent: 'Google',
-          },
-        ],
-        tag: 'li',
-      },
-      {
-        children: [
-          {
             href: `https://www.ncbi.nlm.nih.gov/search/all/?term=${term}`,
             rel: 'noopener noreferrer',
             tag: 'a',
@@ -128,7 +116,7 @@ describe('All available links', () => {
         tag: 'li',
       };
       expect(list.tag).toBe('ul');
-      expect(list.children[4]).toEqual(expected);
+      expect(list.children[3]).toEqual(expected);
     });
   });
 });

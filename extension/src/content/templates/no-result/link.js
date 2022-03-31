@@ -18,10 +18,6 @@ export const getGeneralLinks = term => ([
     'Ensembl',
   ),
   formatLinkNode(
-    `http://www.google.com/search?q=${term}`,
-    'Google',
-  ),
-  formatLinkNode(
     `https://www.ncbi.nlm.nih.gov/search/all/?term=${term}`,
     'NCBI',
   ),
