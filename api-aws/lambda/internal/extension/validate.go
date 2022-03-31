@@ -16,7 +16,7 @@ var availableSpecies = []string{
 	"homosapiens",
 	"musmusculus",
 	"escherichiacolik12",
-	"salmonellatyphimuriumlT2",
+	"salmonellatyphimuriumlt2",
 	"saccharomycescerevisiae",
 	"schizosaccharomycespombe",
 	"xenopuslaevis",
