@@ -35,13 +35,13 @@ const tissues = {
     tissues: [
     ],
   },
-  'Escherichia coli (K12)': {
+  'Caenorhabditis elegans': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Caenorhabditis elegans': {
+  'Escherichia coli (K12)': {
     cells: [
     ],
     tissues: [

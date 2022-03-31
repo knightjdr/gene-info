@@ -6,7 +6,7 @@
   "scripts": {
     "db-generate-linux": "node --harmony --max-old-space-size=8192 index.js",
     "db-generate-mac": "caffeinate node --harmony --max-old-space-size=8192 index.js",
-    "db-upload-local": "node database/upload/index.js http://localhost:8000 ca-central-1 gix files/databases",
+    "db-upload-local": "node upload/index.js http://localhost:8000 ca-central-1 gix files/databases",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "James Knight",

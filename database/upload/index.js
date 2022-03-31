@@ -11,7 +11,7 @@ const main = async ({ endpoint, folder, region, table }) => {
     region,
   });
   const files = await readFiles(folder);
-  await files.slice(1).reduce(async (p, file) => {
+  await files.reduce(async (p, file) => {
     await p;
     const species = parseSpecies(file);
     console.log(`Processing ${species}`);
