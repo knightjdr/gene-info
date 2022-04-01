@@ -1,10 +1,3 @@
-# api
-/api/config.js
-/api/logs
-
-# mobile app
-/app
-
 # database files
 /database/files/*
 !/database/files/example
@@ -40,8 +33,8 @@ extension/safari
 extension/safari-xcode
 
 # Docs
-docs/build
-docs/.env*
+web-docs/build
+web-docs/.env*
 
 ## pem key
 extension/dist.crx
@@ -53,9 +46,9 @@ extension/dist.pem
 
 # TypeScript incremental build states
 *.tsbuildinfo
-api-aws/bin/**/*.js
-api-aws/lib/**/*.js
-api-aws/test/**/*.js
+api/bin/**/*.js
+api/lib/**/*.js
+api/test/**/*.js
 
 # CDK Context & Staging files
 cdk.context.json
@@ -67,4 +60,4 @@ cdk.out/
 .c9
 .nzm-*
 
-/api-aws/.env
+/api/.env

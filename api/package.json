@@ -1,23 +1,33 @@
 {
-  "name": "gene-info-api",
-  "version": "1.0.0",
-  "description": "GIX API",
-  "main": "index.js",
-  "scripts": {
-    "dev-api": "NODE_ENV=development nodemon node index.js",
-    "prod-api": "NODE_ENV=production node index.js",
-    "prod-api-forever": "NODE_ENV=production forever start -a --uid 'gene-info-api' index.js"
+  "name": "api",
+  "version": "0.1.0",
+  "bin": {
+    "api": "bin/api.js"
   },
-  "author": "James Knight",
-  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev-api": "./test/test-api.bash",
+    "watch": "tsc -w",
+    "test": "jest",
+    "test-lambda": "./test/test-lambda.bash",
+    "cdk": "cdk"
+  },
   "devDependencies": {
-    "mongo-mock": "^3.9.1"
+    "@types/jest": "^26.0.10",
+    "@types/node": "10.17.27",
+    "aws-cdk": "2.17.0",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.2.0",
+    "ts-node": "^9.0.0",
+    "typescript": "~3.9.7"
   },
   "dependencies": {
-    "compression": "^1.7.4",
-    "cors": "^2.8.5",
-    "express": "^4.17.2",
-    "mongodb": "^4.3.1",
-    "winston": "^2.4.5"
+    "@aws-cdk/aws-apigatewayv2-alpha": "2.17.0-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.17.0-alpha.0",
+    "@aws-cdk/aws-lambda-go-alpha": "2.17.0-alpha.0",
+    "aws-cdk-lib": "2.17.0",
+    "constructs": "^10.0.0",
+    "dotenv": "^16.0.0",
+    "source-map-support": "^0.5.16"
   }
 }
