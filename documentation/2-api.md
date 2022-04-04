@@ -16,9 +16,9 @@ The API used AWS API Gateway with Lambda using Go. The infrastructure is describ
 (cd api && npm install)
 ```
 
-## .ENV
+### .ENV file
 
-A `.env` file is required in the `api/` folder. It must specify the following parameters:
+An `.env` file is required in the `api/` folder. It must specify the following parameters:
 ```
 AWS_REGION=ca-central-1
 DYNAMODB_TABLE=gix
