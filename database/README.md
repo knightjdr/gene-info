@@ -45,18 +45,11 @@ http://pfam.xfam.org/protein/<ID>/graphic
 
 ## Create database
 
-Use at least node v10.13.0 (yauzl module produces an error otherwise).
-Databases for each species specified in configs.js will be written to `files/databases`. Javascript files containing tissues in expression databases for each species will be written to `files/protein-expression.js` & `files/rna-expression.js`. Creating the database consumes a lot of memory so increase the limit. 
+Use at least node v10.13.0 (yauzl module produces an error otherwise). Databases for each species specified in configs.js will be written to `files/databases`. Javascript files containing tissues in expression databases for each species will be written to `files/protein-expression.js` & `files/rna-expression.js`. Creating the database consumes a lot of memory so increase the limit. 
 
 ```
 node --max-old-space-size=8192 index.js
 ```
-
-### Flags
-
-* --skip-download
-* --skip-unzip
-* --skip-min
 
 ## Tests
 

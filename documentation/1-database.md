@@ -6,31 +6,7 @@ Instructions for generating and deploying the database.
 
 * Docker
 * [Nodejs](https://nodejs.org/en/), at least v16
-* Python3
-
-### Install nodejs without sudo
-
-```
-mkdir -p ~/local/node
-mkdir ~/node-latest-stable
-cd ~/node-latest-stable
-wget -c https://nodejs.org/dist/v16.14.0/node-v16.14.0-linux-x64.tar.xz
-tar xvf node-v16.14.0-linux-x64.tar.xz --directory ~/local/node --strip-components=1
-echo 'export PATH=$HOME/local/node/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
-```
-
-Confirm version number
-```
-node -v
-npm -v
-```
-
-### Install python dependencies
-
-```
-pip3 install --user numpy pandas
-```
+* Python3, with numpy and pandas
 
 ## Install source code for GIX
 
