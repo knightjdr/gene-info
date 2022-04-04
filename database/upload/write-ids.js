@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const cliProgress = require('cli-progress');
 
 const mergeIDs = (ids) => {
@@ -14,28 +15,38 @@ const mergeIDs = (ids) => {
 };
 
 const writeIDs = async ({ dbClient, ids, species, table }) => {
-  const merged = mergeIDs(ids);
+  try {
+    const merged = mergeIDs(ids);
+    const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+    bar.start(Object.keys(merged).length, 0);
 
-  const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-  bar.start(Object.keys(merged).length, 0);
+    const batchSize = 25;
 
-  await Object.entries(merged).reduce(async (p, [pk, uniprot]) => {
-    await p;
-    bar.increment();
+    for (let i = 0; i < merged.length; i += batchSize) {
+      const batch = Object.entries(merged).slice(i, i + batchSize);
+      const items = batch.map(([pk, uniprot]) => ({
+        PutRequest: {
+          Item: {
+            pk: { S: pk },
+            sk: { S: species },
+            uniprots: { SS: [...new Set(uniprot)] },
+          },
+        },
+      }));
 
-    const item = {
-      pk: { S: pk },
-      sk: { S: species },
-      ids: { SS: [...new Set(uniprot)] },
-    };
-    const params = {
-      Item: item,
-      TableName: table,
-    };
-    return dbClient.putItem(params).promise();
-  }, Promise.resolve());
+      const params = {
+        RequestItems: {
+          [table]: items,
+        },
+      };
 
-  bar.stop();
+      await dbClient.batchWriteItem(params).promise();
+      bar.increment(batchSize);
+    }
+    bar.stop();
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 module.exports = writeIDs;

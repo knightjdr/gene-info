@@ -45,19 +45,24 @@ const readGeneData = ({ dbClient, file, table }) => (
     ]);
 
     pipeline.on('data', async (gene) => {
-      const uniprotID = gene.uniprot[0].toLowerCase();
-      ids[uniprotID] = getIdentifiers(gene);
+      try {
+        const uniprotID = gene.uniprot[0].toLowerCase();
+        ids[uniprotID] = getIdentifiers(gene);
 
-      const item = {
-        pk: { S: `UNIPROT#${uniprotID}` },
-        sk: { S: `METADATA#${uniprotID}` },
-        ...AWS.DynamoDB.Converter.marshall(gene),
-      };
-      const params = {
-        Item: item,
-        TableName: table,
-      };
-      return dbClient.putItem(params).promise();
+        const item = {
+          pk: { S: `UNIPROT#${uniprotID}` },
+          sk: { S: `METADATA#${uniprotID}` },
+          ...AWS.DynamoDB.Converter.marshall(gene),
+        };
+        const params = {
+          Item: item,
+          TableName: table,
+        };
+        return dbClient.putItem(params).promise();
+      } catch (err) {
+        console.error(err);
+        return Promise.resolve();
+      }
     });
     pipeline.on('end', () => {
       resolve(ids);
