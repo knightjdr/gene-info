@@ -10,6 +10,12 @@ The API used AWS API Gateway with Lambda using Go. The infrastructure is describ
 * [AWS cli V2](https://aws.amazon.com/cli/)
 * [AWS CDK toolkit](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html)
 
+### Install dependencies
+
+```
+(cd api && npm install)
+```
+
 ## .ENV
 
 A `.env` file is required in the `api/` folder. It must specify the following parameters:
