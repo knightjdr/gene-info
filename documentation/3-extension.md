@@ -17,7 +17,7 @@ Running a development version of the extension requires an API endpoint and the 
 npm install -g web-ext
 ```
 
-### .ENV file
+### .env files
 
 An `.env.development` file is required in development and `.env.production` file is required in production. They must be located in the `extension` folder and specify the API endpoint to connect to.
 

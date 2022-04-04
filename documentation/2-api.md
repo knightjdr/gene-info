@@ -16,7 +16,7 @@ The API used AWS API Gateway with Lambda using Go. The infrastructure is describ
 (cd api && npm install)
 ```
 
-### .ENV file
+### .env file
 
 An `.env` file is required in the `api/` folder. It must specify the following parameters:
 ```
