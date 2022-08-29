@@ -50,3 +50,9 @@ extension/dist.pem
 .htaccess
 *.zip
 *.mp4
+
+web-docs
+api/bin
+api/cdk.out
+api/lib
+api/.env

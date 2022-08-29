@@ -5,25 +5,25 @@ const tissues = {
     tissues: [
     ],
   },
-  'Xenopus laevis': {
-    cells: [
-    ],
-    tissues: [
-    ],
-  },
   'Gallus gallus': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Danio rerio': {
+  'Xenopus laevis': {
     cells: [
     ],
     tissues: [
     ],
   },
   'Dictyostelium discoideum': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Danio rerio': {
     cells: [
     ],
     tissues: [
@@ -47,13 +47,13 @@ const tissues = {
     tissues: [
     ],
   },
-  'Drosophila melanogaster': {
+  'Saccharomyces cerevisiae': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Saccharomyces cerevisiae': {
+  'Drosophila melanogaster': {
     cells: [
     ],
     tissues: [
@@ -213,7 +213,6 @@ const tissues = {
       'frontomarginal cortex',
       'frontopolar cortex',
       'fusiform gyrus',
-      'fusiform gyrus (white matter)',
       'gallbladder',
       'gigantocellular reticular nuclei, medullary',
       'gigantocellular reticular nuclei, pars',
@@ -370,11 +369,9 @@ const tissues = {
       'superior temporal gyrus',
       'superior vestibular nucleus',
       'supplementary motor cortex',
-      'suprachiasmatic nucleus',
       'supramarginal gyrus',
       'supraoptic nucleus',
       'temporal cortex',
-      'temporal cortex (white matter)',
       'temporal pole',
       'temporal white matter',
       'temporo-insular cortex, parainsular gyrus',
@@ -393,7 +390,7 @@ const tissues = {
       'ventral posteromedial thalamic nucleus',
       'ventral tegmental area',
       'ventral thalamic nuclei',
-      'ventrolateral medulla, A1/C1 cell groups',
+      'ventrolateral medulla, A1-C1 cell groups',
       'ventrolateral prefrontal cortex',
       'ventrolateral tegmental area, A5 NE cell group',
       'ventromedial nucleus',

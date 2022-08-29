@@ -54,15 +54,16 @@ const getDBRefs = dbRefs => (
       };
     } if (ref.$.type === 'Ensembl') {
       const ensembl = ref.property.reduce((accumRef, prop) => {
+        const value = prop.$.value.split('.')[0];
         if (prop.$.type === 'gene ID') {
           return {
             ...accumRef,
-            gene: prop.$.value,
+            gene: value,
           };
         } if (prop.$.type === 'protein sequence ID') {
           return {
             ...accumRef,
-            protein: prop.$.value,
+            protein: value,
           };
         }
         return accumRef;
