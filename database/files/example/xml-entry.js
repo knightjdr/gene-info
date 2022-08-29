@@ -385,25 +385,25 @@ const xmlEntry = `
 <dbReference type="ProteomicsDB" id="test2"/>
 <dbReference type="TopDownProteomics" id="Q9BUL8"/>
 <dbReference type="DNASU" id="11235"/>
-<dbReference type="Ensembl" id="ENST00000392750">
-  <property type="protein sequence ID" value="ENSP00000376506"/>
-  <property type="gene ID" value="ENSG00000114209"/>
+<dbReference type="Ensembl" id="ENST00000392750.1">
+  <property type="protein sequence ID" value="ENSP00000376506.1"/>
+  <property type="gene ID" value="ENSG00000114209.1"/>
 </dbReference>
 <dbReference type="Ensembl" id="ENST00000461494">
-  <property type="protein sequence ID" value="ENSP00000420021"/>
-  <property type="gene ID" value="ENSG00000114209"/>
+  <property type="protein sequence ID" value="ENSP00000420021.2"/>
+  <property type="gene ID" value="ENSG00000114209.1"/>
 </dbReference>
 <dbReference type="Ensembl" id="ENST00000470131">
   <property type="protein sequence ID" value="ENSP00000417202"/>
-  <property type="gene ID" value="ENSG00000114209"/>
+  <property type="gene ID" value="ENSG00000114209.1"/>
 </dbReference>
 <dbReference type="Ensembl" id="ENST00000473645">
-  <property type="protein sequence ID" value="ENSP00000418317"/>
-  <property type="gene ID" value="ENSG00000114209"/>
+  <property type="protein sequence ID" value="ENSP00000418317.4"/>
+  <property type="gene ID" value="ENSG00000114209.1"/>
 </dbReference>
 <dbReference type="Ensembl" id="ENST00000497056">
   <property type="protein sequence ID" value="ENSP00000420553"/>
-  <property type="gene ID" value="ENSG00000114209"/>
+  <property type="gene ID" value="ENSG00000114209.1"/>
 </dbReference>
 <dbReference type="GeneID" id="11235"/>
 <dbReference type="KEGG" id="hsa:11235"/>

@@ -5,19 +5,13 @@ const tissues = {
     tissues: [
     ],
   },
-  'Xenopus laevis': {
-    cells: [
-    ],
-    tissues: [
-    ],
-  },
   'Gallus gallus': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Danio rerio': {
+  'Xenopus laevis': {
     cells: [
     ],
     tissues: [
@@ -29,13 +23,13 @@ const tissues = {
     tissues: [
     ],
   },
-  'Schizosaccharomyces pombe': {
+  'Danio rerio': {
     cells: [
     ],
     tissues: [
     ],
   },
-  'Caenorhabditis elegans': {
+  'Schizosaccharomyces pombe': {
     cells: [
     ],
     tissues: [
@@ -47,13 +41,19 @@ const tissues = {
     tissues: [
     ],
   },
-  'Drosophila melanogaster': {
+  'Caenorhabditis elegans': {
     cells: [
     ],
     tissues: [
     ],
   },
   'Saccharomyces cerevisiae': {
+    cells: [
+    ],
+    tissues: [
+    ],
+  },
+  'Drosophila melanogaster': {
     cells: [
     ],
     tissues: [
@@ -74,6 +74,7 @@ const tissues = {
   'Homo sapiens': {
     cells: [
       '143B',
+      '170MGBA',
       '21NT',
       '22RV1',
       '2313287',
@@ -175,6 +176,7 @@ const tissues = {
       'CAPAN1',
       'CAS1',
       'CASKI',
+      'CCC5',
       'CCFSTTG1',
       'CCK81',
       'CCLFPEDS0001T',
@@ -186,6 +188,7 @@ const tissues = {
       'CFPAC1',
       'CH157MN',
       'CHAGOK1',
+      'CHL1DM',
       'CHLA06ATRT',
       'CHLA10',
       'CHLA15',
@@ -210,7 +213,6 @@ const tissues = {
       'COLO679',
       'COLO680N',
       'COLO684',
-      'COLO699',
       'COLO792',
       'COLO800',
       'COLO824',
@@ -225,6 +227,7 @@ const tissues = {
       'COV434',
       'COV504',
       'COV644',
+      'CTV1DM',
       'CW9019',
       'D283MED',
       'D341',
@@ -379,7 +382,6 @@ const tissues = {
       'HS936T',
       'HS939T',
       'HS944T',
-      'HSB2',
       'HSC1',
       'HSC2',
       'HSC3',
@@ -463,6 +465,7 @@ const tissues = {
       'JURKAT',
       'JURLMK1',
       'JVE127',
+      'JVE253',
       'JVM3',
       'K029AX',
       'K562',
@@ -508,6 +511,7 @@ const tissues = {
       'KP1N',
       'KP2',
       'KP3',
+      'KP363T',
       'KP4',
       'KPL1',
       'KPNYN',
@@ -579,6 +583,7 @@ const tissues = {
       'M07E',
       'M140325',
       'MALME3M',
+      'MAPACHS77',
       'MB1',
       'MC116',
       'MCAS',
@@ -606,6 +611,7 @@ const tissues = {
       'MERO14',
       'MERO25',
       'MERO41',
+      'MERO48A',
       'MERO82',
       'MERO83',
       'MERO95',
@@ -613,6 +619,7 @@ const tissues = {
       'MFE296',
       'MFE319',
       'MFM223',
+      'MG63',
       'MHHES1',
       'MHHNB11',
       'MIAPACA2',
@@ -635,6 +642,7 @@ const tissues = {
       'MON',
       'MONOMAC1',
       'MORCPR',
+      'MPNST724',
       'MPP89',
       'MS751',
       'MSTO211H',
@@ -655,17 +663,18 @@ const tissues = {
       'NB6',
       'NB69',
       'NB7',
+      'NCCLMS1C1',
       'NCCMPNST2C1',
       'NCIH1048',
       'NCIH1092',
       'NCIH1155',
       'NCIH1299',
-      'NCIH1339',
       'NCIH1355',
       'NCIH1373',
       'NCIH1437',
       'NCIH1568',
       'NCIH1573',
+      'NCIH157DM',
       'NCIH1581',
       'NCIH1648',
       'NCIH1650',
@@ -827,6 +836,8 @@ const tissues = {
       'PL4',
       'PLCPRF5',
       'PSN1',
+      'PSS008',
+      'PSS131R',
       'RAJI',
       'RBE',
       'RCC10RGB',
@@ -868,6 +879,7 @@ const tissues = {
       'RVH421RPMI',
       'RVH421SKINFV1',
       'S117',
+      'S462',
       'SAOS2',
       'SAS',
       'SAT',
@@ -909,6 +921,7 @@ const tissues = {
       'SKGT2',
       'SKGT4',
       'SKHEP1',
+      'SKLMS1',
       'SKMEL19',
       'SKMEL2',
       'SKMEL24',
@@ -998,6 +1011,7 @@ const tissues = {
       'SUM1315MO2',
       'SUM149PT',
       'SUM159PT',
+      'SUM190PT',
       'SUM229PE',
       'SUM52PE',
       'SUPM2',
@@ -1113,6 +1127,7 @@ const tissues = {
       'UPCISCC152',
       'UPCISCC154',
       'UPCISCC200',
+      'UPMD1',
       'UW228',
       'UWB1289',
       'VAESBJ',
@@ -1142,6 +1157,7 @@ const tissues = {
       'YH13',
       'YKG1',
       'YSCCC',
+      'YUHOIN0650',
       'ZR751',
     ],
     tissues: [

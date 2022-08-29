@@ -10,14 +10,14 @@ const OUT_FOLDER = './files/essentiality';
 const fsConfig = {
   celldata: {
     file: `${OUT_FOLDER}/Homo sapiens-cell-info.csv`,
-    url: 'https://ndownloader.figshare.com/files/34008503',
+    url: 'https://ndownloader.figshare.com/files/35020903',
   },
   coDependency: {
     file: `${OUT_FOLDER}/Homo sapiens-co-dependency.csv`,
   },
   effectsData: {
     file: `${OUT_FOLDER}/Homo sapiens.csv`,
-    url: 'https://ndownloader.figshare.com/files/34008491',
+    url: 'https://ndownloader.figshare.com/files/34990036',
   },
 };
 
